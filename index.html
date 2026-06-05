@@ -1,1039 +1,1029 @@
-  <!DOCTYPE html>
-  <html lang="en">
-  <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Rahul Das — Trade Surveillance & Financial Compliance</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Source+Serif+4:ital,opsz,wght@0
-  ,8..60,300;0,8..60,400;0,8..60,600;1,8..60,300;1,8..60,400&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
-  <style>
-    :root {
-      --cream: #f8f5f0;
-      --cream-dark: #ede9e2;
-      --navy: #1a3a5c;
-      --navy-mid: #2a5280;
-      --navy-light: #3d6b9a;
-      --ink: #1c1c1e;
-      --ink-mid: #3a3a3c;
-      --ink-light: #6e6e73;
-      --rule: #c8bfb0;
-      --gold: #b8976a;
-      --gold-light: #d4b48a;
-      --white: #ffffff;
-      --serif-display: 'Playfair Display', Georgia, serif;
-      --serif-body: 'Source Serif 4', Georgia, serif;
-      --mono: 'DM Mono', 'Courier New', monospace;
-    }
-
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-    html { scroll-behavior: smooth; font-size: 16px; }
-
-    body {
-      background: var(--cream);
-      color: var(--ink);
-      font-family: var(--serif-body);
-      font-weight: 300;
-      line-height: 1.7;
-      -webkit-font-smoothing: antialiased;
-    }
-
-    body::before {
-      content: '';
-      position: fixed;
-      inset: 0;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence
-  type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25'
-  filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
-      pointer-events: none;
-      z-index: 1000;
-      opacity: 0.4;
-    }
-
-    nav {
-      position: fixed;
-      top: 0; left: 0; right: 0;
-      z-index: 100;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 0 3rem;
-      height: 64px;
-      background: rgba(248, 245, 240, 0.92);
-      backdrop-filter: blur(12px);
-      border-bottom: 1px solid var(--rule);
-    }
-
-    .nav-mark {
-      font-family: var(--serif-display);
-      font-size: 1rem;
-      font-weight: 600;
-      color: var(--navy);
-      letter-spacing: 0.02em;
-      text-decoration: none;
-    }
-
-    .nav-links {
-      display: flex;
-      gap: 2.5rem;
-      list-style: none;
-    }
-
-    .nav-links a {
-      font-family: var(--mono);
-      font-size: 0.72rem;
-      font-weight: 300;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--ink-light);
-      text-decoration: none;
-      transition: color 0.2s;
-    }
-
-    .nav-links a:hover { color: var(--navy); }
-
-    .nav-download {
-      font-family: var(--mono);
-      font-size: 0.72rem;
-      font-weight: 400;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--white);
-      background: var(--navy);
-      padding: 0.5rem 1.25rem;
-      text-decoration: none;
-      transition: background 0.2s;
-    }
-
-    .nav-download:hover { background: var(--navy-mid); }
-
-    .hero {
-      min-height: 100vh;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      padding-top: 64px;
-    }
-
-    .hero-left {
-      padding: 8rem 4rem 6rem 8vw;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      border-right: 1px solid var(--rule);
-      position: relative;
-    }
-
-    .hero-left::after {
-      content: '';
-      position: absolute;
-      bottom: 0; left: 0; right: 0;
-      height: 1px;
-      background: var(--rule);
-    }
-
-    .hero-eyebrow {
-      font-family: var(--mono);
-      font-size: 0.72rem;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: var(--gold);
-      margin-bottom: 1.5rem;
-      opacity: 0;
-      animation: fadeUp 0.8s ease 0.1s forwards;
-    }
-
-    .hero-name {
-      font-family: var(--serif-display);
-      font-size: clamp(3rem, 5vw, 5.5rem);
-      font-weight: 700;
-      line-height: 1.05;
-      color: var(--navy);
-      letter-spacing: -0.02em;
-      opacity: 0;
-      animation: fadeUp 0.8s ease 0.25s forwards;
-    }
-
-    .hero-name em {
-      font-style: italic;
-      font-weight: 400;
-      color: var(--navy-light);
-    }
-
-    .hero-title {
-      font-family: var(--serif-body);
-      font-size: 1.15rem;
-      font-weight: 300;
-      color: var(--ink-mid);
-      margin-top: 1.5rem;
-      line-height: 1.5;
-      max-width: 38ch;
-      opacity: 0;
-      animation: fadeUp 0.8s ease 0.4s forwards;
-    }
-
-    .hero-location {
-      font-family: var(--mono);
-      font-size: 0.75rem;
-      color: var(--ink-light);
-      letter-spacing: 0.08em;
-      margin-top: 2rem;
-      opacity: 0;
-      animation: fadeUp 0.8s ease 0.55s forwards;
-    }
-
-    .hero-cta-row {
-      display: flex;
-      gap: 1rem;
-      margin-top: 3rem;
-      opacity: 0;
-      animation: fadeUp 0.8s ease 0.7s forwards;
-    }
-
-    .btn-primary {
-      font-family: var(--mono);
-      font-size: 0.75rem;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--white);
-      background: var(--navy);
-      padding: 0.85rem 2rem;
-      text-decoration: none;
-      transition: background 0.2s, transform 0.15s;
-      display: inline-block;
-    }
-
-    .btn-primary:hover { background: var(--navy-mid); transform: translateY(-1px); }
-
-    .btn-secondary {
-      font-family: var(--mono);
-      font-size: 0.75rem;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--navy);
-      border: 1px solid var(--navy);
-      padding: 0.85rem 2rem;
-      text-decoration: none;
-      transition: background 0.2s, color 0.2s;
-      display: inline-block;
-    }
-
-    .btn-secondary:hover { background: var(--navy); color: var(--white); }
-
-    .hero-right {
-      padding: 8rem 8vw 6rem 4rem;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-    }
-
-    .stat-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 2.5rem 3rem;
-    }
-
-    .stat-item {
-      opacity: 0;
-      animation: fadeUp 0.7s ease forwards;
-    }
-
-    .stat-item:nth-child(1) { animation-delay: 0.4s; }
-    .stat-item:nth-child(2) { animation-delay: 0.55s; }
-    .stat-item:nth-child(3) { animation-delay: 0.7s; }
-    .stat-item:nth-child(4) { animation-delay: 0.85s; }
-    .stat-item:nth-child(5) { animation-delay: 1.0s; }
-    .stat-item:nth-child(6) { animation-delay: 1.15s; }
-
-    .stat-number {
-      font-family: var(--serif-display);
-      font-size: 2.8rem;
-      font-weight: 600;
-      color: var(--navy);
-      line-height: 1;
-      letter-spacing: -0.03em;
-    }
-
-    .stat-number span {
-      font-size: 1.4rem;
-      color: var(--gold);
-      font-weight: 400;
-    }
-
-    .stat-label {
-      font-family: var(--mono);
-      font-size: 0.68rem;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--ink-light);
-      margin-top: 0.35rem;
-      line-height: 1.4;
-    }
-
-    .stat-rule {
-      width: 2rem;
-      height: 2px;
-      background: var(--gold);
-      margin-bottom: 0.6rem;
-    }
-
-    section { padding: 7rem 8vw; border-top: 1px solid var(--rule); }
-
-    .section-header {
-      display: flex;
-      align-items: baseline;
-      gap: 2rem;
-      margin-bottom: 5rem;
-    }
-
-    .section-number {
-      font-family: var(--mono);
-      font-size: 0.68rem;
-      letter-spacing: 0.15em;
-      color: var(--gold);
-      white-space: nowrap;
-    }
-
-    .section-title {
-      font-family: var(--serif-display);
-      font-size: clamp(2rem, 3vw, 3rem);
-      font-weight: 700;
-      color: var(--navy);
-      line-height: 1.1;
-      letter-spacing: -0.02em;
-    }
-
-    .section-title em {
-      font-style: italic;
-      font-weight: 400;
-    }
-
-    #about {
-      background: var(--navy);
-      color: var(--cream);
-      padding: 7rem 8vw;
-    }
-
-    #about .section-number { color: var(--gold-light); }
-    #about .section-title { color: var(--cream); }
-
-    .about-grid {
-      display: grid;
-      grid-template-columns: 1fr 2fr;
-      gap: 5rem;
-      align-items: start;
-    }
-
-    .about-aside { border-top: 2px solid var(--gold); padding-top: 2rem; }
-
-    .about-aside-label {
-      font-family: var(--mono);
-      font-size: 0.68rem;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      color: var(--gold-light);
-      margin-bottom: 1rem;
-    }
-
-    .expertise-list {
-      list-style: none;
-      display: flex;
-      flex-direction: column;
-      gap: 0.75rem;
-    }
-
-    .expertise-list li {
-      font-family: var(--serif-body);
-      font-size: 0.9rem;
-      color: rgba(248,245,240,0.8);
-      padding-left: 1.25rem;
-      position: relative;
-      line-height: 1.4;
-    }
-
-    .expertise-list li::before {
-      content: '—';
-      position: absolute;
-      left: 0;
-      color: var(--gold);
-      font-family: var(--mono);
-    }
-
-    .about-body p {
-      font-size: 1.15rem;
-      line-height: 1.85;
-      color: rgba(248,245,240,0.88);
-      margin-bottom: 1.5rem;
-      font-weight: 300;
-    }
-
-    .about-body p:first-child {
-      font-size: 1.35rem;
-      color: var(--cream);
-      font-weight: 300;
-      font-style: italic;
-    }
-
-    .timeline { position: relative; }
-
-    .timeline::before {
-      content: '';
-      position: absolute;
-      left: 0;
-      top: 0.5rem;
-      bottom: 0;
-      width: 1px;
-      background: var(--rule);
-    }
-
-    .timeline-item {
-      padding-left: 3rem;
-      padding-bottom: 4rem;
-      position: relative;
-    }
-
-    .timeline-item:last-child { padding-bottom: 0; }
-
-    .timeline-dot {
-      position: absolute;
-      left: -4px;
-      top: 0.5rem;
-      width: 9px;
-      height: 9px;
-      border-radius: 50%;
-      background: var(--navy);
-      border: 2px solid var(--cream);
-      outline: 1px solid var(--navy);
-    }
-
-    .timeline-dot.current { background: var(--gold); outline-color: var(--gold); }
-
-    .timeline-meta {
-      display: flex;
-      align-items: baseline;
-      gap: 1.5rem;
-      margin-bottom: 0.25rem;
-      flex-wrap: wrap;
-    }
-
-    .timeline-date {
-      font-family: var(--mono);
-      font-size: 0.7rem;
-      letter-spacing: 0.1em;
-      color: var(--gold);
-    }
-
-    .timeline-company {
-      font-family: var(--mono);
-      font-size: 0.72rem;
-      letter-spacing: 0.08em;
-      color: var(--ink-light);
-      text-transform: uppercase;
-    }
-
-    .timeline-location {
-      font-family: var(--mono);
-      font-size: 0.68rem;
-      color: var(--ink-light);
-    }
-
-    .timeline-role {
-      font-family: var(--serif-display);
-      font-size: 1.5rem;
-      font-weight: 600;
-      color: var(--navy);
-      line-height: 1.2;
-      margin-bottom: 1.25rem;
-    }
-
-    .timeline-bullets {
-      list-style: none;
-      display: flex;
-      flex-direction: column;
-      gap: 0.6rem;
-    }
-
-    .timeline-bullets li {
-      font-size: 0.95rem;
-      color: var(--ink-mid);
-      padding-left: 1.5rem;
-      position: relative;
-      line-height: 1.65;
-    }
-
-    .timeline-bullets li::before {
-      content: '·';
-      position: absolute;
-      left: 0.35rem;
-      color: var(--gold);
-      font-size: 1.2rem;
-      line-height: 1.3;
-    }
-
-    #skills { background: var(--cream-dark); }
-
-    .skills-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 3rem 4rem;
-    }
-
-    .skill-group { border-top: 2px solid var(--navy); padding-top: 1.5rem; }
-
-    .skill-group-label {
-      font-family: var(--mono);
-      font-size: 0.68rem;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      color: var(--navy);
-      margin-bottom: 1.25rem;
-    }
-
-    .skill-tags {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.5rem;
-    }
-
-    .skill-tag {
-      font-family: var(--mono);
-      font-size: 0.7rem;
-      letter-spacing: 0.06em;
-      color: var(--ink-mid);
-      background: var(--cream);
-      border: 1px solid var(--rule);
-      padding: 0.3rem 0.7rem;
-      transition: background 0.15s, color 0.15s, border-color 0.15s;
-      cursor: default;
-    }
-
-    .skill-tag:hover {
-      background: var(--navy);
-      color: var(--cream);
-      border-color: var(--navy);
-    }
-
-    .edu-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 5rem;
-    }
-
-    .edu-item { border-top: 1px solid var(--rule); padding-top: 1.5rem; }
-
-    .edu-degree {
-      font-family: var(--serif-display);
-      font-size: 1.25rem;
-      font-weight: 600;
-      color: var(--navy);
-      line-height: 1.25;
-      margin-bottom: 0.25rem;
-    }
-
-    .edu-school {
-      font-family: var(--serif-body);
-      font-size: 0.95rem;
-      color: var(--ink-mid);
-      font-style: italic;
-    }
-
-    .edu-date {
-      font-family: var(--mono);
-      font-size: 0.7rem;
-      letter-spacing: 0.08em;
-      color: var(--ink-light);
-      margin-top: 0.35rem;
-    }
-
-    .cert-list { list-style: none; display: flex; flex-direction: column; gap: 1.25rem; }
-
-    .cert-item { display: flex; flex-direction: column; }
-
-    .cert-name {
-      font-family: var(--serif-display);
-      font-size: 1rem;
-      font-weight: 600;
-      color: var(--navy);
-    }
-
-    .cert-body {
-      font-family: var(--mono);
-      font-size: 0.7rem;
-      letter-spacing: 0.06em;
-      color: var(--ink-light);
-      margin-top: 0.15rem;
-    }
-
-    #contact {
-      background: var(--navy);
-      color: var(--cream);
-      text-align: center;
-      padding: 7rem 8vw;
-    }
-
-    #contact .section-title { color: var(--cream); text-align: center; }
-    #contact .section-header { justify-content: center; margin-bottom: 3rem; }
-
-    .contact-sub {
-      font-size: 1.1rem;
-      color: rgba(248,245,240,0.7);
-      max-width: 48ch;
-      margin: 0 auto 3rem;
-      line-height: 1.7;
-    }
-
-    .contact-links {
-      display: flex;
-      justify-content: center;
-      gap: 1.5rem;
-      flex-wrap: wrap;
-      margin-bottom: 4rem;
-    }
-
-    .contact-link {
-      font-family: var(--mono);
-      font-size: 0.75rem;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--cream);
-      border: 1px solid rgba(248,245,240,0.3);
-      padding: 0.85rem 2rem;
-      text-decoration: none;
-      transition: background 0.2s, border-color 0.2s;
-    }
-
-    .contact-link:hover { background: rgba(255,255,255,0.1); border-color: var(--cream); }
-
-    .footer-rule {
-      width: 100%;
-      height: 1px;
-      background: rgba(248,245,240,0.15);
-      margin-bottom: 2rem;
-    }
-
-    .footer-text {
-      font-family: var(--mono);
-      font-size: 0.68rem;
-      letter-spacing: 0.1em;
-      color: rgba(248,245,240,0.35);
-    }
-
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(20px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
-
-    .reveal {
-      opacity: 0;
-      transform: translateY(24px);
-      transition: opacity 0.7s ease, transform 0.7s ease;
-    }
-
-    .reveal.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    @media (max-width: 900px) {
-      nav { padding: 0 1.5rem; }
-      .nav-links { display: none; }
-      .hero { grid-template-columns: 1fr; }
-      .hero-left { padding: 5rem 1.5rem 3rem; border-right: none; }
-      .hero-right { padding: 3rem 1.5rem 5rem; }
-      .stat-grid { grid-template-columns: 1fr 1fr; }
-      section { padding: 5rem 1.5rem; }
-      .about-grid { grid-template-columns: 1fr; gap: 3rem; }
-      .skills-grid { grid-template-columns: 1fr 1fr; }
-      .edu-grid { grid-template-columns: 1fr; gap: 3rem; }
-    }
-
-    @media (max-width: 600px) {
-      .skills-grid { grid-template-columns: 1fr; }
-      .hero-cta-row { flex-direction: column; }
-      .stat-grid { gap: 2rem; }
-    }
-  </style>
-
-  <nav>
-    <a class="nav-mark" href="#">Rahul Das</a>
-    <ul class="nav-links">
-      <li><a href="#about">About</a></li>
-      <li><a href="#experience">Experience</a></li>
-      <li><a href="#skills">Skills</a></li>
-      <li><a href="#education">Education</a></li>
-      <li><a href="#contact">Contact</a></li>
-    </ul>
-    <a class="nav-download" href="#" onclick="downloadSelf()">Download</a>
-  </nav>
-
-  <section class="hero" id="home">
-    <div class="hero-left">
-      <p class="hero-eyebrow">Trade Surveillance &amp; Financial Compliance</p>
-      <h1 class="hero-name">Rahul<br><em>Das</em></h1>
-      <p class="hero-title">Cross Market Investigator at Cboe Global Markets. I detect and dismantle market abuse across derivatives — spoofing,
-  layering, wash trading — at scale.</p>
-      <p class="hero-location">📍 Chicago, IL &nbsp;·&nbsp; CAPM &nbsp;·&nbsp; SIE &nbsp;·&nbsp; Lean Six Sigma Yellow Belt</p>
-      <div class="hero-cta-row">
-        <a class="btn-primary" href="#experience">View Experience</a>
-        <a class="btn-secondary" href="#contact">Get in Touch</a>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rahul Das — Trade Surveillance & Financial Compliance</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,600;1,8..60,300;1,8..60,400&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #f8f5f0;
+    --cream-dark: #ede9e2;
+    --navy: #1a3a5c;
+    --navy-mid: #2a5280;
+    --navy-light: #3d6b9a;
+    --ink: #1c1c1e;
+    --ink-mid: #3a3a3c;
+    --ink-light: #6e6e73;
+    --rule: #c8bfb0;
+    --gold: #b8976a;
+    --gold-light: #d4b48a;
+    --white: #ffffff;
+    --serif-display: 'Playfair Display', Georgia, serif;
+    --serif-body: 'Source Serif 4', Georgia, serif;
+    --mono: 'DM Mono', 'Courier New', monospace;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; font-size: 16px; }
+
+  body {
+    background: var(--cream);
+    color: var(--ink);
+    font-family: var(--serif-body);
+    font-weight: 300;
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+  }
+
+
+  /* ── NAV ── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 3rem;
+    height: 64px;
+    background: rgba(248, 245, 240, 0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .nav-mark {
+    font-family: var(--serif-display);
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--navy);
+    letter-spacing: 0.02em;
+    text-decoration: none;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 2.5rem;
+    list-style: none;
+  }
+
+  .nav-links a {
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    font-weight: 300;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink-light);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover { color: var(--navy); }
+
+  .nav-download {
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    font-weight: 400;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--white);
+    background: var(--navy);
+    padding: 0.5rem 1.25rem;
+    text-decoration: none;
+    transition: background 0.2s;
+  }
+
+  .nav-download:hover { background: var(--navy-mid); }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    padding-top: 64px;
+  }
+
+  .hero-left {
+    padding: 8rem 4rem 6rem 8vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border-right: 1px solid var(--rule);
+    position: relative;
+  }
+
+  .hero-left::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 1px;
+    background: var(--rule);
+  }
+
+  .hero-eyebrow {
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 1.5rem;
+    opacity: 0;
+    animation: fadeUp 0.8s ease 0.1s forwards;
+  }
+
+  .hero-name {
+    font-family: var(--serif-display);
+    font-size: clamp(3rem, 5vw, 5.5rem);
+    font-weight: 700;
+    line-height: 1.05;
+    color: var(--navy);
+    letter-spacing: -0.02em;
+    opacity: 0;
+    animation: fadeUp 0.8s ease 0.25s forwards;
+  }
+
+  .hero-name em {
+    font-style: italic;
+    font-weight: 400;
+    color: var(--navy-light);
+  }
+
+  .hero-title {
+    font-family: var(--serif-body);
+    font-size: 1.15rem;
+    font-weight: 300;
+    color: var(--ink-mid);
+    margin-top: 1.5rem;
+    line-height: 1.5;
+    max-width: 38ch;
+    opacity: 0;
+    animation: fadeUp 0.8s ease 0.4s forwards;
+  }
+
+  .hero-location {
+    font-family: var(--mono);
+    font-size: 0.75rem;
+    color: var(--ink-light);
+    letter-spacing: 0.08em;
+    margin-top: 2rem;
+    opacity: 0;
+    animation: fadeUp 0.8s ease 0.55s forwards;
+  }
+
+  .hero-cta-row {
+    display: flex;
+    gap: 1rem;
+    margin-top: 3rem;
+    opacity: 0;
+    animation: fadeUp 0.8s ease 0.7s forwards;
+  }
+
+  .btn-primary {
+    font-family: var(--mono);
+    font-size: 0.75rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--white);
+    background: var(--navy);
+    padding: 0.85rem 2rem;
+    text-decoration: none;
+    transition: background 0.2s, transform 0.15s;
+    display: inline-block;
+  }
+
+  .btn-primary:hover { background: var(--navy-mid); transform: translateY(-1px); }
+
+  .btn-secondary {
+    font-family: var(--mono);
+    font-size: 0.75rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--navy);
+    border: 1px solid var(--navy);
+    padding: 0.85rem 2rem;
+    text-decoration: none;
+    transition: background 0.2s, color 0.2s;
+    display: inline-block;
+  }
+
+  .btn-secondary:hover { background: var(--navy); color: var(--white); }
+
+  .hero-right {
+    padding: 8rem 8vw 6rem 4rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .stat-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2.5rem 3rem;
+  }
+
+  .stat-item {
+    opacity: 0;
+    animation: fadeUp 0.7s ease forwards;
+  }
+
+  .stat-item:nth-child(1) { animation-delay: 0.4s; }
+  .stat-item:nth-child(2) { animation-delay: 0.55s; }
+  .stat-item:nth-child(3) { animation-delay: 0.7s; }
+  .stat-item:nth-child(4) { animation-delay: 0.85s; }
+  .stat-item:nth-child(5) { animation-delay: 1.0s; }
+  .stat-item:nth-child(6) { animation-delay: 1.15s; }
+
+  .stat-number {
+    font-family: var(--serif-display);
+    font-size: 2.8rem;
+    font-weight: 600;
+    color: var(--navy);
+    line-height: 1;
+    letter-spacing: -0.03em;
+  }
+
+  .stat-number span {
+    font-size: 1.4rem;
+    color: var(--gold);
+    font-weight: 400;
+  }
+
+  .stat-label {
+    font-family: var(--mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-light);
+    margin-top: 0.35rem;
+    line-height: 1.4;
+  }
+
+  .stat-rule {
+    width: 2rem;
+    height: 2px;
+    background: var(--gold);
+    margin-bottom: 0.6rem;
+  }
+
+  /* ── SECTION SCAFFOLDING ── */
+  section { padding: 7rem 8vw; border-top: 1px solid var(--rule); }
+
+  .section-header {
+    display: flex;
+    align-items: baseline;
+    gap: 2rem;
+    margin-bottom: 5rem;
+  }
+
+  .section-number {
+    font-family: var(--mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.15em;
+    color: var(--gold);
+    white-space: nowrap;
+  }
+
+  .section-title {
+    font-family: var(--serif-display);
+    font-size: clamp(2rem, 3vw, 3rem);
+    font-weight: 700;
+    color: var(--navy);
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+  }
+
+  .section-title em {
+    font-style: italic;
+    font-weight: 400;
+  }
+
+  /* ── ABOUT ── */
+  #about {
+    background: var(--navy);
+    color: var(--cream);
+    padding: 7rem 8vw;
+  }
+
+  #about .section-number { color: var(--gold-light); }
+  #about .section-title { color: var(--cream); }
+
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 5rem;
+    align-items: start;
+  }
+
+  .about-aside { border-top: 2px solid var(--gold); padding-top: 2rem; }
+
+  .about-aside-label {
+    font-family: var(--mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--gold-light);
+    margin-bottom: 1rem;
+  }
+
+  .expertise-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .expertise-list li {
+    font-family: var(--serif-body);
+    font-size: 0.9rem;
+    color: rgba(248,245,240,0.8);
+    padding-left: 1.25rem;
+    position: relative;
+    line-height: 1.4;
+  }
+
+  .expertise-list li::before {
+    content: '—';
+    position: absolute;
+    left: 0;
+    color: var(--gold);
+    font-family: var(--mono);
+  }
+
+  .about-body p {
+    font-size: 1.15rem;
+    line-height: 1.85;
+    color: rgba(248,245,240,0.88);
+    margin-bottom: 1.5rem;
+    font-weight: 300;
+  }
+
+  .about-body p:first-child {
+    font-size: 1.35rem;
+    color: var(--cream);
+    font-weight: 300;
+    font-style: italic;
+  }
+
+  /* ── EXPERIENCE ── */
+  .timeline { position: relative; }
+
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.5rem;
+    bottom: 0;
+    width: 1px;
+    background: var(--rule);
+  }
+
+  .timeline-item {
+    padding-left: 3rem;
+    padding-bottom: 4rem;
+    position: relative;
+  }
+
+  .timeline-item:last-child { padding-bottom: 0; }
+
+  .timeline-dot {
+    position: absolute;
+    left: -4px;
+    top: 0.5rem;
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: var(--navy);
+    border: 2px solid var(--cream);
+    outline: 1px solid var(--navy);
+  }
+
+  .timeline-dot.current { background: var(--gold); outline-color: var(--gold); }
+
+  .timeline-meta {
+    display: flex;
+    align-items: baseline;
+    gap: 1.5rem;
+    margin-bottom: 0.25rem;
+    flex-wrap: wrap;
+  }
+
+  .timeline-date {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    color: var(--gold);
+  }
+
+  .timeline-company {
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.08em;
+    color: var(--ink-light);
+    text-transform: uppercase;
+  }
+
+  .timeline-location {
+    font-family: var(--mono);
+    font-size: 0.68rem;
+    color: var(--ink-light);
+  }
+
+  .timeline-role {
+    font-family: var(--serif-display);
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--navy);
+    line-height: 1.2;
+    margin-bottom: 1.25rem;
+  }
+
+  .timeline-bullets {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+  }
+
+  .timeline-bullets li {
+    font-size: 0.95rem;
+    color: var(--ink-mid);
+    padding-left: 1.5rem;
+    position: relative;
+    line-height: 1.65;
+  }
+
+  .timeline-bullets li::before {
+    content: '·';
+    position: absolute;
+    left: 0.35rem;
+    color: var(--gold);
+    font-size: 1.2rem;
+    line-height: 1.3;
+  }
+
+  /* ── SKILLS ── */
+  #skills { background: var(--cream-dark); }
+
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 3rem 4rem;
+  }
+
+  .skill-group { border-top: 2px solid var(--navy); padding-top: 1.5rem; }
+
+  .skill-group-label {
+    font-family: var(--mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--navy);
+    margin-bottom: 1.25rem;
+  }
+
+  .skill-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .skill-tag {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.06em;
+    color: var(--ink-mid);
+    background: var(--cream);
+    border: 1px solid var(--rule);
+    padding: 0.3rem 0.7rem;
+    transition: background 0.15s, color 0.15s, border-color 0.15s;
+    cursor: default;
+  }
+
+  .skill-tag:hover {
+    background: var(--navy);
+    color: var(--cream);
+    border-color: var(--navy);
+  }
+
+  /* ── EDUCATION & CERTS ── */
+  .edu-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5rem;
+  }
+
+  .edu-item { border-top: 1px solid var(--rule); padding-top: 1.5rem; }
+
+  .edu-degree {
+    font-family: var(--serif-display);
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--navy);
+    line-height: 1.25;
+    margin-bottom: 0.25rem;
+  }
+
+  .edu-school {
+    font-family: var(--serif-body);
+    font-size: 0.95rem;
+    color: var(--ink-mid);
+    font-style: italic;
+  }
+
+  .edu-date {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.08em;
+    color: var(--ink-light);
+    margin-top: 0.35rem;
+  }
+
+  .cert-list { list-style: none; display: flex; flex-direction: column; gap: 1.25rem; }
+
+  .cert-item { display: flex; flex-direction: column; }
+
+  .cert-name {
+    font-family: var(--serif-display);
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--navy);
+  }
+
+  .cert-body {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.06em;
+    color: var(--ink-light);
+    margin-top: 0.15rem;
+  }
+
+  /* ── CONTACT ── */
+  #contact {
+    background: var(--navy);
+    color: var(--cream);
+    text-align: center;
+    padding: 7rem 8vw;
+  }
+
+  #contact .section-title { color: var(--cream); text-align: center; }
+  #contact .section-header { justify-content: center; margin-bottom: 3rem; }
+
+  .contact-sub {
+    font-size: 1.1rem;
+    color: rgba(248,245,240,0.7);
+    max-width: 48ch;
+    margin: 0 auto 3rem;
+    line-height: 1.7;
+  }
+
+  .contact-links {
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+    margin-bottom: 4rem;
+  }
+
+  .contact-link {
+    font-family: var(--mono);
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--cream);
+    border: 1px solid rgba(248,245,240,0.3);
+    padding: 0.85rem 2rem;
+    text-decoration: none;
+    transition: background 0.2s, border-color 0.2s;
+  }
+
+  .contact-link:hover { background: rgba(255,255,255,0.1); border-color: var(--cream); }
+
+  .footer-rule {
+    width: 100%;
+    height: 1px;
+    background: rgba(248,245,240,0.15);
+    margin-bottom: 2rem;
+  }
+
+  .footer-text {
+    font-family: var(--mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.1em;
+    color: rgba(248,245,240,0.35);
+  }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    nav { padding: 0 1.5rem; }
+    .nav-links { display: none; }
+    .hero { grid-template-columns: 1fr; }
+    .hero-left { padding: 5rem 1.5rem 3rem; border-right: none; }
+    .hero-right { padding: 3rem 1.5rem 5rem; }
+    .stat-grid { grid-template-columns: 1fr 1fr; }
+    section { padding: 5rem 1.5rem; }
+    .about-grid { grid-template-columns: 1fr; gap: 3rem; }
+    .skills-grid { grid-template-columns: 1fr 1fr; }
+    .edu-grid { grid-template-columns: 1fr; gap: 3rem; }
+  }
+
+  @media (max-width: 600px) {
+    .skills-grid { grid-template-columns: 1fr; }
+    .hero-cta-row { flex-direction: column; }
+    .stat-grid { gap: 2rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-mark" href="#">Rahul Das</a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#education">Education</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <a class="nav-download" href="#" onclick="downloadSelf()">Download</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero-left">
+    <p class="hero-eyebrow">Trade Surveillance &amp; Financial Compliance</p>
+    <h1 class="hero-name">Rahul<br><em>Das</em></h1>
+    <p class="hero-title">Cross Market Investigator at Cboe Global Markets. I detect and dismantle market abuse across derivatives — spoofing, layering, wash trading — at scale.</p>
+    <p class="hero-location">📍 Chicago, IL &nbsp;·&nbsp; CAPM &nbsp;·&nbsp; SIE &nbsp;·&nbsp; Lean Six Sigma Yellow Belt</p>
+    <div class="hero-cta-row">
+      <a class="btn-primary" href="#experience">View Experience</a>
+      <a class="btn-secondary" href="#contact">Get in Touch</a>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="stat-grid">
+      <div class="stat-item">
+        <div class="stat-rule"></div>
+        <div class="stat-number">100<span>+</span></div>
+        <div class="stat-label">Full-cycle investigations<br>completed</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-rule"></div>
+        <div class="stat-number">250<span>k+</span></div>
+        <div class="stat-label">Derivatives transactions<br>reviewed daily</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-rule"></div>
+        <div class="stat-number">15<span>M+</span></div>
+        <div class="stat-label">Order &amp; execution<br>records analyzed</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-rule"></div>
+        <div class="stat-number">10<span>×</span></div>
+        <div class="stat-label">Query performance gain<br>via Snowflake migration</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-rule"></div>
+        <div class="stat-number">20<span>+</span></div>
+        <div class="stat-label">Surveillance frameworks<br>built &amp; standardized</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-rule"></div>
+        <div class="stat-number">25<span>%</span></div>
+        <div class="stat-label">Faster turnaround via<br>Python automation</div>
       </div>
     </div>
-    <div class="hero-right">
-      <div class="stat-grid">
-        <div class="stat-item">
-          <div class="stat-rule"></div>
-          <div class="stat-number">100<span>+</span></div>
-          <div class="stat-label">Full-cycle investigations<br>completed</div>
-        </div>
-        <div class="stat-item">
-          <div class="stat-rule"></div>
-          <div class="stat-number">250<span>k+</span></div>
-          <div class="stat-label">Derivatives transactions<br>reviewed daily</div>
-        </div>
-        <div class="stat-item">
-          <div class="stat-rule"></div>
-          <div class="stat-number">15<span>M+</span></div>
-          <div class="stat-label">Order &amp; execution<br>records analyzed</div>
-        </div>
-        <div class="stat-item">
-          <div class="stat-rule"></div>
-          <div class="stat-number">10<span>×</span></div>
-          <div class="stat-label">Query performance gain<br>via Snowflake migration</div>
-        </div>
-        <div class="stat-item">
-          <div class="stat-rule"></div>
-          <div class="stat-number">20<span>+</span></div>
-          <div class="stat-label">Surveillance frameworks<br>built &amp; standardized</div>
-        </div>
-        <div class="stat-item">
-          <div class="stat-rule"></div>
-          <div class="stat-number">25<span>%</span></div>
-          <div class="stat-label">Faster turnaround via<br>Python automation</div>
-        </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="section-header">
+    <span class="section-number">01</span>
+    <h2 class="section-title">The Work<br><em>Behind the Numbers</em></h2>
+  </div>
+  <div class="about-grid">
+    <div class="about-aside reveal">
+      <div class="about-aside-label">Areas of Expertise</div>
+      <ul class="expertise-list">
+        <li>Trade Surveillance (Options &amp; Futures)</li>
+        <li>Market Abuse Detection (Spoofing, Layering, Wash Trades)</li>
+        <li>Cross-Market &amp; Multi-Venue Analysis</li>
+        <li>Trade Reconstruction &amp; Event Analysis</li>
+        <li>Alert Review &amp; Tuning (SMARTS)</li>
+        <li>Regulatory Escalation &amp; Case Building</li>
+        <li>Process Design &amp; Surveillance Controls</li>
+        <li>Data-Driven Investigations</li>
+      </ul>
+    </div>
+    <div class="about-body reveal">
+      <p>I specialize in finding what markets try to hide — reconstructing the full chain of intent behind suspicious trading activity and turning that into defensible, enforcement-ready findings.</p>
+      <p>At Cboe Global Markets, I conduct end-to-end cross-market surveillance across options and futures, using Nasdaq SMARTS alongside Python, SQL, and TB-scale Snowflake pipelines. My work covers the full lifecycle: from alert triage and order-level forensics to investigative memos that reach regulatory decision-makers.</p>
+      <p>Before Cboe, I built compliance process infrastructure at FINRA — converting regulatory obligations into measurable controls, leading senior working groups, and reducing risk exposure across broker-dealer operations. That dual background in investigation and institutional compliance is what I bring to every engagement.</p>
+      <p>I believe rigorous surveillance isn't just about catching bad actors — it's about building systems precise enough to distinguish intent from noise, at scale, under scrutiny.</p>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <div class="section-header">
+    <span class="section-number">02</span>
+    <h2 class="section-title">Professional<br><em>Experience</em></h2>
+  </div>
+  <div class="timeline">
+
+    <div class="timeline-item reveal">
+      <div class="timeline-dot current"></div>
+      <div class="timeline-meta">
+        <span class="timeline-date">Aug 2025 — Present</span>
+        <span class="timeline-company">Cboe Global Markets</span>
+        <span class="timeline-location">Chicago, IL</span>
+      </div>
+      <div class="timeline-role">Cross Market Investigator</div>
+      <ul class="timeline-bullets">
+        <li>Conduct cross-market surveillance on 250,000+ derivatives transactions daily using Nasdaq SMARTS and internal tools to detect spoofing, layering, wash trading, and index expiration manipulation.</li>
+        <li>Perform forensic analysis of 15M+ order and execution records using Python (Pandas, NumPy), SQL, and Excel to identify exchange rule violations.</li>
+        <li>Designed 20+ cross-market surveillance frameworks covering options and futures, closing detection gaps for front-running, spoofing, and settlement abuse.</li>
+        <li>Re-architected surveillance data stack on Snowflake (TB-scale), cutting query time up to 10× and enabling faster, deeper cross-venue analysis.</li>
+        <li>Delivered 100+ full-cycle investigations, translating data signals into enforcement outcomes that held up under regulatory scrutiny.</li>
+        <li>Developed Python-based automation tools to streamline data extraction and investigative workflows, accelerating analysis turnaround by 25%.</li>
+        <li>Produced 40+ investigative memoranda and case summaries presenting evidence of potential market manipulation to regulatory and enforcement decision makers.</li>
+      </ul>
+    </div>
+
+    <div class="timeline-item reveal">
+      <div class="timeline-dot"></div>
+      <div class="timeline-meta">
+        <span class="timeline-date">Jul 2024 — Aug 2025</span>
+        <span class="timeline-company">FINRA</span>
+        <span class="timeline-location">Westbury, NY</span>
+      </div>
+      <div class="timeline-role">Associate Analyst, Member Supervision Operations Procedures &amp; Standards</div>
+      <ul class="timeline-bullets">
+        <li>Closed critical broker-dealer compliance gaps by partnering with executives and front-office stakeholders, delivering 10+ surveillance and control improvements tied to regulatory risk.</li>
+        <li>Directed 5–8 parallel compliance and surveillance programs from design to rollout with consistent on-time delivery.</li>
+        <li>Ran 15+ senior-level working sessions, converting regulatory guidance into concrete surveillance controls and operational changes that reduced risk exposure by 40%.</li>
+        <li>Implemented governance frameworks clarifying roles, escalation protocols, and accountability metrics, improving audit readiness by 22%.</li>
+        <li>Authored executive-level reports linking regulatory requirements to business outcomes, influencing C-suite decisions on compliance strategy.</li>
+      </ul>
+    </div>
+
+    <div class="timeline-item reveal">
+      <div class="timeline-dot"></div>
+      <div class="timeline-meta">
+        <span class="timeline-date">May 2024 — Jun 2024</span>
+        <span class="timeline-company">Centene Corporation</span>
+        <span class="timeline-location">Westbury, NY</span>
+      </div>
+      <div class="timeline-role">Data Analyst, Resource Management Intern</div>
+      <ul class="timeline-bullets">
+        <li>Developed 5 Power BI dashboards for real-time visibility supporting data-driven oversight for senior stakeholders.</li>
+        <li>Designed dashboards and Excel-based tools reducing licensing overuse by 15%, improving compliance adherence.</li>
+        <li>Implemented structured workflow tracking using Microsoft Planner and Kanban boards, improving coordination across 10 high-priority initiatives.</li>
+      </ul>
+    </div>
+
+    <div class="timeline-item reveal">
+      <div class="timeline-dot"></div>
+      <div class="timeline-meta">
+        <span class="timeline-date">Nov 2023 — Mar 2024</span>
+        <span class="timeline-company">Centene Corporation</span>
+        <span class="timeline-location">United States</span>
+      </div>
+      <div class="timeline-role">Business Process Analyst Intern</div>
+      <ul class="timeline-bullets">
+        <li>Built dashboards and control frameworks with licensing teams, cutting overuse by 15% and strengthening monitoring and governance.</li>
+        <li>Bridged business and technical teams by defining requirements and producing detailed specifications for data-driven solutions.</li>
+      </ul>
+    </div>
+
+    <div class="timeline-item reveal">
+      <div class="timeline-dot"></div>
+      <div class="timeline-meta">
+        <span class="timeline-date">May 2023 — Aug 2023</span>
+        <span class="timeline-company">Centene Corporation</span>
+        <span class="timeline-location">United States</span>
+      </div>
+      <div class="timeline-role">Problem Management Business Data Analyst Intern</div>
+      <ul class="timeline-bullets">
+        <li>Engineered solutions to address incomplete datasets, improving forecasting accuracy by 25%.</li>
+        <li>Optimized data extraction workflows using advanced SQL, improving speed and accuracy of analysis.</li>
+        <li>Led cost-reduction initiatives that lowered operational spend by 15% through data-driven identification of inefficiencies and control gaps.</li>
+      </ul>
+    </div>
+
+    <div class="timeline-item reveal">
+      <div class="timeline-dot"></div>
+      <div class="timeline-meta">
+        <span class="timeline-date">Sep 2023 — Oct 2023</span>
+        <span class="timeline-company">International Benefits Administrators</span>
+        <span class="timeline-location">United States</span>
+      </div>
+      <div class="timeline-role">Junior Project Management Intern</div>
+      <ul class="timeline-bullets">
+        <li>Built analytics frameworks across Cognos, SPSS, Power BI, and Excel, increasing efficiency by 30%.</li>
+        <li>Uncovered $100K in annual savings by analyzing financial and operational data, identifying control gaps.</li>
+        <li>Delivered multiple high-impact projects with a 98% on-time rate.</li>
+      </ul>
+    </div>
+
+    <div class="timeline-item reveal">
+      <div class="timeline-dot"></div>
+      <div class="timeline-meta">
+        <span class="timeline-date">Jan 2022</span>
+        <span class="timeline-company">Nomorobo</span>
+        <span class="timeline-location">New York, NY</span>
+      </div>
+      <div class="timeline-role">Machine Learning Intern</div>
+      <ul class="timeline-bullets">
+        <li>Built Python-based pipelines for data extraction, cleaning, and analysis, improving classification performance by 20%.</li>
+        <li>Enhanced model precision by 15% and reduced false positives by 25% through targeted feature engineering and validation.</li>
+      </ul>
+    </div>
+
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="section-header">
+    <span class="section-number">03</span>
+    <h2 class="section-title">Technical<br><em>Capabilities</em></h2>
+  </div>
+  <div class="skills-grid">
+    <div class="skill-group reveal">
+      <div class="skill-group-label">Surveillance &amp; Compliance Systems</div>
+      <div class="skill-tags">
+        <span class="skill-tag">Nasdaq SMARTS</span>
+        <span class="skill-tag">NICE Actimize</span>
+        <span class="skill-tag">Cboe S3</span>
+        <span class="skill-tag">Archer GRC</span>
+        <span class="skill-tag">IBM OpenPages</span>
       </div>
     </div>
-  </section>
-
-  <section id="about">
-    <div class="section-header">
-      <span class="section-number">01</span>
-      <h2 class="section-title">The Work<br><em>Behind the Numbers</em></h2>
-    </div>
-    <div class="about-grid">
-      <div class="about-aside reveal">
-        <div class="about-aside-label">Areas of Expertise</div>
-        <ul class="expertise-list">
-          <li>Trade Surveillance (Options &amp; Futures)</li>
-          <li>Market Abuse Detection (Spoofing, Layering, Wash Trades)</li>
-          <li>Cross-Market &amp; Multi-Venue Analysis</li>
-          <li>Trade Reconstruction &amp; Event Analysis</li>
-          <li>Alert Review &amp; Tuning (SMARTS)</li>
-          <li>Regulatory Escalation &amp; Case Building</li>
-          <li>Process Design &amp; Surveillance Controls</li>
-          <li>Data-Driven Investigations</li>
-        </ul>
-      </div>
-      <div class="about-body reveal">
-        <p>I specialize in finding what markets try to hide — reconstructing the full chain of intent behind suspicious trading activity and turning
-  that into defensible, enforcement-ready findings.</p>
-        <p>At Cboe Global Markets, I conduct end-to-end cross-market surveillance across options and futures, using Nasdaq SMARTS alongside Python,
-  SQL, and TB-scale Snowflake pipelines. My work covers the full lifecycle: from alert triage and order-level forensics to investigative memos that
-  reach regulatory decision-makers.</p>
-        <p>Before Cboe, I built compliance process infrastructure at FINRA — converting regulatory obligations into measurable controls, leading
-  senior working groups, and reducing risk exposure across broker-dealer operations. That dual background in investigation and institutional
-  compliance is what I bring to every engagement.</p>
-        <p>I believe rigorous surveillance isn't just about catching bad actors — it's about building systems precise enough to distinguish intent
-  from noise, at scale, under scrutiny.</p>
+    <div class="skill-group reveal">
+      <div class="skill-group-label">Data Analysis &amp; Visualization</div>
+      <div class="skill-tags">
+        <span class="skill-tag">Python (Pandas, NumPy)</span>
+        <span class="skill-tag">SQL</span>
+        <span class="skill-tag">R</span>
+        <span class="skill-tag">Excel</span>
+        <span class="skill-tag">Power BI</span>
+        <span class="skill-tag">Tableau</span>
+        <span class="skill-tag">Alteryx</span>
       </div>
     </div>
-  </section>
-
-  <section id="experience">
-    <div class="section-header">
-      <span class="section-number">02</span>
-      <h2 class="section-title">Professional<br><em>Experience</em></h2>
-    </div>
-    <div class="timeline">
-
-      <div class="timeline-item reveal">
-        <div class="timeline-dot current"></div>
-        <div class="timeline-meta">
-          <span class="timeline-date">Aug 2025 — Present</span>
-          <span class="timeline-company">Cboe Global Markets</span>
-          <span class="timeline-location">Chicago, IL</span>
-        </div>
-        <div class="timeline-role">Cross Market Investigator</div>
-        <ul class="timeline-bullets">
-          <li>Conduct cross-market surveillance on 250,000+ derivatives transactions daily using Nasdaq SMARTS and internal tools to detect spoofing,
-  layering, wash trading, and index expiration manipulation.</li>
-          <li>Perform forensic analysis of 15M+ order and execution records using Python (Pandas, NumPy), SQL, and Excel to identify exchange rule
-  violations.</li>
-          <li>Designed 20+ cross-market surveillance frameworks covering options and futures, closing detection gaps for front-running, spoofing, and
-  settlement abuse.</li>
-          <li>Re-architected surveillance data stack on Snowflake (TB-scale), cutting query time up to 10× and enabling faster, deeper cross-venue
-  analysis.</li>
-          <li>Delivered 100+ full-cycle investigations, translating data signals into enforcement outcomes that held up under regulatory
-  scrutiny.</li>
-          <li>Developed Python-based automation tools to streamline data extraction and investigative workflows, accelerating analysis turnaround by
-  25%.</li>
-          <li>Produced 40+ investigative memoranda and case summaries presenting evidence of potential market manipulation to regulatory and
-  enforcement decision makers.</li>
-        </ul>
-      </div>
-
-      <div class="timeline-item reveal">
-        <div class="timeline-dot"></div>
-        <div class="timeline-meta">
-          <span class="timeline-date">Jul 2024 — Aug 2025</span>
-          <span class="timeline-company">FINRA</span>
-          <span class="timeline-location">Westbury, NY</span>
-        </div>
-        <div class="timeline-role">Associate Analyst, Member Supervision Operations Procedures &amp; Standards</div>
-        <ul class="timeline-bullets">
-          <li>Closed critical broker-dealer compliance gaps by partnering with executives and front-office stakeholders, delivering 10+ surveillance
-  and control improvements tied to regulatory risk.</li>
-          <li>Directed 5–8 parallel compliance and surveillance programs from design to rollout with consistent on-time delivery.</li>
-          <li>Ran 15+ senior-level working sessions, converting regulatory guidance into concrete surveillance controls and operational changes that
-  reduced risk exposure by 40%.</li>
-          <li>Implemented governance frameworks clarifying roles, escalation protocols, and accountability metrics, improving audit readiness by
-  22%.</li>
-          <li>Authored executive-level reports linking regulatory requirements to business outcomes, influencing C-suite decisions on compliance
-  strategy.</li>
-        </ul>
-      </div>
-
-      <div class="timeline-item reveal">
-        <div class="timeline-dot"></div>
-        <div class="timeline-meta">
-          <span class="timeline-date">May 2024 — Jun 2024</span>
-          <span class="timeline-company">Centene Corporation</span>
-          <span class="timeline-location">Westbury, NY</span>
-        </div>
-        <div class="timeline-role">Data Analyst, Resource Management Intern</div>
-        <ul class="timeline-bullets">
-          <li>Developed 5 Power BI dashboards for real-time visibility supporting data-driven oversight for senior stakeholders.</li>
-          <li>Designed dashboards and Excel-based tools reducing licensing overuse by 15%, improving compliance adherence.</li>
-          <li>Implemented structured workflow tracking using Microsoft Planner and Kanban boards, improving coordination across 10 high-priority
-  initiatives.</li>
-        </ul>
-      </div>
-
-      <div class="timeline-item reveal">
-        <div class="timeline-dot"></div>
-        <div class="timeline-meta">
-          <span class="timeline-date">Nov 2023 — Mar 2024</span>
-          <span class="timeline-company">Centene Corporation</span>
-          <span class="timeline-location">United States</span>
-        </div>
-        <div class="timeline-role">Business Process Analyst Intern</div>
-        <ul class="timeline-bullets">
-          <li>Built dashboards and control frameworks with licensing teams, cutting overuse by 15% and strengthening monitoring and governance.</li>
-          <li>Bridged business and technical teams by defining requirements and producing detailed specifications for data-driven solutions.</li>
-        </ul>
-      </div>
-
-      <div class="timeline-item reveal">
-        <div class="timeline-dot"></div>
-        <div class="timeline-meta">
-          <span class="timeline-date">May 2023 — Aug 2023</span>
-          <span class="timeline-company">Centene Corporation</span>
-          <span class="timeline-location">United States</span>
-        </div>
-        <div class="timeline-role">Problem Management Business Data Analyst Intern</div>
-        <ul class="timeline-bullets">
-          <li>Engineered solutions to address incomplete datasets, improving forecasting accuracy by 25%.</li>
-          <li>Optimized data extraction workflows using advanced SQL, improving speed and accuracy of analysis.</li>
-          <li>Led cost-reduction initiatives that lowered operational spend by 15% through data-driven identification of inefficiencies and control
-  gaps.</li>
-        </ul>
-      </div>
-
-      <div class="timeline-item reveal">
-        <div class="timeline-dot"></div>
-        <div class="timeline-meta">
-          <span class="timeline-date">Sep 2023 — Oct 2023</span>
-          <span class="timeline-company">International Benefits Administrators</span>
-          <span class="timeline-location">United States</span>
-        </div>
-        <div class="timeline-role">Junior Project Management Intern</div>
-        <ul class="timeline-bullets">
-          <li>Built analytics frameworks across Cognos, SPSS, Power BI, and Excel, increasing efficiency by 30%.</li>
-          <li>Uncovered $100K in annual savings by analyzing financial and operational data, identifying control gaps.</li>
-          <li>Delivered multiple high-impact projects with a 98% on-time rate.</li>
-        </ul>
-      </div>
-
-      <div class="timeline-item reveal">
-        <div class="timeline-dot"></div>
-        <div class="timeline-meta">
-          <span class="timeline-date">Jan 2022</span>
-          <span class="timeline-company">Nomorobo</span>
-          <span class="timeline-location">New York, NY</span>
-        </div>
-        <div class="timeline-role">Machine Learning Intern</div>
-        <ul class="timeline-bullets">
-          <li>Built Python-based pipelines for data extraction, cleaning, and analysis, improving classification performance by 20%.</li>
-          <li>Enhanced model precision by 15% and reduced false positives by 25% through targeted feature engineering and validation.</li>
-        </ul>
-      </div>
-
-    </div>
-  </section>
-
-  <section id="skills">
-    <div class="section-header">
-      <span class="section-number">03</span>
-      <h2 class="section-title">Technical<br><em>Capabilities</em></h2>
-    </div>
-    <div class="skills-grid">
-      <div class="skill-group reveal">
-        <div class="skill-group-label">Surveillance &amp; Compliance Systems</div>
-        <div class="skill-tags">
-          <span class="skill-tag">Nasdaq SMARTS</span>
-          <span class="skill-tag">NICE Actimize</span>
-          <span class="skill-tag">Cboe S3</span>
-          <span class="skill-tag">Archer GRC</span>
-          <span class="skill-tag">IBM OpenPages</span>
-        </div>
-      </div>
-      <div class="skill-group reveal">
-        <div class="skill-group-label">Data Analysis &amp; Visualization</div>
-        <div class="skill-tags">
-          <span class="skill-tag">Python (Pandas, NumPy)</span>
-          <span class="skill-tag">SQL</span>
-          <span class="skill-tag">R</span>
-          <span class="skill-tag">Excel</span>
-          <span class="skill-tag">Power BI</span>
-          <span class="skill-tag">Tableau</span>
-          <span class="skill-tag">Alteryx</span>
-        </div>
-      </div>
-      <div class="skill-group reveal">
-        <div class="skill-group-label">Database &amp; Query Tools</div>
-        <div class="skill-tags">
-          <span class="skill-tag">Snowflake</span>
-          <span class="skill-tag">PostgreSQL</span>
-          <span class="skill-tag">MySQL</span>
-          <span class="skill-tag">MS SQL Server</span>
-        </div>
-      </div>
-      <div class="skill-group reveal">
-        <div class="skill-group-label">Automation &amp; Scripting</div>
-        <div class="skill-tags">
-          <span class="skill-tag">Python</span>
-          <span class="skill-tag">VBA</span>
-          <span class="skill-tag">Power Query</span>
-          <span class="skill-tag">Shell scripting</span>
-        </div>
-      </div>
-      <div class="skill-group reveal">
-        <div class="skill-group-label">Regulatory Reporting</div>
-        <div class="skill-tags">
-          <span class="skill-tag">CAT</span>
-          <span class="skill-tag">OATS</span>
-          <span class="skill-tag">Blue Sheets</span>
-          <span class="skill-tag">FINRA Gateway</span>
-          <span class="skill-tag">SEC EDGAR</span>
-        </div>
-      </div>
-      <div class="skill-group reveal">
-        <div class="skill-group-label">Case Management &amp; Workflow</div>
-        <div class="skill-tags">
-          <span class="skill-tag">ServiceNow</span>
-          <span class="skill-tag">Salesforce</span>
-          <span class="skill-tag">Jira Service Management</span>
-          <span class="skill-tag">Cognos</span>
-          <span class="skill-tag">SPSS</span>
-        </div>
+    <div class="skill-group reveal">
+      <div class="skill-group-label">Database &amp; Query Tools</div>
+      <div class="skill-tags">
+        <span class="skill-tag">Snowflake</span>
+        <span class="skill-tag">PostgreSQL</span>
+        <span class="skill-tag">MySQL</span>
+        <span class="skill-tag">MS SQL Server</span>
       </div>
     </div>
-  </section>
-
-  <section id="education">
-    <div class="section-header">
-      <span class="section-number">04</span>
-      <h2 class="section-title">Education &amp;<br><em>Certifications</em></h2>
-    </div>
-    <div class="edu-grid">
-      <div>
-        <div class="edu-item reveal">
-          <div class="edu-degree">Master's in Accounting Forensics</div>
-          <div class="edu-school">Roosevelt University</div>
-          <div class="edu-date">Expected January 2029 &nbsp;·&nbsp; Chicago, IL</div>
-        </div>
-        <br>
-        <div class="edu-item reveal">
-          <div class="edu-degree">Bachelor of Business Administration<br>in Business Analytics</div>
-          <div class="edu-school">Hofstra University</div>
-          <div class="edu-date">Sep 2020 – May 2024 &nbsp;·&nbsp; Hempstead, NY</div>
-          <div class="edu-date" style="margin-top:0.5rem; color: var(--gold)">Dean's List Fall 2021 &amp; Spring 2022</div>
-        </div>
-      </div>
-      <div>
-        <ul class="cert-list">
-          <li class="cert-item reveal">
-            <span class="cert-name">Certified Associate in Project Management (CAPM)</span>
-            <span class="cert-body">PMI</span>
-          </li>
-          <li class="cert-item reveal">
-            <span class="cert-name">Securities Industry Essentials (SIE)</span>
-            <span class="cert-body">FINRA</span>
-          </li>
-          <li class="cert-item reveal">
-            <span class="cert-name">Prosci® Certified Change Practitioner</span>
-            <span class="cert-body">Prosci</span>
-          </li>
-          <li class="cert-item reveal">
-            <span class="cert-name">Lean Six Sigma Yellow Belt</span>
-            <span class="cert-body">Lean Six Sigma</span>
-          </li>
-          <li class="cert-item reveal">
-            <span class="cert-name">Lean Six Sigma White Belt</span>
-            <span class="cert-body">Lean Six Sigma</span>
-          </li>
-        </ul>
+    <div class="skill-group reveal">
+      <div class="skill-group-label">Automation &amp; Scripting</div>
+      <div class="skill-tags">
+        <span class="skill-tag">Python</span>
+        <span class="skill-tag">VBA</span>
+        <span class="skill-tag">Power Query</span>
+        <span class="skill-tag">Shell scripting</span>
       </div>
     </div>
-  </section>
-
-  <section id="contact">
-    <div class="section-header">
-      <span class="section-number">05</span>
-      <h2 class="section-title">Let's<br><em>Connect</em></h2>
+    <div class="skill-group reveal">
+      <div class="skill-group-label">Regulatory Reporting</div>
+      <div class="skill-tags">
+        <span class="skill-tag">CAT</span>
+        <span class="skill-tag">OATS</span>
+        <span class="skill-tag">Blue Sheets</span>
+        <span class="skill-tag">FINRA Gateway</span>
+        <span class="skill-tag">SEC EDGAR</span>
+      </div>
     </div>
-    <p class="contact-sub">Whether you're building a surveillance function, investigating complex trading activity, or looking for a compliance
-  professional who can bridge data and regulation — reach out.</p>
-    <div class="contact-links">
-      <a class="contact-link" href="mailto:rdas0541@gmail.com">rdas0541@gmail.com</a>
-      <a class="contact-link" href="tel:5162208652">516-220-8652</a>
-      <a class="contact-link" href="https://www.linkedin.com/in/rahul-das-capm/" target="_blank" rel="noopener">LinkedIn Profile</a>
-      <a class="contact-link" href="#" onclick="downloadSelf(); return false;">Download This Page</a>
+    <div class="skill-group reveal">
+      <div class="skill-group-label">Case Management &amp; Workflow</div>
+      <div class="skill-tags">
+        <span class="skill-tag">ServiceNow</span>
+        <span class="skill-tag">Salesforce</span>
+        <span class="skill-tag">Jira Service Management</span>
+        <span class="skill-tag">Cognos</span>
+        <span class="skill-tag">SPSS</span>
+      </div>
     </div>
-    <div class="footer-rule"></div>
-    <p class="footer-text">© 2026 Rahul Das &nbsp;·&nbsp; Trade Surveillance &amp; Financial Compliance Professional &nbsp;·&nbsp; Chicago, IL</p>
-  </section>
+  </div>
+</section>
 
-  <script>
-    const reveals = document.querySelectorAll('.reveal');
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry, i) => {
-        if (entry.isIntersecting) {
-          setTimeout(() => entry.target.classList.add('visible'), i * 60);
-          observer.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
-    reveals.forEach(el => observer.observe(el));
+<!-- EDUCATION & CERTIFICATIONS -->
+<section id="education">
+  <div class="section-header">
+    <span class="section-number">04</span>
+    <h2 class="section-title">Education &amp;<br><em>Certifications</em></h2>
+  </div>
+  <div class="edu-grid">
+    <div>
+      <div class="edu-item reveal">
+        <div class="edu-degree">Master's in Accounting Forensics</div>
+        <div class="edu-school">Roosevelt University</div>
+        <div class="edu-date">Expected January 2029 &nbsp;·&nbsp; Chicago, IL</div>
+      </div>
+      <br>
+      <div class="edu-item reveal">
+        <div class="edu-degree">Bachelor of Business Administration<br>in Business Analytics</div>
+        <div class="edu-school">Hofstra University</div>
+        <div class="edu-date">Sep 2020 – May 2024 &nbsp;·&nbsp; Hempstead, NY</div>
+        <div class="edu-date" style="margin-top:0.5rem; color: var(--gold)">Dean's List Fall 2021 &amp; Spring 2022</div>
+      </div>
+    </div>
+    <div>
+      <ul class="cert-list">
+        <li class="cert-item reveal">
+          <span class="cert-name">Certified Associate in Project Management (CAPM)</span>
+          <span class="cert-body">PMI</span>
+        </li>
+        <li class="cert-item reveal">
+          <span class="cert-name">Securities Industry Essentials (SIE)</span>
+          <span class="cert-body">FINRA</span>
+        </li>
+        <li class="cert-item reveal">
+          <span class="cert-name">Prosci® Certified Change Practitioner</span>
+          <span class="cert-body">Prosci</span>
+        </li>
+        <li class="cert-item reveal">
+          <span class="cert-name">Lean Six Sigma Yellow Belt</span>
+          <span class="cert-body">Lean Six Sigma</span>
+        </li>
+        <li class="cert-item reveal">
+          <span class="cert-name">Lean Six Sigma White Belt</span>
+          <span class="cert-body">Lean Six Sigma</span>
+        </li>
+      </ul>
+    </div>
+  </div>
+</section>
 
-    function downloadSelf() {
-      const html = document.documentElement.outerHTML;
-      const blob = new Blob([html], { type: 'text/html' });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = 'Rahul-Das-Compliance-Professional.html';
-      a.click();
-      URL.revokeObjectURL(url);
-    }
-  </script>
+<!-- CONTACT -->
+<section id="contact">
+  <div class="section-header">
+    <span class="section-number">05</span>
+    <h2 class="section-title">Let's<br><em>Connect</em></h2>
+  </div>
+  <p class="contact-sub">Whether you're building a surveillance function, investigating complex trading activity, or looking for a compliance professional who can bridge data and regulation — reach out.</p>
+  <div class="contact-links">
+    <a class="contact-link" href="mailto:rdas0541@gmail.com">rdas0541@gmail.com</a>
+    <a class="contact-link" href="tel:5162208652">516-220-8652</a>
+    <a class="contact-link" href="https://www.linkedin.com/in/rahul-das-capm/" target="_blank" rel="noopener">LinkedIn Profile</a>
+    <a class="contact-link" href="#" onclick="downloadSelf(); return false;">Download This Page</a>
+  </div>
+  <div class="footer-rule"></div>
+  <p class="footer-text">© 2026 Rahul Das &nbsp;·&nbsp; Trade Surveillance &amp; Financial Compliance Professional &nbsp;·&nbsp; Chicago, IL</p>
+</section>
+
+<script>
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => entry.target.classList.add('visible'), i * 60);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+  reveals.forEach(el => observer.observe(el));
+
+  // Download the page as self-contained HTML
+  function downloadSelf() {
+    const html = document.documentElement.outerHTML;
+    const blob = new Blob([html], { type: 'text/html' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'Rahul-Das-Compliance-Professional.html';
+    a.click();
+    URL.revokeObjectURL(url);
+  }
+</script>
+</body>
+</html>
