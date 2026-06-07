@@ -2,7 +2,36 @@
 <html lang="en">
 <head>
 <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-2008615M0E"></script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-2008615M0E">
+  // Contact form — AJAX via Formspree
+  const contactForm = document.getElementById('contact-form');
+  if (contactForm) {
+    contactForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const btn = contactForm.querySelector('.form-submit');
+      btn.textContent = 'Sending...';
+      btn.disabled = true;
+      try {
+        const res = await fetch(contactForm.action, {
+          method: 'POST',
+          body: new FormData(contactForm),
+          headers: { 'Accept': 'application/json' }
+        });
+        if (res.ok) {
+          contactForm.reset();
+          document.getElementById('form-success').style.display = 'block';
+          btn.style.display = 'none';
+        } else {
+          btn.textContent = 'Try Again';
+          btn.disabled = false;
+        }
+      } catch {
+        btn.textContent = 'Try Again';
+        btn.disabled = false;
+      }
+    });
+  }
+</script>
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
@@ -757,6 +786,66 @@
     .hero-cta-row { flex-direction: column; }
     .stat-grid { gap: 2rem; }
   }
+
+  /* ── CONTACT FORM ── */
+  .contact-form {
+    max-width: 560px;
+    margin: 0 auto 4rem;
+  }
+  .form-group { margin-bottom: 1.25rem; }
+  .form-label {
+    display: block;
+    font-family: var(--mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(248,245,240,0.5);
+    margin-bottom: 0.5rem;
+  }
+  .form-input, .form-textarea {
+    width: 100%;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(248,245,240,0.2);
+    color: var(--cream);
+    font-family: var(--serif-body);
+    font-size: 0.95rem;
+    font-weight: 300;
+    padding: 0.85rem 1rem;
+    outline: none;
+    transition: border-color 0.2s;
+    -webkit-appearance: none;
+    border-radius: 0;
+  }
+  .form-input:focus, .form-textarea:focus { border-color: var(--gold); }
+  .form-input::placeholder, .form-textarea::placeholder { color: rgba(248,245,240,0.25); }
+  .form-textarea { resize: vertical; min-height: 130px; }
+  .form-submit {
+    font-family: var(--mono);
+    font-size: 0.75rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--navy);
+    background: var(--cream);
+    border: none;
+    padding: 0.85rem 2.5rem;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.15s;
+    width: 100%;
+    margin-top: 0.5rem;
+  }
+  .form-submit:hover { background: var(--gold-light); transform: translateY(-1px); }
+  .form-submit:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+  .form-success {
+    display: none;
+    font-family: var(--mono);
+    font-size: 0.8rem;
+    letter-spacing: 0.08em;
+    color: var(--gold-light);
+    text-align: center;
+    padding: 1.5rem;
+    border: 1px solid rgba(184,151,106,0.3);
+    margin-top: 1rem;
+  }
 </style>
 </head>
 <body>
@@ -1187,6 +1276,23 @@
     <a class="contact-link" href="https://www.linkedin.com/in/rahul-das-capm/" target="_blank" rel="noopener">LinkedIn Profile</a>
     <a class="contact-link" href="./Rahul_Das_Resume.pdf" download="Rahul_Das_Resume.pdf">Download Resume</a>
   </div>
+
+  <form class="contact-form" id="contact-form" action="https://formspree.io/f/mqeoqzkn" method="POST">
+    <div class="form-group">
+      <label class="form-label" for="name">Name</label>
+      <input class="form-input" type="text" id="name" name="name" placeholder="Your name" required>
+    </div>
+    <div class="form-group">
+      <label class="form-label" for="email">Email</label>
+      <input class="form-input" type="email" id="email" name="email" placeholder="your@email.com" required>
+    </div>
+    <div class="form-group">
+      <label class="form-label" for="message">Message</label>
+      <textarea class="form-textarea" id="message" name="message" placeholder="Tell me about the role or opportunity..." required></textarea>
+    </div>
+    <button class="form-submit" type="submit">Send Message</button>
+    <div class="form-success" id="form-success">Message sent — I will be in touch shortly.</div>
+  </form>
   <div class="footer-rule"></div>
   <p class="footer-text">© 2026 Rahul Das &nbsp;·&nbsp; Trade Surveillance &amp; Financial Compliance Professional &nbsp;·&nbsp; Chicago, IL</p>
 </section>
