@@ -1,6 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<script>
+  (function(){
+    var s=localStorage.getItem('theme');
+    var p=window.matchMedia('(prefers-color-scheme: dark)').matches;
+    if(s==='dark'||(!s&&p)){document.documentElement.setAttribute('data-theme','dark');}
+  })();
+</script>
+
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-2008615M0E">
   // Contact form — AJAX via Formspree
@@ -846,6 +854,91 @@
     border: 1px solid rgba(184,151,106,0.3);
     margin-top: 1rem;
   }
+
+  /* ── DARK MODE ── */
+  body, nav, section, .timeline-item, .skill-tag, .timeline-tag,
+  .nav-download, .btn-primary, .btn-secondary, .contact-link,
+  .form-input, .form-textarea, .edu-item, .cert-item, .about-aside {
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+  }
+
+  [data-theme="dark"] {
+    --cream:      #0d1c2e;
+    --cream-dark: #112235;
+    --navy:       #c4d4e4;
+    --navy-mid:   #a4b8cc;
+    --navy-light: #849cb4;
+    --ink:        #ddd8d0;
+    --ink-mid:    #bcb8b0;
+    --ink-light:  #7c7870;
+    --rule:       #1c3048;
+    --gold:       #c4a472;
+    --gold-light: #d4b48a;
+    --white:      #0d1c2e;
+  }
+
+  [data-theme="dark"] nav {
+    background: rgba(13, 28, 46, 0.95);
+    border-bottom-color: #1c3048;
+  }
+
+  [data-theme="dark"] #about,
+  [data-theme="dark"] #contact {
+    background: #071420;
+  }
+
+  [data-theme="dark"] .skill-tag,
+  [data-theme="dark"] .timeline-tag {
+    background: #112235;
+  }
+
+  [data-theme="dark"] .skill-tag:hover,
+  [data-theme="dark"] .timeline-tag:hover {
+    background: var(--navy);
+    color: #0d1c2e;
+    border-color: var(--navy);
+  }
+
+  [data-theme="dark"] .form-input,
+  [data-theme="dark"] .form-textarea {
+    background: rgba(255,255,255,0.04);
+    border-color: rgba(196,212,228,0.15);
+    color: var(--ink);
+  }
+
+  [data-theme="dark"] .timeline::before {
+    background: #1c3048;
+  }
+
+  [data-theme="dark"] .timeline-dot {
+    border-color: #0d1c2e;
+  }
+
+  /* ── Theme toggle button ── */
+  .theme-toggle {
+    background: none;
+    border: 1px solid var(--rule);
+    color: var(--ink-light);
+    cursor: pointer;
+    padding: 0.38rem 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 0.75rem;
+    line-height: 0;
+    transition: color 0.2s, border-color 0.2s;
+  }
+
+  .theme-toggle:hover {
+    color: var(--navy);
+    border-color: var(--navy);
+  }
+
+  .icon-sun  { display: none;  }
+  .icon-moon { display: block; }
+
+  [data-theme="dark"] .icon-moon { display: none;  }
+  [data-theme="dark"] .icon-sun  { display: block; }
 </style>
 </head>
 <body>
@@ -860,6 +953,10 @@
     <li><a href="#education">Education</a></li>
     <li><a href="#contact">Contact</a></li>
   </ul>
+<button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark mode">
+    <svg class="icon-moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+    <svg class="icon-sun" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+  </button>
   <a class="nav-download" href="./Rahul_Das_Resume.pdf" download="Rahul_Das_Resume.pdf">Download CV</a>
 </nav>
 
@@ -1309,6 +1406,28 @@
     });
   }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
   reveals.forEach(el => observer.observe(el));
+
+  // ── Dark mode (Option C: OS default + manual toggle + localStorage) ──
+  const htmlEl       = document.documentElement;
+  const themeToggle  = document.getElementById('theme-toggle');
+
+  function applyTheme(dark) {
+    htmlEl.setAttribute('data-theme', dark ? 'dark' : 'light');
+    themeToggle.setAttribute('aria-label', dark ? 'Switch to light mode' : 'Switch to dark mode');
+    localStorage.setItem('theme', dark ? 'dark' : 'light');
+  }
+
+  const savedTheme = localStorage.getItem('theme');
+  const systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+  applyTheme(savedTheme ? savedTheme === 'dark' : systemDark);
+
+  themeToggle.addEventListener('click', () => {
+    applyTheme(htmlEl.getAttribute('data-theme') !== 'dark');
+  });
+
+  window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
+    if (!localStorage.getItem('theme')) applyTheme(e.matches);
+  });
 </script>
 </body>
 </html>
