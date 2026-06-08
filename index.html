@@ -787,6 +787,7 @@
     .about-grid { grid-template-columns: 1fr; gap: 3rem; }
     .skills-grid { grid-template-columns: 1fr 1fr; }
     .edu-grid { grid-template-columns: 1fr; gap: 3rem; }
+    .interests-grid { grid-template-columns: 1fr; gap: 2.5rem; }
   }
 
   @media (max-width: 600px) {
@@ -950,6 +951,43 @@
     border-color: var(--gold);
     color: var(--gold-light);
   }
+
+  /* ── INTERESTS ── */
+  .interests-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 3.5rem;
+  }
+
+  .interest-card {
+    border-top: 2px solid var(--gold);
+    padding-top: 2rem;
+  }
+
+  .interest-eyebrow {
+    font-family: var(--mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 0.75rem;
+  }
+
+  .interest-title {
+    font-family: var(--serif-display);
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: var(--navy);
+    line-height: 1.2;
+    margin-bottom: 1rem;
+  }
+
+  .interest-body {
+    font-size: 0.95rem;
+    color: var(--ink-mid);
+    line-height: 1.8;
+    font-weight: 300;
+  }
 </style>
 </head>
 <body>
@@ -962,6 +1000,7 @@
     <li><a href="#experience">Experience</a></li>
     <li><a href="#skills">Skills</a></li>
     <li><a href="#education">Education</a></li>
+    <li><a href="#interests">Interests</a></li>
     <li><a href="#contact">Contact</a></li>
   </ul>
 <button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark mode">
@@ -1371,10 +1410,39 @@
   </div>
 </section>
 
+<!-- INTERESTS -->
+<section id="interests">
+  <div class="section-header">
+    <span class="section-number">05</span>
+    <h2 class="section-title">Beyond<br><em>the Work</em></h2>
+  </div>
+  <div class="interests-grid">
+
+    <div class="interest-card reveal">
+      <div class="interest-eyebrow">On the Pitch</div>
+      <div class="interest-title">Soccer</div>
+      <p class="interest-body">Football was the first system I learned to read. Growing up, I spent weekends on pitches in New York learning that positioning and pattern recognition matter as much as pace. The instinct for reading movement under pressure carries over into surveillance work more than I expected. I still follow the game closely and play pickup whenever I can in Chicago.</p>
+    </div>
+
+    <div class="interest-card reveal">
+      <div class="interest-eyebrow">Paper Folding</div>
+      <div class="interest-title">Origami</div>
+      <p class="interest-body">Origami taught me that precision is a practice, not a given. There is something deeply satisfying about transforming a single sheet of paper into something structurally complex through nothing but deliberate folds. It is a discipline in following constraints exactly while holding an end form in mind. That kind of methodical patience translates well to detail-intensive investigative work.</p>
+    </div>
+
+    <div class="interest-card reveal">
+      <div class="interest-eyebrow">Still Learning</div>
+      <div class="interest-title">Guitar</div>
+      <p class="interest-body">I picked up guitar as a way to think differently. Learning an instrument as an adult means accepting that progress is nonlinear and that muscle memory takes real time to build. It is humbling in a good way and a useful reminder that getting good at something genuinely hard requires patience and repetition. Still very much a student of it.</p>
+    </div>
+
+  </div>
+</section>
+
 <!-- CONTACT -->
 <section id="contact">
   <div class="section-header">
-    <span class="section-number">05</span>
+    <span class="section-number">06</span>
     <h2 class="section-title">Let's<br><em>Connect</em></h2>
   </div>
   <p class="contact-sub">Whether you're building a surveillance function, investigating complex trading activity, or looking for a compliance professional who can bridge data and regulation: reach out.</p>
