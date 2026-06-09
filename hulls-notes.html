@@ -56,31 +56,32 @@
   .page-title em{font-style:italic;font-weight:400;color:var(--navy-light);}
   .page-sub{font-family:var(--serif-body);font-size:1rem;font-weight:300;color:var(--ink-light);margin-top:1rem;max-width:55ch;line-height:1.6;}
 
-  /* Accordion */
   .notes-wrap{padding:4rem 8vw 5rem;}
 
+  .section-label{font-family:var(--serif-display);font-size:1.6rem;font-weight:700;color:var(--navy);letter-spacing:-.01em;padding:2.5rem 0 .75rem;border-top:2px solid var(--gold);margin-top:1rem;}
+  .section-label:first-child{border-top:none;margin-top:0;padding-top:0;}
+  .section-sub{font-family:var(--mono);font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-light);margin-bottom:2rem;}
+
   .qa-block{border-bottom:1px solid var(--rule);}
-  .qa-block:first-child{border-top:1px solid var(--rule);}
+  .qa-block:first-of-type, .section-first{border-top:1px solid var(--rule);}
 
-  .qa-trigger{width:100%;background:none;border:none;cursor:pointer;text-align:left;padding:1.75rem 0;display:flex;align-items:center;gap:1.25rem;transition:background .15s;}
+  .qa-trigger{width:100%;background:none;border:none;cursor:pointer;text-align:left;padding:1.75rem 0;display:flex;align-items:center;gap:1.25rem;}
   .qa-trigger:hover .q-text{color:var(--navy-mid);}
-
   .q-num{font-family:var(--mono);font-size:.64rem;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);flex-shrink:0;width:2.5rem;}
-  .q-text{font-family:var(--serif-display);font-size:1.1rem;font-weight:600;color:var(--navy);line-height:1.3;flex:1;transition:color .2s;}
+  .q-text{font-family:var(--serif-display);font-size:1.05rem;font-weight:600;color:var(--navy);line-height:1.3;flex:1;transition:color .2s;}
   .q-chevron{flex-shrink:0;width:18px;height:18px;color:var(--ink-light);transition:transform .3s ease;}
   .qa-block.open .q-chevron{transform:rotate(180deg);}
-  .qa-block.open .q-text{color:var(--navy);}
 
   .qa-body{max-height:0;overflow:hidden;transition:max-height .4s ease;}
   .qa-body-inner{padding:0 0 2rem 3.75rem;}
 
-  .a-body{font-family:var(--serif-body);font-size:.95rem;font-weight:300;color:var(--ink-mid);line-height:1.8;}
+  .a-body{font-family:var(--serif-body);font-size:.93rem;font-weight:300;color:var(--ink-mid);line-height:1.8;}
   .a-body p{margin-bottom:.9rem;}
   .a-body p:last-child{margin-bottom:0;}
   .a-body strong{font-weight:600;color:var(--ink);}
 
-  .formula{font-family:var(--mono);font-size:.8rem;background:var(--cream-dark);border-left:3px solid var(--gold);padding:.85rem 1.1rem;margin:.85rem 0;color:var(--navy);line-height:1.9;white-space:pre-wrap;}
-  .diagram{font-family:var(--mono);font-size:.74rem;background:var(--cream-dark);padding:1rem 1.25rem;margin:.85rem 0;color:var(--ink-mid);line-height:1.6;overflow-x:auto;white-space:pre;}
+  .formula{font-family:var(--mono);font-size:.79rem;background:var(--cream-dark);border-left:3px solid var(--gold);padding:.85rem 1.1rem;margin:.85rem 0;color:var(--navy);line-height:1.9;white-space:pre-wrap;}
+  .diagram{font-family:var(--mono);font-size:.73rem;background:var(--cream-dark);padding:1rem 1.25rem;margin:.85rem 0;color:var(--ink-mid);line-height:1.6;overflow-x:auto;white-space:pre;}
   .key-point{margin-top:1.1rem;padding:.9rem 1.1rem;border:1px solid var(--rule);border-left:3px solid var(--navy-light);}
   .key-point-lbl{font-family:var(--mono);font-size:.58rem;letter-spacing:.15em;text-transform:uppercase;color:var(--navy-light);margin-bottom:.3rem;}
   .key-point p{font-family:var(--mono);font-size:.74rem;color:var(--ink-mid);line-height:1.7;margin:0;}
@@ -89,6 +90,13 @@
   .order-item{padding:.8rem 1rem;border:1px solid var(--rule);}
   .order-name{font-family:var(--mono);font-size:.68rem;font-weight:400;letter-spacing:.08em;text-transform:uppercase;color:var(--navy);margin-bottom:.25rem;}
   .order-desc{font-family:var(--serif-body);font-size:.84rem;font-weight:300;color:var(--ink-mid);line-height:1.55;}
+
+  .factor-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:.75rem;margin-top:.85rem;}
+  .factor-item{padding:.75rem 1rem;border:1px solid var(--rule);}
+  .factor-name{font-family:var(--mono);font-size:.65rem;font-weight:400;letter-spacing:.08em;text-transform:uppercase;color:var(--navy);margin-bottom:.25rem;}
+  .factor-row{font-family:var(--mono);font-size:.72rem;color:var(--ink-mid);line-height:1.6;}
+  .up{color:#1a5c3a;} .dn{color:#8b2020;}
+  [data-theme="dark"] .up{color:#5db88a;} [data-theme="dark"] .dn{color:#e06060;}
 
   .ref-wrap{padding:3rem 8vw 5rem;border-top:1px solid var(--rule);}
   .ref-txt{font-family:var(--mono);font-size:.72rem;letter-spacing:.04em;color:var(--ink-light);line-height:1.75;max-width:65ch;}
@@ -106,7 +114,7 @@
     .page-header,.notes-wrap,.ref-wrap{padding-left:1.5rem;padding-right:1.5rem;}
     .nav-links{display:none;}
     .qa-body-inner{padding-left:2.25rem;}
-    .order-grid{grid-template-columns:1fr;}
+    .order-grid,.factor-grid{grid-template-columns:1fr;}
   }
 </style>
 </head>
@@ -129,294 +137,519 @@
 </nav>
 
 <div class="page-header">
-  <p class="page-eyebrow">Hull, Ch. 1-5</p>
+  <p class="page-eyebrow">Hull, Ch. 1-17</p>
   <h1 class="page-title">Hull's<br><em>Notes</em></h1>
-  <p class="page-sub">Forwards, futures, margin, pricing, and market mechanics from John C. Hull's Options, Futures, and Other Derivatives, 11th ed. Click any question to expand.</p>
+  <p class="page-sub">Forwards, futures, options, pricing, and volatility from John C. Hull's Options, Futures, and Other Derivatives, 11th ed. Click any question to expand.</p>
 </div>
 
 <div class="notes-wrap">
 
-  <div class="qa-block" id="q1">
-    <button class="qa-trigger" aria-expanded="false">
-      <span class="q-num">01</span>
-      <span class="q-text">What's a forward vs a future? How are they traded?</span>
-      <svg class="q-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
-    </button>
-    <div class="qa-body">
-      <div class="qa-body-inner">
-        <div class="a-body">
-          <p>Both are agreements to buy or sell an asset at a future date for a price locked in today. Same economic idea. Different wrappers.</p>
-          <p>A <strong>forward</strong> is a private deal between two parties. Negotiated directly, fully customizable: any size, any date, any underlying. Trades OTC with no exchange and no clearinghouse. You are exposed to the other side.</p>
-          <p>A <strong>future</strong> is the standardized version on an exchange: CME, ICE, CBOE. The exchange sets contract size and delivery dates. No customization. What you gain is liquidity and no counterparty risk because the clearinghouse steps between both sides.</p>
-          <p>Forwards settle once at maturity. Futures are marked to market every single day. Gains and losses hit your margin account overnight.</p>
-        </div>
-      </div>
-    </div>
-  </div>
+<!-- ═══════════════════════════════════════
+     SECTION 1: FORWARDS AND FUTURES
+════════════════════════════════════════ -->
+<div class="section-label">Section 1 — Forwards and Futures</div>
+<div class="section-sub">Ch. 1-5 &nbsp;·&nbsp; 11 questions</div>
 
-  <div class="qa-block" id="q2">
-    <button class="qa-trigger" aria-expanded="false">
-      <span class="q-num">02</span>
-      <span class="q-text">What do the payoffs look like?</span>
-      <svg class="q-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
-    </button>
-    <div class="qa-body">
-      <div class="qa-body-inner">
-        <div class="a-body">
-          <p>Both forwards and futures have the same payoff shape. Perfectly linear. No kinks, no caps, no floors.</p>
-          <div class="diagram">Long (agreed to buy at F_0):        Short (agreed to sell at F_0):
+<div class="qa-block section-first" id="q1">
+  <button class="qa-trigger" aria-expanded="false">
+    <span class="q-num">01</span>
+    <span class="q-text">What's a forward vs a future? How are they traded?</span>
+    <svg class="q-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+  </button>
+  <div class="qa-body"><div class="qa-body-inner"><div class="a-body">
+    <p>Both are agreements to buy or sell an asset at a future date for a price locked in today. Same economic idea. Different wrappers.</p>
+    <p>A <strong>forward</strong> is a private OTC deal. Fully customizable: any size, any date, any underlying. No exchange, no clearinghouse. You are exposed to the other side.</p>
+    <p>A <strong>future</strong> is the standardized exchange-traded version (CME, ICE, CBOE). No customization. The clearinghouse steps between both sides and eliminates counterparty risk.</p>
+    <p>Forwards settle once at maturity. Futures are marked to market every day. Gains and losses hit your margin account overnight.</p>
+  </div></div></div>
+</div>
 
-  P&L                                   P&L
-   |               /                     |  \
-   |             /                     + |    \
- + |           /                         |      \
-   |         /                     ------|---------\-----> S_T
----|---------/----------> S_T            |    F_0    \
-   |       / F_0                    -    |              \
- - |     /                               |                \
-   |   /</div>
-          <div class="formula">Long:  P&L = S_T - F_0
+<div class="qa-block" id="q2">
+  <button class="qa-trigger" aria-expanded="false">
+    <span class="q-num">02</span>
+    <span class="q-text">What do the payoffs look like?</span>
+    <svg class="q-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+  </button>
+  <div class="qa-body"><div class="qa-body-inner"><div class="a-body">
+    <p>Perfectly linear. No kinks, no caps, no floors. Same shape for both forwards and futures.</p>
+    <div class="diagram">Long (buy at F_0):           Short (sell at F_0):
+
+  P&L                           P&L
+   |               /             |  \
+ + |             /             + |    \
+   |           /                 |      \
+---|---------/------> S_T  ------|---------\----> S_T
+   |       / F_0                 |    F_0    \
+ - |     /                  -    |              \</div>
+    <div class="formula">Long:  P&L = S_T - F_0
 Short: P&L = F_0 - S_T</div>
-          <p>S_T is the spot price at delivery. F_0 is the locked-in price. No premium paid upfront. Zero cost to enter. Both sides are fully obligated. That is what separates this from options.</p>
-        </div>
-      </div>
+    <p>No premium paid upfront. Zero cost to enter. Both sides fully obligated.</p>
+  </div></div></div>
+</div>
+
+<div class="qa-block" id="q3">
+  <button class="qa-trigger" aria-expanded="false">
+    <span class="q-num">03</span>
+    <span class="q-text">What's the risk with forwards?</span>
+    <svg class="q-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+  </button>
+  <div class="qa-body"><div class="qa-body-inner"><div class="a-body">
+    <p>Counterparty risk. Delivery day comes, the market moved against the other side, and they do not show up. No exchange, no clearinghouse, nobody guaranteeing settlement.</p>
+    <p>Two additional risks: <strong>liquidity risk</strong> (no exchange to exit early, you negotiate a termination) and <strong>operational risk</strong> (bilateral customized contracts have more room for errors).</p>
+    <p>Futures eliminate counterparty risk. You trade customization for certainty of settlement.</p>
+  </div></div></div>
+</div>
+
+<div class="qa-block" id="q4">
+  <button class="qa-trigger" aria-expanded="false">
+    <span class="q-num">04</span>
+    <span class="q-text">What's a clearinghouse? How does it guarantee settlement?</span>
+    <svg class="q-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+  </button>
+  <div class="qa-body"><div class="qa-body-inner"><div class="a-body">
+    <p>The clearinghouse sits between every futures trade. Once your trade executes, it becomes the buyer to every seller and seller to every buyer. Counterparty risk is centralized onto one entity built to handle it.</p>
+    <p>Three mechanisms: <strong>margin requirements</strong> (collateral posted upfront), <strong>mark to market</strong> (losses collected daily, no giant end-of-term exposure), <strong>default fund</strong> (pooled contributions from clearing members absorb defaults before the clearinghouse's own capital is touched).</p>
+    <div class="key-point">
+      <div class="key-point-lbl">2008 context</div>
+      <p>Lehman had massive bilateral OTC exposure with no clearinghouse. When they failed nobody knew who owed what to whom. Exchange-cleared futures kept functioning normally through the same period. Dodd-Frank 2010 pushed large portions of OTC derivatives into central clearing because of this.</p>
     </div>
-  </div>
+  </div></div></div>
+</div>
 
-  <div class="qa-block" id="q3">
-    <button class="qa-trigger" aria-expanded="false">
-      <span class="q-num">03</span>
-      <span class="q-text">What's the risk with forwards?</span>
-      <svg class="q-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
-    </button>
-    <div class="qa-body">
-      <div class="qa-body-inner">
-        <div class="a-body">
-          <p>One word: counterparty risk.</p>
-          <p>You locked in a price with another party months ago. Delivery day comes. The market moved hard against them. They do not show up. No exchange, no clearinghouse, nobody guaranteeing the other side. You are holding a contract and the counterparty is bankrupt or walking away.</p>
-          <p>The forward is only as good as the credit of the person on the other side. Institutions run credit checks, use ISDA master agreements, and maintain credit departments to manage this exposure across thousands of bilateral contracts.</p>
-          <p>Two other risks. <strong>Liquidity risk:</strong> no exchange to exit early, you negotiate a termination or find someone to take it off you. <strong>Operational risk:</strong> bilateral, customized contracts have more room for settlement errors.</p>
-          <p>Futures eliminate counterparty risk by design. You lose customization. You gain certainty of settlement.</p>
-        </div>
-      </div>
+<div class="qa-block" id="q5">
+  <button class="qa-trigger" aria-expanded="false">
+    <span class="q-num">05</span>
+    <span class="q-text">Are there any payoff diagram differences between futures and forwards?</span>
+    <svg class="q-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+  </button>
+  <div class="qa-body"><div class="qa-body-inner"><div class="a-body">
+    <p>At expiry, none. Identical formula, identical shape, identical breakeven at F_0.</p>
+    <p>Theoretical difference: if asset prices are positively correlated with interest rates, futures prices will be slightly higher than forward prices. Daily gains get reinvested at higher rates; daily losses are paid when rates are lower. The asymmetry gets priced in. Negligible for most assets.</p>
+    <p>Practical difference: path dependency. A forward ignores what happens between today and maturity. Futures get margin-called along the way. You can call the direction right and still get wiped out if you could not survive the drawdown to your margin floor.</p>
+  </div></div></div>
+</div>
+
+<div class="qa-block" id="q6">
+  <button class="qa-trigger" aria-expanded="false">
+    <span class="q-num">06</span>
+    <span class="q-text">What exactly is margin? How does it work and what's a margin call?</span>
+    <svg class="q-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+  </button>
+  <div class="qa-body"><div class="qa-body-inner"><div class="a-body">
+    <p>Margin is a good-faith deposit to open a futures position. Not a fee, not a down payment. Pure collateral.</p>
+    <p><strong>Initial margin:</strong> what you post to open (5-10% of notional). <strong>Maintenance margin:</strong> the floor (~75% of initial). <strong>Variation margin:</strong> daily cash that flows in and out via mark to market.</p>
+    <div class="formula">Gold: F_0=$1,750, contract=100oz, notional=$175,000
+Initial=$6,000 | Maintenance=$4,500
+
+Day 2: gold drops $25 -> lose $2,500 -> account $3,500 (ok)
+Day 3: gold drops $15 -> lose $1,500 -> account $2,000 (MARGIN CALL)
+Must top back up to $6,000 (initial), not $4,500 (maintenance).
+Wire $4,000 by EOD or position gets liquidated at market.</div>
+    <div class="key-point">
+      <div class="key-point-lbl">What people get wrong</div>
+      <p>You can nail the direction and still lose. Get margin-called at the bottom, cannot fund it, get liquidated. Then the asset recovers. Being right is not enough if you cannot survive the path.</p>
     </div>
-  </div>
+  </div></div></div>
+</div>
 
-  <div class="qa-block" id="q4">
-    <button class="qa-trigger" aria-expanded="false">
-      <span class="q-num">04</span>
-      <span class="q-text">What's a clearinghouse? How does it guarantee settlement?</span>
-      <svg class="q-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
-    </button>
-    <div class="qa-body">
-      <div class="qa-body-inner">
-        <div class="a-body">
-          <p>The clearinghouse sits in the middle of every futures trade. The moment your trade executes, it becomes the buyer to every seller and the seller to every buyer. You no longer have a contract with the person on the other side. You have a contract with the clearinghouse.</p>
-          <p>Counterparty risk does not disappear. It gets centralized onto one entity built to handle it. Three mechanisms keep it solvent.</p>
-          <p><strong>Margin requirements.</strong> Every participant posts initial margin before trading. First line of defense if someone cannot pay.</p>
-          <p><strong>Mark to market.</strong> Losses are collected daily. By delivery day, almost all gains and losses have already settled in cash. No giant lump sum exposure sitting on the books.</p>
-          <p><strong>Default fund.</strong> Every clearing member contributes to a pooled fund. If one member blows through their margin, the fund absorbs it. The clearinghouse's own capital is the last resort.</p>
-          <div class="key-point">
-            <div class="key-point-lbl">2008 context</div>
-            <p>Lehman had massive OTC derivatives exposure with no clearinghouse. When they failed, nobody knew who was exposed to whom. Exchange-cleared futures kept functioning normally through the same period. Dodd-Frank 2010 pushed large portions of OTC derivatives into central clearing because of exactly this.</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+<div class="qa-block" id="q7">
+  <button class="qa-trigger" aria-expanded="false">
+    <span class="q-num">07</span>
+    <span class="q-text">What is the futures pricing equation? F_0 = S_0 * e^(rT)</span>
+    <svg class="q-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+  </button>
+  <div class="qa-body"><div class="qa-body-inner"><div class="a-body">
+    <p>The cost of carry model. Futures price = spot price plus net cost of carrying the asset to delivery. Arbitrage locks it in.</p>
+    <div class="formula">Base:                    F_0 = S_0 * e^(rT)
+Dividend-paying stock:   F_0 = S_0 * e^((r-q)T)    [q = dividend yield]
+Foreign currency:        F_0 = S_0 * e^((r-rf)T)   [rf = foreign rate]
+Commodity with storage:  F_0 = S_0 * e^((r+u)T)    [u = storage cost]
+With convenience yield:  F_0 = S_0 * e^((r+u-y)T)  [y = convenience yield]</div>
+    <p>If futures trade above the formula, you borrow cash, buy spot, sell futures, deliver at expiry, and pocket the spread risk-free. If too cheap, reverse it. Free money closes the gap instantly.</p>
+  </div></div></div>
+</div>
 
-  <div class="qa-block" id="q5">
-    <button class="qa-trigger" aria-expanded="false">
-      <span class="q-num">05</span>
-      <span class="q-text">Are there any payoff diagram differences between futures and forwards?</span>
-      <svg class="q-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
-    </button>
-    <div class="qa-body">
-      <div class="qa-body-inner">
-        <div class="a-body">
-          <p>At expiry, no. The diagrams are identical. Same formula, same linear shape, same breakeven at F_0.</p>
-          <p>The theoretical difference comes from daily settlement. If asset prices are positively correlated with interest rates, futures prices will be slightly higher than forward prices. When the asset rises you collect daily gains and reinvest at higher rates. When it falls you pay losses when rates are lower. That asymmetry gets priced in. For most assets and time horizons the difference is negligible.</p>
-          <p>The meaningful practical difference is path dependency. A forward does not care what happens between today and maturity. A futures position gets margin-called along the way. You can be right on direction, have the price crash and recover, and still get wiped out if you could not fund the margin calls during the drawdown. Same final payoff on paper. Completely different experience getting there.</p>
-        </div>
-      </div>
-    </div>
-  </div>
+<div class="qa-block" id="q8">
+  <button class="qa-trigger" aria-expanded="false">
+    <span class="q-num">08</span>
+    <span class="q-text">What's a convenience yield?</span>
+    <svg class="q-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+  </button>
+  <div class="qa-body"><div class="qa-body-inner"><div class="a-body">
+    <p>The benefit of physically holding a commodity that you cannot get from holding a futures contract. You own a refinery, you need crude on hand. If supply gets disrupted tomorrow, a paper contract cannot feed your refinery. That operational value is the convenience yield.</p>
+    <p>It reduces the futures price. Higher convenience yield means lower F_0 relative to spot. When y is high, people bid up spot. Futures stays lower because the benefit does not transfer to paper.</p>
+    <p>You cannot observe it directly. Back it out from market prices using the pricing equation. Matters most for oil, gas, and agricultural products. Financial assets have no convenience yield. High convenience yield drives backwardation.</p>
+  </div></div></div>
+</div>
 
-  <div class="qa-block" id="q6">
-    <button class="qa-trigger" aria-expanded="false">
-      <span class="q-num">06</span>
-      <span class="q-text">What exactly is margin? How does it work and what's a margin call?</span>
-      <svg class="q-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
-    </button>
-    <div class="qa-body">
-      <div class="qa-body-inner">
-        <div class="a-body">
-          <p>Margin is a good-faith deposit you post to open a futures position. Not a fee, not a down payment. Pure collateral.</p>
-          <p><strong>Initial margin</strong> is what you post to open, typically 5-10% of notional. <strong>Maintenance margin</strong> is the floor, usually around 75% of initial. <strong>Variation margin</strong> is the daily cash that flows in and out as the position is marked to market.</p>
-          <div class="formula">Gold futures:
-F_0 = $1,750/oz  |  Contract = 100 oz  |  Notional = $175,000
-Initial margin = $6,000  |  Maintenance = $4,500</div>
-          <p>Day 1: you post $6,000, you are long. Day 2: gold drops $25, you lose $2,500 (25 x 100), account goes to $3,500. Still above maintenance. Day 3: gold drops $15 more, account hits $2,000. Below $4,500 floor. Margin call.</p>
-          <p>The call requires you to top back up to the <strong>initial margin level</strong>, not maintenance. Wire $4,000 by end of day or the position gets liquidated at market.</p>
-          <div class="key-point">
-            <div class="key-point-lbl">What people get wrong</div>
-            <p>You can be right on direction and still lose. Gold drops, triggers your margin call, you cannot fund it in time, you get liquidated. Then gold recovers. You called the trade correctly and lost money because you could not survive the path.</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="qa-block" id="q7">
-    <button class="qa-trigger" aria-expanded="false">
-      <span class="q-num">07</span>
-      <span class="q-text">What is the futures pricing equation? F_0 = S_0 * e^(rT)</span>
-      <svg class="q-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
-    </button>
-    <div class="qa-body">
-      <div class="qa-body-inner">
-        <div class="a-body">
-          <p>The cost of carry model. The futures price is what it costs to buy the asset today and hold it to delivery.</p>
-          <div class="formula">F_0 = S_0 * e^(rT)
-
-S_0 = spot price today
-r   = risk-free rate
-T   = time to delivery in years</div>
-          <p>Arbitrage locks the price in. If futures trade above this, you borrow cash, buy spot, sell the futures, deliver at expiry, pocket the spread risk-free. If futures trade below, you reverse it. Free money closes the gap instantly.</p>
-          <div class="formula">Dividend-paying stock:   F_0 = S_0 * e^((r - q)T)   [q = dividend yield]
-Foreign currency:        F_0 = S_0 * e^((r - rf)T)  [rf = foreign rate]
-Commodity with storage:  F_0 = S_0 * e^((r + u)T)   [u = storage cost]
-Commodity with yield:    F_0 = S_0 * e^((r + u - y)T) [y = convenience yield]</div>
-          <p>The intuition is always the same: futures price equals spot price plus net cost of carry to delivery.</p>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="qa-block" id="q8">
-    <button class="qa-trigger" aria-expanded="false">
-      <span class="q-num">08</span>
-      <span class="q-text">What's a convenience yield?</span>
-      <svg class="q-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
-    </button>
-    <div class="qa-body">
-      <div class="qa-body-inner">
-        <div class="a-body">
-          <p>The benefit of physically holding a commodity that you cannot get from holding a futures contract.</p>
-          <p>You own a refinery. You need crude oil on hand to keep production running. If supply gets disrupted tomorrow, you cannot feed your refinery with a paper contract. Physical inventory has operational value beyond the financial exposure. That extra value is the convenience yield.</p>
-          <div class="formula">F_0 = S_0 * e^((r + u - y)T)
-
-y reduces the futures price.
-Higher y = lower F_0 relative to spot.</div>
-          <p>When convenience yield is high, people really want the physical commodity right now. They bid up spot. Futures stays lower because the operational benefit does not transfer to a paper contract.</p>
-          <p>You cannot observe it directly. Back it out from market prices using the pricing equation. It matters most for oil, natural gas, and agricultural products. Financial assets have no convenience yield. High convenience yield also drives backwardation.</p>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="qa-block" id="q9">
-    <button class="qa-trigger" aria-expanded="false">
-      <span class="q-num">09</span>
-      <span class="q-text">What's the difference between backwardation and contango?</span>
-      <svg class="q-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
-    </button>
-    <div class="qa-body">
-      <div class="qa-body-inner">
-        <div class="a-body">
-          <p>These describe the shape of the futures curve: futures prices plotted across different delivery dates.</p>
-          <p><strong>Contango</strong> is the normal state. Futures are higher than spot, longer-dated contracts cost more than shorter-dated ones. Curve slopes upward. Cost of carry doing its job: financing and storage pile up the further out you go.</p>
-          <div class="diagram">Contango:                    Backwardation:
+<div class="qa-block" id="q9">
+  <button class="qa-trigger" aria-expanded="false">
+    <span class="q-num">09</span>
+    <span class="q-text">What's the difference between backwardation and contango?</span>
+    <svg class="q-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+  </button>
+  <div class="qa-body"><div class="qa-body-inner"><div class="a-body">
+    <p><strong>Contango:</strong> futures above spot, longer-dated contracts more expensive than shorter-dated. Curve slopes upward. Normal state. Cost of carry doing its job.</p>
+    <p><strong>Backwardation:</strong> futures below spot, near-dated contracts more expensive than far-dated. Curve slopes downward. Convenience yield overwhelms cost of carry. Market says the asset is more valuable in your hands today than in storage for future delivery.</p>
+    <div class="diagram">Contango:                    Backwardation:
 Price                         Price
   |                   *         |  * (spot)
-  |              *              |    *
-  |         *                   |         *
-  |    * (spot)                 |              *
+  |              *              |     *
+  |         *                   |          *
+  |    * (spot)                 |               *
   |____________________>        |____________________>
      Time to delivery              Time to delivery</div>
-          <p><strong>Backwardation</strong> is when futures are below spot. Near-dated contracts trade higher than far-dated ones. Curve slopes downward. Happens when convenience yield overwhelms cost of carry. Oil during a supply shock. Natural gas heading into winter with low inventory. The market is saying the asset is more valuable in your hands today than in a warehouse for future delivery.</p>
-          <p><strong>Roll yield.</strong> In contango you sell the expiring contract cheap and buy the next one expensive on every roll. You bleed. In backwardation you collect on every roll. This is why long-term commodity ETFs holding futures can massively underperform spot price in sustained contango.</p>
-          <p><strong>Market signal.</strong> Steep backwardation signals tight current supply or high near-term demand. Steep contango can signal oversupply or weak near-term demand with inventory building.</p>
-        </div>
-      </div>
-    </div>
-  </div>
+    <p><strong>Roll yield:</strong> in contango you sell cheap and buy expensive on every roll, bleeding steadily. In backwardation you collect on every roll. This is why commodity ETFs holding futures can massively underperform spot in sustained contango.</p>
+  </div></div></div>
+</div>
 
-  <div class="qa-block" id="q10">
-    <button class="qa-trigger" aria-expanded="false">
-      <span class="q-num">10</span>
-      <span class="q-text">Why do companies hedge?</span>
-      <svg class="q-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
-    </button>
-    <div class="qa-body">
-      <div class="qa-body-inner">
-        <div class="a-body">
-          <p>To reduce uncertainty around cash flows. Not to make money. To remove a financial variable they cannot control so they can focus on the business they actually run.</p>
-          <p><strong>Airline.</strong> Buys jet fuel constantly. Oil spikes 40%, cost base blows up. They buy oil futures to lock in fuel costs months in advance. Southwest did this well for years and had a structural cost advantage over competitors who did not.</p>
-          <p><strong>US exporter.</strong> Gets paid in euros, converts back to dollars. Dollar strengthens, real revenue falls even though the sale price did not change. They sell EUR/USD forwards to lock in the exchange rate today.</p>
-          <p><strong>Floating rate borrower.</strong> Exposed to rising rates on their debt. They enter an interest rate swap: pay fixed, receive floating. Converts the exposure to a fixed cost.</p>
-          <div class="key-point">
-            <div class="key-point-lbl">Hull's key point</div>
-            <p>Hedging does not guarantee a better outcome than not hedging. If the airline hedges oil at $90 and oil drops to $60, the hedge hurt them ex-post. That is not the point. The point is removing uncertainty so management can plan and operate without a commodity bet sitting inside the business.</p>
-          </div>
-        </div>
-      </div>
+<div class="qa-block" id="q10">
+  <button class="qa-trigger" aria-expanded="false">
+    <span class="q-num">10</span>
+    <span class="q-text">Why do companies hedge?</span>
+    <svg class="q-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+  </button>
+  <div class="qa-body"><div class="qa-body-inner"><div class="a-body">
+    <p>To reduce uncertainty around cash flows. Not to make money. To remove financial variables they cannot control so they can focus on the business they actually run.</p>
+    <p><strong>Airline:</strong> buys oil futures to lock in jet fuel costs. Southwest had a structural cost advantage for years doing this. <strong>US exporter:</strong> sells EUR/USD forwards to lock in exchange rates on euro-denominated revenue. <strong>Floating rate borrower:</strong> enters an interest rate swap to convert variable debt to fixed cost.</p>
+    <div class="key-point">
+      <div class="key-point-lbl">Hull's key point</div>
+      <p>Hedging does not guarantee a better outcome than not hedging. If oil drops after the airline locks in $90, the hedge hurt them ex-post. That is not the point. The point is removing uncertainty so management can plan without a commodity bet embedded in the business.</p>
     </div>
-  </div>
+  </div></div></div>
+</div>
 
-  <div class="qa-block" id="q11">
-    <button class="qa-trigger" aria-expanded="false">
-      <span class="q-num">11</span>
-      <span class="q-text">What are the different order types used by traders and investors?</span>
-      <svg class="q-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
-    </button>
-    <div class="qa-body">
-      <div class="qa-body-inner">
-        <div class="a-body">
-          <p>Instructions to the exchange controlling exactly how your trade executes. The price you get depends heavily on which one you use.</p>
-          <div class="order-grid">
-            <div class="order-item">
-              <div class="order-name">Market Order</div>
-              <div class="order-desc">Execute immediately at best available price. Guaranteed fill, no price control. Slippage risk in thin or fast-moving markets.</div>
-            </div>
-            <div class="order-item">
-              <div class="order-name">Limit Order</div>
-              <div class="order-desc">Execute only at your specified price or better. Price control, no fill guarantee. Sits in the order book until hit or cancelled.</div>
-            </div>
-            <div class="order-item">
-              <div class="order-name">Stop Order</div>
-              <div class="order-desc">Dormant until price hits your trigger, then converts to a market order. Used to cut losses. Risk: in a fast market you fill well past your trigger.</div>
-            </div>
-            <div class="order-item">
-              <div class="order-name">Stop-Limit Order</div>
-              <div class="order-desc">Converts to a limit order at trigger. More price control, less fill certainty. If the market gaps through your limit you do not get filled.</div>
-            </div>
-            <div class="order-item">
-              <div class="order-name">Market-if-Touched (MIT)</div>
-              <div class="order-desc">Opposite of a stop. Triggers at your level and fires a market order. Used to enter on pullbacks or take profits at a target. Hull mentions this for futures markets specifically.</div>
-            </div>
-            <div class="order-item">
-              <div class="order-name">Day Order</div>
-              <div class="order-desc">Expires at end of session if not filled. Default for most orders.</div>
-            </div>
-            <div class="order-item">
-              <div class="order-name">Good-till-Cancelled (GTC)</div>
-              <div class="order-desc">Stays live until you cancel it or it fills. Can sit in the book for weeks.</div>
-            </div>
-            <div class="order-item">
-              <div class="order-name">Fill-or-Kill (FOK)</div>
-              <div class="order-desc">Fill immediately and in full or cancel entirely. Used by institutions where partial fills create more problems than no fill.</div>
-            </div>
-          </div>
-        </div>
-      </div>
+<div class="qa-block" id="q11">
+  <button class="qa-trigger" aria-expanded="false">
+    <span class="q-num">11</span>
+    <span class="q-text">What are the different order types used by traders and investors?</span>
+    <svg class="q-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+  </button>
+  <div class="qa-body"><div class="qa-body-inner"><div class="a-body">
+    <div class="order-grid">
+      <div class="order-item"><div class="order-name">Market Order</div><div class="order-desc">Execute immediately at best available price. Guaranteed fill, no price control. Slippage risk in thin markets.</div></div>
+      <div class="order-item"><div class="order-name">Limit Order</div><div class="order-desc">Execute only at your specified price or better. Price control, no fill guarantee. Sits in the book until hit or cancelled.</div></div>
+      <div class="order-item"><div class="order-name">Stop Order</div><div class="order-desc">Dormant until trigger hit, then fires a market order. Used to cut losses. Risk: fast markets fill well past the trigger.</div></div>
+      <div class="order-item"><div class="order-name">Stop-Limit Order</div><div class="order-desc">Converts to limit order at trigger. More price control, less fill certainty. Gaps through your limit means no fill.</div></div>
+      <div class="order-item"><div class="order-name">Market-if-Touched (MIT)</div><div class="order-desc">Opposite of a stop. Triggers at your level and fires a market order. Used to enter on pullbacks or take profits at a target.</div></div>
+      <div class="order-item"><div class="order-name">Day / GTC / FOK</div><div class="order-desc">Day: expires end of session. GTC: live until cancelled. Fill-or-Kill: fill in full immediately or cancel entirely.</div></div>
     </div>
-  </div>
+  </div></div></div>
+</div>
+
+<!-- ═══════════════════════════════════════
+     SECTION 2: OPTIONS
+════════════════════════════════════════ -->
+<div class="section-label" style="margin-top:3.5rem;">Section 2 — Options</div>
+<div class="section-sub">Ch. 9-17 &nbsp;·&nbsp; 14 questions</div>
+
+<div class="qa-block section-first" id="s2q1">
+  <button class="qa-trigger" aria-expanded="false">
+    <span class="q-num">01</span>
+    <span class="q-text">What's an options contract?</span>
+    <svg class="q-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+  </button>
+  <div class="qa-body"><div class="qa-body-inner"><div class="a-body">
+    <p>An options contract gives the buyer the right, not the obligation, to buy or sell an underlying asset at a fixed price on or before a specific date. The buyer pays a premium upfront. The seller collects the premium and takes on the obligation.</p>
+    <p>Four variables: <strong>underlying</strong> (stock, index, ETF, currency), <strong>strike K</strong> (the price you can buy or sell at), <strong>expiration T</strong> (the date the contract dies), <strong>premium</strong> (what you pay, non-refundable).</p>
+    <p>A <strong>call</strong> gives the right to buy. You want the underlying to go up. A <strong>put</strong> gives the right to sell. You want it to go down.</p>
+    <p>The asymmetry is the whole point. The buyer has a right. The seller has an obligation. That asymmetry has a price and that price is the premium. One US equity options contract covers 100 shares.</p>
+  </div></div></div>
+</div>
+
+<div class="qa-block" id="s2q2">
+  <button class="qa-trigger" aria-expanded="false">
+    <span class="q-num">02</span>
+    <span class="q-text">What's intrinsic value vs time value of options?</span>
+    <svg class="q-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+  </button>
+  <div class="qa-body"><div class="qa-body-inner"><div class="a-body">
+    <div class="formula">Premium = Intrinsic Value + Time Value
+
+Call intrinsic = max(S_0 - K, 0)
+Put intrinsic  = max(K - S_0, 0)</div>
+    <p><strong>Intrinsic value</strong> is what the option is worth if exercised right now. Stock at $50, call K=$45: intrinsic = $5. Cannot go negative. OTM options have zero intrinsic value.</p>
+    <p><strong>Time value</strong> is everything above intrinsic. Stock at $50, call K=$45 trading at $7: intrinsic=$5, time value=$2. The market pays $2 extra because there is still time for the stock to move further.</p>
+    <p>Time value bleeds to zero as expiry approaches. ATM options have maximum time value because they sit on the knife edge where any move matters. On expiry day, premium equals intrinsic value exactly. OTM at expiry is worth zero.</p>
+    <div class="key-point">
+      <div class="key-point-lbl">Practical implication</div>
+      <p>When you buy options you pay for both components. You need the stock to move enough to cover the time value you paid or you lose money even if you called the direction right.</p>
+    </div>
+  </div></div></div>
+</div>
+
+<div class="qa-block" id="s2q3">
+  <button class="qa-trigger" aria-expanded="false">
+    <span class="q-num">03</span>
+    <span class="q-text">What's options margin? How is it different from futures margin?</span>
+    <svg class="q-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+  </button>
+  <div class="qa-body"><div class="qa-body-inner"><div class="a-body">
+    <p>When you <strong>buy</strong> an option, there is no margin. You paid the premium upfront. That is your max loss. Nothing more to collect.</p>
+    <p>Margin only applies when you <strong>write</strong> (sell) options. You have an open-ended obligation. For a naked short call, margin is the greater of:</p>
+    <div class="formula">Option A:  Premium received + 20% of stock price - OTM amount
+Option B:  Premium received + 10% of stock price
+
+Example: stock $50, write call K=$55, premium=$2
+A: $2 + (0.20*$50) - $5 = $7 per share = $700/contract
+B: $2 + (0.10*$50)      = $7 per share</div>
+    <p>Key difference from futures margin: in futures <strong>both sides</strong> post margin because both have unlimited loss potential. In options only the <strong>short side</strong> posts margin. The long side already paid the premium which caps their loss.</p>
+    <p>Covered calls get much lower margin treatment. If you already own the shares, your stock is the collateral and broker margin drops dramatically or disappears.</p>
+  </div></div></div>
+</div>
+
+<div class="qa-block" id="s2q4">
+  <button class="qa-trigger" aria-expanded="false">
+    <span class="q-num">04</span>
+    <span class="q-text">Explain the difference between call and put options.</span>
+    <svg class="q-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+  </button>
+  <div class="qa-body"><div class="qa-body-inner"><div class="a-body">
+    <p>See the interactive diagrams at <strong>options-visualizer.html</strong>. Set S0=$50, K=$50, Premium=$5 on each tab to compare directly.</p>
+    <p><strong>Call:</strong> right to buy at K. Profit when S_T > K + premium. Loss capped at premium below breakeven.</p>
+    <div class="formula">Long Call: P&L = max(S_T - K, 0) - C
+Breakeven = K + C
+Max loss  = C (premium paid)
+Max profit = unlimited</div>
+    <p><strong>Put:</strong> right to sell at K. Profit when S_T &lt; K - premium. Loss capped at premium above breakeven.</p>
+    <div class="formula">Long Put: P&L = max(K - S_T, 0) - P
+Breakeven = K - P
+Max loss  = P (premium paid)
+Max profit = K - P (stock goes to zero)</div>
+    <p>Calls pay when the stock goes up. Puts pay when it goes down. Both have limited downside (the premium) and asymmetric upside. Switch to Short Call and Short Put on the visualizer to see the mirror image: the writer's payoff is the exact inverse.</p>
+  </div></div></div>
+</div>
+
+<div class="qa-block" id="s2q5">
+  <button class="qa-trigger" aria-expanded="false">
+    <span class="q-num">05</span>
+    <span class="q-text">How and why do you exercise options? American vs European style?</span>
+    <svg class="q-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+  </button>
+  <div class="qa-body"><div class="qa-body-inner"><div class="a-body">
+    <p>Exercising means invoking your right. For a call you buy 100 shares at K. For a put you sell 100 shares at K. The writer is obligated to perform. Most brokers auto-exercise any option $0.01 or more ITM at expiry.</p>
+    <div class="formula">Exercise a call when: S_T > K
+Exercise a put when:  S_T < K
+OTM at expiry: let it expire worthless.</div>
+    <p><strong>American options</strong> can be exercised any time before expiry. Most US equity options are American. <strong>European options</strong> can only be exercised on expiry day. Most index options (SPX) are European.</p>
+    <p><strong>Never exercise American calls early</strong> on non-dividend-paying stocks. Exercising kills the time value. Sell the option in the market instead and collect both intrinsic and time value. Only exception: exercise early to capture a large upcoming dividend.</p>
+    <p><strong>Early exercise of puts can make sense.</strong> If the stock crashes near zero, the put is deep ITM and the max payout is K. Collect K now. K today is worth more than K a year from now. Exercise when interest earned on K outweighs remaining time value.</p>
+  </div></div></div>
+</div>
+
+<div class="qa-block" id="s2q6">
+  <button class="qa-trigger" aria-expanded="false">
+    <span class="q-num">06</span>
+    <span class="q-text">Explain covered calls vs protective puts.</span>
+    <svg class="q-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+  </button>
+  <div class="qa-body"><div class="qa-body-inner"><div class="a-body">
+    <p><strong>Covered Call:</strong> own 100 shares + write a call against them. Collect premium, cap your upside at K.</p>
+    <div class="formula">Position = Long Stock + Short Call
+Max profit = (K - S_0) + premium
+Max loss   = S_0 - premium (stock goes to zero)
+Breakeven  = S_0 - premium</div>
+    <p>Stock at $50, sell call K=$55, collect $3. Stock stays below $55: keep $3. Stock rips to $70: called away at $55, make $5 + $3 = $8, miss the move above $55. Use when you think the stock goes sideways or up modestly and want income on a position you already hold.</p>
+    <p><strong>Protective Put:</strong> own 100 shares + buy a put. Pay premium, floor your downside at K.</p>
+    <div class="formula">Position = Long Stock + Long Put
+Max loss   = (S_0 - K) + premium
+Max profit = unlimited minus premium paid
+Breakeven  = S_0 + premium</div>
+    <p>Stock at $50, buy put K=$47, pay $2. Stock crashes to $30: exercise put, sell at $47, max loss = $5. Stock runs to $70: make $20 minus the $2 premium. Insurance. Use before a catalyst or to protect a large unrealized gain.</p>
+    <p>Covered calls generate income, sacrifice upside. Protective puts cost money, eliminate catastrophic downside.</p>
+  </div></div></div>
+</div>
+
+<div class="qa-block" id="s2q7">
+  <button class="qa-trigger" aria-expanded="false">
+    <span class="q-num">07</span>
+    <span class="q-text">Explain put-call parity and how exactly it works.</span>
+    <svg class="q-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+  </button>
+  <div class="qa-body"><div class="qa-body-inner"><div class="a-body">
+    <p>A no-arbitrage relationship between a European call and put with the same strike, expiry, and underlying.</p>
+    <div class="formula">c + K*e^(-rT) = p + S_0</div>
+    <p>Two portfolios that pay max(S_T, K) at expiry must cost the same today. Portfolio A: long call + cash K*e^(-rT). Portfolio B: long put + long stock. Same payoff at every outcome, so same price now.</p>
+    <div class="formula">Example: S_0=$50, K=$50, r=5%, T=1yr, c=$4
+K*e^(-rT) = 50*e^(-0.05) = $47.56
+p = c + K*e^(-rT) - S_0 = $4 + $47.56 - $50 = $1.56
+
+If put trades at $2: buy call + invest $47.56 + short put + short stock.
+Zero cost today, guaranteed profit at expiry. Arbitrage closes the gap.</div>
+    <p>Only holds for European options. For American options Hull gives bounds: S_0 - K &lt;= C - P &lt;= S_0 - K*e^(-rT).</p>
+    <p>Also holds with dividends: replace S_0 with S_0 minus PV of dividends.</p>
+  </div></div></div>
+</div>
+
+<div class="qa-block" id="s2q8">
+  <button class="qa-trigger" aria-expanded="false">
+    <span class="q-num">08</span>
+    <span class="q-text">What are some factors that impact option prices?</span>
+    <svg class="q-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+  </button>
+  <div class="qa-body"><div class="qa-body-inner"><div class="a-body">
+    <p>Six inputs. Hull covers all of them in Chapter 10.</p>
+    <div class="factor-grid">
+      <div class="factor-item"><div class="factor-name">Stock Price S_0</div><div class="factor-row">Call: <span class="up">up</span> &nbsp; Put: <span class="dn">down</span></div></div>
+      <div class="factor-item"><div class="factor-name">Strike K</div><div class="factor-row">Call: <span class="dn">down</span> &nbsp; Put: <span class="up">up</span></div></div>
+      <div class="factor-item"><div class="factor-name">Time to Expiry T</div><div class="factor-row">Call: <span class="up">up</span> &nbsp; Put: <span class="up">up</span></div></div>
+      <div class="factor-item"><div class="factor-name">Volatility sigma</div><div class="factor-row">Call: <span class="up">up</span> &nbsp; Put: <span class="up">up</span></div></div>
+      <div class="factor-item"><div class="factor-name">Risk-free Rate r</div><div class="factor-row">Call: <span class="up">up</span> &nbsp; Put: <span class="dn">down</span></div></div>
+      <div class="factor-item"><div class="factor-name">Dividends</div><div class="factor-row">Call: <span class="dn">down</span> &nbsp; Put: <span class="up">up</span></div></div>
+    </div>
+    <p style="margin-top:.85rem;">Volatility and time move both calls and puts in the same direction. Everything else moves them in opposite directions. Vol is the most watched input on any options desk because it drives both sides simultaneously.</p>
+  </div></div></div>
+</div>
+
+<div class="qa-block" id="s2q9">
+  <button class="qa-trigger" aria-expanded="false">
+    <span class="q-num">09</span>
+    <span class="q-text">What's a call spread? A put spread?</span>
+    <svg class="q-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+  </button>
+  <div class="qa-body"><div class="qa-body-inner"><div class="a-body">
+    <p>Buy one option, sell another of the same type in the same expiry. The sale offsets cost. You give up unlimited upside for a cheaper trade with defined risk and defined reward.</p>
+    <p><strong>Bull Call Spread:</strong> buy lower-strike call (K1), sell higher-strike call (K2).</p>
+    <div class="formula">Example: stock $50, buy call K1=$50 at $4, sell call K2=$55 at $1.50
+Net cost    = $2.50
+Max loss    = $2.50 (stock stays below $50)
+Breakeven   = $52.50
+Max profit  = ($55-$50) - $2.50 = $2.50 (stock above $55)</div>
+    <p><strong>Bear Put Spread:</strong> buy higher-strike put (K2), sell lower-strike put (K1). Mirror image, used when you think the stock goes down moderately.</p>
+    <div class="formula">Example: stock $50, buy put K2=$50 at $3, sell put K1=$45 at $1
+Net cost    = $2.00
+Max loss    = $2.00 (stock stays above $50)
+Breakeven   = $48.00
+Max profit  = ($50-$45) - $2 = $3 (stock below $45)</div>
+    <p>Use spreads when your view is directional but measured. Lower cost, lower breakeven, capped upside.</p>
+  </div></div></div>
+</div>
+
+<div class="qa-block" id="s2q10">
+  <button class="qa-trigger" aria-expanded="false">
+    <span class="q-num">10</span>
+    <span class="q-text">How are butterfly spreads constructed and why are they created?</span>
+    <svg class="q-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+  </button>
+  <div class="qa-body"><div class="qa-body-inner"><div class="a-body">
+    <p>Three strikes, four legs. A bet that the stock stays near K2 at expiry. Buy one call at K1, sell two calls at K2, buy one call at K3. Strikes equally spaced.</p>
+    <div class="formula">Example: stock $50, K1=$45, K2=$50, K3=$55
+Buy  1x Call K1=$45 at $6.00
+Sell 2x Call K2=$50 at $3.00  (collect $6.00)
+Buy  1x Call K3=$55 at $1.00
+Net cost = $1.00
+
+Max profit = (K2-K1) - premium = $5 - $1 = $4  (stock closes at $50)
+Max loss   = $1.00  (stock closes below $45 or above $55)
+Breakevens = $46 and $54</div>
+    <p>The long wings (K1 and K3) cap your max loss. Without them you have a naked short straddle with unlimited downside. With them you lose $1 no matter what.</p>
+    <p>Use when you think the stock is going nowhere. Post-catalyst, vol is elevated, you want to short volatility with defined downside. Maximum payout if the stock closes exactly at K2.</p>
+    <p>Can also be built with puts (same payoff by put-call parity) or as an <strong>iron butterfly</strong>: sell a call and put at K2, buy a call at K3, buy a put at K1. Collects net premium upfront instead of paying it. More capital efficient.</p>
+  </div></div></div>
+</div>
+
+<div class="qa-block" id="s2q11">
+  <button class="qa-trigger" aria-expanded="false">
+    <span class="q-num">11</span>
+    <span class="q-text">What's an options straddle?</span>
+    <svg class="q-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+  </button>
+  <div class="qa-body"><div class="qa-body-inner"><div class="a-body">
+    <p>Buy a call and a put at the same strike and expiry. Zero directional view. You just think the stock moves a lot.</p>
+    <div class="formula">Example: stock $50, buy call K=$50 at $3, buy put K=$50 at $2.50
+Total premium = $5.50
+Max loss      = $5.50 (stock closes exactly at $50)
+Upside BE     = $55.50
+Downside BE   = $44.50
+
+Stock at $60: call pays $10, net = $10 - $5.50 = +$4.50
+Stock at $38: put pays $12, net = $12 - $5.50 = +$6.50
+Stock at $50: both worthless, lose $5.50</div>
+    <p>Classic pre-earnings play. You know a catalyst is coming but not the direction. You are betting the actual move exceeds what the market has priced in.</p>
+    <div class="key-point">
+      <div class="key-point-lbl">Vol crush risk</div>
+      <p>Market makers jack up implied vol before events. After the event vol collapses instantly even if the stock moved. You can be right on the magnitude and still lose because the vol you bought deflated faster than the intrinsic gain you collected. This is called vol crush.</p>
+    </div>
+    <p style="margin-top:.85rem;">A <strong>strangle</strong> is the cheaper version: buy OTM call and OTM put instead. Lower premium, wider breakevens, needs a bigger move to pay off.</p>
+  </div></div></div>
+</div>
+
+<div class="qa-block" id="s2q12">
+  <button class="qa-trigger" aria-expanded="false">
+    <span class="q-num">12</span>
+    <span class="q-text">How exactly do investors price options?</span>
+    <svg class="q-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+  </button>
+  <div class="qa-body"><div class="qa-body-inner"><div class="a-body">
+    <p>Two models. Binomial trees for intuition. Black-Scholes-Merton for closed-form pricing.</p>
+    <p><strong>Binomial tree:</strong> break time into steps. At each step stock goes up by u or down by d. Work backwards from expiry using risk-neutral probabilities. As steps increase, converges to BSM.</p>
+    <div class="formula">Risk-neutral up probability: p = (e^(rT) - d) / (u - d)</div>
+    <p><strong>Black-Scholes-Merton:</strong> assumes geometric Brownian motion. Build a riskless portfolio of option + underlying in the right ratio. Solve the resulting differential equation.</p>
+    <div class="formula">c = S_0*N(d1) - K*e^(-rT)*N(d2)
+p = K*e^(-rT)*N(-d2) - S_0*N(-d1)
+
+d1 = [ln(S_0/K) + (r + sigma^2/2)*T] / (sigma*sqrt(T))
+d2 = d1 - sigma*sqrt(T)
+
+Hull example: S_0=$42, K=$40, r=10%, sigma=20%, T=0.5
+d1=0.7693, d2=0.6278 -> c=$4.76, p=$0.81</div>
+    <p>Four inputs are known (S_0, K, T, r). Sigma is not. Traders back it out from market prices: the sigma that makes BSM equal the market price is implied volatility. Traders price options using implied vol, not historical vol. The market is always forward-looking.</p>
+  </div></div></div>
+</div>
+
+<div class="qa-block" id="s2q13">
+  <button class="qa-trigger" aria-expanded="false">
+    <span class="q-num">13</span>
+    <span class="q-text">What exactly is implied volatility?</span>
+    <svg class="q-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+  </button>
+  <div class="qa-body"><div class="qa-body-inner"><div class="a-body">
+    <p>The volatility number you back out of an option's market price using BSM. The market's forward-looking estimate of how much the stock will move over the life of the option.</p>
+    <div class="formula">Market Price + BSM formula -> solve for sigma -> Implied Vol</div>
+    <p>If you think the stock will move more than implied vol suggests, buy options. You are buying vol cheap. If you think it will move less, sell options. You are selling vol rich. The vol view is the trade.</p>
+    <p><strong>VIX</strong> is the implied vol of 30-day S&P 500 options. Normal range 10-20. Hit 80 in October 2008 after Lehman. Spiked again in March 2020.</p>
+    <p><strong>Vol skew:</strong> BSM assumes vol is constant across strikes. The market disagrees. For equities, OTM puts trade at higher implied vol than OTM calls. The market prices in crash risk. Traders pay up for downside protection.</p>
+    <div class="diagram">Vol Skew (equity):          Vol Smile (FX):
+IV                           IV
+|  *                          |  *           *
+| * *                         |   *         *
+|   * *                       |     *     *
+|       * * *                 |       * *
+|______________> Strike        |______________> Strike
+OTM put  ATM  OTM call        OTM put ATM OTM call</div>
+    <p><strong>Vol crush:</strong> implied vol spikes before known events (earnings, Fed). The moment the event passes, vol collapses even if the stock moved. Buying straddles into earnings can lose money because the vol deflation outweighs the intrinsic gain.</p>
+  </div></div></div>
+</div>
+
+<div class="qa-block" id="s2q14">
+  <button class="qa-trigger" aria-expanded="false">
+    <span class="q-num">14</span>
+    <span class="q-text">Explain the difference between index and currency options.</span>
+    <svg class="q-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+  </button>
+  <div class="qa-body"><div class="qa-body-inner"><div class="a-body">
+    <p>Same option mechanics. Different underlying and different BSM adjustment.</p>
+    <p><strong>Index options</strong> (S&P 500, Nasdaq 100): the index pays continuous dividends across its constituents. Substitute dividend yield q into BSM.</p>
+    <div class="formula">c = S_0*e^(-qT)*N(d1) - K*e^(-rT)*N(d2)
+d1 = [ln(S_0/K) + (r - q + sigma^2/2)*T] / (sigma*sqrt(T))</div>
+    <p>Cash settled (you cannot deliver 500 stocks). Most major index options are European (SPX). SPY options on the ETF are American. Used by portfolio managers to hedge entire equity books in one trade.</p>
+    <p><strong>Currency options</strong> (EUR/USD, GBP/USD): the foreign currency earns interest at rate rf. Substitute rf in place of q. This is the Garman-Kohlhagen model.</p>
+    <div class="formula">c = S_0*e^(-rf*T)*N(d1) - K*e^(-rT)*N(d2)
+d1 = [ln(S_0/K) + (r - rf + sigma^2/2)*T] / (sigma*sqrt(T))</div>
+    <p>S_0 is the spot exchange rate. Trade both on exchanges (PHLX) and heavily OTC because corporations need customized sizes and dates. A US company receiving EUR 10M in six months buys a EUR put to lock in the exchange rate while keeping the ability to benefit if the dollar weakens.</p>
+    <div class="formula">                Index Options       Currency Options
+Underlying      Stock index         Exchange rate
+BSM adjustment  Dividend yield q    Foreign rate rf
+Settlement      Cash                Cash or physical
+Primary use     Portfolio hedging   FX risk management
+Style           Mostly European     Both</div>
+  </div></div></div>
+</div>
 
 </div>
 
 <div class="ref-wrap">
-  <p class="ref-txt">Source: John C. Hull, <em>Options, Futures, and Other Derivatives</em>, 11th ed., Ch. 1-5. Interactive payoff diagrams for options and futures positions are available in the visualizers below.</p>
+  <p class="ref-txt">Source: John C. Hull, <em>Options, Futures, and Other Derivatives</em>, 11th ed. Section 1 covers Ch. 1-5. Section 2 covers Ch. 9-17. Interactive payoff diagrams are available in the visualizers below.</p>
   <div class="viz-links">
     <a class="viz-link" href="./options-visualizer.html">Options Visualizer</a>
     <a class="viz-link" href="./futures-visualizer.html">Futures Visualizer</a>
@@ -429,19 +662,15 @@ Price                         Price
 
 <script>
 (function(){
-  /* Accordion */
   document.querySelectorAll('.qa-trigger').forEach(function(trigger){
     trigger.addEventListener('click', function(){
       var block = trigger.closest('.qa-block');
       var body = block.querySelector('.qa-body');
       var isOpen = block.classList.contains('open');
-
       if(isOpen){
         body.style.maxHeight = body.scrollHeight + 'px';
         requestAnimationFrame(function(){
-          requestAnimationFrame(function(){
-            body.style.maxHeight = '0';
-          });
+          requestAnimationFrame(function(){ body.style.maxHeight = '0'; });
         });
         block.classList.remove('open');
         trigger.setAttribute('aria-expanded','false');
@@ -457,7 +686,6 @@ Price                         Price
     });
   });
 
-  /* Dark mode */
   var html = document.documentElement;
   var toggle = document.getElementById('theme-toggle');
   function applyTheme(dark){
