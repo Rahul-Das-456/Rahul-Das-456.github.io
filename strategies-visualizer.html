@@ -555,13 +555,14 @@ function buildFillRegions(pts,xmin,xmax,ymin,ymax){
   while(i<expanded.length-1){
     var seg=[expanded[i]];
     var profit=expanded[i][1]>=0;
+    if(expanded[i][1]===0&&i+1<expanded.length)profit=expanded[i+1][1]>=0;
     while(i<expanded.length-1){
       var cur=expanded[i],nxt=expanded[i+1];
       seg.push(nxt);
       i++;
       if(i<expanded.length-1){
         var nextProfit=expanded[i][1]>=0;
-        if(nextProfit!==profit)break;
+        if(nextProfit!==profit||expanded[i][1]===0)break;
       }
     }
     // Build closed path: line pts then baseline back
@@ -780,3 +781,4 @@ render();
 </script>
 </body>
 </html>
+
