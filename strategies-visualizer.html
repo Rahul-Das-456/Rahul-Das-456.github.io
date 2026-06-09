@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script>
+  (function(){
+    var s=localStorage.getItem('theme'),p=window.matchMedia('(prefers-color-scheme: dark)').matches;
+    if(s==='dark'||(!s&&p))document.documentElement.setAttribute('data-theme','dark');
+  })();
+</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Option Strategies Visualizer — Rahul Das</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,600;1,8..60,300;1,8..60,400&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --cream:#f8f5f0;--cream-dark:#ede9e2;
+  --navy:#1a3a5c;--navy-mid:#2a5280;--navy-light:#3d6b9a;
+  --ink:#1c1c1e;--ink-mid:#3a3a3c;--ink-light:#6e6e73;
+  --rule:#c8bfb0;--gold:#b8976a;--gold-light:#d4b48a;--white:#ffffff;
+  --serif-display:'Playfair Display',Georgia,serif;
+  --serif-body:'Source Serif 4',Georgia,serif;
+  --mono:'DM Mono','Courier New',monospace;
+}
+[data-theme="dark"]{
+  --cream:#0d1c2e;--cream-dark:#112235;
+  --navy:#c4d4e4;--navy-mid:#a4b8cc;--navy-light:#849cb4;
+  --ink:#ddd8d0;--ink-mid:#bcb8b0;--ink-light:#7c7870;
+  --rule:#1c3048;--gold:#c4a472;--gold-light:#d4b48a;--white:#0d1c2e;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;font-size:16px;}
+body{background:var(--cream);color:var(--ink);font-family:var(--serif-body);font-weight:300;line-height:1.7;-webkit-font-smoothing:antialiased;transition:background .3s,color .3s;}
+
+nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:0 3rem;height:64px;background:rgba(248,245,240,.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--rule);transition:background .3s,border-color .3s;}
+[data-theme="dark"] nav{background:rgba(13,28,46,.95);border-bottom-color:#1c3048;}
+.nav-mark{font-family:var(--serif-display);font-size:1rem;font-weight:600;color:var(--navy);letter-spacing:.02em;text-decoration:none;}
+.nav-links{display:flex;gap:2rem;list-style:none;align-items:center;}
+.nav-links a{font-family:var(--mono);font-size:.72rem;font-weight:300;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-light);text-decoration:none;transition:color .2s;}
+.nav-links a:hover{color:var(--navy);}
+.nav-right{display:flex;align-items:center;gap:.75rem;}
+.nav-back{font-family:var(--mono);font-size:.72rem;font-weight:400;letter-spacing:.1em;text-transform:uppercase;color:var(--white);background:var(--navy);padding:.5rem 1.25rem;text-decoration:none;transition:background .2s;}
+.nav-back:hover{background:var(--navy-mid);}
+.theme-toggle{background:none;border:1px solid var(--rule);color:var(--ink-light);cursor:pointer;padding:.38rem .5rem;display:flex;align-items:center;justify-content:center;line-height:0;transition:color .2s,border-color .2s;}
+.theme-toggle:hover{color:var(--navy);border-color:var(--navy);}
+.icon-sun{display:none;}.icon-moon{display:block;}
+[data-theme="dark"] .icon-moon{display:none;}[data-theme="dark"] .icon-sun{display:block;}
+
+.page-header{padding:9rem 8vw 4rem;border-bottom:1px solid var(--rule);}
+.page-eyebrow{font-family:var(--mono);font-size:.72rem;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);margin-bottom:1rem;}
+.page-title{font-family:var(--serif-display);font-size:clamp(2.5rem,4vw,4rem);font-weight:700;line-height:1.05;color:var(--navy);letter-spacing:-.02em;}
+.page-title em{font-style:italic;font-weight:400;color:var(--navy-light);}
+.page-sub{font-family:var(--serif-body);font-size:1rem;font-weight:300;color:var(--ink-light);margin-top:1rem;max-width:55ch;line-height:1.6;}
+
+.viz-wrap{padding:4rem 8vw 5rem;}
+.type-tabs{display:flex;flex-wrap:wrap;margin-bottom:3rem;border:1px solid var(--rule);width:fit-content;}
+.type-tab{font-family:var(--mono);font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-light);background:none;border:none;border-right:1px solid var(--rule);padding:.65rem 1.2rem;cursor:pointer;transition:background .2s,color .2s;white-space:nowrap;}
+.type-tab:last-child{border-right:none;}
+.type-tab:hover{color:var(--navy);background:var(--cream-dark);}
+.type-tab.active{background:var(--navy);color:var(--white);}
+
+.viz-grid{display:grid;grid-template-columns:260px 1fr;gap:4rem;align-items:start;}
+.controls{border-top:2px solid var(--gold);padding-top:1.5rem;}
+.ctrl-heading{font-family:var(--mono);font-size:.68rem;letter-spacing:.15em;text-transform:uppercase;color:var(--gold);margin-bottom:1.5rem;}
+.ctrl-group{margin-bottom:1.75rem;}
+.ctrl-row{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:.5rem;}
+.ctrl-name{font-family:var(--mono);font-size:.7rem;letter-spacing:.08em;color:var(--ink-mid);text-transform:uppercase;}
+.ctrl-val{font-family:var(--mono);font-size:.92rem;font-weight:400;color:var(--navy);}
+input[type=range]{width:100%;appearance:none;-webkit-appearance:none;height:2px;background:var(--rule);outline:none;cursor:pointer;}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:14px;height:14px;background:var(--navy);border-radius:50%;cursor:pointer;}
+
+.formula-box{margin-top:1.75rem;padding:1.1rem 1.25rem;background:var(--cream-dark);border-left:3px solid var(--gold);}
+.formula-lbl{font-family:var(--mono);font-size:.6rem;letter-spacing:.15em;text-transform:uppercase;color:var(--gold);margin-bottom:.5rem;}
+.formula-txt{font-family:var(--mono);font-size:.75rem;color:var(--navy);line-height:1.9;white-space:pre-line;}
+
+.kpi-grid{display:grid;grid-template-columns:1fr 1fr;gap:.75rem;margin-top:1.5rem;}
+.kpi{padding:.75rem;border:1px solid var(--rule);}
+.kpi-lbl{font-family:var(--mono);font-size:.58rem;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-light);margin-bottom:.2rem;}
+.kpi-val{font-family:var(--mono);font-size:.85rem;font-weight:400;color:var(--navy);}
+.pos{color:#1a5c3a;}.neg{color:#8b2020;}
+[data-theme="dark"] .pos{color:#5db88a;}[data-theme="dark"] .neg{color:#e06060;}
+
+.chart-panel{position:sticky;top:84px;}
+.chart-box{background:var(--cream);border:1px solid var(--rule);padding:1.5rem;}
+.chart-box svg{width:100%;height:auto;display:block;}
+
+.cax{stroke:var(--ink-light);stroke-width:1.5;fill:none;}
+.cgrid{stroke:var(--rule);stroke-width:.5;stroke-dasharray:3,5;fill:none;}
+.czero{stroke:var(--ink-mid);stroke-width:1.5;fill:none;}
+.cpayoff{stroke:var(--navy);stroke-width:3;fill:none;stroke-linecap:round;stroke-linejoin:round;}
+.cpayoff2{stroke:var(--navy-light);stroke-width:1.5;stroke-dasharray:6,4;fill:none;}
+.cs0line{stroke:var(--gold);stroke-width:1.5;stroke-dasharray:6,4;fill:none;}
+.cbe{fill:var(--gold);}
+.cbe2{fill:var(--navy-light);}
+.clbl{font-family:'DM Mono',monospace;font-size:10px;fill:var(--ink-light);}
+.ckelbl{font-family:'DM Mono',monospace;font-size:9px;fill:var(--gold);}
+.caxtitle{font-family:'DM Mono',monospace;font-size:10.5px;fill:var(--ink-light);}
+.cvol{stroke:var(--navy);stroke-width:2.5;fill:none;stroke-linecap:round;stroke-linejoin:round;}
+.cvol-eq{stroke:var(--gold);stroke-width:2;stroke-dasharray:5,4;fill:none;}
+.cvol-fx{stroke:var(--navy-light);stroke-width:2;stroke-dasharray:5,4;fill:none;}
+.legend-line{stroke-width:2.5;}
+
+.desc-box{margin-top:1.75rem;padding:1rem 1.25rem;border:1px solid var(--rule);border-left:3px solid var(--navy-light);}
+.desc-lbl{font-family:var(--mono);font-size:.6rem;letter-spacing:.15em;text-transform:uppercase;color:var(--navy-light);margin-bottom:.4rem;}
+.desc-txt{font-family:var(--serif-body);font-size:.82rem;font-weight:300;color:var(--ink-mid);line-height:1.65;}
+
+.ref-wrap{padding:3rem 8vw 5rem;border-top:1px solid var(--rule);}
+.ref-txt{font-family:var(--mono);font-size:.72rem;letter-spacing:.04em;color:var(--ink-light);line-height:1.75;max-width:65ch;}
+.ref-txt em{font-style:italic;color:var(--ink-mid);}
+.viz-links{display:flex;gap:1rem;margin-top:1.5rem;flex-wrap:wrap;}
+.viz-link{font-family:var(--mono);font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;color:var(--white);background:var(--navy);padding:.55rem 1.25rem;text-decoration:none;transition:background .2s;}
+.viz-link:hover{background:var(--navy-mid);}
+footer{background:var(--navy);padding:2rem 8vw;text-align:center;}
+[data-theme="dark"] footer{background:#071420;}
+.foot-txt{font-family:var(--mono);font-size:.68rem;letter-spacing:.1em;color:rgba(248,245,240,.35);}
+
+@media(max-width:900px){
+  nav{padding:0 1.5rem;}
+  .page-header,.viz-wrap,.ref-wrap{padding-left:1.5rem;padding-right:1.5rem;}
+  .viz-grid{grid-template-columns:1fr;}
+  .chart-panel{position:static;}
+  .type-tab{flex:1;min-width:calc(50% - 1px);}
+  .nav-links{display:none;}
+}
+</style>
+</head>
+<body>
+<nav>
+  <a class="nav-mark" href="./index.html">Rahul Das</a>
+  <ul class="nav-links">
+    <li><a href="./options-visualizer.html">Options</a></li>
+    <li><a href="./futures-visualizer.html">Futures</a></li>
+    <li><a href="./hulls-notes.html">Hull's Notes</a></li>
+  </ul>
+  <div class="nav-right">
+    <button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark mode">
+      <svg class="icon-moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      <svg class="icon-sun" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+    </button>
+    <a class="nav-back" href="./index.html">Back to Portfolio</a>
+  </div>
+</nav>
+
+<div class="page-header">
+  <p class="page-eyebrow">Hull, Ch. 11-12 + 20</p>
+  <h1 class="page-title">Option Strategies<br><em>Visualizer</em></h1>
+  <p class="page-sub">Interactive payoff diagrams for seven core option strategies plus the volatility smile. Adjust sliders to see how each parameter reshapes risk and reward.</p>
+</div>
+
+<div class="viz-wrap">
+  <div class="type-tabs" role="tablist">
+    <button class="type-tab active" data-type="covered-call">Covered Call</button>
+    <button class="type-tab" data-type="protective-put">Protective Put</button>
+    <button class="type-tab" data-type="call-spread">Call Spread</button>
+    <button class="type-tab" data-type="put-spread">Put Spread</button>
+    <button class="type-tab" data-type="butterfly">Butterfly</button>
+    <button class="type-tab" data-type="straddle">Straddle</button>
+    <button class="type-tab" data-type="strangle">Strangle</button>
+    <button class="type-tab" data-type="vol-smile">Vol Smile</button>
+  </div>
+
+  <div class="viz-grid">
+    <div class="controls" id="controls-panel"></div>
+    <div class="chart-panel">
+      <div class="chart-box">
+        <svg id="chart-svg" viewBox="0 0 600 360" xmlns="http://www.w3.org/2000/svg"></svg>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="ref-wrap">
+  <p class="ref-txt">Source: John C. Hull, <em>Options, Futures, and Other Derivatives</em>, 11th ed. Payoffs shown at expiry. Volatility smile illustrates implied vol patterns across strikes for equity (left skew) and FX (symmetric smile) markets.</p>
+  <div class="viz-links">
+    <a class="viz-link" href="./options-visualizer.html">Options Visualizer</a>
+    <a class="viz-link" href="./futures-visualizer.html">Futures Visualizer</a>
+    <a class="viz-link" href="./hulls-notes.html">Hull's Notes</a>
+  </div>
+</div>
+
+<footer><p class="foot-txt">Option Strategies Visualizer &nbsp;&#xb7;&nbsp; Rahul Das &nbsp;&#xb7;&nbsp; rahul-das-456.github.io</p></footer>
+
+<script>
+(function(){
+var NS='http://www.w3.org/2000/svg';
+var W=600,H=360,ML=72,MR=28,MT=24,MB=56,IW=W-ML-MR,IH=H-MT-MB;
+
+function tx(s,xmin,xmax){return ML+(s-xmin)/(xmax-xmin)*IW;}
+function ty(p,ymin,ymax){return MT+(ymax-p)/(ymax-ymin)*IH;}
+function el(tag,attrs){var e=document.createElementNS(NS,tag);for(var k in attrs)e.setAttribute(k,attrs[k]);return e;}
+function txt(x,y,str,cls,anchor){var e=el('text',{x:x,y:y,class:cls,'text-anchor':anchor||'middle'});e.textContent=str;return e;}
+function clamp(v,lo,hi){return Math.max(lo,Math.min(hi,v));}
+
+var state={
+  'covered-call':{s0:50,k:55,c:3},
+  'protective-put':{s0:50,k:47,p:2.5},
+  'call-spread':{s0:50,k1:48,k2:56,net:2.5},
+  'put-spread':{s0:50,k1:44,k2:52,net:2},
+  'butterfly':{s0:50,k1:44,k2:50,k3:56,net:1},
+
+  'strangle':{
+    desc:'Buy an OTM call (K2) and an OTM put (K1) where K1 < S0 < K2. Cheaper than a straddle but needs a bigger move to profit. Good when you expect volatility but want a lower entry cost.',
+    formula:'P&L = max(S_T-K2,0) + max(K1-S_T,0) - (C+P)\nLower BE = K1 - (C+P)\nUpper BE = K2 + (C+P)\nMax loss = -(C+P)  [when K1 < S_T < K2]',
+    sliders:[
+      {key:'s0',label:'Stock Price S\u2080',min:5,max:120,step:1,fmt:function(v){return '$'+v;}},
+      {key:'k1',label:'Put Strike K1 (OTM)',min:5,max:120,step:1,fmt:function(v){return '$'+v;}},
+      {key:'k2',label:'Call Strike K2 (OTM)',min:5,max:120,step:1,fmt:function(v){return '$'+v;}},
+      {key:'c',label:'Call Premium C',min:0.25,max:20,step:0.25,fmt:function(v){return '$'+v.toFixed(2);}},
+      {key:'p',label:'Put Premium P',min:0.25,max:20,step:0.25,fmt:function(v){return '$'+v.toFixed(2);}}
+    ],
+    pnl:function(st,s){return Math.max(st-s.k2,0)+Math.max(s.k1-st,0)-(s.c+s.p);},
+    kpts:function(s,xmin,xmax){var tot=s.c+s.p;return [[xmin,s.k1-tot],[s.k1,-tot],[s.k2,-tot],[xmax,xmax-s.k2-tot]];},
+    kpis:function(s){var tot=s.c+s.p;return {
+      be:'$'+(s.k1-tot).toFixed(2)+' / $'+(s.k2+tot).toFixed(2),
+      pnl_s0:function(){var v=Math.max(s.s0-s.k2,0)+Math.max(s.k1-s.s0,0)-tot;return (v>=0?'+':'')+' $'+Math.abs(v).toFixed(2);}(),
+      mp:'Unlimited',
+      ml:'-$'+tot.toFixed(2)+' between K1 and K2'
+    };}
+  },
+  'straddle':{s0:50,k:50,c:3,p:2.5},
+  'strangle':{s0:50,k1:44,k2:56,c:1.5,p:1.5},
+  'vol-smile':{s0:100,atm:25,skew:-15,curv:10}
+};
+
+var CONFIGS={
+  'covered-call':{
+    desc:'Own 100 shares and sell a call against them. Collect premium, cap upside at the strike. Use when you expect the stock to trade sideways or up modestly.',
+    formula:'P&L = (S_T - S_0) + C - max(S_T - K, 0)\nBreakeven = S_0 - C\nMax profit = (K - S_0) + C\nMax loss  = -(S_0 - C)  [stock to zero]',
+    sliders:[
+      {key:'s0',label:'Stock Price S₀',min:5,max:120,step:1,fmt:function(v){return '$'+v;}},
+      {key:'k',label:'Strike K',min:5,max:120,step:1,fmt:function(v){return '$'+v;}},
+      {key:'c',label:'Call Premium C',min:0.25,max:20,step:0.25,fmt:function(v){return '$'+v.toFixed(2);}}
+    ],
+    pnl:function(st,s){return (st-s.s0)+s.c-Math.max(st-s.k,0);},
+    kpts:function(s,xmin,xmax){return [[xmin,(xmin-s.s0)+s.c],[s.k,(s.k-s.s0)+s.c],[xmax,(s.k-s.s0)+s.c]];},
+    kpis:function(s){return {
+      be:'$'+(s.s0-s.c).toFixed(2),
+      pnl_s0:'$'+s.c.toFixed(2),
+      mp:'$'+(s.k-s.s0+s.c).toFixed(2),
+      ml:'-$'+(s.s0-s.c).toFixed(2)
+    };}
+  },
+  'protective-put':{
+    desc:'Own 100 shares and buy a put for insurance. Pay a premium, floor your downside at the strike. Use before a catalyst or to protect an unrealized gain.',
+    formula:'P&L = (S_T - S_0) - P + max(K - S_T, 0)\nBreakeven = S_0 + P\nMax profit = unlimited - P\nFloor     = K - S_0 - P',
+    sliders:[
+      {key:'s0',label:'Stock Price S₀',min:5,max:120,step:1,fmt:function(v){return '$'+v;}},
+      {key:'k',label:'Put Strike K',min:5,max:120,step:1,fmt:function(v){return '$'+v;}},
+      {key:'p',label:'Put Premium P',min:0.25,max:20,step:0.25,fmt:function(v){return '$'+v.toFixed(2);}}
+    ],
+    pnl:function(st,s){return (st-s.s0)-s.p+Math.max(s.k-st,0);},
+    kpts:function(s,xmin,xmax){var floor=s.k-s.s0-s.p;return [[xmin,floor],[s.k,floor],[xmax,(xmax-s.s0)-s.p]];},
+    kpis:function(s){return {
+      be:'$'+(s.s0+s.p).toFixed(2),
+      pnl_s0:'-$'+s.p.toFixed(2),
+      mp:'Unlimited',
+      ml:'$'+(s.k-s.s0-s.p).toFixed(2)+(s.k-s.s0-s.p<0?' (loss)':' (gain)')
+    };}
+  },
+  'call-spread':{
+    desc:'Buy a lower-strike call and sell a higher-strike call. Reduces cost vs buying a call outright. Caps upside at K2. Use when you have a moderate bullish view.',
+    formula:'P&L = max(S_T-K1,0) - max(S_T-K2,0) - net\nBreakeven = K1 + net premium\nMax profit = (K2 - K1) - net\nMax loss  = -net premium',
+    sliders:[
+      {key:'s0',label:'Stock Price S₀',min:5,max:120,step:1,fmt:function(v){return '$'+v;}},
+      {key:'k1',label:'Lower Strike K1',min:5,max:120,step:1,fmt:function(v){return '$'+v;}},
+      {key:'k2',label:'Upper Strike K2',min:5,max:120,step:1,fmt:function(v){return '$'+v;}},
+      {key:'net',label:'Net Premium',min:0.25,max:20,step:0.25,fmt:function(v){return '$'+v.toFixed(2);}}
+    ],
+    pnl:function(st,s){return Math.max(st-s.k1,0)-Math.max(st-s.k2,0)-s.net;},
+    kpts:function(s,xmin,xmax){var mp=s.k2-s.k1-s.net;return [[xmin,-s.net],[s.k1,-s.net],[s.k2,mp],[xmax,mp]];},
+    kpis:function(s){return {
+      be:'$'+(s.k1+s.net).toFixed(2),
+      pnl_s0:function(){var v=Math.max(s.s0-s.k1,0)-Math.max(s.s0-s.k2,0)-s.net;return (v>=0?'+':'')+' $'+Math.abs(v).toFixed(2);}(),
+      mp:'$'+(s.k2-s.k1-s.net).toFixed(2),
+      ml:'-$'+s.net.toFixed(2)
+    };}
+  },
+  'put-spread':{
+    desc:'Buy a higher-strike put and sell a lower-strike put. Reduces cost vs buying a put outright. Caps downside profit at K1. Use when you have a moderate bearish view.',
+    formula:'P&L = max(K2-S_T,0) - max(K1-S_T,0) - net\nBreakeven = K2 - net premium\nMax profit = (K2 - K1) - net\nMax loss  = -net premium',
+    sliders:[
+      {key:'s0',label:'Stock Price S₀',min:5,max:120,step:1,fmt:function(v){return '$'+v;}},
+      {key:'k1',label:'Lower Strike K1',min:5,max:120,step:1,fmt:function(v){return '$'+v;}},
+      {key:'k2',label:'Upper Strike K2',min:5,max:120,step:1,fmt:function(v){return '$'+v;}},
+      {key:'net',label:'Net Premium',min:0.25,max:20,step:0.25,fmt:function(v){return '$'+v.toFixed(2);}}
+    ],
+    pnl:function(st,s){return Math.max(s.k2-st,0)-Math.max(s.k1-st,0)-s.net;},
+    kpts:function(s,xmin,xmax){var mp=s.k2-s.k1-s.net;return [[xmin,mp],[s.k1,mp],[s.k2,-s.net],[xmax,-s.net]];},
+    kpis:function(s){return {
+      be:'$'+(s.k2-s.net).toFixed(2),
+      pnl_s0:function(){var v=Math.max(s.k2-s.s0,0)-Math.max(s.k1-s.s0,0)-s.net;return (v>=0?'+':'')+' $'+Math.abs(v).toFixed(2);}(),
+      mp:'$'+(s.k2-s.k1-s.net).toFixed(2),
+      ml:'-$'+s.net.toFixed(2)
+    };}
+  },
+  'butterfly':{
+    desc:'Long K1 call + short 2x K2 calls + long K3 call. Profits when stock stays near K2. Low cost, defined max loss. A short-vol bet with protected wings.',
+    formula:'P&L = max(S_T-K1,0) - 2*max(S_T-K2,0) + max(S_T-K3,0) - net\nMax profit = (K2 - K1) - net  [at S_T = K2]\nMax loss  = -net premium\nBE upper  = K3 - net | BE lower = K1 + net',
+    sliders:[
+      {key:'s0',label:'Stock Price S₀',min:5,max:120,step:1,fmt:function(v){return '$'+v;}},
+      {key:'k1',label:'Lower Wing K1',min:5,max:120,step:1,fmt:function(v){return '$'+v;}},
+      {key:'k2',label:'Center Strike K2',min:5,max:120,step:1,fmt:function(v){return '$'+v;}},
+      {key:'k3',label:'Upper Wing K3',min:5,max:120,step:1,fmt:function(v){return '$'+v;}},
+      {key:'net',label:'Net Premium',min:0.25,max:15,step:0.25,fmt:function(v){return '$'+v.toFixed(2);}}
+    ],
+    pnl:function(st,s){return Math.max(st-s.k1,0)-2*Math.max(st-s.k2,0)+Math.max(st-s.k3,0)-s.net;},
+    kpts:function(s,xmin,xmax){return [[xmin,-s.net],[s.k1,-s.net],[s.k2,s.k2-s.k1-s.net],[s.k3,-s.net],[xmax,-s.net]];},
+    kpis:function(s){return {
+      be:'$'+(s.k1+s.net).toFixed(2)+' / $'+(s.k3-s.net).toFixed(2),
+      pnl_s0:function(){var v=Math.max(s.s0-s.k1,0)-2*Math.max(s.s0-s.k2,0)+Math.max(s.s0-s.k3,0)-s.net;return (v>=0?'+':'')+' $'+Math.abs(v).toFixed(2);}(),
+      mp:'$'+(s.k2-s.k1-s.net).toFixed(2)+' at K2',
+      ml:'-$'+s.net.toFixed(2)
+    };}
+  },
+
+  'strangle':{
+    desc:'Buy an OTM call (K2) and an OTM put (K1) where K1 < S0 < K2. Cheaper than a straddle but needs a bigger move to profit. Good when you expect volatility but want a lower entry cost.',
+    formula:'P&L = max(S_T-K2,0) + max(K1-S_T,0) - (C+P)\nLower BE = K1 - (C+P)\nUpper BE = K2 + (C+P)\nMax loss = -(C+P)  [when K1 < S_T < K2]',
+    sliders:[
+      {key:'s0',label:'Stock Price S\u2080',min:5,max:120,step:1,fmt:function(v){return '$'+v;}},
+      {key:'k1',label:'Put Strike K1 (OTM)',min:5,max:120,step:1,fmt:function(v){return '$'+v;}},
+      {key:'k2',label:'Call Strike K2 (OTM)',min:5,max:120,step:1,fmt:function(v){return '$'+v;}},
+      {key:'c',label:'Call Premium C',min:0.25,max:20,step:0.25,fmt:function(v){return '$'+v.toFixed(2);}},
+      {key:'p',label:'Put Premium P',min:0.25,max:20,step:0.25,fmt:function(v){return '$'+v.toFixed(2);}}
+    ],
+    pnl:function(st,s){return Math.max(st-s.k2,0)+Math.max(s.k1-st,0)-(s.c+s.p);},
+    kpts:function(s,xmin,xmax){var tot=s.c+s.p;return [[xmin,s.k1-tot],[s.k1,-tot],[s.k2,-tot],[xmax,xmax-s.k2-tot]];},
+    kpis:function(s){var tot=s.c+s.p;return {
+      be:'$'+(s.k1-tot).toFixed(2)+' / $'+(s.k2+tot).toFixed(2),
+      pnl_s0:function(){var v=Math.max(s.s0-s.k2,0)+Math.max(s.k1-s.s0,0)-tot;return (v>=0?'+':'')+' $'+Math.abs(v).toFixed(2);}(),
+      mp:'Unlimited',
+      ml:'-$'+tot.toFixed(2)+' between K1 and K2'
+    };}
+  },
+  'straddle':{
+    desc:'Buy a call and put at the same strike. No directional view. You profit if the stock moves a lot in either direction. Classic pre-earnings trade.',
+    formula:'P&L = max(S_T-K,0) + max(K-S_T,0) - (C+P)\nUpper BE = K + C + P\nLower BE = K - (C+P)\nMax loss = -(C+P)  [at S_T = K]',
+    sliders:[
+      {key:'s0',label:'Stock Price S₀',min:5,max:120,step:1,fmt:function(v){return '$'+v;}},
+      {key:'k',label:'Strike K',min:5,max:120,step:1,fmt:function(v){return '$'+v;}},
+      {key:'c',label:'Call Premium C',min:0.25,max:20,step:0.25,fmt:function(v){return '$'+v.toFixed(2);}},
+      {key:'p',label:'Put Premium P',min:0.25,max:20,step:0.25,fmt:function(v){return '$'+v.toFixed(2);}}
+    ],
+    pnl:function(st,s){return Math.max(st-s.k,0)+Math.max(s.k-st,0)-(s.c+s.p);},
+    kpts:function(s,xmin,xmax){var tot=s.c+s.p;return [[xmin,s.k-xmin-tot],[s.k,-tot],[xmax,xmax-s.k-tot]];},
+    kpis:function(s){var tot=s.c+s.p;return {
+      be:'$'+(s.k-tot).toFixed(2)+' / $'+(s.k+tot).toFixed(2),
+      pnl_s0:function(){var v=Math.max(s.s0-s.k,0)+Math.max(s.k-s.s0,0)-tot;return (v>=0?'+':'')+' $'+Math.abs(v).toFixed(2);}(),
+      mp:'Unlimited',
+      ml:'-$'+tot.toFixed(2)+' at K'
+    };}
+  }
+};
+
+var ACTIVE='covered-call';
+
+function buildControls(type){
+  var panel=document.getElementById('controls-panel');
+  panel.innerHTML='';
+
+  if(type==='vol-smile'){buildVolControls(panel);return;}
+
+  var cfg=CONFIGS[type];
+  var s=state[type];
+
+  var hdg=document.createElement('div');
+  hdg.className='ctrl-heading';hdg.textContent='Parameters';panel.appendChild(hdg);
+
+  cfg.sliders.forEach(function(sl){
+    var grp=document.createElement('div');grp.className='ctrl-group';
+    var row=document.createElement('div');row.className='ctrl-row';
+    var nm=document.createElement('span');nm.className='ctrl-name';nm.textContent=sl.label;
+    var vl=document.createElement('span');vl.className='ctrl-val';vl.id='v-'+sl.key;vl.textContent=sl.fmt(s[sl.key]);
+    row.appendChild(nm);row.appendChild(vl);
+    var inp=document.createElement('input');
+    inp.type='range';inp.min=sl.min;inp.max=sl.max;inp.step=sl.step;inp.value=s[sl.key];
+    inp.id='s-'+sl.key;
+    inp.addEventListener('input',function(){
+      s[sl.key]=+inp.value;
+      document.getElementById('v-'+sl.key).textContent=sl.fmt(s[sl.key]);
+      render();
+    });
+    grp.appendChild(row);grp.appendChild(inp);panel.appendChild(grp);
+  });
+
+  var fb=document.createElement('div');fb.className='formula-box';
+  var fl=document.createElement('div');fl.className='formula-lbl';fl.textContent='Payoff at Expiry';
+  var ft=document.createElement('div');ft.className='formula-txt';ft.id='formula-txt';ft.textContent=cfg.formula;
+  fb.appendChild(fl);fb.appendChild(ft);panel.appendChild(fb);
+
+  var kg=document.createElement('div');kg.className='kpi-grid';
+  [['kpi-be','Breakeven'],['kpi-pnl','P&L at S₀'],['kpi-mp','Max Profit'],['kpi-ml','Max Loss']].forEach(function(pair){
+    var k=document.createElement('div');k.className='kpi';
+    var l=document.createElement('div');l.className='kpi-lbl';l.textContent=pair[1];
+    var v=document.createElement('div');v.className='kpi-val';v.id=pair[0];
+    k.appendChild(l);k.appendChild(v);kg.appendChild(k);
+  });
+  panel.appendChild(kg);
+
+  var db=document.createElement('div');db.className='desc-box';
+  var dl=document.createElement('div');dl.className='desc-lbl';dl.textContent='Strategy note';
+  var dt=document.createElement('div');dt.className='desc-txt';dt.textContent=cfg.desc;
+  db.appendChild(dl);db.appendChild(dt);panel.appendChild(db);
+}
+
+function buildVolControls(panel){
+  var hdg=document.createElement('div');hdg.className='ctrl-heading';hdg.textContent='Parameters';panel.appendChild(hdg);
+  var s=state['vol-smile'];
+  var sliders=[
+    {key:'s0',label:'Spot Price S₀',min:50,max:150,step:5,fmt:function(v){return '$'+v;}},
+    {key:'atm',label:'ATM Implied Vol',min:5,max:80,step:1,fmt:function(v){return v+'%';}},
+    {key:'skew',label:'Skew (equity: negative)',min:-40,max:40,step:1,fmt:function(v){return (v>=0?'+':'')+v+'%/unit';}},
+    {key:'curv',label:'Curvature (smile width)',min:0,max:40,step:1,fmt:function(v){return v+'%/unit\xb2';}}
+  ];
+  sliders.forEach(function(sl){
+    var grp=document.createElement('div');grp.className='ctrl-group';
+    var row=document.createElement('div');row.className='ctrl-row';
+    var nm=document.createElement('span');nm.className='ctrl-name';nm.textContent=sl.label;
+    var vl=document.createElement('span');vl.className='ctrl-val';vl.id='v-'+sl.key;vl.textContent=sl.fmt(s[sl.key]);
+    row.appendChild(nm);row.appendChild(vl);
+    var inp=document.createElement('input');
+    inp.type='range';inp.min=sl.min;inp.max=sl.max;inp.step=sl.step;inp.value=s[sl.key];
+    inp.id='s-'+sl.key;
+    inp.addEventListener('input',function(){
+      s[sl.key]=+inp.value;
+      document.getElementById('v-'+sl.key).textContent=sl.fmt(s[sl.key]);
+      render();
+    });
+    grp.appendChild(row);grp.appendChild(inp);panel.appendChild(grp);
+  });
+
+  var db=document.createElement('div');db.className='desc-box';
+  var dl=document.createElement('div');dl.className='desc-lbl';dl.textContent='What you are seeing';
+  var dt=document.createElement('div');dt.className='desc-txt';
+  dt.textContent='Implied vol plotted against strike. The equity curve (navy) shows the typical left skew: OTM puts trade at higher IV than OTM calls. The FX curve (dashed gold) shows a symmetric smile. The BSM assumption of flat IV (dashed light) is shown for reference.';
+  db.appendChild(dl);db.appendChild(dt);panel.appendChild(db);
+}
+
+function updateKPIs(type){
+  var cfg=CONFIGS[type];
+  if(!cfg)return;
+  var s=state[type];
+  var kpis=cfg.kpis(s);
+  var beEl=document.getElementById('kpi-be');
+  var pnlEl=document.getElementById('kpi-pnl');
+  var mpEl=document.getElementById('kpi-mp');
+  var mlEl=document.getElementById('kpi-ml');
+  if(beEl)beEl.textContent=kpis.be;
+  if(pnlEl){
+    pnlEl.textContent=kpis.pnl_s0;
+    var pv=parseFloat(kpis.pnl_s0.replace(/[^0-9.\-]/g,''));
+    pnlEl.className='kpi-val '+(kpis.pnl_s0.charAt(0)==='-'?'neg':'pos');
+  }
+  if(mpEl){mpEl.textContent=kpis.mp;mpEl.className='kpi-val pos';}
+  if(mlEl){mlEl.textContent=kpis.ml;mlEl.className='kpi-val neg';}
+}
+
+function drawPayoff(type){
+  var cfg=CONFIGS[type];
+  var s=state[type];
+  var svg=document.getElementById('chart-svg');
+  while(svg.firstChild)svg.removeChild(svg.firstChild);
+
+  var allK=[s.s0];
+  if(s.k)allK.push(s.k);
+  if(s.k1)allK.push(s.k1);
+  if(s.k2)allK.push(s.k2);
+  if(s.k3)allK.push(s.k3);
+  var maxK=Math.max.apply(null,allK);
+  var xmin=0,xmax=Math.max(maxK*2.2,s.s0*1.8,80);
+  var pts=cfg.kpts(s,xmin,xmax);
+  var ys=pts.map(function(p){return p[1];});
+  var rawmax=Math.max.apply(null,ys),rawmin=Math.min.apply(null,ys);
+  var pad=Math.max(Math.abs(rawmax),Math.abs(rawmin))*0.3;
+  var ymax=rawmax+pad,ymin=rawmin-pad;
+
+  for(var i=0;i<=4;i++){
+    var gp=ymin+(ymax-ymin)*(i/4);
+    var gy=ty(gp,ymin,ymax);
+    svg.appendChild(el('line',{x1:ML,y1:gy,x2:ML+IW,y2:gy,class:'cgrid'}));
+    svg.appendChild(txt(ML-7,gy+3.5,(gp>=0?'+':'')+gp.toFixed(1),'clbl','end'));
+  }
+
+  var y0=ty(0,ymin,ymax);
+  svg.appendChild(el('line',{x1:ML,y1:y0,x2:ML+IW,y2:y0,class:'czero'}));
+  svg.appendChild(el('line',{x1:ML,y1:MT,x2:ML,y2:MT+IH,class:'cax'}));
+  svg.appendChild(el('line',{x1:ML,y1:MT+IH,x2:ML+IW,y2:MT+IH,class:'cax'}));
+  svg.appendChild(txt(ML+5,y0-6,'0','clbl','start'));
+
+  // S0 marker
+  var xS0=tx(s.s0,xmin,xmax);
+  if(xS0>=ML&&xS0<=ML+IW){
+    svg.appendChild(el('line',{x1:xS0,y1:MT,x2:xS0,y2:MT+IH,class:'cs0line'}));
+    svg.appendChild(txt(xS0,MT+IH+28,'S₀=$'+s.s0,'clbl','middle'));
+  }
+
+  // Strike tick labels
+  var strikes=[];
+  if(s.k)strikes.push({v:s.k,lbl:'K=$'+s.k});
+  if(s.k1)strikes.push({v:s.k1,lbl:'K1=$'+s.k1});
+  if(s.k2)strikes.push({v:s.k2,lbl:'K2=$'+s.k2});
+  if(s.k3)strikes.push({v:s.k3,lbl:'K3=$'+s.k3});
+  strikes.forEach(function(sk){
+    var xk=tx(sk.v,xmin,xmax);
+    svg.appendChild(el('line',{x1:xk,y1:MT+IH,x2:xk,y2:MT+IH+5,class:'cax'}));
+    svg.appendChild(txt(xk,MT+IH+16,sk.lbl,'clbl','middle'));
+  });
+
+  // Payoff path
+  var d='';
+  pts.forEach(function(pt,i){
+    var cx=tx(pt[0],xmin,xmax),cy=ty(clamp(pt[1],ymin,ymax),ymin,ymax);
+    d+=(i===0?'M':'L')+cx.toFixed(2)+','+cy.toFixed(2)+' ';
+  });
+  svg.appendChild(el('path',{d:d,class:'cpayoff'}));
+
+  // Breakeven dots
+  for(var i=0;i<pts.length-1;i++){
+    var p1=pts[i],p2=pts[i+1];
+    if((p1[1]<=0&&p2[1]>=0)||(p1[1]>=0&&p2[1]<=0)){
+      var t2=-p1[1]/(p2[1]-p1[1]);
+      var bex2=p1[0]+t2*(p2[0]-p1[0]);
+      var bexPx=tx(bex2,xmin,xmax);
+      svg.appendChild(el('circle',{cx:bexPx,cy:y0,r:5,class:'cbe'}));
+      svg.appendChild(txt(bexPx,y0-10,'BE','ckelbl','middle'));
+    }
+  }
+
+  svg.appendChild(txt(ML+IW/2,H-6,'Stock Price at Expiry  S_T ($)','caxtitle','middle'));
+  var yt=el('text',{x:13,y:MT+IH/2,class:'caxtitle','text-anchor':'middle',transform:'rotate(-90,13,'+(MT+IH/2)+')'});
+  yt.textContent='Profit / Loss ($)';svg.appendChild(yt);
+}
+
+function drawVolSmile(){
+  var s=state['vol-smile'];
+  var svg=document.getElementById('chart-svg');
+  while(svg.firstChild)svg.removeChild(svg.firstChild);
+
+  var xmin=s.s0*0.6,xmax=s.s0*1.4;
+  var npts=120;
+
+  function ivEq(k){var m=(k-s.s0)/s.s0;return s.atm+s.skew*m+s.curv*m*m;}
+  function ivFX(k){var m=(k-s.s0)/s.s0;return s.atm+s.curv*m*m;}
+  function ivFlat(){return s.atm;}
+
+  var allIV=[];
+  for(var i=0;i<=npts;i++){var k=xmin+(xmax-xmin)*(i/npts);allIV.push(ivEq(k),ivFX(k));}
+  var ymin=Math.max(0,Math.min.apply(null,allIV)*0.88);
+  var ymax=Math.max.apply(null,allIV)*1.12;
+
+  for(var gi=0;gi<=4;gi++){
+    var gp=ymin+(ymax-ymin)*(gi/4);
+    var gy=ty(gp,ymin,ymax);
+    svg.appendChild(el('line',{x1:ML,y1:gy,x2:ML+IW,y2:gy,class:'cgrid'}));
+    svg.appendChild(txt(ML-7,gy+3.5,gp.toFixed(0)+'%','clbl','end'));
+  }
+
+  svg.appendChild(el('line',{x1:ML,y1:MT,x2:ML,y2:MT+IH,class:'cax'}));
+  svg.appendChild(el('line',{x1:ML,y1:MT+IH,x2:ML+IW,y2:MT+IH,class:'cax'}));
+
+  // ATM marker
+  var xAtm=tx(s.s0,xmin,xmax);
+  svg.appendChild(el('line',{x1:xAtm,y1:MT,x2:xAtm,y2:MT+IH,class:'cs0line'}));
+  svg.appendChild(txt(xAtm,MT+IH+16,'ATM','clbl','middle'));
+
+  // BSM flat line
+  var flatY=ty(s.atm,ymin,ymax);
+  svg.appendChild(el('line',{x1:ML,y1:flatY,x2:ML+IW,y2:flatY,class:'cpayoff2'}));
+
+  // Equity curve
+  function buildPath(fn){
+    var d='';
+    for(var i=0;i<=npts;i++){
+      var k=xmin+(xmax-xmin)*(i/npts);
+      var iv=fn(k);
+      var cx=tx(k,xmin,xmax),cy=ty(clamp(iv,ymin,ymax),ymin,ymax);
+      d+=(i===0?'M':'L')+cx.toFixed(2)+','+cy.toFixed(2)+' ';
+    }
+    return d;
+  }
+  svg.appendChild(el('path',{d:buildPath(ivEq),class:'cvol'}));
+  svg.appendChild(el('path',{d:buildPath(ivFX),class:'cvol-fx'}));
+
+  // Legend
+  var lx=ML+IW-120,ly=MT+18;
+  svg.appendChild(el('line',{x1:lx,y1:ly,x2:lx+24,y2:ly,class:'cvol legend-line',stroke:'var(--navy)','stroke-width':2.5}));
+  svg.appendChild(txt(lx+28,ly+4,'Equity skew','clbl','start'));
+  svg.appendChild(el('line',{x1:lx,y1:ly+16,x2:lx+24,y2:ly+16,class:'cvol-fx legend-line','stroke-dasharray':'5,4'}));
+  svg.appendChild(txt(lx+28,ly+20,'FX smile','clbl','start'));
+  svg.appendChild(el('line',{x1:lx,y1:ly+32,x2:lx+24,y2:ly+32,class:'cpayoff2 legend-line'}));
+  svg.appendChild(txt(lx+28,ly+36,'BSM (flat)','clbl','start'));
+
+  svg.appendChild(txt(ML+IW/2,H-6,'Strike Price K ($)','caxtitle','middle'));
+  var yt=el('text',{x:13,y:MT+IH/2,class:'caxtitle','text-anchor':'middle',transform:'rotate(-90,13,'+(MT+IH/2)+')'});
+  yt.textContent='Implied Volatility (%)';svg.appendChild(yt);
+}
+
+function render(){
+  if(ACTIVE==='vol-smile'){drawVolSmile();return;}
+  drawPayoff(ACTIVE);
+  updateKPIs(ACTIVE);
+}
+
+document.querySelectorAll('.type-tab').forEach(function(tab){
+  tab.addEventListener('click',function(){
+    document.querySelectorAll('.type-tab').forEach(function(t){t.classList.remove('active');});
+    tab.classList.add('active');
+    ACTIVE=tab.dataset.type;
+    buildControls(ACTIVE);
+    render();
+  });
+});
+
+// Dark mode
+var html=document.documentElement,toggle=document.getElementById('theme-toggle');
+function applyTheme(dark){html.setAttribute('data-theme',dark?'dark':'light');localStorage.setItem('theme',dark?'dark':'light');}
+var saved=localStorage.getItem('theme'),sysDark=window.matchMedia('(prefers-color-scheme: dark)').matches;
+applyTheme(saved?saved==='dark':sysDark);
+toggle.addEventListener('click',function(){applyTheme(html.getAttribute('data-theme')!=='dark');});
+window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change',function(e){if(!localStorage.getItem('theme'))applyTheme(e.matches);});
+
+buildControls(ACTIVE);
+render();
+})();
+</script>
+</body>
+</html>
