@@ -150,7 +150,11 @@ footer{background:var(--navy);padding:2rem 8vw;text-align:center;}
 
 <div class="viz-wrap">
   <div class="type-tabs" role="tablist">
-    <button class="type-tab active" data-type="covered-call">Covered Call</button>
+    <button class="type-tab active" data-type="long-call">Long Call</button>
+    <button class="type-tab" data-type="short-call">Short Call</button>
+    <button class="type-tab" data-type="long-put">Long Put</button>
+    <button class="type-tab" data-type="short-put">Short Put</button>
+    <button class="type-tab" data-type="covered-call">Covered Call</button>
     <button class="type-tab" data-type="protective-put">Protective Put</button>
     <button class="type-tab" data-type="call-spread">Call Spread</button>
     <button class="type-tab" data-type="put-spread">Put Spread</button>
@@ -193,6 +197,10 @@ function txt(x,y,str,cls,anchor){var e=el('text',{x:x,y:y,class:cls,'text-anchor
 function clamp(v,lo,hi){return Math.max(lo,Math.min(hi,v));}
 
 var state={
+  'long-call':{s0:50,k:52,c:3},
+  'short-call':{s0:50,k:52,c:3},
+  'long-put':{s0:50,k:48,p:2.5},
+  'short-put':{s0:50,k:48,p:2.5},
   'covered-call':{s0:50,k:55,c:3},
   'protective-put':{s0:50,k:47,p:2.5},
   'call-spread':{s0:50,k1:48,k2:56,net:2.5},
@@ -224,6 +232,74 @@ var state={
 };
 
 var CONFIGS={
+  'long-call':{
+    desc:'Buy one call. Pay the premium upfront. Profit if the stock rises above breakeven. Maximum loss is limited to the premium paid — unlimited upside.',
+    formula:'P&L = max(S_T - K, 0) - C\nBreakeven = K + C\nMax profit = Unlimited\nMax loss  = -C',
+    sliders:[
+      {key:'s0',label:'Stock Price S₀',min:5,max:120,step:1,fmt:function(v){return '$'+v;}},
+      {key:'k',label:'Strike K',min:5,max:120,step:1,fmt:function(v){return '$'+v;}},
+      {key:'c',label:'Call Premium C',min:0.25,max:20,step:0.25,fmt:function(v){return '$'+v.toFixed(2);}}
+    ],
+    pnl:function(st,s){return Math.max(st-s.k,0)-s.c;},
+    kpts:function(s,xmin,xmax){return [[xmin,-s.c],[s.k,-s.c],[xmax,xmax-s.k-s.c]];},
+    kpis:function(s){return {
+      be:'$'+(s.k+s.c).toFixed(2),
+      pnl_s0:(function(){var v=Math.max(s.s0-s.k,0)-s.c;return (v>=0?'+':'')+' $'+Math.abs(v).toFixed(2);})(),
+      mp:'Unlimited',
+      ml:'-$'+s.c.toFixed(2)
+    };}
+  },
+  'short-call':{
+    desc:'Sell one call. Collect the premium upfront. Profit if the stock stays below the strike. Unlimited loss if the stock rallies — only suitable for hedged or covered positions.',
+    formula:'P&L = C - max(S_T - K, 0)\nBreakeven = K + C\nMax profit = +C\nMax loss  = Unlimited',
+    sliders:[
+      {key:'s0',label:'Stock Price S₀',min:5,max:120,step:1,fmt:function(v){return '$'+v;}},
+      {key:'k',label:'Strike K',min:5,max:120,step:1,fmt:function(v){return '$'+v;}},
+      {key:'c',label:'Call Premium C',min:0.25,max:20,step:0.25,fmt:function(v){return '$'+v.toFixed(2);}}
+    ],
+    pnl:function(st,s){return s.c-Math.max(st-s.k,0);},
+    kpts:function(s,xmin,xmax){return [[xmin,s.c],[s.k,s.c],[xmax,s.c-(xmax-s.k)]];},
+    kpis:function(s){return {
+      be:'$'+(s.k+s.c).toFixed(2),
+      pnl_s0:(function(){var v=s.c-Math.max(s.s0-s.k,0);return (v>=0?'+':'')+' $'+Math.abs(v).toFixed(2);})(),
+      mp:'+$'+s.c.toFixed(2),
+      ml:'Unlimited'
+    };}
+  },
+  'long-put':{
+    desc:'Buy one put. Pay the premium upfront. Profit if the stock falls below breakeven. Maximum loss is limited to the premium — maximum gain capped at the strike (stock to zero).',
+    formula:'P&L = max(K - S_T, 0) - P\nBreakeven = K - P\nMax profit = K - P  (stock → 0)\nMax loss  = -P',
+    sliders:[
+      {key:'s0',label:'Stock Price S₀',min:5,max:120,step:1,fmt:function(v){return '$'+v;}},
+      {key:'k',label:'Strike K',min:5,max:120,step:1,fmt:function(v){return '$'+v;}},
+      {key:'p',label:'Put Premium P',min:0.25,max:20,step:0.25,fmt:function(v){return '$'+v.toFixed(2);}}
+    ],
+    pnl:function(st,s){return Math.max(s.k-st,0)-s.p;},
+    kpts:function(s,xmin,xmax){return [[xmin,s.k-xmin-s.p],[s.k,-s.p],[xmax,-s.p]];},
+    kpis:function(s){return {
+      be:'$'+(s.k-s.p).toFixed(2),
+      pnl_s0:(function(){var v=Math.max(s.k-s.s0,0)-s.p;return (v>=0?'+':'')+' $'+Math.abs(v).toFixed(2);})(),
+      mp:'$'+(s.k-s.p).toFixed(2)+' (stock → 0)',
+      ml:'-$'+s.p.toFixed(2)
+    };}
+  },
+  'short-put':{
+    desc:'Sell one put. Collect the premium upfront. Profit if the stock stays above the strike. Loss increases as the stock falls — effectively obligated to buy stock at strike if assigned.',
+    formula:'P&L = P - max(K - S_T, 0)\nBreakeven = K - P\nMax profit = +P\nMax loss  = -(K - P)  (stock → 0)',
+    sliders:[
+      {key:'s0',label:'Stock Price S₀',min:5,max:120,step:1,fmt:function(v){return '$'+v;}},
+      {key:'k',label:'Strike K',min:5,max:120,step:1,fmt:function(v){return '$'+v;}},
+      {key:'p',label:'Put Premium P',min:0.25,max:20,step:0.25,fmt:function(v){return '$'+v.toFixed(2);}}
+    ],
+    pnl:function(st,s){return s.p-Math.max(s.k-st,0);},
+    kpts:function(s,xmin,xmax){return [[xmin,s.p-s.k],[s.k,s.p],[xmax,s.p]];},
+    kpis:function(s){return {
+      be:'$'+(s.k-s.p).toFixed(2),
+      pnl_s0:(function(){var v=s.p-Math.max(s.k-s.s0,0);return (v>=0?'+':'')+' $'+Math.abs(v).toFixed(2);})(),
+      mp:'+$'+s.p.toFixed(2),
+      ml:'-$'+(s.k-s.p).toFixed(2)+' (stock → 0)'
+    };}
+  },
   'covered-call':{
     desc:'Own 100 shares and sell a call against them. Collect premium, cap upside at the strike. Use when you expect the stock to trade sideways or up modestly.',
     formula:'P&L = (S_T - S_0) + C - max(S_T - K, 0)\nBreakeven = S_0 - C\nMax profit = (K - S_0) + C\nMax loss  = -(S_0 - C)  [stock to zero]',
@@ -353,7 +429,7 @@ var CONFIGS={
   }
 };
 
-var ACTIVE='covered-call';
+var ACTIVE='long-call';
 
 function buildControls(type){
   var panel=document.getElementById('controls-panel');
@@ -456,6 +532,53 @@ function updateKPIs(type){
   if(mlEl){mlEl.textContent=kpis.ml;mlEl.className='kpi-val neg';}
 }
 
+// Build filled profit/loss regions between the payoff line and zero.
+// Returns array of {profit:true/false, d:svgPathString}
+function buildFillRegions(pts,xmin,xmax,ymin,ymax){
+  // Expand pts to dense set so fills follow the line exactly
+  var regions=[];
+  // Walk segments; split at zero crossings
+  var allPts=pts.slice();
+  var expanded=[];
+  for(var i=0;i<allPts.length-1;i++){
+    var a=allPts[i],b=allPts[i+1];
+    expanded.push(a);
+    if((a[1]<0&&b[1]>0)||(a[1]>0&&b[1]<0)){
+      var t=-a[1]/(b[1]-a[1]);
+      expanded.push([a[0]+t*(b[0]-a[0]),0]);
+    }
+  }
+  expanded.push(allPts[allPts.length-1]);
+
+  // Group consecutive segments by sign
+  var i=0;
+  while(i<expanded.length-1){
+    var seg=[expanded[i]];
+    var profit=expanded[i][1]>=0;
+    while(i<expanded.length-1){
+      var cur=expanded[i],nxt=expanded[i+1];
+      seg.push(nxt);
+      i++;
+      if(i<expanded.length-1){
+        var nextProfit=expanded[i][1]>=0;
+        if(nextProfit!==profit)break;
+      }
+    }
+    // Build closed path: line pts then baseline back
+    var d='';
+    seg.forEach(function(pt,j){
+      var cx=tx(pt[0],xmin,xmax),cy=ty(clamp(pt[1],ymin,ymax),ymin,ymax);
+      d+=(j===0?'M':'L')+cx.toFixed(2)+','+cy.toFixed(2)+' ';
+    });
+    var y0px=ty(0,ymin,ymax);
+    // close along zero axis
+    d+='L'+tx(seg[seg.length-1][0],xmin,xmax).toFixed(2)+','+y0px.toFixed(2)+' ';
+    d+='L'+tx(seg[0][0],xmin,xmax).toFixed(2)+','+y0px.toFixed(2)+' Z';
+    regions.push({profit:profit,d:d});
+  }
+  return regions;
+}
+
 function drawPayoff(type){
   var cfg=CONFIGS[type];
   var s=state[type];
@@ -488,6 +611,37 @@ function drawPayoff(type){
   svg.appendChild(el('line',{x1:ML,y1:MT+IH,x2:ML+IW,y2:MT+IH,class:'cax'}));
   svg.appendChild(txt(ML+5,y0-6,'0','clbl','start'));
 
+  // Profit/loss fill regions
+  var isDark=document.documentElement.getAttribute('data-theme')==='dark';
+  var fillProfit=isDark?'rgba(93,184,138,0.18)':'rgba(26,92,58,0.12)';
+  var fillLoss=isDark?'rgba(224,96,96,0.18)':'rgba(139,32,32,0.12)';
+  var regions=buildFillRegions(pts,xmin,xmax,ymin,ymax);
+  regions.forEach(function(r){
+    svg.appendChild(el('path',{d:r.d,fill:r.profit?fillProfit:fillLoss,stroke:'none'}));
+  });
+
+  // Covered call: draw stock line and naked short call line as components
+  if(type==='covered-call'){
+    var stockPts=[[xmin,xmin-s.s0],[xmax,xmax-s.s0]];
+    var callShortPts=[[xmin,s.c],[s.k,s.c],[xmax,s.c-(xmax-s.k)]];
+    function ptsToD(arr){
+      var d='';
+      arr.forEach(function(pt,j){
+        var cx=tx(pt[0],xmin,xmax),cy=ty(clamp(pt[1],ymin,ymax),ymin,ymax);
+        d+=(j===0?'M':'L')+cx.toFixed(2)+','+cy.toFixed(2)+' ';
+      });
+      return d;
+    }
+    svg.appendChild(el('path',{d:ptsToD(stockPts),stroke:'#4a9a6a',opacity:'0.7','stroke-width':'1.5','stroke-dasharray':'5,4',fill:'none','stroke-linecap':'round'}));
+    svg.appendChild(el('path',{d:ptsToD(callShortPts),stroke:'#c05050',opacity:'0.7','stroke-width':'1.5','stroke-dasharray':'5,4',fill:'none','stroke-linecap':'round'}));
+    // Legend
+    var lx=ML+8,ly=MT+10;
+    svg.appendChild(el('line',{x1:lx,y1:ly,x2:lx+20,y2:ly,stroke:'#4a9a6a',opacity:'0.85','stroke-width':1.5,'stroke-dasharray':'5,4'}));
+    svg.appendChild(txt(lx+24,ly+4,'Long stock','clbl','start'));
+    svg.appendChild(el('line',{x1:lx,y1:ly+14,x2:lx+20,y2:ly+14,stroke:'#c05050',opacity:'0.85','stroke-width':1.5,'stroke-dasharray':'5,4'}));
+    svg.appendChild(txt(lx+24,ly+18,'Short call','clbl','start'));
+  }
+
   // S0 marker
   var xS0=tx(s.s0,xmin,xmax);
   if(xS0>=ML&&xS0<=ML+IW){
@@ -507,7 +661,7 @@ function drawPayoff(type){
     svg.appendChild(txt(xk,MT+IH+16,sk.lbl,'clbl','middle'));
   });
 
-  // Payoff path
+  // Payoff path (on top of fills)
   var d='';
   pts.forEach(function(pt,i){
     var cx=tx(pt[0],xmin,xmax),cy=ty(clamp(pt[1],ymin,ymax),ymin,ymax);
@@ -516,8 +670,8 @@ function drawPayoff(type){
   svg.appendChild(el('path',{d:d,class:'cpayoff'}));
 
   // Breakeven dots
-  for(var i=0;i<pts.length-1;i++){
-    var p1=pts[i],p2=pts[i+1];
+  for(var bi=0;bi<pts.length-1;bi++){
+    var p1=pts[bi],p2=pts[bi+1];
     if((p1[1]<=0&&p2[1]>=0)||(p1[1]>=0&&p2[1]<=0)){
       var t2=-p1[1]/(p2[1]-p1[1]);
       var bex2=p1[0]+t2*(p2[0]-p1[0]);
