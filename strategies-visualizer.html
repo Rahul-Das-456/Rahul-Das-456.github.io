@@ -621,26 +621,40 @@ function drawPayoff(type){
     svg.appendChild(el('path',{d:r.d,fill:r.profit?fillProfit:fillLoss,stroke:'none'}));
   });
 
+  // Shared helper for component lines
+  function ptsToD(arr){
+    var d='';
+    arr.forEach(function(pt,j){
+      var cx=tx(pt[0],xmin,xmax),cy=ty(clamp(pt[1],ymin,ymax),ymin,ymax);
+      d+=(j===0?'M':'L')+cx.toFixed(2)+','+cy.toFixed(2)+' ';
+    });
+    return d;
+  }
+
   // Covered call: draw stock line and naked short call line as components
   if(type==='covered-call'){
     var stockPts=[[xmin,xmin-s.s0],[xmax,xmax-s.s0]];
     var callShortPts=[[xmin,s.c],[s.k,s.c],[xmax,s.c-(xmax-s.k)]];
-    function ptsToD(arr){
-      var d='';
-      arr.forEach(function(pt,j){
-        var cx=tx(pt[0],xmin,xmax),cy=ty(clamp(pt[1],ymin,ymax),ymin,ymax);
-        d+=(j===0?'M':'L')+cx.toFixed(2)+','+cy.toFixed(2)+' ';
-      });
-      return d;
-    }
     svg.appendChild(el('path',{d:ptsToD(stockPts),stroke:'#4a9a6a',opacity:'0.7','stroke-width':'1.5','stroke-dasharray':'5,4',fill:'none','stroke-linecap':'round'}));
     svg.appendChild(el('path',{d:ptsToD(callShortPts),stroke:'#c05050',opacity:'0.7','stroke-width':'1.5','stroke-dasharray':'5,4',fill:'none','stroke-linecap':'round'}));
-    // Legend
     var lx=ML+8,ly=MT+10;
     svg.appendChild(el('line',{x1:lx,y1:ly,x2:lx+20,y2:ly,stroke:'#4a9a6a',opacity:'0.85','stroke-width':1.5,'stroke-dasharray':'5,4'}));
     svg.appendChild(txt(lx+24,ly+4,'Long stock','clbl','start'));
     svg.appendChild(el('line',{x1:lx,y1:ly+14,x2:lx+20,y2:ly+14,stroke:'#c05050',opacity:'0.85','stroke-width':1.5,'stroke-dasharray':'5,4'}));
     svg.appendChild(txt(lx+24,ly+18,'Short call','clbl','start'));
+  }
+
+  // Protective put: draw long stock and long put as components
+  if(type==='protective-put'){
+    var stockPts=[[xmin,xmin-s.s0],[xmax,xmax-s.s0]];
+    var putLongPts=[[xmin,s.k-xmin-s.p],[s.k,-s.p],[xmax,-s.p]];
+    svg.appendChild(el('path',{d:ptsToD(stockPts),stroke:'#4a9a6a',opacity:'0.7','stroke-width':'1.5','stroke-dasharray':'5,4',fill:'none','stroke-linecap':'round'}));
+    svg.appendChild(el('path',{d:ptsToD(putLongPts),stroke:'#6070b8',opacity:'0.7','stroke-width':'1.5','stroke-dasharray':'5,4',fill:'none','stroke-linecap':'round'}));
+    var lx=ML+8,ly=MT+10;
+    svg.appendChild(el('line',{x1:lx,y1:ly,x2:lx+20,y2:ly,stroke:'#4a9a6a',opacity:'0.85','stroke-width':1.5,'stroke-dasharray':'5,4'}));
+    svg.appendChild(txt(lx+24,ly+4,'Long stock','clbl','start'));
+    svg.appendChild(el('line',{x1:lx,y1:ly+14,x2:lx+20,y2:ly+14,stroke:'#6070b8',opacity:'0.85','stroke-width':1.5,'stroke-dasharray':'5,4'}));
+    svg.appendChild(txt(lx+24,ly+18,'Long put','clbl','start'));
   }
 
   // S0 marker
