@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script>
+  (function(){
+    var s=localStorage.getItem('theme');
+    var p=window.matchMedia('(prefers-color-scheme: dark)').matches;
+    if(s==='dark'||(!s&&p)){document.documentElement.setAttribute('data-theme','dark');}
+  })();
+</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Futures Payoff Visualizer — Rahul Das</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,600;1,8..60,300;1,8..60,400&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream:#f8f5f0; --cream-dark:#ede9e2;
+    --navy:#1a3a5c; --navy-mid:#2a5280; --navy-light:#3d6b9a;
+    --ink:#1c1c1e; --ink-mid:#3a3a3c; --ink-light:#6e6e73;
+    --rule:#c8bfb0; --gold:#b8976a; --gold-light:#d4b48a;
+    --white:#ffffff;
+    --serif-display:'Playfair Display',Georgia,serif;
+    --serif-body:'Source Serif 4',Georgia,serif;
+    --mono:'DM Mono','Courier New',monospace;
+  }
+  [data-theme="dark"] {
+    --cream:#0d1c2e; --cream-dark:#112235;
+    --navy:#c4d4e4; --navy-mid:#a4b8cc; --navy-light:#849cb4;
+    --ink:#ddd8d0; --ink-mid:#bcb8b0; --ink-light:#7c7870;
+    --rule:#1c3048; --gold:#c4a472; --gold-light:#d4b48a;
+    --white:#0d1c2e;
+  }
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;font-size:16px;}
+  body{background:var(--cream);color:var(--ink);font-family:var(--serif-body);font-weight:300;line-height:1.7;-webkit-font-smoothing:antialiased;transition:background-color .3s,color .3s;}
+
+  nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:0 3rem;height:64px;background:rgba(248,245,240,.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--rule);transition:background .3s,border-color .3s;}
+  [data-theme="dark"] nav{background:rgba(13,28,46,.95);border-bottom-color:#1c3048;}
+  .nav-mark{font-family:var(--serif-display);font-size:1rem;font-weight:600;color:var(--navy);letter-spacing:.02em;text-decoration:none;}
+  .nav-links{display:flex;gap:2rem;list-style:none;align-items:center;}
+  .nav-links a{font-family:var(--mono);font-size:.72rem;font-weight:300;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-light);text-decoration:none;transition:color .2s;}
+  .nav-links a:hover{color:var(--navy);}
+  .nav-right{display:flex;align-items:center;gap:.75rem;}
+  .nav-back{font-family:var(--mono);font-size:.72rem;font-weight:400;letter-spacing:.1em;text-transform:uppercase;color:var(--white);background:var(--navy);padding:.5rem 1.25rem;text-decoration:none;transition:background .2s;}
+  .nav-back:hover{background:var(--navy-mid);}
+  .theme-toggle{background:none;border:1px solid var(--rule);color:var(--ink-light);cursor:pointer;padding:.38rem .5rem;display:flex;align-items:center;justify-content:center;line-height:0;transition:color .2s,border-color .2s;}
+  .theme-toggle:hover{color:var(--navy);border-color:var(--navy);}
+  .icon-sun{display:none;} .icon-moon{display:block;}
+  [data-theme="dark"] .icon-moon{display:none;} [data-theme="dark"] .icon-sun{display:block;}
+
+  .page-header{padding:9rem 8vw 4rem;border-bottom:1px solid var(--rule);}
+  .page-eyebrow{font-family:var(--mono);font-size:.72rem;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);margin-bottom:1rem;}
+  .page-title{font-family:var(--serif-display);font-size:clamp(2.5rem,4vw,4rem);font-weight:700;line-height:1.05;color:var(--navy);letter-spacing:-.02em;}
+  .page-title em{font-style:italic;font-weight:400;color:var(--navy-light);}
+  .page-sub{font-family:var(--serif-body);font-size:1rem;font-weight:300;color:var(--ink-light);margin-top:1rem;max-width:55ch;line-height:1.6;}
+
+  .viz-wrap{padding:4rem 8vw 5rem;}
+  .type-tabs{display:flex;margin-bottom:3rem;border:1px solid var(--rule);width:fit-content;}
+  .type-tab{font-family:var(--mono);font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-light);background:none;border:none;border-right:1px solid var(--rule);padding:.7rem 1.5rem;cursor:pointer;transition:background .2s,color .2s;}
+  .type-tab:last-child{border-right:none;}
+  .type-tab:hover{color:var(--navy);background:var(--cream-dark);}
+  .type-tab.active{background:var(--navy);color:var(--white);}
+
+  .viz-grid{display:grid;grid-template-columns:260px 1fr;gap:4rem;align-items:start;}
+  .controls{border-top:2px solid var(--gold);padding-top:1.5rem;}
+  .ctrl-heading{font-family:var(--mono);font-size:.68rem;letter-spacing:.15em;text-transform:uppercase;color:var(--gold);margin-bottom:1.5rem;}
+  .ctrl-group{margin-bottom:1.75rem;}
+  .ctrl-row{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:.5rem;}
+  .ctrl-name{font-family:var(--mono);font-size:.7rem;letter-spacing:.08em;color:var(--ink-mid);text-transform:uppercase;}
+  .ctrl-val{font-family:var(--mono);font-size:.92rem;font-weight:400;color:var(--navy);}
+  input[type=range]{width:100%;appearance:none;-webkit-appearance:none;height:2px;background:var(--rule);outline:none;cursor:pointer;}
+  input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:14px;height:14px;background:var(--navy);border-radius:50%;cursor:pointer;transition:background .2s;}
+  input[type=range]::-webkit-slider-thumb:hover{background:var(--navy-mid);}
+
+  .formula-box{margin-top:2rem;padding:1.25rem;background:var(--cream-dark);border-left:3px solid var(--gold);}
+  .formula-lbl{font-family:var(--mono);font-size:.62rem;letter-spacing:.15em;text-transform:uppercase;color:var(--gold);margin-bottom:.5rem;}
+  .formula-txt{font-family:var(--mono);font-size:.78rem;color:var(--navy);line-height:1.9;white-space:pre-line;}
+
+  .margin-box{margin-top:1.25rem;padding:1.25rem;background:var(--cream-dark);border-left:3px solid var(--navy-light);}
+  .margin-lbl{font-family:var(--mono);font-size:.62rem;letter-spacing:.15em;text-transform:uppercase;color:var(--navy-light);margin-bottom:.5rem;}
+  .margin-item{font-family:var(--mono);font-size:.75rem;color:var(--ink-mid);line-height:1.9;}
+  .margin-item span{color:var(--navy);}
+
+  .kpi-grid{display:grid;grid-template-columns:1fr 1fr;gap:.75rem;margin-top:1.75rem;}
+  .kpi{padding:.75rem;border:1px solid var(--rule);}
+  .kpi-lbl{font-family:var(--mono);font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-light);margin-bottom:.2rem;}
+  .kpi-val{font-family:var(--mono);font-size:.88rem;font-weight:400;color:var(--navy);}
+  .pos{color:#1a5c3a;} .neg{color:#8b2020;}
+  [data-theme="dark"] .pos{color:#5db88a;} [data-theme="dark"] .neg{color:#e06060;}
+
+  .chart-panel{position:sticky;top:84px;}
+  .chart-box{background:var(--cream);border:1px solid var(--rule);padding:1.5rem;}
+  .chart-box svg{width:100%;height:auto;display:block;}
+
+  .cax{stroke:var(--ink-light);stroke-width:1.5;fill:none;}
+  .cgrid{stroke:var(--rule);stroke-width:.5;stroke-dasharray:3,5;fill:none;}
+  .czero{stroke:var(--ink-mid);stroke-width:1.5;fill:none;}
+  .cpayoff{stroke:var(--navy);stroke-width:3;fill:none;stroke-linecap:round;stroke-linejoin:round;}
+  .cs0line{stroke:var(--gold);stroke-width:1.5;stroke-dasharray:6,4;fill:none;}
+  .cf0line{stroke:var(--navy-light);stroke-width:1.5;stroke-dasharray:4,6;fill:none;}
+  .cbe{fill:var(--gold);}
+  .clbl{font-family:'DM Mono',monospace;font-size:10px;fill:var(--ink-light);}
+  .ckelbl{font-family:'DM Mono',monospace;font-size:9.5px;fill:var(--gold);}
+  .caxtitle{font-family:'DM Mono',monospace;font-size:10.5px;fill:var(--ink-light);letter-spacing:.04em;}
+
+  .scenario-wrap{padding:0 8vw 5rem;}
+  .s-heading{font-family:var(--mono);font-size:.7rem;letter-spacing:.15em;text-transform:uppercase;color:var(--gold);padding-top:2.5rem;border-top:1px solid var(--rule);margin-bottom:1.25rem;}
+  table{width:100%;border-collapse:collapse;font-family:var(--mono);font-size:.78rem;}
+  th{font-weight:400;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-light);border-bottom:1px solid var(--rule);padding:.6rem 1rem;text-align:left;font-size:.66rem;}
+  td{padding:.6rem 1rem;color:var(--ink-mid);border-bottom:1px solid rgba(200,191,176,.35);}
+  tr:last-child td{border-bottom:none;}
+  td.pos{color:#1a5c3a;} td.neg{color:#8b2020;} td.be{color:var(--gold);}
+  [data-theme="dark"] td.pos{color:#5db88a;} [data-theme="dark"] td.neg{color:#e06060;}
+  .tbl-note{font-family:var(--mono);font-size:.65rem;color:var(--ink-light);margin-top:.75rem;line-height:1.6;}
+
+  .ref-wrap{padding:3rem 8vw 5rem;border-top:1px solid var(--rule);}
+  .ref-txt{font-family:var(--mono);font-size:.72rem;letter-spacing:.04em;color:var(--ink-light);line-height:1.75;max-width:65ch;}
+  .ref-txt em{font-style:italic;color:var(--ink-mid);}
+
+  footer{background:var(--navy);padding:2rem 8vw;text-align:center;transition:background .3s;}
+  [data-theme="dark"] footer{background:#071420;}
+  .foot-txt{font-family:var(--mono);font-size:.68rem;letter-spacing:.1em;color:rgba(248,245,240,.35);}
+
+  @media(max-width:900px){
+    nav{padding:0 1.5rem;}
+    .page-header{padding:7rem 1.5rem 3rem;}
+    .viz-wrap{padding:3rem 1.5rem 4rem;}
+    .viz-grid{grid-template-columns:1fr;}
+    .chart-panel{position:static;}
+    .scenario-wrap{padding:0 1.5rem 4rem;}
+    .ref-wrap{padding:2rem 1.5rem 4rem;}
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-mark" href="./index.html">Rahul Das</a>
+  <ul class="nav-links">
+    <li><a href="./options-visualizer.html">Options Visualizer</a></li>
+    <li><a href="./index.html#experience">Portfolio</a></li>
+  </ul>
+  <div class="nav-right">
+    <button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark mode">
+      <svg class="icon-moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      <svg class="icon-sun" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+    </button>
+    <a class="nav-back" href="./index.html">Back to Portfolio</a>
+  </div>
+</nav>
+
+<div class="page-header">
+  <p class="page-eyebrow">Hull, Ch. 2-5</p>
+  <h1 class="page-title">Futures Payoff<br><em>Visualizer</em></h1>
+  <p class="page-sub">Interactive payoff diagrams for long and short futures positions. Linear exposure, no premium, infinite downside. Move the sliders to build intuition around leverage and margin.</p>
+</div>
+
+<div class="viz-wrap">
+  <div class="type-tabs" role="tablist">
+    <button class="type-tab active" data-type="long" role="tab">Long Future</button>
+    <button class="type-tab" data-type="short" role="tab">Short Future</button>
+  </div>
+
+  <div class="viz-grid">
+    <div class="controls">
+      <div class="ctrl-heading">Parameters</div>
+
+      <div class="ctrl-group">
+        <div class="ctrl-row">
+          <span class="ctrl-name">Futures Price F&#x2080;</span>
+          <span class="ctrl-val" id="v-f0">$1,750</span>
+        </div>
+        <input type="range" id="s-f0" min="100" max="3000" step="10" value="1750">
+      </div>
+
+      <div class="ctrl-group">
+        <div class="ctrl-row">
+          <span class="ctrl-name">Current Price S&#x2080;</span>
+          <span class="ctrl-val" id="v-s0">$1,900</span>
+        </div>
+        <input type="range" id="s-s0" min="100" max="3000" step="10" value="1900">
+      </div>
+
+      <div class="ctrl-group">
+        <div class="ctrl-row">
+          <span class="ctrl-name">Contract Size</span>
+          <span class="ctrl-val" id="v-cs">100</span>
+        </div>
+        <input type="range" id="s-cs" min="1" max="500" step="1" value="100">
+      </div>
+
+      <div class="formula-box">
+        <div class="formula-lbl">Payoff at Settlement</div>
+        <div class="formula-txt" id="formula-txt">Long:  S_T - F_0
+Short: F_0 - S_T
+Breakeven: S_T = F_0</div>
+      </div>
+
+      <div class="margin-box">
+        <div class="margin-lbl">Margin (illustrative)</div>
+        <div class="margin-item">Initial margin: <span id="m-init">$10,500</span></div>
+        <div class="margin-item">Notional: <span id="m-notl">$175,000</span></div>
+        <div class="margin-item">Leverage: <span id="m-lev">16.7x</span></div>
+      </div>
+
+      <div class="kpi-grid">
+        <div class="kpi">
+          <div class="kpi-lbl">P&amp;L at S&#x2080;</div>
+          <div class="kpi-val" id="kpi-pnl">+$15,000</div>
+        </div>
+        <div class="kpi">
+          <div class="kpi-lbl">P&amp;L / Contract</div>
+          <div class="kpi-val" id="kpi-ppu">+$150.00</div>
+        </div>
+        <div class="kpi">
+          <div class="kpi-lbl">Return on Margin</div>
+          <div class="kpi-val pos" id="kpi-rom">+142.9%</div>
+        </div>
+        <div class="kpi">
+          <div class="kpi-lbl">Breakeven</div>
+          <div class="kpi-val" id="kpi-be">$1,750</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="chart-panel">
+      <div class="chart-box">
+        <svg id="chart-svg" viewBox="0 0 600 360" xmlns="http://www.w3.org/2000/svg"></svg>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="scenario-wrap">
+  <div class="s-heading">Scenario Analysis</div>
+  <table>
+    <thead>
+      <tr>
+        <th>S_T at Settlement</th>
+        <th>Move vs F&#x2080;</th>
+        <th>P&amp;L / Unit</th>
+        <th>Total P&amp;L</th>
+        <th>Return on Margin</th>
+      </tr>
+    </thead>
+    <tbody id="tbl-body"></tbody>
+  </table>
+  <p class="tbl-note">Total P&amp;L = (S_T - F_0) * contract size for long; (F_0 - S_T) * contract size for short. Initial margin assumed at ~6% of notional. Mark-to-market is daily in practice.</p>
+</div>
+
+<div class="ref-wrap">
+  <p class="ref-txt">Source: John C. Hull, <em>Options, Futures, and Other Derivatives</em>, 11th ed., Ch. 2-5. Futures are exchange-traded, marked to market daily. Margin figures are illustrative (CME gold is ~$8,000 per 100 oz contract as of 2024). Forward prices and futures prices converge at delivery. Unlike options, both long and short have unlimited loss potential.</p>
+</div>
+
+<footer>
+  <p class="foot-txt">Futures Payoff Visualizer &nbsp;&#xb7;&nbsp; Rahul Das &nbsp;&#xb7;&nbsp; rahul-das-456.github.io</p>
+</footer>
+
+<script>
+(function(){
+  var activeType='long';
+
+  var W=600, H=360, ML=82, MR=28, MT=24, MB=56;
+  var IW=W-ML-MR, IH=H-MT-MB;
+
+  function tx(s,xmin,xmax){ return ML+(s-xmin)/(xmax-xmin)*IW; }
+  function ty(p,ymin,ymax){ return MT+(ymax-p)/(ymax-ymin)*IH; }
+
+  function pnl(type,st,f0){ return type==='long'? st-f0 : f0-st; }
+
+  var NS='http://www.w3.org/2000/svg';
+  function el(tag,attrs){
+    var e=document.createElementNS(NS,tag);
+    for(var k in attrs) e.setAttribute(k,attrs[k]);
+    return e;
+  }
+  function txt(x,y,str,cls,anchor){
+    var e=el('text',{x:x,y:y,class:cls,'text-anchor':anchor||'middle'});
+    e.textContent=str; return e;
+  }
+
+  function draw(){
+    var type=activeType;
+    var F0=+document.getElementById('s-f0').value;
+    var S0=+document.getElementById('s-s0').value;
+    var svg=document.getElementById('chart-svg');
+    while(svg.firstChild) svg.removeChild(svg.firstChild);
+
+    var span=Math.max(F0*0.55, Math.abs(S0-F0)*1.4, 500);
+    var xmin=Math.max(0, F0-span), xmax=F0+span;
+
+    var p0=pnl(type,xmin,F0);
+    var p1=pnl(type,xmax,F0);
+    var ymin=Math.min(p0,p1)*1.3, ymax=Math.max(p0,p1)*1.3;
+    if(ymax<=0) ymax=Math.abs(ymin)*0.3;
+    if(ymin>=0) ymin=-Math.abs(ymax)*0.3;
+
+    /* Grid */
+    var ngy=4;
+    for(var i=0;i<=ngy;i++){
+      var gp=ymin+(ymax-ymin)*(i/ngy);
+      var gy=ty(gp,ymin,ymax);
+      svg.appendChild(el('line',{x1:ML,y1:gy,x2:ML+IW,y2:gy,class:'cgrid'}));
+    }
+
+    var y0=ty(0,ymin,ymax);
+    svg.appendChild(el('line',{x1:ML,y1:y0,x2:ML+IW,y2:y0,class:'czero'}));
+
+    svg.appendChild(el('line',{x1:ML,y1:MT,x2:ML,y2:MT+IH,class:'cax'}));
+    svg.appendChild(el('line',{x1:ML,y1:MT+IH,x2:ML+IW,y2:MT+IH,class:'cax'}));
+
+    for(var i=0;i<=ngy;i++){
+      var gp=ymin+(ymax-ymin)*(i/ngy);
+      var gy=ty(gp,ymin,ymax);
+      var lbl=gp>=0?'+'+Math.round(gp):String(Math.round(gp));
+      svg.appendChild(txt(ML-8,gy+3.5,lbl,'clbl','end'));
+    }
+
+    /* F0 marker */
+    var xF0=tx(F0,xmin,xmax);
+    svg.appendChild(el('line',{x1:xF0,y1:MT,x2:xF0,y2:MT+IH,class:'cf0line'}));
+    svg.appendChild(el('line',{x1:xF0,y1:MT+IH,x2:xF0,y2:MT+IH+5,class:'cax'}));
+    svg.appendChild(txt(xF0,MT+IH+16,'F₀=$'+F0,'clbl','middle'));
+
+    /* S0 marker */
+    var xS0=tx(S0,xmin,xmax);
+    if(xS0>=ML&&xS0<=ML+IW){
+      svg.appendChild(el('line',{x1:xS0,y1:MT,x2:xS0,y2:MT+IH,class:'cs0line'}));
+      svg.appendChild(txt(xS0,MT+IH+28,'S₀=$'+S0,'clbl','middle'));
+    }
+
+    /* Payoff line — pure linear */
+    var lx1=ML, ly1=ty(pnl(type,xmin,F0),ymin,ymax);
+    var lx2=ML+IW, ly2=ty(pnl(type,xmax,F0),ymin,ymax);
+    svg.appendChild(el('line',{x1:lx1,y1:ly1,x2:lx2,y2:ly2,class:'cpayoff'}));
+
+    /* Breakeven dot at F0 */
+    svg.appendChild(el('circle',{cx:xF0,cy:y0,r:5,class:'cbe'}));
+    svg.appendChild(txt(xF0,y0-10,'BE','ckelbl','middle'));
+
+    svg.appendChild(txt(ML+IW/2,H-6,'Futures Price at Settlement  S_T ($)','caxtitle','middle'));
+    var yt=el('text',{x:13,y:MT+IH/2,class:'caxtitle','text-anchor':'middle',
+                      transform:'rotate(-90,13,'+(MT+IH/2)+')'});
+    yt.textContent='Profit / Loss ($)'; svg.appendChild(yt);
+
+    /* Y zero label */
+    svg.appendChild(txt(ML+5,y0-6,'0','clbl','start'));
+  }
+
+  function fmt(n){ return (n>=0?'+$':'-$')+Math.abs(n).toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits:2}); }
+
+  function updateStats(){
+    var type=activeType;
+    var F0=+document.getElementById('s-f0').value;
+    var S0=+document.getElementById('s-s0').value;
+    var CS=+document.getElementById('s-cs').value;
+    var notl=F0*CS;
+    var margin=notl*0.06;
+    var ppu=pnl(type,S0,F0);
+    var total=ppu*CS;
+    var rom=(total/margin)*100;
+
+    document.getElementById('v-f0').textContent='$'+F0.toLocaleString();
+    document.getElementById('v-s0').textContent='$'+S0.toLocaleString();
+    document.getElementById('v-cs').textContent=CS.toLocaleString();
+    document.getElementById('m-init').textContent='$'+Math.round(margin).toLocaleString();
+    document.getElementById('m-notl').textContent='$'+Math.round(notl).toLocaleString();
+    document.getElementById('m-lev').textContent=(notl/margin).toFixed(1)+'x';
+
+    var pnlEl=document.getElementById('kpi-pnl');
+    pnlEl.textContent=fmt(total);
+    pnlEl.className='kpi-val '+(total>0?'pos':total<0?'neg':'');
+
+    var ppuEl=document.getElementById('kpi-ppu');
+    ppuEl.textContent=fmt(ppu);
+    ppuEl.className='kpi-val '+(ppu>0?'pos':ppu<0?'neg':'');
+
+    var romEl=document.getElementById('kpi-rom');
+    romEl.textContent=(rom>=0?'+':'')+rom.toFixed(1)+'%';
+    romEl.className='kpi-val '+(rom>0?'pos':rom<0?'neg':'');
+
+    document.getElementById('kpi-be').textContent='$'+F0.toLocaleString();
+  }
+
+  function updateTable(){
+    var type=activeType;
+    var F0=+document.getElementById('s-f0').value;
+    var CS=+document.getElementById('s-cs').value;
+    var notl=F0*CS;
+    var margin=notl*0.06;
+
+    var pcts=[-0.25,-0.15,-0.08,-0.03,0,0.03,0.08,0.15,0.25];
+    var tbody=document.getElementById('tbl-body');
+    tbody.innerHTML='';
+    pcts.forEach(function(pct){
+      var st=Math.round(F0*(1+pct));
+      var pu=pnl(type,st,F0);
+      var tot=pu*CS;
+      var move=st-F0;
+      var rom=(tot/margin)*100;
+      var moveCls=move>0?'pos':move<0?'neg':'';
+      var totCls=tot>0?'pos':tot<0?'neg':pct===0?'be':'';
+      var tr=document.createElement('tr');
+      tr.innerHTML='<td>$'+st.toLocaleString()+'</td>'
+        +'<td class="'+moveCls+'">'+(move>=0?'+':'')+move.toLocaleString()+'</td>'
+        +'<td class="'+totCls+'">'+fmt(pu)+' / unit</td>'
+        +'<td class="'+totCls+'">'+fmt(tot)+'</td>'
+        +'<td class="'+totCls+'">'+(rom>=0?'+':'')+rom.toFixed(1)+'%</td>';
+      tbody.appendChild(tr);
+    });
+  }
+
+  function render(){ draw(); updateStats(); updateTable(); }
+
+  document.querySelectorAll('.type-tab').forEach(function(tab){
+    tab.addEventListener('click',function(){
+      document.querySelectorAll('.type-tab').forEach(function(t){t.classList.remove('active');});
+      tab.classList.add('active');
+      activeType=tab.dataset.type;
+      render();
+    });
+  });
+  ['s-f0','s-s0','s-cs'].forEach(function(id){
+    document.getElementById(id).addEventListener('input',render);
+  });
+
+  var html=document.documentElement;
+  var toggle=document.getElementById('theme-toggle');
+  function applyTheme(dark){
+    html.setAttribute('data-theme',dark?'dark':'light');
+    localStorage.setItem('theme',dark?'dark':'light');
+  }
+  var saved=localStorage.getItem('theme');
+  var sysDark=window.matchMedia('(prefers-color-scheme: dark)').matches;
+  applyTheme(saved?saved==='dark':sysDark);
+  toggle.addEventListener('click',function(){ applyTheme(html.getAttribute('data-theme')!=='dark'); });
+  window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change',function(e){
+    if(!localStorage.getItem('theme')) applyTheme(e.matches);
+  });
+
+  render();
+})();
+</script>
+</body>
+</html>
