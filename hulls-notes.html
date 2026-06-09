@@ -137,9 +137,9 @@
 </nav>
 
 <div class="page-header">
-  <p class="page-eyebrow">Hull, Ch. 1-17</p>
+  <p class="page-eyebrow">Hull, Ch. 1-26</p>
   <h1 class="page-title">Hull's<br><em>Notes</em></h1>
-  <p class="page-sub">Forwards, futures, options, pricing, and volatility from John C. Hull's Options, Futures, and Other Derivatives, 11th ed. Click any question to expand.</p>
+  <p class="page-sub">Forwards, futures, options, pricing, Greeks, volatility, and real options from John C. Hull's Options, Futures, and Other Derivatives, 11th ed. Click any question to expand.</p>
 </div>
 
 <div class="notes-wrap">
@@ -647,6 +647,364 @@ Style           Mostly European     Both</div>
 </div>
 
 </div>
+
+
+<!-- SECTION 3 -->
+<div class="section-label" style="margin-top:3.5rem;">Section 3 — Pricing Models</div>
+<div class="section-sub">Ch. 11-15 &nbsp;·&nbsp; 6 questions</div>
+
+<div class="qa-block section-first" id="s3q1">
+  <button class="qa-trigger" aria-expanded="false">
+    <span class="q-num">01</span>
+    <span class="q-text">What's a binomial tree and how do you price options using it?</span>
+    <svg class="q-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+  </button>
+  <div class="qa-body"><div class="qa-body-inner"><div class="a-body">
+    <p>A binomial tree models stock price movement in discrete steps. At each step the stock either goes up by factor u or down by factor d. You build the tree forward, calculate option payoffs at expiry, then work backwards to get today's price.</p>
+    <div class="formula">One-step setup:
+Stock today: S_0
+Up node:     S_0 * u  ->  option payoff f_u = max(S_0*u - K, 0)
+Down node:   S_0 * d  ->  option payoff f_d = max(S_0*d - K, 0)
+
+Risk-neutral probability of up move:
+p = (e^(rT) - d) / (u - d)
+
+Option price today:
+f = e^(-rT) * [p*f_u + (1-p)*f_d]</div>
+    <p>The risk-neutral probability p is not a real-world probability. It is the probability that makes the stock earn the risk-free rate. You price all derivatives in a world where every asset earns r.</p>
+    <div class="key-point">
+      <div class="key-point-lbl">Hull example (Ch. 13)</div>
+      <p>S_0=$20, K=$21, u=1.1, d=0.9, r=12%, T=3mo. f_u=max(22-21,0)=$1, f_d=0. p=(e^(0.03)-0.9)/(1.1-0.9)=0.6523. f=e^(-0.03)*(0.6523*1+0.3477*0)=$0.633.</p>
+    </div>
+  </div></div></div>
+</div>
+
+<div class="qa-block" id="s3q2">
+  <button class="qa-trigger" aria-expanded="false">
+    <span class="q-num">02</span>
+    <span class="q-text">What about multi-step binomial trees?</span>
+    <svg class="q-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+  </button>
+  <div class="qa-body"><div class="qa-body-inner"><div class="a-body">
+    <p>Break T into N steps of length dt = T/N. At each step the stock goes up or down. After N steps you have N+1 terminal nodes. Calculate option payoff at each terminal node, then fold backwards through the tree step by step.</p>
+    <div class="formula">Step size:  dt = T/N
+Up factor:  u = e^(sigma*sqrt(dt))
+Down factor: d = 1/u
+Risk-neutral prob: p = (e^(r*dt) - d) / (u - d)
+
+At each node work backwards:
+f = e^(-r*dt) * [p*f_up + (1-p)*f_down]</div>
+    <div class="diagram">2-step tree (each node branches up or down):
+
+         S*u^2  -> payoff
+        /
+  S*u
+ /     S       S*u*d  -> payoff
+ \     /
+  S*d
+                 S*d^2  -> payoff</div>
+    <p>For American options, at each node check whether immediate exercise beats holding. Take the max of exercise value and hold value. This is why binomial trees handle American options directly while BSM requires adjustments.</p>
+    <p>As N increases, the binomial tree converges to Black-Scholes. Practitioners use 50-200 steps for accuracy. More steps, better precision, more computation.</p>
+  </div></div></div>
+</div>
+
+<div class="qa-block" id="s3q3">
+  <button class="qa-trigger" aria-expanded="false">
+    <span class="q-num">03</span>
+    <span class="q-text">When do you exercise options?</span>
+    <svg class="q-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+  </button>
+  <div class="qa-body"><div class="qa-body-inner"><div class="a-body">
+    <p>At expiry: exercise when ITM, let expire when OTM. Brokers auto-exercise any option $0.01 or more ITM.</p>
+    <div class="formula">Exercise call when: S_T > K
+Exercise put when:  S_T < K</div>
+    <p><strong>American calls, no dividends:</strong> never exercise early. Exercising kills time value. Sell the option instead and collect intrinsic plus time value. Only exception: exercise early to capture a large upcoming dividend.</p>
+    <p><strong>American puts:</strong> early exercise can make sense. If stock crashes near zero the put is deep ITM. Max payout is K. Collect K now rather than waiting. K today is worth more than K in the future.</p>
+    <p>The decision rule: exercise the put early when interest earned on K from now to expiry exceeds the remaining time value of the option.</p>
+  </div></div></div>
+</div>
+
+<div class="qa-block" id="s3q4">
+  <button class="qa-trigger" aria-expanded="false">
+    <span class="q-num">04</span>
+    <span class="q-text">What is the Black-Scholes model? How do you price options using it?</span>
+    <svg class="q-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+  </button>
+  <div class="qa-body"><div class="qa-body-inner"><div class="a-body">
+    <p>Assumes stock prices follow geometric Brownian motion. Build a riskless portfolio of option plus underlying in the right ratio. That portfolio must earn the risk-free rate. Solve the differential equation for a closed-form price.</p>
+    <div class="formula">c = S_0*N(d1) - K*e^(-rT)*N(d2)
+p = K*e^(-rT)*N(-d2) - S_0*N(-d1)
+
+d1 = [ln(S_0/K) + (r + sigma^2/2)*T] / (sigma*sqrt(T))
+d2 = d1 - sigma*sqrt(T)
+
+N(x) = cumulative standard normal CDF</div>
+    <p>Five inputs: S_0 (observable), K (contract), T (contract), r (T-bills/SOFR), sigma (not observable, backed out as implied vol).</p>
+    <p>What each piece means: N(d2) is the risk-neutral probability the call finishes ITM. K*e^(-rT)*N(d2) is the PV of what you pay if exercised. S_0*N(d1) is the expected stock value received, probability-weighted. N(d1) is also delta.</p>
+    <div class="formula">Hull example: S_0=$42, K=$40, r=10%, sigma=20%, T=0.5
+d1=0.7693, d2=0.6278
+c = 42*0.7791 - 40*e^(-0.05)*0.7349 = $4.76
+p = $0.81</div>
+    <p>BSM assumes constant vol, continuous trading, no dividends, no transaction costs. All violated in practice. Traders use it anyway as a common language for quoting options in vol terms.</p>
+  </div></div></div>
+</div>
+
+<div class="qa-block" id="s3q5">
+  <button class="qa-trigger" aria-expanded="false">
+    <span class="q-num">05</span>
+    <span class="q-text">What's implied volatility?</span>
+    <svg class="q-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+  </button>
+  <div class="qa-body"><div class="qa-body-inner"><div class="a-body">
+    <p>The sigma you back out of an observed market price using BSM. The market's forward-looking estimate of how much the stock will move.</p>
+    <div class="formula">Take market price + plug in S_0, K, T, r -> solve for sigma -> implied vol</div>
+    <p>Four BSM inputs are known. Sigma is not. Traders iterate numerically until BSM output equals the market price. That sigma is the trade.</p>
+    <p>If you think realized vol will exceed implied vol, buy options. If you think realized vol will fall short, sell options. The directional view is secondary.</p>
+    <p><strong>VIX</strong> is 30-day implied vol on S&P 500 options. Normal range 10-20. Spiked to 80 in Oct 2008 and March 2020.</p>
+    <p><strong>Vol crush:</strong> implied vol spikes before known events. After the event it collapses instantly even if the stock moved. Buying straddles into earnings loses money when vol deflation outweighs intrinsic gains.</p>
+  </div></div></div>
+</div>
+
+<div class="qa-block" id="s3q6">
+  <button class="qa-trigger" aria-expanded="false">
+    <span class="q-num">06</span>
+    <span class="q-text">What's the Monte Carlo method?</span>
+    <svg class="q-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+  </button>
+  <div class="qa-body"><div class="qa-body-inner"><div class="a-body">
+    <p>Simulate thousands of random stock price paths using geometric Brownian motion. Calculate the option payoff on each path. Average all the payoffs and discount back to today. That average is the option price.</p>
+    <div class="formula">One path, one time step:
+S_T = S_0 * exp((r - sigma^2/2)*T + sigma*sqrt(T)*z)
+z = random draw from standard normal N(0,1)
+
+Repeat 10,000+ times:
+  -> calculate payoff on each path
+  -> average all payoffs
+  -> discount: price = e^(-rT) * average payoff</div>
+    <p>Where Monte Carlo beats BSM and binomial trees: path-dependent options where the payoff depends on the full price history, not just the final price.</p>
+    <p><strong>Asian option:</strong> payoff based on average stock price over the life of the option. BSM cannot handle this. Monte Carlo tracks every step and averages.</p>
+    <p><strong>Barrier option:</strong> expires worthless (knock-out) or activates (knock-in) if the stock hits a barrier at any point. Monte Carlo checks the barrier at every simulated step.</p>
+    <p>Downside: slow. More paths means more accuracy but more computation. Standard error shrinks as 1/sqrt(N). To halve the error you need four times as many paths. Variance reduction techniques (antithetic variates, control variates) speed convergence.</p>
+  </div></div></div>
+</div>
+
+<!-- SECTION 4 -->
+<div class="section-label" style="margin-top:3.5rem;">Section 4 — Greeks and Hedging</div>
+<div class="section-sub">Ch. 18-19 &nbsp;·&nbsp; 5 questions</div>
+
+<div class="qa-block section-first" id="s4q1">
+  <button class="qa-trigger" aria-expanded="false">
+    <span class="q-num">01</span>
+    <span class="q-text">What are the Greeks? How are Delta, Vega, Rho, Theta, Gamma different?</span>
+    <svg class="q-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+  </button>
+  <div class="qa-body"><div class="qa-body-inner"><div class="a-body">
+    <p>Greeks measure how sensitive an option price is to each input. Every derivatives desk manages these daily.</p>
+    <div class="formula">Delta (d):  dC/dS  — sensitivity to stock price
+Gamma (G):  d2C/dS2 — rate of change of delta
+Theta (Th): dC/dt  — sensitivity to time passing
+Vega  (v):  dC/dsigma — sensitivity to volatility
+Rho   (r):  dC/dr  — sensitivity to interest rates</div>
+    <p><strong>Delta:</strong> call delta = N(d1), ranges 0 to 1. Put delta = N(d1)-1, ranges -1 to 0. ATM options delta ~0.5. Deep ITM call delta approaches 1 and behaves like stock. OTM call delta approaches 0. A delta-0.6 call gains $0.60 for every $1 rise in stock.</p>
+    <p><strong>Gamma:</strong> N'(d1)/(S_0*sigma*sqrt(T)). Always positive for long options. Highest for ATM options near expiry. High gamma means delta is shifting fast and you must rebalance constantly. Cannot be hedged with stock alone, needs other options.</p>
+    <p><strong>Theta:</strong> usually negative. Options bleed value as time passes. ATM near-expiry options decay fastest. The theta-gamma relationship: theta + 0.5*sigma^2*S^2*gamma = r*portfolio. High gamma, high theta. That is the core tradeoff.</p>
+    <p><strong>Vega:</strong> S_0*sqrt(T)*N'(d1). Always positive for long options. Higher vol makes both calls and puts more expensive. Cannot be hedged with stock, needs other options. One percent rise in implied vol changes option value by approximately vega*0.01.</p>
+    <p><strong>Rho:</strong> K*T*e^(-rT)*N(d2) for calls. Positive for calls, negative for puts. Smallest Greek for short-dated options. Matters more for LEAPS.</p>
+  </div></div></div>
+</div>
+
+<div class="qa-block" id="s4q2">
+  <button class="qa-trigger" aria-expanded="false">
+    <span class="q-num">02</span>
+    <span class="q-text">What are neutral portfolios and how do you create them?</span>
+    <svg class="q-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+  </button>
+  <div class="qa-body"><div class="qa-body-inner"><div class="a-body">
+    <p>A neutral portfolio has zero sensitivity to a specific risk factor. You are removing a specific Greek from your exposure.</p>
+    <p><strong>Delta neutral:</strong> combine option position with the underlying in a ratio that makes total delta zero. Sold 100 calls with delta 0.6: buy 60 shares. Net delta = -60 + 60 = 0. Small stock moves cancel out.</p>
+    <div class="formula">Shares needed to delta hedge = delta * number of options
+Example: short 100 calls, delta=0.6 -> buy 60 shares</div>
+    <p><strong>Gamma neutral:</strong> delta neutrality does not protect against large moves. Gamma captures how fast delta is shifting. To neutralize gamma you need another option position since stock has zero gamma.</p>
+    <div class="formula">If portfolio gamma = G_P, and a traded option has gamma G_T:
+Add w_T = -G_P / G_T units of the traded option.
+Then re-establish delta neutrality with stock.</div>
+    <p><strong>Vega neutral:</strong> same logic. Portfolio vega + (w_T * option vega) = 0. Use another option to zero it out, then rebalance delta with stock.</p>
+    <p>In practice traders do not zero everything simultaneously. They stay within risk limits on each Greek. The goal is staying inside bounds, not perfect neutrality, because the cost of hedging every Greek every minute would eat all the profit.</p>
+  </div></div></div>
+</div>
+
+<div class="qa-block" id="s4q3">
+  <button class="qa-trigger" aria-expanded="false">
+    <span class="q-num">03</span>
+    <span class="q-text">What exactly is dynamic hedging?</span>
+    <svg class="q-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+  </button>
+  <div class="qa-body"><div class="qa-body-inner"><div class="a-body">
+    <p>Delta changes constantly as the stock moves. Dynamic hedging means continuously rebalancing the stock position to maintain delta neutrality over the life of the option.</p>
+    <div class="key-point">
+      <div class="key-point-lbl">Hull's bank example (Ch. 19)</div>
+      <p>Bank sells 100,000 calls. S_0=$49, K=$50, T=20wks, sigma=20%, r=5%. BSM price=$240k. Delta=0.522, buy 52,200 shares, borrow $2.56M. Week 1: stock falls to $48.12, delta drops to 0.458, sell 6,400 shares, reduce borrowing. Week 3: stock jumps to $50.25, delta rises to 0.596, buy more shares. Repeat weekly for 20 weeks. Final hedging cost ~$263k vs BSM price $240k. Gap exists because rebalancing is weekly not continuous and vol is not perfectly constant.</p>
+    </div>
+    <p>As rebalancing frequency increases, cost converges to the BSM price. Continuous rebalancing in theory perfectly replicates the option payoff. In practice transaction costs make continuous rebalancing prohibitive. Real desks rebalance daily or when delta drifts past a threshold.</p>
+    <p>The key insight: BSM assumes you can continuously delta hedge. The BSM price is literally the cost of running that hedge to replication. If you sell an option and hedge it perfectly, your net cost equals the premium you collected. Your profit comes from the bid-ask spread and from selling options when implied vol exceeds realized vol.</p>
+  </div></div></div>
+</div>
+
+<div class="qa-block" id="s4q4">
+  <button class="qa-trigger" aria-expanded="false">
+    <span class="q-num">04</span>
+    <span class="q-text">Explain volatility trading in terms of call and put options.</span>
+    <svg class="q-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+  </button>
+  <div class="qa-body"><div class="qa-body-inner"><div class="a-body">
+    <p>Volatility trading means taking a view on whether implied vol is too high or too low relative to what you expect realized vol to be. Direction is not the point. Vol is.</p>
+    <p><strong>Long vol (buying volatility):</strong> you think the stock will move more than implied vol suggests. Buy a straddle or strangle. Delta hedge away the directional exposure immediately. Now you are long gamma and long vega. You make money if realized vol exceeds implied vol. You lose money from theta every day the stock sits still.</p>
+    <p><strong>Short vol (selling volatility):</strong> you think the stock will move less than implied vol suggests. Sell a straddle or strangle. Delta hedge. Now you are short gamma and short vega. You collect theta daily but face losses if the stock makes a big move.</p>
+    <div class="formula">Long vol trade:
+Buy straddle -> delta hedge -> long gamma, long vega, short theta
+Profit if realized vol > implied vol
+
+Short vol trade:
+Sell straddle -> delta hedge -> short gamma, short vega, long theta
+Profit if realized vol < implied vol</div>
+    <p>The gamma-theta tradeoff is the heart of it. Long gamma positions profit from large moves but pay theta daily. Short gamma positions collect theta daily but bleed on large moves. Volatility trading is just choosing which side of that tradeoff you want based on your vol forecast.</p>
+  </div></div></div>
+</div>
+
+<div class="qa-block" id="s4q5">
+  <button class="qa-trigger" aria-expanded="false">
+    <span class="q-num">05</span>
+    <span class="q-text">Explain volatility arbitrage. How does it work?</span>
+    <svg class="q-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+  </button>
+  <div class="qa-body"><div class="qa-body-inner"><div class="a-body">
+    <p>Vol arb exploits the difference between implied volatility (what the market prices into options) and realized volatility (how much the stock actually moves). You strip out the directional exposure with delta hedging and isolate the vol bet.</p>
+    <p><strong>The trade:</strong> if implied vol is 30% but you forecast realized vol of 20%, sell options and delta hedge. You collect the 30% vol premium. As you rebalance daily, your hedging cost reflects actual realized vol. The spread between what you sold at and what it cost to hedge is your profit.</p>
+    <div class="formula">P&L from vol arb (simplified):
+Daily P&L ~ 0.5 * Gamma * S^2 * (sigma_realized^2 - sigma_implied^2) * dt
+
+sigma_realized > sigma_implied -> long vol wins
+sigma_realized < sigma_implied -> short vol wins</div>
+    <p><strong>In practice:</strong> buy a call, delta hedge it continuously. Your total cost to hedge is driven by realized vol. You paid implied vol for the option. If implied vol > realized vol, you overpaid and lose. If implied vol &lt; realized vol, you got a cheap option and profit from delta hedging.</p>
+    <p>Risk: realized vol is unknown until expiry. You forecast it. You can be wrong. Also, large sudden moves (gap risk) kill short vol positions before you can rebalance. Vol arb is not risk-free. It is a systematic vol forecast being executed through options and delta hedging.</p>
+  </div></div></div>
+</div>
+
+<!-- SECTION 5 -->
+<div class="section-label" style="margin-top:3.5rem;">Section 5 — Volatility and Real Options</div>
+<div class="section-sub">Ch. 17, 20, 34 &nbsp;·&nbsp; 4 questions</div>
+
+<div class="qa-block section-first" id="s5q1">
+  <button class="qa-trigger" aria-expanded="false">
+    <span class="q-num">01</span>
+    <span class="q-text">Index options vs currency options re-explained.</span>
+    <svg class="q-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+  </button>
+  <div class="qa-body"><div class="qa-body-inner"><div class="a-body">
+    <p>Same option mechanics, different underlying, different BSM adjustment.</p>
+    <p><strong>Index options:</strong> underlying is a stock index (S&P 500, Nasdaq). The index pays continuous dividends across its constituents. Substitute dividend yield q for r in BSM.</p>
+    <div class="formula">c = S_0*e^(-qT)*N(d1) - K*e^(-rT)*N(d2)
+d1 = [ln(S_0/K) + (r - q + sigma^2/2)*T] / (sigma*sqrt(T))</div>
+    <p>Cash settled only (you cannot deliver 500 stocks). SPX options are European. SPY ETF options are American. Used by portfolio managers to hedge entire equity books in one trade.</p>
+    <p><strong>Currency options:</strong> underlying is an exchange rate. Foreign currency earns interest at rate rf. Substitute rf for q. This is the Garman-Kohlhagen model.</p>
+    <div class="formula">c = S_0*e^(-rf*T)*N(d1) - K*e^(-rT)*N(d2)
+d1 = [ln(S_0/K) + (r - rf + sigma^2/2)*T] / (sigma*sqrt(T))</div>
+    <p>S_0 is spot exchange rate. r is domestic rate. rf is foreign rate. Heavy OTC market because corporates need custom sizes and dates. Used by multinationals to hedge FX revenue exposure while retaining upside if rates move favorably.</p>
+    <div class="formula">                Index         Currency
+Underlying      Stock index   Exchange rate
+BSM adjustment  Div yield q   Foreign rate rf
+Settlement      Cash          Cash or physical
+Main use        Portfolio hedge  FX risk mgmt</div>
+  </div></div></div>
+</div>
+
+<div class="qa-block" id="s5q2">
+  <button class="qa-trigger" aria-expanded="false">
+    <span class="q-num">02</span>
+    <span class="q-text">What is the volatility smile? How is it formed?</span>
+    <svg class="q-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+  </button>
+  <div class="qa-body"><div class="qa-body-inner"><div class="a-body">
+    <p>BSM assumes implied volatility is the same across all strikes. The market disagrees. Plot implied vol against strike for any single expiry and you get a curve. That curve is the vol smile or vol skew.</p>
+    <p><strong>Equity skew:</strong> OTM puts have higher implied vol than OTM calls. Not symmetric. The market prices in crash risk. Investors pay up for downside protection, bidding up put implied vol. Called a skew, not a smile.</p>
+    <div class="diagram">Equity vol skew:         FX vol smile:
+IV                        IV
+|  *                       |  *           *
+| * *                      |   *         *
+|   * *                    |     *     *
+|       * * *              |       * *
+|______________> K          |______________> K
+OTM put ATM OTM call       OTM put ATM OTM call</div>
+    <p><strong>FX smile:</strong> both OTM puts and OTM calls have elevated implied vol relative to ATM. Large moves in either direction are seen as roughly equally likely for currencies. More symmetric than equities.</p>
+    <p><strong>Why it exists:</strong> three reasons. First, stock returns have fat tails: large moves happen more often than the normal distribution assumes, so OTM options are worth more than BSM suggests. Second, leverage effect: stocks tend to be more volatile when prices fall (higher debt-to-equity, more uncertainty). Third, supply and demand: portfolio managers systematically buy OTM puts for protection, bidding up their price.</p>
+    <p>The smile is direct evidence that BSM is wrong. Traders know this. They still use BSM as a quoting convention and manage the residual through the vol surface.</p>
+  </div></div></div>
+</div>
+
+<div class="qa-block" id="s5q3">
+  <button class="qa-trigger" aria-expanded="false">
+    <span class="q-num">03</span>
+    <span class="q-text">What's the term structure of volatility and the volatility surface?</span>
+    <svg class="q-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+  </button>
+  <div class="qa-body"><div class="qa-body-inner"><div class="a-body">
+    <p><strong>Term structure of volatility:</strong> implied vol varies across expiration dates, not just strikes. Plot ATM implied vol against time to expiry and you get the term structure.</p>
+    <div class="diagram">Term structure shapes:
+
+Normal (upward):        Inverted (downward):
+IV                      IV
+  |           *           |  *
+  |       *               |      *
+  |   *                   |          *
+  |*                      |              *
+  |________> Expiry        |________> Expiry
+
+When current vol is low, market expects it to rise (upward sloping).
+When current vol is high, market expects mean reversion (inverted).</div>
+    <p>VIX typically shows an inverted term structure during market stress because near-term fear is priced higher than long-term uncertainty.</p>
+    <p><strong>Volatility surface:</strong> combine the vol smile (across strikes) with the term structure (across expiries) and you get a 2D surface: implied vol as a function of both strike K and expiry T.</p>
+    <div class="diagram">Vol surface (conceptual):
+          IV
+         /|
+        / |
+       /  | <- near expiry: steep skew
+      /   |
+     /    | <- far expiry: flatter skew
+    /_____|_____________> Strike K
+   /
+Expiry T</div>
+    <p>Every options desk marks this surface daily. When the surface shifts, every single position re-prices simultaneously. Managing a book means managing exposure to surface movements, not just individual options. Options market makers quote in terms of where the surface sits and hedge their book against surface risk.</p>
+  </div></div></div>
+</div>
+
+<div class="qa-block" id="s5q4">
+  <button class="qa-trigger" aria-expanded="false">
+    <span class="q-num">04</span>
+    <span class="q-text">What are real options?</span>
+    <svg class="q-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+  </button>
+  <div class="qa-body"><div class="qa-body-inner"><div class="a-body">
+    <p>Real options apply options pricing theory to corporate investment decisions. A company has a choice, not an obligation, to take a business action. That flexibility has value just like a financial option does.</p>
+    <p>Standard NPV analysis ignores managerial flexibility. It assumes you commit fully upfront. Real options pricing captures the value of waiting, expanding, contracting, or abandoning depending on how conditions evolve.</p>
+    <div class="formula">Four main types:
+
+Option to expand:   if project succeeds, invest more -> like a call option
+Option to abandon:  if project fails, exit and recover salvage -> like a put option
+Option to defer:    wait and invest only if conditions improve -> like a call
+Option to switch:   change inputs or outputs as prices shift -> portfolio of options</div>
+    <p><strong>Example:</strong> an oil company owns undeveloped reserves. They do not have to drill. If oil prices rise enough to make drilling profitable, they exercise and drill. If prices stay low they wait. That optionality has real economic value not captured by a simple DCF.</p>
+    <div class="formula">Real option value = NPV(invest now) + option value of waiting
+
+Underlying asset S = PV of project cash flows
+Strike K = investment cost
+Sigma = volatility of project cash flows
+T = time window to make the decision
+r = risk-free rate</div>
+    <p>Higher uncertainty (sigma) increases real option value just like it increases financial option value. This flips the standard intuition: more volatile projects can be worth more, not less, because you have the option to invest only when things look good and abandon when they do not.</p>
+    <p>Used in natural resources, pharma R&D, tech platform investment, real estate development, and any capital decision with staged commitments.</p>
+  </div></div></div>
+</div>
+
 
 <div class="ref-wrap">
   <p class="ref-txt">Source: John C. Hull, <em>Options, Futures, and Other Derivatives</em>, 11th ed. Section 1 covers Ch. 1-5. Section 2 covers Ch. 9-17. Interactive payoff diagrams are available in the visualizers below.</p>
