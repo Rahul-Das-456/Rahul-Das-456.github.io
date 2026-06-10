@@ -115,6 +115,21 @@ footer{background:var(--navy);padding:2rem 8vw;text-align:center;}
 [data-theme="dark"] footer{background:#071420;}
 .foot-txt{font-family:var(--mono);font-size:.68rem;letter-spacing:.1em;color:rgba(248,245,240,.35);}
 
+.pos-info{margin-bottom:1.75rem;border:1px solid var(--rule);}
+.pos-info-top{display:flex;justify-content:space-between;align-items:center;padding:.55rem 1rem;background:var(--cream-dark);border-bottom:1px solid var(--rule);}
+.pos-info-name{font-family:var(--mono);font-size:.7rem;font-weight:400;letter-spacing:.14em;text-transform:uppercase;color:var(--navy);}
+.pos-info-badge{font-family:var(--mono);font-size:.58rem;letter-spacing:.12em;text-transform:uppercase;padding:.22rem .55rem;}
+.pos-info-badge.bull{color:#1a5c3a;background:rgba(26,92,58,.1);}
+.pos-info-badge.bear{color:#8b2020;background:rgba(139,32,32,.08);}
+[data-theme="dark"] .pos-info-badge.bull{color:#5db88a;background:rgba(93,184,138,.15);}
+[data-theme="dark"] .pos-info-badge.bear{color:#e06060;background:rgba(224,96,96,.15);}
+.pos-info-right{padding:.45rem 1rem;border-bottom:1px solid var(--rule);font-family:var(--mono);font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);}
+.pos-info-row{display:grid;grid-template-columns:1fr 1fr;border-bottom:1px solid var(--rule);}
+.pos-info-row:last-child{border-bottom:none;}
+.pos-info-cell{padding:.45rem 1rem;}
+.pos-info-cell-lbl{font-family:var(--mono);font-size:.56rem;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-light);}
+.pos-info-cell-val{font-family:var(--mono);font-size:.72rem;color:var(--navy);margin-top:.1rem;}
+
 @media(max-width:900px){
   nav{padding:0 1.5rem;}
   .page-header,.viz-wrap,.ref-wrap{padding-left:1.5rem;padding-right:1.5rem;}
@@ -163,6 +178,8 @@ footer{background:var(--navy);padding:2rem 8vw;text-align:center;}
     <button class="type-tab" data-type="strangle">Strangle</button>
     <button class="type-tab" data-type="vol-smile">Vol Smile</button>
   </div>
+
+  <div id="pos-info-card"></div>
 
   <div class="viz-grid">
     <div class="controls" id="controls-panel"></div>
@@ -789,10 +806,39 @@ applyTheme(saved?saved==='dark':sysDark);
 toggle.addEventListener('click',function(){applyTheme(html.getAttribute('data-theme')!=='dark');});
 window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change',function(e){if(!localStorage.getItem('theme'))applyTheme(e.matches);});
 
+/* ── POSITION INFO CARD ── */
+var POS_INFO={
+  'long-call':{name:'Long Call',badge:'Bullish',badgeClass:'bull',right:'Right to buy at strike K',mg:'Unlimited (stock rises)',ml:'Premium paid (C)',be:'K + C'},
+  'short-call':{name:'Short Call',badge:'Bearish / Neutral',badgeClass:'bear',right:'Obligation to sell at strike K',mg:'Premium received (C)',ml:'Unlimited (stock rises)',be:'K + C'},
+  'long-put':{name:'Long Put',badge:'Bearish',badgeClass:'bear',right:'Right to sell at strike K',mg:'Strike − Premium (stock → 0)',ml:'Premium paid (P)',be:'K − P'},
+  'short-put':{name:'Short Put',badge:'Bullish / Neutral',badgeClass:'bull',right:'Obligation to buy at strike K',mg:'Premium received (P)',ml:'Strike − Premium (stock → 0)',be:'K − P'}
+};
+
+function renderInfoCard(){
+  var info=POS_INFO[ACTIVE];
+  var card=document.getElementById('pos-info-card');
+  if(!info){card.innerHTML='';return;}
+  card.innerHTML=
+    '<div class="pos-info">'
+    +'<div class="pos-info-top"><span class="pos-info-name">'+info.name+'</span><span class="pos-info-badge '+info.badgeClass+'">'+info.badge+'</span></div>'
+    +'<div class="pos-info-right">'+info.right+'</div>'
+    +'<div class="pos-info-row"><div class="pos-info-cell"><div class="pos-info-cell-lbl">Max Gain (MG)</div><div class="pos-info-cell-val">'+info.mg+'</div></div>'
+    +'<div class="pos-info-cell"><div class="pos-info-cell-lbl">Max Loss (ML)</div><div class="pos-info-cell-val">'+info.ml+'</div></div></div>'
+    +'<div class="pos-info-row"><div class="pos-info-cell" style="grid-column:1/-1"><div class="pos-info-cell-lbl">Breakeven (B/E)</div><div class="pos-info-cell-val">'+info.be+'</div></div></div>'
+    +'</div>';
+}
+
+/* patch tab listener to also update card */
+document.querySelectorAll('.type-tab').forEach(function(tab){
+  tab.addEventListener('click',function(){ renderInfoCard(); });
+});
+
 buildControls(ACTIVE);
 render();
+renderInfoCard();
 })();
 </script>
 </body>
 </html>
+
 
