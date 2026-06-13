@@ -148,7 +148,7 @@
      SECTION 1: FORWARDS AND FUTURES
 ════════════════════════════════════════ -->
 <div class="section-label">Section 1 — Forwards and Futures</div>
-<div class="section-sub">Ch. 1-5 &nbsp;·&nbsp; 11 questions</div>
+<div class="section-sub">Ch. 1-5 &nbsp;·&nbsp; 12 questions</div>
 
 <div class="qa-block section-first" id="q1">
   <button class="qa-trigger" aria-expanded="false">
@@ -333,6 +333,44 @@ Price                         Price
       <div class="order-item"><div class="order-name">Stop-Limit Order</div><div class="order-desc">Converts to limit order at trigger. More price control, less fill certainty. Gaps through your limit means no fill.</div></div>
       <div class="order-item"><div class="order-name">Market-if-Touched (MIT)</div><div class="order-desc">Opposite of a stop. Triggers at your level and fires a market order. Used to enter on pullbacks or take profits at a target.</div></div>
       <div class="order-item"><div class="order-name">Day / GTC / FOK</div><div class="order-desc">Day: expires end of session. GTC: live until cancelled. Fill-or-Kill: fill in full immediately or cancel entirely.</div></div>
+    </div>
+  </div></div></div>
+</div>
+
+<div class="qa-block" id="q12">
+  <button class="qa-trigger" aria-expanded="false">
+    <span class="q-num">12</span>
+    <span class="q-text">How do you calculate intrinsic value and time value for options?</span>
+    <svg class="q-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+  </button>
+  <div class="qa-body"><div class="qa-body-inner"><div class="a-body">
+    <p>Every option premium breaks into two components. Intrinsic value is what you could collect right now if you exercised immediately. Time value is everything the market pays on top of that for the chance the option moves further ITM before expiry.</p>
+    <div class="formula">Premium = Intrinsic Value + Time Value
+
+Call intrinsic = max(S_0 - K, 0)
+Put intrinsic  = max(K - S_0, 0)
+Time value     = Premium - Intrinsic Value</div>
+    <p>Intrinsic can never go negative. If a call is OTM, intrinsic is zero, not negative. You do not exercise it and the floor holds at zero.</p>
+    <div class="formula">ITM Call:  Stock $185, K=$180, Premium=$9
+  Intrinsic  = max(185 - 180, 0) = $5.00
+  Time Value = $9.00 - $5.00    = $4.00
+
+OTM Put:   Stock $185, K=$175, Premium=$3
+  Intrinsic  = max(175 - 185, 0) = $0.00
+  Time Value = $3.00 - $0.00     = $3.00  (pure time value)
+
+ITM Put:   Stock $185, K=$200, Premium=$18
+  Intrinsic  = max(200 - 185, 0) = $15.00
+  Time Value = $18.00 - $15.00   = $3.00
+
+ATM Call:  Stock $50, K=$50, Premium=$4
+  Intrinsic  = max(50 - 50, 0)   = $0.00
+  Time Value = $4.00 - $0.00     = $4.00  (maximum time value)</div>
+    <p>ATM options carry the most time value. The stock sits right on the knife edge and any move matters, so the market charges the most for that optionality. Deep ITM options are almost entirely intrinsic with minimal time value. Deep OTM options are pure time value with zero intrinsic.</p>
+    <p>Time value decays to zero as expiry approaches. This is theta working in real time. On expiry day, premium equals intrinsic exactly. If OTM at expiry, the option is worth zero.</p>
+    <div class="key-point">
+      <div class="key-point-lbl">Why it matters in practice</div>
+      <p>When you buy options you pay both components. The stock has to move enough to cover the time value you paid or you lose money even if you got the direction right. That gap between intrinsic gain and time value paid is what kills most long option trades.</p>
     </div>
   </div></div></div>
 </div>
