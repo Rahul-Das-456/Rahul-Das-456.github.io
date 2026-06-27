@@ -988,6 +988,173 @@
     line-height: 1.8;
     font-weight: 300;
   }
+
+  /* ── REGULATION ROADMAP ── */
+  #regulation { background: var(--cream-dark); }
+
+  .roadmap-intro {
+    font-size: 1.05rem;
+    color: var(--ink-mid);
+    max-width: 72ch;
+    line-height: 1.8;
+    margin-bottom: 4rem;
+    font-weight: 300;
+  }
+
+  .roadmap-wrapper { display: flex; flex-direction: column; gap: 0; }
+  .roadmap-tier { padding: 2rem 0; }
+
+  .roadmap-tier-top {
+    display: flex;
+    justify-content: center;
+    padding-bottom: 0;
+    position: relative;
+  }
+
+  .roadmap-tier-top::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 50%;
+    transform: translateX(-50%);
+    width: 1px; height: 2rem;
+    background: var(--rule);
+  }
+
+  .roadmap-federal-cols {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+  }
+
+  .roadmap-branch { display: flex; flex-direction: column; gap: 1.5rem; }
+
+  .roadmap-branch-label {
+    font-family: var(--mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--ink-light);
+    border-left: 2px solid var(--gold);
+    padding-left: 0.75rem;
+    margin-bottom: 0.25rem;
+  }
+
+  .roadmap-branch-label.branch-cftc { border-left-color: #3d9966; }
+  .roadmap-support-label { border-left-color: var(--ink-light); margin-bottom: 1.5rem; }
+
+  .roadmap-sro-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+
+  .roadmap-support-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+  }
+
+  .roadmap-tier-federal {
+    border-top: 1px dashed var(--rule);
+    padding-top: 2rem;
+    margin-top: 2rem;
+  }
+
+  .roadmap-tier-sro {
+    border-top: 1px dashed var(--rule);
+    padding-top: 2rem;
+  }
+
+  .roadmap-tier-support {
+    border-top: 2px solid var(--rule);
+    padding-top: 2rem;
+    margin-top: 1rem;
+  }
+
+  .roadmap-card {
+    background: var(--cream);
+    border: 1px solid var(--rule);
+    padding: 1.25rem 1.5rem;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+
+  .roadmap-card:hover {
+    border-color: var(--navy-light);
+    box-shadow: 0 4px 16px rgba(26,58,92,0.08);
+  }
+
+  .congress-card  { border-left: 3px solid var(--ink-mid); max-width: 640px; width: 100%; text-align: center; }
+  .sec-card       { border-left: 3px solid var(--navy); }
+  .cftc-card      { border-left: 3px solid #2e7d52; }
+  .sro-card       { border-left: 3px solid var(--gold); }
+  .sro-cftc       { border-left-color: #3d9966; }
+  .support-card   { border-left: 3px solid var(--ink-light); }
+
+  .rn-eyebrow {
+    font-family: var(--mono);
+    font-size: 0.6rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 0.4rem;
+  }
+  .sec-card .rn-eyebrow      { color: var(--navy-light); }
+  .cftc-card .rn-eyebrow     { color: #3d9966; }
+  .sro-cftc .rn-eyebrow      { color: #3d9966; }
+  .support-card .rn-eyebrow  { color: var(--ink-light); }
+  .congress-card .rn-eyebrow { color: var(--ink-mid); }
+
+  .rn-abbr {
+    font-family: var(--serif-display);
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--navy);
+    line-height: 1;
+    margin-bottom: 0.2rem;
+    letter-spacing: -0.01em;
+  }
+
+  .rn-name {
+    font-family: var(--mono);
+    font-size: 0.62rem;
+    letter-spacing: 0.04em;
+    color: var(--ink-light);
+    margin-bottom: 0.5rem;
+    line-height: 1.4;
+  }
+
+  .rn-desc {
+    font-family: var(--serif-body);
+    font-size: 0.83rem;
+    color: var(--ink-mid);
+    line-height: 1.6;
+    font-weight: 300;
+  }
+
+  .rn-tags { display: flex; flex-wrap: wrap; gap: 0.3rem; margin-top: 0.75rem; }
+
+  .rn-tag {
+    font-family: var(--mono);
+    font-size: 0.58rem;
+    letter-spacing: 0.06em;
+    color: var(--ink-mid);
+    background: var(--cream-dark);
+    border: 1px solid var(--rule);
+    padding: 0.15rem 0.5rem;
+  }
+
+  [data-theme="dark"] .roadmap-card { background: #0d1c2e; }
+  [data-theme="dark"] .rn-tag { background: #071420; border-color: #1c3048; }
+
+  @media (max-width: 900px) {
+    .roadmap-federal-cols { grid-template-columns: 1fr; }
+    .roadmap-sro-grid     { grid-template-columns: 1fr; }
+    .roadmap-support-grid { grid-template-columns: 1fr 1fr; }
+  }
+  @media (max-width: 600px) {
+    .roadmap-support-grid { grid-template-columns: 1fr; }
+  }
+
 </style>
 </head>
 <body>
@@ -1001,6 +1168,7 @@
     <li><a href="#skills">Skills</a></li>
     <li><a href="#education">Education</a></li>
     <li><a href="#interests">Interests</a></li>
+    <li><a href="#regulation">Regulation</a></li>
     <li><a href="#contact">Contact</a></li>
     <li><a href="./options-visualizer.html">Options</a></li>
     <li><a href="./futures-visualizer.html">Futures</a></li>
@@ -1445,10 +1613,211 @@
   </div>
 </section>
 
+<!-- REGULATION ROADMAP -->
+<section id="regulation">
+  <div class="section-header">
+    <span class="section-number">06</span>
+    <h2 class="section-title">U.S. Financial SRO<br><em>Regulation Roadmap</em></h2>
+  </div>
+
+  <p class="roadmap-intro">Congress empowers two federal commissions — the SEC for securities and the CFTC for derivatives — which delegate front-line oversight to Self-Regulatory Organizations (SROs), while Treasury agencies handle cross-market financial crimes and sanctions.</p>
+
+  <div class="roadmap-wrapper reveal">
+
+    <!-- CONGRESS -->
+    <div class="roadmap-tier roadmap-tier-top">
+      <div class="roadmap-card congress-card">
+        <div class="rn-eyebrow">Legislative Foundation</div>
+        <div class="rn-abbr">U.S. Congress</div>
+        <div class="rn-desc">Securities Exchange Act (1934) &nbsp;·&nbsp; Commodity Exchange Act (1936) &nbsp;·&nbsp; Dodd-Frank Act (2010) &nbsp;·&nbsp; Sarbanes-Oxley (2002) &nbsp;·&nbsp; Investment Advisers Act (1940)</div>
+      </div>
+    </div>
+
+    <!-- FEDERAL REGULATORS -->
+    <div class="roadmap-tier roadmap-tier-federal">
+      <div class="roadmap-federal-cols">
+
+        <div class="roadmap-branch">
+          <div class="roadmap-card sec-card">
+            <div class="rn-eyebrow">Securities Markets</div>
+            <div class="rn-abbr">SEC</div>
+            <div class="rn-name">Securities and Exchange Commission</div>
+            <div class="rn-desc">Regulates U.S. securities markets, broker-dealers, investment advisers, and public company disclosure.</div>
+            <div class="rn-tags"><span class="rn-tag">Est. 1934</span><span class="rn-tag">Reg BI</span><span class="rn-tag">Rule 10b-5</span><span class="rn-tag">17a-4</span></div>
+          </div>
+        </div>
+
+        <div class="roadmap-branch">
+          <div class="roadmap-card cftc-card">
+            <div class="rn-eyebrow">Derivatives &amp; Futures Markets</div>
+            <div class="rn-abbr">CFTC</div>
+            <div class="rn-name">Commodity Futures Trading Commission</div>
+            <div class="rn-desc">Regulates futures, options on futures, swaps, and commodity derivatives markets, including FCMs and swap dealers.</div>
+            <div class="rn-tags"><span class="rn-tag">Est. 1974</span><span class="rn-tag">CEA</span><span class="rn-tag">DCM</span><span class="rn-tag">Dodd-Frank</span></div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- SROs -->
+    <div class="roadmap-tier roadmap-tier-sro">
+      <div class="roadmap-federal-cols">
+
+        <!-- SEC SROs -->
+        <div class="roadmap-branch">
+          <div class="roadmap-branch-label">SROs Under SEC Oversight</div>
+          <div class="roadmap-sro-grid">
+
+            <div class="roadmap-card sro-card">
+              <div class="rn-eyebrow">Broker-Dealer SRO</div>
+              <div class="rn-abbr">FINRA</div>
+              <div class="rn-name">Financial Industry Regulatory Authority</div>
+              <div class="rn-desc">Licenses, examines, and disciplines broker-dealers and their 624K+ registered representatives across the U.S.</div>
+              <div class="rn-tags"><span class="rn-tag">WSPs</span><span class="rn-tag">CAT</span><span class="rn-tag">Rule 3110</span><span class="rn-tag">BrokerCheck</span></div>
+            </div>
+
+            <div class="roadmap-card sro-card">
+              <div class="rn-eyebrow">Municipal Securities SRO</div>
+              <div class="rn-abbr">MSRB</div>
+              <div class="rn-name">Municipal Securities Rulemaking Board</div>
+              <div class="rn-desc">Writes conduct rules for muni securities dealers and advisors but relies on SEC and FINRA to enforce them.</div>
+              <div class="rn-tags"><span class="rn-tag">EMMA</span><span class="rn-tag">Rule G-17</span><span class="rn-tag">Rule G-37</span></div>
+            </div>
+
+            <div class="roadmap-card sro-card">
+              <div class="rn-eyebrow">Derivatives Exchange SRO</div>
+              <div class="rn-abbr">Cboe</div>
+              <div class="rn-name">Cboe Global Markets</div>
+              <div class="rn-desc">World's largest options exchange, self-regulating trade practice and member conduct for listed options and equity markets.</div>
+              <div class="rn-tags"><span class="rn-tag">SMARTS</span><span class="rn-tag">VIX</span><span class="rn-tag">Exchange Act §6</span></div>
+            </div>
+
+            <div class="roadmap-card sro-card">
+              <div class="rn-eyebrow">Equity Exchange SROs</div>
+              <div class="rn-abbr">NYSE / Nasdaq</div>
+              <div class="rn-name">National Securities Exchanges</div>
+              <div class="rn-desc">Operate listing standards, real-time market surveillance, and member oversight as SEC-registered national exchanges.</div>
+              <div class="rn-tags"><span class="rn-tag">Reg NMS</span><span class="rn-tag">Listing Standards</span></div>
+            </div>
+
+            <div class="roadmap-card sro-card">
+              <div class="rn-eyebrow">Options Clearing SRO</div>
+              <div class="rn-abbr">OCC</div>
+              <div class="rn-name">Options Clearing Corporation</div>
+              <div class="rn-desc">Central counterparty that issues, clears, and guarantees all U.S. exchange-listed options contracts, clearing 40M+ daily.</div>
+              <div class="rn-tags"><span class="rn-tag">CCP</span><span class="rn-tag">CFTC co-supervised</span></div>
+            </div>
+
+            <div class="roadmap-card sro-card">
+              <div class="rn-eyebrow">Clearing &amp; Settlement SRO</div>
+              <div class="rn-abbr">DTCC</div>
+              <div class="rn-name">Depository Trust &amp; Clearing Corporation</div>
+              <div class="rn-desc">Provides post-trade clearing, settlement, and custody for U.S. equities and fixed income, processing ~$2.5 quadrillion/year.</div>
+              <div class="rn-tags"><span class="rn-tag">T+1 Settlement</span><span class="rn-tag">NSCC</span><span class="rn-tag">DTC</span></div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- CFTC SROs -->
+        <div class="roadmap-branch">
+          <div class="roadmap-branch-label branch-cftc">SROs Under CFTC Oversight</div>
+          <div class="roadmap-sro-grid">
+
+            <div class="roadmap-card sro-card sro-cftc">
+              <div class="rn-eyebrow">Futures Industry SRO</div>
+              <div class="rn-abbr">NFA</div>
+              <div class="rn-name">National Futures Association</div>
+              <div class="rn-desc">Mandatory SRO that registers and examines all U.S. futures participants — FCMs, IBs, CPOs, CTAs, and swap dealers.</div>
+              <div class="rn-tags"><span class="rn-tag">BASIC</span><span class="rn-tag">FCM</span><span class="rn-tag">Swap Dealer</span></div>
+            </div>
+
+            <div class="roadmap-card sro-card sro-cftc">
+              <div class="rn-eyebrow">Futures Exchange SRO</div>
+              <div class="rn-abbr">CME Group</div>
+              <div class="rn-name">Chicago Mercantile Exchange Group</div>
+              <div class="rn-desc">World's largest futures exchange operator (CME, CBOT, NYMEX, COMEX), self-regulating trade practice and position limits under CFTC designation.</div>
+              <div class="rn-tags"><span class="rn-tag">DCM</span><span class="rn-tag">CME Globex</span><span class="rn-tag">CBOT</span></div>
+            </div>
+
+            <div class="roadmap-card sro-card sro-cftc">
+              <div class="rn-eyebrow">ICE / Volatility SRO</div>
+              <div class="rn-abbr">ICE &amp; CFE</div>
+              <div class="rn-name">Intercontinental Exchange &amp; Cboe Futures Exchange</div>
+              <div class="rn-desc">ICE Futures U.S. handles soft commodity and financial futures; CFE lists VIX futures — both CFTC-designated contract markets.</div>
+              <div class="rn-tags"><span class="rn-tag">ICE Futures U.S.</span><span class="rn-tag">VIX Futures</span></div>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- SUPPORTING AGENCIES -->
+    <div class="roadmap-tier roadmap-tier-support">
+      <div class="roadmap-branch-label roadmap-support-label">Cross-Market Supporting Agencies</div>
+      <div class="roadmap-support-grid">
+
+        <div class="roadmap-card support-card">
+          <div class="rn-eyebrow">Financial Crimes</div>
+          <div class="rn-abbr">FinCEN</div>
+          <div class="rn-name">Financial Crimes Enforcement Network</div>
+          <div class="rn-desc">Treasury bureau that administers BSA/AML compliance, mandating SARs, CTRs, and KYC/CDD for all financial institutions.</div>
+          <div class="rn-tags"><span class="rn-tag">AML/BSA</span><span class="rn-tag">SAR</span><span class="rn-tag">CTR</span><span class="rn-tag">CDD</span></div>
+        </div>
+
+        <div class="roadmap-card support-card">
+          <div class="rn-eyebrow">Sanctions Enforcement</div>
+          <div class="rn-abbr">OFAC</div>
+          <div class="rn-name">Office of Foreign Assets Control</div>
+          <div class="rn-desc">Enforces U.S. sanctions programs via the SDN list — all firms must screen transactions and counterparties or face strict-liability penalties.</div>
+          <div class="rn-tags"><span class="rn-tag">SDN List</span><span class="rn-tag">50% Rule</span><span class="rn-tag">VSD</span></div>
+        </div>
+
+        <div class="roadmap-card support-card">
+          <div class="rn-eyebrow">Systemic Risk</div>
+          <div class="rn-abbr">Federal Reserve</div>
+          <div class="rn-name">Board of Governors — Federal Reserve System</div>
+          <div class="rn-desc">Supervises bank holding companies and SIFIs, sets capital requirements under Basel III, and oversees Regulation T margin rules.</div>
+          <div class="rn-tags"><span class="rn-tag">Reg T</span><span class="rn-tag">SIFI</span><span class="rn-tag">Basel III</span></div>
+        </div>
+
+        <div class="roadmap-card support-card">
+          <div class="rn-eyebrow">National Banks</div>
+          <div class="rn-abbr">OCC</div>
+          <div class="rn-name">Office of the Comptroller of the Currency</div>
+          <div class="rn-desc">Charters and supervises national banks and federal savings associations, including bank-affiliated broker-dealers and custodians.</div>
+          <div class="rn-tags"><span class="rn-tag">National Banks</span><span class="rn-tag">Trust Companies</span></div>
+        </div>
+
+        <div class="roadmap-card support-card">
+          <div class="rn-eyebrow">Deposit Insurance</div>
+          <div class="rn-abbr">FDIC</div>
+          <div class="rn-name">Federal Deposit Insurance Corporation</div>
+          <div class="rn-desc">Insures bank deposits up to $250K and supervises state-chartered non-Fed-member banks, coordinating with SIPC for broker-dealer insolvency.</div>
+          <div class="rn-tags"><span class="rn-tag">$250K Coverage</span><span class="rn-tag">SIPC</span></div>
+        </div>
+
+        <div class="roadmap-card support-card">
+          <div class="rn-eyebrow">State Level</div>
+          <div class="rn-abbr">NASAA</div>
+          <div class="rn-name">North American Securities Administrators Assoc.</div>
+          <div class="rn-desc">Coordinates state "blue sky" laws, registering investment advisers under $100M AUM and handling retail investor complaints.</div>
+          <div class="rn-tags"><span class="rn-tag">Blue Sky Laws</span><span class="rn-tag">IA Registration</span></div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</section>
+
 <!-- CONTACT -->
 <section id="contact">
   <div class="section-header">
-    <span class="section-number">06</span>
+    <span class="section-number">07</span>
     <h2 class="section-title">Let's<br><em>Connect</em></h2>
   </div>
   <p class="contact-sub">Whether you're building a surveillance function, investigating complex trading activity, or looking for a compliance professional who can bridge data and regulation: reach out.</p>
