@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script>
+  (function(){
+    var s=localStorage.getItem('theme');
+    var p=window.matchMedia('(prefers-color-scheme: dark)').matches;
+    if(s==='dark'||(!s&&p)){document.documentElement.setAttribute('data-theme','dark');}
+  })();
+</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trade Surveillance Career Guide — Rahul Das</title>
+<meta name="description" content="How to become an Analyst, Associate, and Sr. Associate in trade surveillance compliance. Career pathway, salary benchmarks, and practical tips from a Cboe Global Markets investigator.">
+<meta name="author" content="Rahul Das">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,600;1,8..60,300;1,8..60,400&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream:#f8f5f0; --cream-dark:#ede9e2;
+    --navy:#1a3a5c; --navy-mid:#2a5280; --navy-light:#3d6b9a;
+    --ink:#1c1c1e; --ink-mid:#3a3a3c; --ink-light:#6e6e73;
+    --rule:#c8bfb0; --gold:#b8976a; --gold-light:#d4b48a;
+    --white:#ffffff;
+    --serif-display:'Playfair Display',Georgia,serif;
+    --serif-body:'Source Serif 4',Georgia,serif;
+    --mono:'DM Mono','Courier New',monospace;
+  }
+  [data-theme="dark"] {
+    --cream:#0d1c2e; --cream-dark:#112235;
+    --navy:#c4d4e4; --navy-mid:#a4b8cc; --navy-light:#849cb4;
+    --ink:#ddd8d0; --ink-mid:#bcb8b0; --ink-light:#7c7870;
+    --rule:#1c3048; --gold:#c4a472; --gold-light:#d4b48a;
+    --white:#0d1c2e;
+  }
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;font-size:16px;}
+  body{background:var(--cream);color:var(--ink);font-family:var(--serif-body);font-weight:300;line-height:1.7;-webkit-font-smoothing:antialiased;transition:background-color .3s,color .3s;}
+
+  nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:0 3rem;height:64px;background:rgba(248,245,240,.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--rule);transition:background .3s,border-color .3s;}
+  [data-theme="dark"] nav{background:rgba(13,28,46,.95);border-bottom-color:#1c3048;}
+  .nav-mark{font-family:var(--serif-display);font-size:1rem;font-weight:600;color:var(--navy);letter-spacing:.02em;text-decoration:none;}
+  .nav-links{display:flex;gap:2rem;list-style:none;align-items:center;}
+  .nav-links a{font-family:var(--mono);font-size:.72rem;font-weight:300;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-light);text-decoration:none;transition:color .2s;}
+  .nav-links a:hover{color:var(--navy);}
+  .nav-right{display:flex;align-items:center;gap:.75rem;}
+  .nav-back{font-family:var(--mono);font-size:.72rem;font-weight:400;letter-spacing:.1em;text-transform:uppercase;color:var(--white);background:var(--navy);padding:.5rem 1.25rem;text-decoration:none;transition:background .2s;}
+  .nav-back:hover{background:var(--navy-mid);}
+  .theme-toggle{background:none;border:1px solid var(--rule);color:var(--ink-light);cursor:pointer;padding:.38rem .5rem;display:flex;align-items:center;justify-content:center;line-height:0;transition:color .2s,border-color .2s;}
+  .theme-toggle:hover{color:var(--navy);border-color:var(--navy);}
+  .icon-sun{display:none;} .icon-moon{display:block;}
+  [data-theme="dark"] .icon-moon{display:none;} [data-theme="dark"] .icon-sun{display:block;}
+
+  .page-header{padding:9rem 8vw 4rem;border-bottom:1px solid var(--rule);}
+  .page-eyebrow{font-family:var(--mono);font-size:.72rem;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);margin-bottom:1rem;}
+  .page-title{font-family:var(--serif-display);font-size:clamp(2.5rem,4vw,4rem);font-weight:700;line-height:1.05;color:var(--navy);letter-spacing:-.02em;}
+  .page-title em{font-style:italic;font-weight:400;color:var(--navy-light);}
+  .page-sub{font-family:var(--serif-body);font-size:1rem;font-weight:300;color:var(--ink-light);margin-top:1rem;max-width:60ch;line-height:1.6;}
+
+  .guide-wrap{padding:4rem 8vw 5rem;}
+
+  .section-label{font-family:var(--serif-display);font-size:1.6rem;font-weight:700;color:var(--navy);letter-spacing:-.01em;padding:2.5rem 0 .75rem;border-top:2px solid var(--gold);margin-top:1rem;}
+  .section-label:first-child{border-top:none;margin-top:0;padding-top:0;}
+  .section-sub{font-family:var(--mono);font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-light);margin-bottom:2rem;}
+
+  .body-text{font-family:var(--serif-body);font-size:.95rem;font-weight:300;color:var(--ink-mid);line-height:1.85;max-width:70ch;margin-bottom:1.25rem;}
+  .body-text strong{font-weight:600;color:var(--ink);}
+
+  .level-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.25rem;margin:1.5rem 0 2rem;}
+  .level-card{padding:1.5rem;border:1px solid var(--rule);border-top:3px solid var(--gold);}
+  .level-card-title{font-family:var(--serif-display);font-size:1.05rem;font-weight:700;color:var(--navy);margin-bottom:.3rem;}
+  .level-card-years{font-family:var(--mono);font-size:.65rem;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);margin-bottom:1rem;}
+  .level-card ul{list-style:none;padding:0;}
+  .level-card ul li{font-family:var(--serif-body);font-size:.88rem;font-weight:300;color:var(--ink-mid);line-height:1.6;padding:.35rem 0;border-bottom:1px solid var(--rule);}
+  .level-card ul li:last-child{border-bottom:none;}
+  .level-card ul li::before{content:"";display:inline-block;width:4px;height:4px;border-radius:50%;background:var(--gold);margin-right:.6rem;vertical-align:middle;}
+
+  .tip-list{list-style:none;padding:0;margin:1rem 0 2rem;}
+  .tip-list li{display:flex;gap:1rem;padding:1rem 0;border-bottom:1px solid var(--rule);}
+  .tip-list li:first-child{border-top:1px solid var(--rule);}
+  .tip-num{font-family:var(--mono);font-size:.64rem;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);flex-shrink:0;width:2rem;padding-top:.15rem;}
+  .tip-body{font-family:var(--serif-body);font-size:.93rem;font-weight:300;color:var(--ink-mid);line-height:1.75;}
+  .tip-body strong{font-weight:600;color:var(--ink);}
+
+  .salary-table{width:100%;border-collapse:collapse;margin:1.5rem 0 2rem;max-width:50ch;}
+  .salary-table th{font-family:var(--mono);font-size:.65rem;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-light);padding:.65rem 1rem;text-align:left;border-bottom:2px solid var(--gold);}
+  .salary-table td{font-family:var(--serif-body);font-size:.9rem;font-weight:300;color:var(--ink-mid);padding:.65rem 1rem;border-bottom:1px solid var(--rule);}
+  .salary-table td:first-child{font-weight:600;color:var(--ink);}
+  .salary-table tr:last-child td{border-bottom:none;}
+
+  .callout{margin:1.5rem 0;padding:1.1rem 1.4rem;border:1px solid var(--rule);border-left:3px solid var(--navy-light);}
+  .callout-lbl{font-family:var(--mono);font-size:.58rem;letter-spacing:.15em;text-transform:uppercase;color:var(--navy-light);margin-bottom:.4rem;}
+  .callout p{font-family:var(--mono);font-size:.78rem;color:var(--ink-mid);line-height:1.7;margin:0;}
+
+  .ref-wrap{padding:3rem 8vw 5rem;border-top:1px solid var(--rule);}
+  .ref-txt{font-family:var(--mono);font-size:.72rem;letter-spacing:.04em;color:var(--ink-light);line-height:1.75;max-width:65ch;}
+  .back-link{font-family:var(--mono);font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;color:var(--white);background:var(--navy);padding:.55rem 1.25rem;text-decoration:none;display:inline-block;margin-top:1.5rem;transition:background .2s;}
+  .back-link:hover{background:var(--navy-mid);}
+
+  footer{background:var(--navy);padding:2rem 8vw;text-align:center;transition:background .3s;}
+  [data-theme="dark"] footer{background:#071420;}
+  .foot-txt{font-family:var(--mono);font-size:.68rem;letter-spacing:.1em;color:rgba(248,245,240,.35);}
+
+  @media(max-width:900px){
+    .level-grid{grid-template-columns:1fr;}
+  }
+  @media(max-width:768px){
+    nav{padding:0 1.5rem;}
+    .page-header,.guide-wrap,.ref-wrap{padding-left:1.5rem;padding-right:1.5rem;}
+    .nav-links{display:none;}
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-mark" href="./index.html">Rahul Das</a>
+  <ul class="nav-links">
+    <li><a href="./index.html#about">About</a></li>
+    <li><a href="./index.html#experience">Experience</a></li>
+    <li><a href="./index.html#skills">Skills</a></li>
+    <li><a href="./index.html#contact">Contact</a></li>
+    <li><a href="./hulls-notes.html">Hull's Notes</a></li>
+    <li><a href="./trade-surveillance-career-guide.html" style="color:var(--gold);">Career Guide</a></li>
+  </ul>
+  <div class="nav-right">
+    <button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark mode">
+      <svg class="icon-moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      <svg class="icon-sun" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+    </button>
+    <a class="nav-back" href="./index.html">Back to Portfolio</a>
+  </div>
+</nav>
+
+<div class="page-header">
+  <p class="page-eyebrow">Financial Compliance</p>
+  <h1 class="page-title">Trade Surveillance<br><em>Career Guide</em></h1>
+  <p class="page-sub">How to build a career as an Analyst, Associate, and Sr. Associate in trade surveillance compliance — what to learn, what to do, and what actually gets you promoted.</p>
+</div>
+
+<div class="guide-wrap">
+
+  <!-- WHAT IS TRADE SURVEILLANCE -->
+  <h2 class="section-label">What Trade Surveillance Is</h2>
+  <p class="section-sub">The function, the tech, the regulation</p>
+  <p class="body-text">Trade surveillance teams monitor trading activity across equities, fixed income, options, and derivatives for market manipulation, insider trading, front-running, wash trading, spoofing, and layering. You sit at the intersection of capital markets, technology, and regulation.</p>
+  <p class="body-text">Core regulatory frameworks: <strong>FINRA Rule 3110</strong>, <strong>SEC Rule 10b-5</strong>, <strong>Market Abuse Regulation (MAR)</strong>, and <strong>MiFID II</strong>. Common surveillance platforms: <strong>Nasdaq SMARTS</strong>, <strong>Actimize</strong>, <strong>NICE Surveil</strong>.</p>
+  <div class="callout">
+    <p class="callout-lbl">Key manipulation types to know cold</p>
+    <p>Spoofing &amp; layering / Front-running / Wash trading / Marking the close / Cross-market manipulation / Insider trading / Pump-and-dump</p>
+  </div>
+
+  <!-- LEVEL BREAKDOWN -->
+  <h2 class="section-label">Level Breakdown</h2>
+  <p class="section-sub">Analyst to Sr. Associate</p>
+  <div class="level-grid">
+    <div class="level-card">
+      <div class="level-card-title">Analyst</div>
+      <div class="level-card-years">0&ndash;2 years</div>
+      <ul>
+        <li>Disposition system-generated alerts (escalate or close)</li>
+        <li>Document case narratives with supporting evidence</li>
+        <li>Pull trade data from SMARTS, Actimize, Bloomberg</li>
+        <li>Learn FINRA, SEC, and exchange rules</li>
+        <li>Build pattern recognition across manipulation typologies</li>
+      </ul>
+    </div>
+    <div class="level-card">
+      <div class="level-card-title">Associate</div>
+      <div class="level-card-years">2&ndash;4 years</div>
+      <ul>
+        <li>Handle complex multi-leg alert cases</li>
+        <li>Draft regulatory responses to FINRA/SEC inquiries</li>
+        <li>Contribute to WSP updates and control documentation</li>
+        <li>Mentor Analysts and QC their work</li>
+        <li>Own a specific product coverage area</li>
+      </ul>
+    </div>
+    <div class="level-card">
+      <div class="level-card-title">Sr. Associate</div>
+      <div class="level-card-years">4&ndash;6 years</div>
+      <ul>
+        <li>Own entire surveillance coverage areas end-to-end</li>
+        <li>Tune alert thresholds, reduce false positive rates</li>
+        <li>Lead internal testing and regulatory exam support</li>
+        <li>Present findings to compliance leadership</li>
+        <li>Drive cross-functional process improvement</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- BREAKING IN -->
+  <h2 class="section-label">How to Break In</h2>
+  <p class="section-sub">Getting your first Analyst role</p>
+  <ul class="tip-list">
+    <li>
+      <span class="tip-num">01</span>
+      <span class="tip-body"><strong>Target mid-size broker-dealers first.</strong> Goldman and JPM are competitive at entry level. Firms like Baird, Piper Sandler, and regional BDs hire more frequently and give you faster case ownership.</span>
+    </li>
+    <li>
+      <span class="tip-num">02</span>
+      <span class="tip-body"><strong>Get the SIE immediately.</strong> It signals you understand securities basics. Follow it with Series 7 or Series 57 when possible. These are table-stakes credentials for most surveillance postings.</span>
+    </li>
+    <li>
+      <span class="tip-num">03</span>
+      <span class="tip-body"><strong>Learn one surveillance platform.</strong> Actimize and Nasdaq SMARTS are industry standard. Look for demos, YouTube walkthroughs, or vendor training. Drop the platform name in your resume keyword section.</span>
+    </li>
+    <li>
+      <span class="tip-num">04</span>
+      <span class="tip-body"><strong>Frame data and analytics experience hard.</strong> SQL, Excel pivot tables, and pattern analysis transfer directly to alert review. Lead with what you found and what you did about it.</span>
+    </li>
+    <li>
+      <span class="tip-num">05</span>
+      <span class="tip-body"><strong>Cast a wide title net.</strong> "Trade Surveillance Analyst," "Equities Compliance Analyst," "Market Conduct Analyst," and "Surveillance Operations Analyst" all describe the same entry-level function.</span>
+    </li>
+  </ul>
+
+  <!-- LEVELING UP TO ASSOCIATE -->
+  <h2 class="section-label">Leveling Up to Associate</h2>
+  <p class="section-sub">What actually moves the needle</p>
+  <ul class="tip-list">
+    <li>
+      <span class="tip-num">01</span>
+      <span class="tip-body"><strong>Document every regulatory inquiry you touched.</strong> Even tangential involvement counts. This is your proof of external regulatory exposure, which is what hiring managers at Associate level are screening for.</span>
+    </li>
+    <li>
+      <span class="tip-num">02</span>
+      <span class="tip-body"><strong>Volunteer for complex products early.</strong> Options, swaps, and derivatives are products most junior analysts avoid. Taking ownership of them makes you the rare person who can cover both equities and derivatives — and rare gets promoted.</span>
+    </li>
+    <li>
+      <span class="tip-num">03</span>
+      <span class="tip-body"><strong>Track and quantify your false positive rate improvements.</strong> "Reduced false positive rate on layering alerts 18% through threshold recalibration" is a promotion-worthy bullet. Raw alert counts are not.</span>
+    </li>
+    <li>
+      <span class="tip-num">04</span>
+      <span class="tip-body"><strong>Go deep on one manipulation typology.</strong> Spoofing and layering are the hottest post-SEC/DOJ enforcement wave. Being the person who owns that expertise at your firm is worth more than broad shallow coverage.</span>
+    </li>
+  </ul>
+
+  <!-- LEVELING UP TO SR ASSOCIATE -->
+  <h2 class="section-label">Leveling Up to Sr. Associate</h2>
+  <p class="section-sub">From execution to ownership</p>
+  <ul class="tip-list">
+    <li>
+      <span class="tip-num">01</span>
+      <span class="tip-body"><strong>Own a workstream end-to-end, not just cases.</strong> Sr. Associates are expected to manage a coverage area: alerts, escalations, controls, documentation, and exam readiness. Start taking that scope before the title.</span>
+    </li>
+    <li>
+      <span class="tip-num">02</span>
+      <span class="tip-body"><strong>Get into control design, not just operations.</strong> Firms pay more for people who can design and test controls, not just run them. Push to be involved in any alert tuning, threshold review, or rule implementation project.</span>
+    </li>
+    <li>
+      <span class="tip-num">03</span>
+      <span class="tip-body"><strong>Build FINRA and SEC exam experience.</strong> Participate in exam responses. Document your specific role. Make it visible and quantified on your resume. Exam management is a Sr. Associate and above skill set.</span>
+    </li>
+    <li>
+      <span class="tip-num">04</span>
+      <span class="tip-body"><strong>Add a distinguishing credential.</strong> CAMS (AML-adjacent), Certified Regulatory Compliance Manager (CRCM), or a securities law certificate signals you are investing in the profession, not just occupying a seat.</span>
+    </li>
+  </ul>
+
+  <!-- BEST TIPS -->
+  <h2 class="section-label">Best Tips Across All Levels</h2>
+  <p class="section-sub">Things that actually separate people</p>
+  <ul class="tip-list">
+    <li>
+      <span class="tip-num">01</span>
+      <span class="tip-body"><strong>Write tight case narratives.</strong> Hiring managers test this. If your investigative memos are vague or narrative-light, you will not advance. Practice writing: what triggered the alert, what evidence you pulled, what the behavior showed, and what you decided.</span>
+    </li>
+    <li>
+      <span class="tip-num">02</span>
+      <span class="tip-body"><strong>Know your red flags cold.</strong> Spoofing, layering, front-running, marking the close, wash sales, cross-market manipulation. Be able to explain each in plain English during an interview without hesitation. Interviewers will test this.</span>
+    </li>
+    <li>
+      <span class="tip-num">03</span>
+      <span class="tip-body"><strong>Network inside compliance ops specifically.</strong> Most surveillance roles are filled by referral. Target LinkedIn connections at the surveillance or market conduct teams of your target firms. A referral from inside the function is worth ten cold applications.</span>
+    </li>
+    <li>
+      <span class="tip-num">04</span>
+      <span class="tip-body"><strong>Leverage process improvement credentials.</strong> CAPM and Lean Six Sigma are genuine differentiators at Sr. Associate and above. Reducing alert backlog, improving SLA, or building a new workflow is the kind of initiative that earns a VP conversation.</span>
+    </li>
+    <li>
+      <span class="tip-num">05</span>
+      <span class="tip-body"><strong>Target SROs and exchanges, not just banks.</strong> FINRA, Cboe, CME Group, and DTCC all run significant in-house surveillance operations. The scope is broader, the regulatory exposure is deeper, and the exit opportunities are strong.</span>
+    </li>
+  </ul>
+
+  <!-- SALARY -->
+  <h2 class="section-label">Salary Benchmarks</h2>
+  <p class="section-sub">Chicago market, 2025&ndash;2026</p>
+  <table class="salary-table">
+    <thead>
+      <tr>
+        <th>Level</th>
+        <th>Base Range</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>Analyst</td><td>$65,000 &ndash; $90,000</td></tr>
+      <tr><td>Associate</td><td>$90,000 &ndash; $115,000</td></tr>
+      <tr><td>Sr. Associate</td><td>$115,000 &ndash; $145,000</td></tr>
+    </tbody>
+  </table>
+  <div class="callout">
+    <p class="callout-lbl">Strong Chicago targets for this path</p>
+    <p>Cboe Global Markets / CME Group / Morningstar / Northern Trust / DTCC / FINRA Chicago / Baird / Nuveen</p>
+  </div>
+
+</div>
+
+<div class="ref-wrap">
+  <p class="ref-txt">Written by <em>Rahul Das</em> &mdash; Cross Market Investigator, Cboe Global Markets. Trade surveillance and financial compliance professional in Chicago, IL. SIE &middot; CAPM &middot; Lean Six Sigma.</p>
+  <a class="back-link" href="./index.html">Back to Portfolio</a>
+</div>
+
+<footer>
+  <p class="foot-txt">&copy; 2026 Rahul Das &nbsp;&middot;&nbsp; Chicago, IL &nbsp;&middot;&nbsp; Trade Surveillance &amp; Financial Compliance</p>
+</footer>
+
+<script>
+  const tt = document.getElementById('theme-toggle');
+  if(tt){
+    tt.addEventListener('click',()=>{
+      const d = document.documentElement;
+      const isDark = d.getAttribute('data-theme')==='dark';
+      d.setAttribute('data-theme', isDark ? 'light' : 'dark');
+      localStorage.setItem('theme', isDark ? 'light' : 'dark');
+    });
+  }
+</script>
+</body>
+</html>
