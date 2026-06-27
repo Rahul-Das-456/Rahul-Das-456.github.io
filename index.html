@@ -1155,9 +1155,290 @@
     .roadmap-support-grid { grid-template-columns: 1fr; }
   }
 
+
+  /* ── MOBILE NAV ── */
+  .hamburger {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    gap: 4px;
+    background: none;
+    border: 1px solid var(--rule);
+    color: var(--ink-light);
+    cursor: pointer;
+    padding: 0.5rem;
+    margin-right: 0.5rem;
+    transition: color 0.2s, border-color 0.2s;
+  }
+  .hamburger:hover { color: var(--navy); border-color: var(--navy); }
+  .hamburger span {
+    display: block;
+    width: 18px;
+    height: 1.5px;
+    background: currentColor;
+    transition: transform 0.25s ease, opacity 0.25s ease;
+    transform-origin: center;
+  }
+  .hamburger.open span:nth-child(1) { transform: translateY(5.5px) rotate(45deg); }
+  .hamburger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+  .hamburger.open span:nth-child(3) { transform: translateY(-5.5px) rotate(-45deg); }
+
+  @media (max-width: 900px) {
+    .hamburger { display: flex; }
+  }
+
+  /* Full-screen slide-in overlay */
+  .mobile-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 300;
+    background: var(--cream);
+    display: flex;
+    flex-direction: column;
+    transform: translateX(100%);
+    transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  .mobile-overlay.open {
+    transform: translateX(0);
+  }
+
+  .mobile-overlay-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 1.5rem;
+    height: 64px;
+    border-bottom: 1px solid var(--rule);
+    flex-shrink: 0;
+    position: sticky;
+    top: 0;
+    background: var(--cream);
+    z-index: 1;
+  }
+
+  .mobile-overlay-close {
+    background: none;
+    border: 1px solid var(--rule);
+    color: var(--ink-light);
+    cursor: pointer;
+    padding: 0.4rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: color 0.2s, border-color 0.2s;
+  }
+  .mobile-overlay-close:hover { color: var(--navy); border-color: var(--navy); }
+
+  .mobile-overlay-body {
+    padding: 1.5rem;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  .mobile-overlay-group-label {
+    font-family: var(--mono);
+    font-size: 0.6rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 0.5rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .mobile-nav-links-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .mobile-nav-link {
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+    padding: 1.1rem 0;
+    border-bottom: 1px solid var(--rule);
+    text-decoration: none;
+    color: var(--navy);
+    transition: color 0.15s, padding-left 0.15s;
+  }
+  .mobile-nav-link:last-child { border-bottom: none; }
+  .mobile-nav-link:hover { color: var(--gold); padding-left: 0.35rem; }
+
+  .mobile-nav-num {
+    font-family: var(--mono);
+    font-size: 0.62rem;
+    letter-spacing: 0.12em;
+    color: var(--gold);
+    min-width: 2rem;
+    flex-shrink: 0;
+  }
+
+  .mobile-nav-label {
+    font-family: var(--serif-display);
+    font-size: 1.5rem;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    line-height: 1;
+  }
+
+  .mobile-tool-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.6rem;
+  }
+
+  .mobile-tool-link {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-mid);
+    border: 1px solid var(--rule);
+    padding: 0.8rem 1rem;
+    text-decoration: none;
+    text-align: center;
+    transition: background 0.15s, color 0.15s, border-color 0.15s;
+  }
+  .mobile-tool-link:hover { background: var(--navy); color: var(--cream); border-color: var(--navy); }
+
+  .mobile-overlay-footer {
+    padding: 1.5rem;
+    border-top: 1px solid var(--rule);
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .mobile-overlay-dl {
+    display: block;
+    font-family: var(--mono);
+    font-size: 0.75rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--white);
+    background: var(--navy);
+    padding: 1rem;
+    text-decoration: none;
+    text-align: center;
+    transition: background 0.2s;
+  }
+  .mobile-overlay-dl:hover { background: var(--navy-mid); }
+
+  .mobile-overlay-contact-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.6rem;
+  }
+
+  .mobile-contact-pill {
+    font-family: var(--mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.06em;
+    color: var(--ink-mid);
+    border: 1px solid var(--rule);
+    padding: 0.65rem 0.75rem;
+    text-decoration: none;
+    text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    transition: background 0.15s, color 0.15s;
+  }
+  .mobile-contact-pill:hover { background: var(--navy); color: var(--cream); border-color: var(--navy); }
+
+  /* Scroll-to-top button */
+  .scroll-top {
+    position: fixed;
+    bottom: 1.5rem;
+    right: 1.5rem;
+    z-index: 90;
+    width: 44px;
+    height: 44px;
+    background: var(--navy);
+    color: var(--cream);
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transform: translateY(8px);
+    transition: opacity 0.25s, transform 0.25s, background 0.15s;
+    pointer-events: none;
+  }
+  .scroll-top.visible { opacity: 1; transform: translateY(0); pointer-events: auto; }
+  .scroll-top:hover { background: var(--navy-mid); }
+
+  /* Dark mode overlay */
+  [data-theme="dark"] .mobile-overlay { background: #0d1c2e; }
+  [data-theme="dark"] .mobile-overlay-header { background: #0d1c2e; }
+  [data-theme="dark"] .mobile-overlay-dl { color: #0d1c2e; background: var(--navy); }
+
+  /* Fix: "Let's Connect" title in dark mode should be gold, not cream-turned-navy */
+  [data-theme="dark"] #contact .section-title { color: var(--gold); }
+
 </style>
 </head>
 <body>
+<!-- MOBILE FULL-SCREEN NAV OVERLAY -->
+<div class="mobile-overlay" id="mobile-overlay" aria-hidden="true" role="dialog" aria-label="Navigation">
+
+  <div class="mobile-overlay-header">
+    <a class="nav-mark" href="#" id="overlay-logo">Rahul Das</a>
+    <button class="mobile-overlay-close" id="mobile-overlay-close" aria-label="Close navigation">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+  </div>
+
+  <div class="mobile-overlay-body">
+
+    <div>
+      <div class="mobile-overlay-group-label">Sections</div>
+      <ul class="mobile-nav-links-list">
+        <li><a class="mobile-nav-link" href="#about"><span class="mobile-nav-num">01</span><span class="mobile-nav-label">About</span></a></li>
+        <li><a class="mobile-nav-link" href="#experience"><span class="mobile-nav-num">02</span><span class="mobile-nav-label">Experience</span></a></li>
+        <li><a class="mobile-nav-link" href="#skills"><span class="mobile-nav-num">03</span><span class="mobile-nav-label">Skills</span></a></li>
+        <li><a class="mobile-nav-link" href="#education"><span class="mobile-nav-num">04</span><span class="mobile-nav-label">Education</span></a></li>
+        <li><a class="mobile-nav-link" href="#interests"><span class="mobile-nav-num">05</span><span class="mobile-nav-label">Interests</span></a></li>
+        <li><a class="mobile-nav-link" href="#regulation"><span class="mobile-nav-num">06</span><span class="mobile-nav-label">Regulation</span></a></li>
+        <li><a class="mobile-nav-link" href="#contact"><span class="mobile-nav-num">07</span><span class="mobile-nav-label">Contact</span></a></li>
+      </ul>
+    </div>
+
+    <div>
+      <div class="mobile-overlay-group-label">Tools &amp; Projects</div>
+      <div class="mobile-tool-grid">
+        <a class="mobile-tool-link" href="./options-visualizer.html">Options</a>
+        <a class="mobile-tool-link" href="./futures-visualizer.html">Futures</a>
+        <a class="mobile-tool-link" href="./strategies-visualizer.html">Strategies</a>
+        <a class="mobile-tool-link" href="./hulls-notes.html">Hull's Notes</a>
+        <a class="mobile-tool-link" href="https://soccer-shot-dashboard-cgjvzk8sfh8fpxgjxjjpl5.streamlit.app" target="_blank" rel="noopener">Soccer</a>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="mobile-overlay-footer">
+    <a class="mobile-overlay-dl" href="./Rahul_Das_Resume.pdf" download="Rahul_Das_Resume.pdf">Download CV</a>
+    <div class="mobile-overlay-contact-row">
+      <a class="mobile-contact-pill" href="mailto:rdas0541@gmail.com">rdas0541@gmail.com</a>
+      <a class="mobile-contact-pill" href="https://www.linkedin.com/in/rahul-das-capm/" target="_blank" rel="noopener">LinkedIn</a>
+    </div>
+  </div>
+
+</div>
+
+<!-- SCROLL TO TOP -->
+<button class="scroll-top" id="scroll-top" aria-label="Back to top">
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="12" y1="19" x2="12" y2="5"/><polyline points="5 12 12 5 19 12"/></svg>
+</button>
+
 
 <!-- NAV -->
 <nav>
@@ -1180,7 +1461,10 @@
     <svg class="icon-moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
     <svg class="icon-sun" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
   </button>
-  <a class="nav-download" href="./Rahul_Das_Resume.pdf" download="Rahul_Das_Resume.pdf">Download CV</a>
+<button class="hamburger" id="hamburger" aria-label="Open navigation" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
+    <a class="nav-download" href="./Rahul_Das_Resume.pdf" download="Rahul_Das_Resume.pdf">Download CV</a>
 </nav>
 
 <!-- HERO -->
@@ -1882,6 +2166,54 @@
   window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
     if (!localStorage.getItem('theme')) applyTheme(e.matches);
   });
+
+  // ── Mobile nav ──
+  const hamburgerBtn  = document.getElementById('hamburger');
+  const mobileOverlay = document.getElementById('mobile-overlay');
+  const overlayClose  = document.getElementById('mobile-overlay-close');
+  const overlayLogo   = document.getElementById('overlay-logo');
+
+  function openMobileNav() {
+    hamburgerBtn.classList.add('open');
+    hamburgerBtn.setAttribute('aria-expanded', 'true');
+    mobileOverlay.classList.add('open');
+    mobileOverlay.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeMobileNav() {
+    hamburgerBtn.classList.remove('open');
+    hamburgerBtn.setAttribute('aria-expanded', 'false');
+    mobileOverlay.classList.remove('open');
+    mobileOverlay.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+  }
+
+  hamburgerBtn.addEventListener('click', () => {
+    mobileOverlay.classList.contains('open') ? closeMobileNav() : openMobileNav();
+  });
+  overlayClose.addEventListener('click', closeMobileNav);
+  overlayLogo.addEventListener('click', closeMobileNav);
+
+  // Close on any overlay link click
+  mobileOverlay.querySelectorAll('a[href^="#"]').forEach(link => {
+    link.addEventListener('click', closeMobileNav);
+  });
+
+  // Close on swipe right
+  let touchStartX = 0;
+  mobileOverlay.addEventListener('touchstart', e => { touchStartX = e.touches[0].clientX; }, { passive: true });
+  mobileOverlay.addEventListener('touchend', e => {
+    if (e.changedTouches[0].clientX - touchStartX > 60) closeMobileNav();
+  }, { passive: true });
+
+  // ── Scroll-to-top ──
+  const scrollTopBtn = document.getElementById('scroll-top');
+  window.addEventListener('scroll', () => {
+    scrollTopBtn.classList.toggle('visible', window.scrollY > 400);
+  }, { passive: true });
+  scrollTopBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
 </script>
 </body>
 </html>
