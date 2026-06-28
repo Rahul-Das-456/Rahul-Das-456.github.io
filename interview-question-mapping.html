@@ -1,0 +1,1006 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script>
+  (function(){
+    var s=localStorage.getItem('theme');
+    var p=window.matchMedia('(prefers-color-scheme: dark)').matches;
+    if(s==='dark'||(!s&&p)){document.documentElement.setAttribute('data-theme','dark');}
+  })();
+</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Interview Question Mapping — Rahul Das</title>
+<meta name="description" content="How to predict behavioral interview questions from your own resume bullets — no AI required. A manual question mapping technique for compliance and finance professionals.">
+<meta name="author" content="Rahul Das">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://rahul-das-456.github.io/interview-question-mapping.html">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,600;1,8..60,300;1,8..60,400&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #f8f5f0;
+    --cream-dark: #ede9e2;
+    --navy: #1a3a5c;
+    --navy-mid: #2a5280;
+    --navy-light: #3d6b9a;
+    --ink: #1c1c1e;
+    --ink-mid: #3a3a3c;
+    --ink-light: #6e6e73;
+    --rule: #c8bfb0;
+    --gold: #b8976a;
+    --gold-light: #d4b48a;
+    --white: #ffffff;
+    --serif-display: 'Playfair Display', Georgia, serif;
+    --serif-body: 'Source Serif 4', Georgia, serif;
+    --mono: 'DM Mono', 'Courier New', monospace;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; font-size: 16px; }
+  body {
+    background: var(--cream);
+    color: var(--ink);
+    font-family: var(--serif-body);
+    font-weight: 300;
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 3rem;
+    height: 64px;
+    background: rgba(248, 245, 240, 0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--rule);
+  }
+  .nav-mark {
+    font-family: var(--serif-display);
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--navy);
+    letter-spacing: 0.02em;
+    text-decoration: none;
+  }
+  .nav-links {
+    display: flex;
+    gap: 2rem;
+    list-style: none;
+  }
+  .nav-links a {
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    font-weight: 300;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink-light);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--navy); }
+  .nav-links a.active { color: var(--gold); }
+  .nav-download {
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    font-weight: 400;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--white);
+    background: var(--navy);
+    padding: 0.5rem 1.25rem;
+    text-decoration: none;
+    transition: background 0.2s;
+    white-space: nowrap;
+  }
+  .nav-download:hover { background: var(--navy-mid); }
+
+  /* ── THEME TOGGLE ── */
+  .theme-toggle {
+    background: none;
+    border: 1px solid var(--rule);
+    color: var(--ink-light);
+    cursor: pointer;
+    padding: 0.38rem 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 0.75rem;
+    line-height: 0;
+    transition: color 0.2s, border-color 0.2s;
+  }
+  .theme-toggle:hover { color: var(--navy); border-color: var(--navy); }
+  .icon-sun  { display: none; }
+  .icon-moon { display: block; }
+  [data-theme="dark"] .icon-moon { display: none; }
+  [data-theme="dark"] .icon-sun  { display: block; }
+
+  /* ── DARK MODE ── */
+  [data-theme="dark"] {
+    --cream:      #0d1c2e;
+    --cream-dark: #112235;
+    --navy:       #c4d4e4;
+    --navy-mid:   #a4b8cc;
+    --navy-light: #849cb4;
+    --ink:        #ddd8d0;
+    --ink-mid:    #bcb8b0;
+    --ink-light:  #7c7870;
+    --rule:       #1c3048;
+    --gold:       #c4a472;
+    --gold-light: #d4b48a;
+    --white:      #0d1c2e;
+  }
+  [data-theme="dark"] nav {
+    background: rgba(13, 28, 46, 0.95);
+    border-bottom-color: #1c3048;
+  }
+  [data-theme="dark"] .hero-section { background: #071420; }
+  [data-theme="dark"] .tool-card { background: #112235; border-color: #1c3048; }
+  [data-theme="dark"] .example-bullet { background: #071420; border-color: #1c3048; }
+  [data-theme="dark"] .q-output { background: #0d1c2e; border-left-color: var(--gold); }
+  [data-theme="dark"] .stem-chip { background: #112235; border-color: #1c3048; }
+  [data-theme="dark"] .step-card { background: #112235; border-color: #1c3048; }
+  [data-theme="dark"] .theme-table th { background: #071420; }
+  [data-theme="dark"] .theme-table tr:nth-child(even) td { background: #112235; }
+
+  /* ── HERO ── */
+  .hero-section {
+    background: var(--navy);
+    color: var(--cream);
+    padding: 10rem 8vw 6rem;
+    border-bottom: 1px solid var(--rule);
+  }
+  .hero-eyebrow {
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 1.5rem;
+  }
+  .hero-title {
+    font-family: var(--serif-display);
+    font-size: clamp(2.5rem, 5vw, 4.5rem);
+    font-weight: 700;
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    color: var(--cream);
+    margin-bottom: 2rem;
+  }
+  .hero-title em { font-style: italic; font-weight: 400; color: var(--gold-light); }
+  .hero-sub {
+    font-size: 1.15rem;
+    font-weight: 300;
+    color: rgba(248,245,240,0.78);
+    max-width: 64ch;
+    line-height: 1.8;
+  }
+  [data-theme="dark"] .hero-section { background: #071420; }
+  [data-theme="dark"] .hero-title { color: var(--gold); }
+
+  /* ── MAIN CONTENT ── */
+  .page-body { max-width: 900px; margin: 0 auto; padding: 5rem 8vw; }
+
+  .content-section { margin-bottom: 5rem; }
+
+  .section-eyebrow {
+    font-family: var(--mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 0.75rem;
+  }
+
+  .content-title {
+    font-family: var(--serif-display);
+    font-size: clamp(1.6rem, 2.5vw, 2.2rem);
+    font-weight: 700;
+    color: var(--navy);
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    margin-bottom: 1.5rem;
+    border-bottom: 2px solid var(--gold);
+    padding-bottom: 0.75rem;
+  }
+
+  .content-body {
+    font-size: 1.05rem;
+    color: var(--ink-mid);
+    line-height: 1.85;
+    font-weight: 300;
+    margin-bottom: 1.5rem;
+  }
+
+  .content-body strong { color: var(--ink); font-weight: 600; }
+
+  /* ── STEMS ── */
+  .stems-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    margin: 2rem 0;
+  }
+
+  .stem-chip {
+    background: var(--cream-dark);
+    border: 1px solid var(--rule);
+    border-top: 3px solid var(--gold);
+    padding: 1.5rem;
+  }
+
+  .stem-number {
+    font-family: var(--mono);
+    font-size: 0.62rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 0.5rem;
+  }
+
+  .stem-text {
+    font-family: var(--serif-display);
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--navy);
+    line-height: 1.3;
+  }
+
+  .stem-note {
+    font-family: var(--mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.04em;
+    color: var(--ink-light);
+    margin-top: 0.65rem;
+    line-height: 1.5;
+  }
+
+  /* ── STEPS ── */
+  .steps-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin: 2rem 0;
+  }
+
+  .step-card {
+    background: var(--cream-dark);
+    border: 1px solid var(--rule);
+    padding: 1.25rem 1.5rem;
+    display: grid;
+    grid-template-columns: 2.5rem 1fr;
+    gap: 1rem;
+    align-items: start;
+  }
+
+  .step-num {
+    font-family: var(--serif-display);
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: var(--gold);
+    line-height: 1;
+    padding-top: 0.1rem;
+  }
+
+  .step-content {}
+
+  .step-label {
+    font-family: var(--mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--navy);
+    margin-bottom: 0.35rem;
+  }
+
+  .step-desc {
+    font-size: 0.95rem;
+    color: var(--ink-mid);
+    line-height: 1.65;
+    font-weight: 300;
+  }
+
+  .step-desc code {
+    font-family: var(--mono);
+    font-size: 0.82rem;
+    background: rgba(184,151,106,0.12);
+    color: var(--navy);
+    padding: 0.1em 0.4em;
+    border-radius: 2px;
+  }
+
+  /* ── EXAMPLES ── */
+  .example-block {
+    margin: 2.5rem 0;
+    border: 1px solid var(--rule);
+    border-top: 3px solid var(--navy);
+  }
+
+  .example-header {
+    background: var(--navy);
+    color: var(--cream);
+    padding: 0.65rem 1.25rem;
+    font-family: var(--mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  [data-theme="dark"] .example-header { background: #071420; color: var(--gold); }
+
+  .example-bullet {
+    background: var(--cream-dark);
+    border-bottom: 1px solid var(--rule);
+    padding: 1rem 1.25rem;
+    font-size: 0.95rem;
+    color: var(--ink);
+    line-height: 1.65;
+    font-style: italic;
+  }
+
+  .example-bullet::before {
+    content: 'BULLET  ';
+    font-family: var(--mono);
+    font-size: 0.6rem;
+    letter-spacing: 0.14em;
+    color: var(--gold);
+    font-style: normal;
+    display: block;
+    margin-bottom: 0.4rem;
+  }
+
+  .example-questions {
+    padding: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .q-output {
+    background: var(--cream);
+    border-left: 3px solid var(--navy-light);
+    padding: 0.75rem 1rem;
+    font-size: 0.93rem;
+    color: var(--ink-mid);
+    line-height: 1.6;
+  }
+
+  .q-stem {
+    font-family: var(--mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--navy-light);
+    display: block;
+    margin-bottom: 0.3rem;
+  }
+
+  /* ── INTERACTIVE TOOL ── */
+  .tool-card {
+    background: var(--cream-dark);
+    border: 1px solid var(--rule);
+    border-top: 3px solid var(--gold);
+    padding: 2rem 2rem 2.5rem;
+    margin-top: 2rem;
+  }
+
+  .tool-label {
+    font-family: var(--mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-light);
+    display: block;
+    margin-bottom: 0.5rem;
+  }
+
+  .tool-textarea {
+    width: 100%;
+    min-height: 110px;
+    background: var(--cream);
+    border: 1px solid var(--rule);
+    color: var(--ink);
+    font-family: var(--serif-body);
+    font-size: 1rem;
+    font-weight: 300;
+    line-height: 1.7;
+    padding: 0.85rem 1rem;
+    outline: none;
+    resize: vertical;
+    transition: border-color 0.2s;
+    border-radius: 0;
+    -webkit-appearance: none;
+  }
+  .tool-textarea:focus { border-color: var(--gold); }
+  .tool-textarea::placeholder { color: var(--ink-light); font-style: italic; }
+
+  [data-theme="dark"] .tool-textarea {
+    background: #0d1c2e;
+    border-color: #1c3048;
+    color: var(--ink);
+  }
+
+  .tool-btn {
+    margin-top: 0.85rem;
+    font-family: var(--mono);
+    font-size: 0.75rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--white);
+    background: var(--navy);
+    border: none;
+    padding: 0.85rem 2rem;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.15s;
+  }
+  .tool-btn:hover { background: var(--navy-mid); transform: translateY(-1px); }
+
+  .tool-output {
+    margin-top: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .tool-output .q-output { background: var(--cream); }
+
+  .tool-empty {
+    font-family: var(--mono);
+    font-size: 0.75rem;
+    color: var(--ink-light);
+    letter-spacing: 0.06em;
+    padding: 1rem;
+    border: 1px dashed var(--rule);
+    text-align: center;
+  }
+
+  /* ── THEME TABLE ── */
+  .theme-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9rem;
+    margin-top: 1.5rem;
+  }
+
+  .theme-table th {
+    font-family: var(--mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--navy);
+    background: var(--cream-dark);
+    padding: 0.75rem 1rem;
+    text-align: left;
+    border-bottom: 2px solid var(--rule);
+  }
+
+  .theme-table td {
+    padding: 0.75rem 1rem;
+    border-bottom: 1px solid var(--rule);
+    color: var(--ink-mid);
+    line-height: 1.5;
+    vertical-align: top;
+  }
+
+  .theme-table tr:nth-child(even) td { background: var(--cream-dark); }
+
+  .theme-table td:first-child {
+    font-family: var(--mono);
+    font-size: 0.75rem;
+    letter-spacing: 0.06em;
+    color: var(--gold);
+    white-space: nowrap;
+  }
+
+  .theme-table td:nth-child(2) {
+    font-size: 0.85rem;
+    color: var(--navy);
+    font-weight: 400;
+  }
+
+  /* ── CALLOUT ── */
+  .callout {
+    border-left: 3px solid var(--gold);
+    background: rgba(184,151,106,0.07);
+    padding: 1.25rem 1.5rem;
+    margin: 2rem 0;
+    font-size: 0.98rem;
+    color: var(--ink-mid);
+    line-height: 1.75;
+  }
+
+  .callout strong { color: var(--navy); font-weight: 600; }
+
+  /* ── BACK LINK ── */
+  .back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--gold);
+    text-decoration: none;
+    margin-bottom: 3rem;
+    transition: color 0.2s;
+  }
+  .back-link:hover { color: var(--navy); }
+
+  /* ── FOOTER ── */
+  .page-footer {
+    border-top: 1px solid var(--rule);
+    padding: 2rem 8vw;
+    text-align: center;
+    font-family: var(--mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.1em;
+    color: var(--ink-light);
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    nav { padding: 0 1.5rem; }
+    .nav-links { display: none; }
+    .hero-section { padding: 8rem 1.5rem 4rem; }
+    .page-body { padding: 3rem 1.5rem; }
+    .stems-grid { grid-template-columns: 1fr; }
+  }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .hero-eyebrow { animation: fadeUp 0.7s ease 0.1s both; }
+  .hero-title   { animation: fadeUp 0.7s ease 0.25s both; }
+  .hero-sub     { animation: fadeUp 0.7s ease 0.4s both; }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-mark" href="./index.html">Rahul Das</a>
+  <ul class="nav-links">
+    <li><a href="./index.html#about">About</a></li>
+    <li><a href="./index.html#experience">Experience</a></li>
+    <li><a href="./index.html#skills">Skills</a></li>
+    <li><a href="./trade-surveillance-career-guide.html">Career Guide</a></li>
+    <li><a href="./interview-question-mapping.html" class="active">Interview Prep</a></li>
+  </ul>
+  <button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark mode">
+    <svg class="icon-moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+    <svg class="icon-sun"  width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+  </button>
+  <a class="nav-download" href="./Rahul_Das_Resume.pdf" download="Rahul_Das_Resume.pdf">Download CV</a>
+</nav>
+
+<!-- HERO -->
+<div class="hero-section">
+  <p class="hero-eyebrow">Interview Preparation Technique</p>
+  <h1 class="hero-title">Question<br><em>Mapping</em></h1>
+  <p class="hero-sub">Every behavioral question a recruiter can ask you is already sitting on your resume — you just haven't rephrased it as a question yet. Here's the manual technique to do exactly that, no AI required.</p>
+</div>
+
+<!-- PAGE BODY -->
+<main class="page-body">
+
+  <a class="back-link" href="./index.html">← Back to Portfolio</a>
+
+  <!-- SECTION 1: THE CONCEPT -->
+  <div class="content-section">
+    <p class="section-eyebrow">The Core Insight</p>
+    <h2 class="content-title">Your Resume Is Already the Answer Sheet</h2>
+    <p class="content-body">
+      Behavioral interview questions don't come from thin air. Recruiters are trying to get you to narrate a past experience that proves you can do the job. Your resume bullets already describe exactly those experiences — written in achievement format, with context, action, and result baked in.
+    </p>
+    <p class="content-body">
+      Question mapping is the practice of reading your own bullets backward: instead of "here's what I did," you ask "what question would make someone tell this story?" Once you know the question, you already know the answer — because you lived it.
+    </p>
+    <div class="callout">
+      <strong>The key realization:</strong> a behavioral question is just a resume bullet prepended with a conversational stem. That's it. No mystery, no unpredictability. Once you've mapped your bullets, the entire behavioral interview becomes a structured narrative exercise you control.
+    </div>
+  </div>
+
+  <!-- SECTION 2: THE THREE STEMS -->
+  <div class="content-section">
+    <p class="section-eyebrow">Step One</p>
+    <h2 class="content-title">The Three Universal Question Stems</h2>
+    <p class="content-body">
+      Almost every behavioral question you will hear in a compliance, finance, or operations interview uses one of these three opening constructions. They are interchangeable — a recruiter who uses one is asking the exact same thing as a recruiter who uses another.
+    </p>
+
+    <div class="stems-grid">
+      <div class="stem-chip">
+        <div class="stem-number">Stem 01</div>
+        <div class="stem-text">"Can you tell me about a time when you…"</div>
+        <div class="stem-note">Most common. Used in formal panel interviews and structured competency screens.</div>
+      </div>
+      <div class="stem-chip">
+        <div class="stem-number">Stem 02</div>
+        <div class="stem-text">"Walk me through a time when you…"</div>
+        <div class="stem-note">Signals the interviewer wants a narrative arc — they're expecting a full story, not a one-liner.</div>
+      </div>
+      <div class="stem-chip">
+        <div class="stem-number">Stem 03</div>
+        <div class="stem-text">"Name an instance where you…"</div>
+        <div class="stem-note">Common in competency-based screens. Slightly more direct — a specific example, not a general pattern.</div>
+      </div>
+    </div>
+
+    <p class="content-body">
+      After any of these stems, the recruiter appends a topic: "managed competing priorities," "caught an error before it escalated," "worked with a difficult stakeholder," "improved a process," "delivered under a deadline," etc. Your job with question mapping is to pull those topics directly out of your own bullets before the interview happens.
+    </p>
+  </div>
+
+  <!-- SECTION 3: THE PROCESS -->
+  <div class="content-section">
+    <p class="section-eyebrow">Step Two</p>
+    <h2 class="content-title">How to Map a Bullet to a Question</h2>
+    <p class="content-body">
+      Take any resume bullet and run it through these four steps. You'll end up with a set of interview questions you can prepare answers for — and since you wrote the bullet, you already have the story.
+    </p>
+
+    <div class="steps-list">
+      <div class="step-card">
+        <div class="step-num">1</div>
+        <div class="step-content">
+          <div class="step-label">Read the Bullet</div>
+          <div class="step-desc">Take any single bullet as-is. Don't rephrase it yet. Example: <code>Ran 15+ senior-level working sessions, converting regulatory guidance into concrete surveillance controls that reduced risk exposure by 40%.</code></div>
+        </div>
+      </div>
+      <div class="step-card">
+        <div class="step-num">2</div>
+        <div class="step-content">
+          <div class="step-label">Identify the Core Skill or Challenge</div>
+          <div class="step-desc">Ask: what behavior does this bullet prove? Strip the numbers and look at the verb + context. <code>Ran working sessions</code> = leadership + facilitation. <code>Converting guidance into controls</code> = translating ambiguity into structure. <code>Reduced risk exposure</code> = risk management + measurable impact.</div>
+        </div>
+      </div>
+      <div class="step-card">
+        <div class="step-num">3</div>
+        <div class="step-content">
+          <div class="step-label">Convert the Bullet to Second Person</div>
+          <div class="step-desc">Rewrite the bullet as if you're completing the stem. Drop the leading verb's subject (it's implied), lowercase the first word, and add "you" before it. <code>Ran 15+ working sessions…</code> becomes <code>you ran 15+ working sessions…</code> — and that's the question completion.</div>
+        </div>
+      </div>
+      <div class="step-card">
+        <div class="step-num">4</div>
+        <div class="step-content">
+          <div class="step-label">Prepend Each of the Three Stems</div>
+          <div class="step-desc">Now combine. You get three questions from one bullet: <code>Can you tell me about a time when you ran senior-level working sessions to translate regulatory guidance into controls?</code> — and two more with the other stems. These are questions you will be asked. Prepare the story once, answer three ways.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 4: WORKED EXAMPLES -->
+  <div class="content-section">
+    <p class="section-eyebrow">Worked Examples</p>
+    <h2 class="content-title">Mapping Real Bullets to Real Questions</h2>
+    <p class="content-body">
+      Below are examples drawn from actual experience. Each shows a resume bullet alongside the three questions it maps to — these are questions you should expect and be ready to answer because you already lived the story.
+    </p>
+
+    <!-- Example 1 -->
+    <div class="example-block">
+      <div class="example-header">Cboe Global Markets — Cross Market Investigator</div>
+      <div class="example-bullet">Designed 20+ cross-market surveillance frameworks covering options and futures, closing detection gaps for front-running, spoofing, and settlement abuse.</div>
+      <div class="example-questions">
+        <div class="q-output">
+          <span class="q-stem">Stem 01</span>
+          Can you tell me about a time when you designed a surveillance or monitoring framework from scratch?
+        </div>
+        <div class="q-output">
+          <span class="q-stem">Stem 02</span>
+          Walk me through a time when you identified a gap in existing controls and built something to close it.
+        </div>
+        <div class="q-output">
+          <span class="q-stem">Stem 03</span>
+          Name an instance where you developed a process that improved detection or coverage across multiple areas.
+        </div>
+      </div>
+    </div>
+
+    <!-- Example 2 -->
+    <div class="example-block">
+      <div class="example-header">Cboe Global Markets — Cross Market Investigator</div>
+      <div class="example-bullet">Build Python-based automation tools to streamline data extraction and investigative workflows, accelerating analysis turnaround by 25%.</div>
+      <div class="example-questions">
+        <div class="q-output">
+          <span class="q-stem">Stem 01</span>
+          Can you tell me about a time when you used automation to improve a manual or slow process?
+        </div>
+        <div class="q-output">
+          <span class="q-stem">Stem 02</span>
+          Walk me through a time when you built a tool or solution that made your team more efficient.
+        </div>
+        <div class="q-output">
+          <span class="q-stem">Stem 03</span>
+          Name an instance where you reduced turnaround time on an analytical or investigative task.
+        </div>
+      </div>
+    </div>
+
+    <!-- Example 3 -->
+    <div class="example-block">
+      <div class="example-header">FINRA — Associate Analyst, Member Supervision</div>
+      <div class="example-bullet">Ran 15+ senior-level working sessions, converting regulatory guidance into concrete surveillance controls that reduced risk exposure by 40%.</div>
+      <div class="example-questions">
+        <div class="q-output">
+          <span class="q-stem">Stem 01</span>
+          Can you tell me about a time when you had to lead a meeting or working group with senior stakeholders?
+        </div>
+        <div class="q-output">
+          <span class="q-stem">Stem 02</span>
+          Walk me through a time when you translated a regulatory requirement into a concrete action plan or control.
+        </div>
+        <div class="q-output">
+          <span class="q-stem">Stem 03</span>
+          Name an instance where you influenced a process change without direct authority over the outcome.
+        </div>
+      </div>
+    </div>
+
+    <!-- Example 4 -->
+    <div class="example-block">
+      <div class="example-header">FINRA — Associate Analyst, Member Supervision</div>
+      <div class="example-bullet">Implemented governance frameworks clarifying roles, escalation protocols, and accountability metrics, improving audit readiness by 22%.</div>
+      <div class="example-questions">
+        <div class="q-output">
+          <span class="q-stem">Stem 01</span>
+          Can you tell me about a time when you built a governance or accountability structure within a team or program?
+        </div>
+        <div class="q-output">
+          <span class="q-stem">Stem 02</span>
+          Walk me through a time when you prepared an organization for an audit or regulatory examination.
+        </div>
+        <div class="q-output">
+          <span class="q-stem">Stem 03</span>
+          Name an instance where you clarified roles or escalation paths to reduce confusion or risk.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 5: INTERACTIVE TOOL -->
+  <div class="content-section">
+    <p class="section-eyebrow">Try It Yourself</p>
+    <h2 class="content-title">Paste a Bullet, Get Three Questions</h2>
+    <p class="content-body">
+      Paste any resume bullet below. The tool will convert it into the three behavioral question forms — no AI, just the mechanical stem prepend that this technique is built on. The output shows you exactly what you're being asked when an interviewer fires a behavioral question at you.
+    </p>
+
+    <div class="tool-card">
+      <label class="tool-label" for="bullet-input">Your resume bullet</label>
+      <textarea
+        class="tool-textarea"
+        id="bullet-input"
+        placeholder="Paste a bullet here — e.g., 'Conducted 100+ full-cycle investigations, translating data signals into enforcement outcomes that hold up under regulatory scrutiny.'"
+        rows="4"
+      ></textarea>
+      <br>
+      <button class="tool-btn" id="map-btn">Map to Questions →</button>
+
+      <div class="tool-output" id="tool-output">
+        <div class="tool-empty" id="tool-placeholder">Your mapped questions will appear here.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 6: THEME TABLE -->
+  <div class="content-section">
+    <p class="section-eyebrow">Quick Reference</p>
+    <h2 class="content-title">Verb → Interview Theme Decoder</h2>
+    <p class="content-body">
+      Every action verb on a resume signals a behavioral competency. When a recruiter asks about that competency, they're asking about whatever bullet contains that verb. Use this table to know which theme each of your bullets covers — and to spot any gaps before the interview.
+    </p>
+
+    <table class="theme-table">
+      <thead>
+        <tr>
+          <th>Verbs in your bullet</th>
+          <th>Interview theme being tested</th>
+          <th>Likely question ending</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Investigated, analyzed, detected, identified</td>
+          <td>Investigation & critical thinking</td>
+          <td>"…you had to dig into a problem without a clear answer"</td>
+        </tr>
+        <tr>
+          <td>Led, directed, ran, managed, facilitated</td>
+          <td>Leadership & influence</td>
+          <td>"…you led a project or group through a challenge"</td>
+        </tr>
+        <tr>
+          <td>Reduced, cut, improved, optimized, streamlined</td>
+          <td>Process improvement & efficiency</td>
+          <td>"…you identified an inefficiency and fixed it"</td>
+        </tr>
+        <tr>
+          <td>Collaborated, partnered, worked with, aligned</td>
+          <td>Cross-functional teamwork</td>
+          <td>"…you had to work across teams with competing priorities"</td>
+        </tr>
+        <tr>
+          <td>Built, designed, developed, created, implemented</td>
+          <td>Initiative & ownership</td>
+          <td>"…you built something from scratch or drove a new initiative"</td>
+        </tr>
+        <tr>
+          <td>Presented, authored, reported, communicated</td>
+          <td>Communication & stakeholder influence</td>
+          <td>"…you had to explain a complex topic to a non-technical audience"</td>
+        </tr>
+        <tr>
+          <td>Escalated, flagged, raised, reported</td>
+          <td>Judgment & risk awareness</td>
+          <td>"…you had to escalate a concern or raise an issue upward"</td>
+        </tr>
+        <tr>
+          <td>Converted, translated, mapped, clarified</td>
+          <td>Ambiguity to structure</td>
+          <td>"…you took something unclear and made it actionable"</td>
+        </tr>
+        <tr>
+          <td>Delivered, completed, met, executed</td>
+          <td>Reliability & execution under pressure</td>
+          <td>"…you had to deliver on a tight deadline or under pressure"</td>
+        </tr>
+        <tr>
+          <td>Uncovered, found, surfaced, exposed</td>
+          <td>Attention to detail & error prevention</td>
+          <td>"…you caught a mistake or gap before it became a problem"</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- SECTION 7: STAR TIE-IN -->
+  <div class="content-section">
+    <p class="section-eyebrow">Closing the Loop</p>
+    <h2 class="content-title">Question Mapping + STAR = You're Already Done</h2>
+    <p class="content-body">
+      Once you have your questions, structuring the answer is straightforward. Your bullet already contains all four STAR components in compressed form. All you're doing in the interview is expanding it back out.
+    </p>
+
+    <div class="steps-list">
+      <div class="step-card">
+        <div class="step-num" style="color: var(--navy-light); font-size: 1.4rem;">S</div>
+        <div class="step-content">
+          <div class="step-label">Situation</div>
+          <div class="step-desc">The job title and employer in your bullet header. Add one sentence of context: what was going on, what the stakes were, what the team or environment looked like.</div>
+        </div>
+      </div>
+      <div class="step-card">
+        <div class="step-num" style="color: var(--navy-light); font-size: 1.4rem;">T</div>
+        <div class="step-content">
+          <div class="step-label">Task</div>
+          <div class="step-desc">What you were specifically responsible for. Usually the first clause of the bullet — the verb phrase before any "by" or "resulting in" language.</div>
+        </div>
+      </div>
+      <div class="step-card">
+        <div class="step-num" style="color: var(--navy-light); font-size: 1.4rem;">A</div>
+        <div class="step-content">
+          <div class="step-label">Action</div>
+          <div class="step-desc">The specific things you did. Your bullet already names the action — expand on how you actually did it. Tools used, decisions made, obstacles navigated. This is where you show depth.</div>
+        </div>
+      </div>
+      <div class="step-card">
+        <div class="step-num" style="color: var(--navy-light); font-size: 1.4rem;">R</div>
+        <div class="step-content">
+          <div class="step-label">Result</div>
+          <div class="step-desc">The quantified outcome already in your bullet. State it directly, then if time allows, add what you learned or how it shaped your approach afterward.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout" style="margin-top: 2.5rem;">
+      <strong>The bottom line:</strong> question mapping turns interview prep from guesswork into a mechanical exercise. Every bullet you've written generates at least three questions. If you have 20 bullets, you have 60+ prepared answers — covering nearly every behavioral scenario a compliance or finance interviewer can throw at you. Do the mapping before the call, not during it.
+    </div>
+  </div>
+
+</main>
+
+<!-- FOOTER -->
+<footer class="page-footer">
+  © 2026 Rahul Das &nbsp;·&nbsp; <a href="./index.html" style="color: var(--gold); text-decoration: none;">rahul-das-456.github.io</a>
+</footer>
+
+<script>
+  // Dark mode
+  const htmlEl = document.documentElement;
+  const themeToggle = document.getElementById('theme-toggle');
+
+  function applyTheme(dark) {
+    htmlEl.setAttribute('data-theme', dark ? 'dark' : 'light');
+    themeToggle.setAttribute('aria-label', dark ? 'Switch to light mode' : 'Switch to dark mode');
+    localStorage.setItem('theme', dark ? 'dark' : 'light');
+  }
+
+  const savedTheme = localStorage.getItem('theme');
+  const systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+  applyTheme(savedTheme ? savedTheme === 'dark' : systemDark);
+
+  themeToggle.addEventListener('click', () => {
+    applyTheme(htmlEl.getAttribute('data-theme') !== 'dark');
+  });
+
+  window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
+    if (!localStorage.getItem('theme')) applyTheme(e.matches);
+  });
+
+  // Question mapping tool
+  const mapBtn      = document.getElementById('map-btn');
+  const bulletInput = document.getElementById('bullet-input');
+  const toolOutput  = document.getElementById('tool-output');
+  const placeholder = document.getElementById('tool-placeholder');
+
+  const STEMS = [
+    { label: 'Stem 01', text: 'Can you tell me about a time when you' },
+    { label: 'Stem 02', text: 'Walk me through a time when you' },
+    { label: 'Stem 03', text: 'Name an instance where you' },
+  ];
+
+  function cleanBullet(raw) {
+    // Strip leading bullet characters, whitespace
+    let text = raw.trim().replace(/^[•·\-–—*►▸▶]+\s*/, '');
+    // Remove trailing period
+    text = text.replace(/\.\s*$/, '');
+    // Lowercase first char
+    if (text.length > 0) {
+      text = text.charAt(0).toLowerCase() + text.slice(1);
+    }
+    return text;
+  }
+
+  function buildQuestions(bulletText) {
+    const cleaned = cleanBullet(bulletText);
+    if (!cleaned) return [];
+    return STEMS.map(stem => ({
+      label: stem.label,
+      question: `${stem.text} ${cleaned}?`
+    }));
+  }
+
+  function renderOutput(questions) {
+    if (!questions.length) {
+      toolOutput.innerHTML = '<div class="tool-empty" id="tool-placeholder">Your mapped questions will appear here.</div>';
+      return;
+    }
+    toolOutput.innerHTML = questions.map(q => `
+      <div class="q-output">
+        <span class="q-stem">${q.label}</span>
+        ${q.question}
+      </div>
+    `).join('');
+  }
+
+  mapBtn.addEventListener('click', () => {
+    const raw = bulletInput.value;
+    if (!raw.trim()) {
+      toolOutput.innerHTML = '<div class="tool-empty">Paste a bullet first, then click Map to Questions.</div>';
+      return;
+    }
+    renderOutput(buildQuestions(raw));
+  });
+
+  bulletInput.addEventListener('keydown', e => {
+    if (e.key === 'Enter' && (e.metaKey || e.ctrlKey)) {
+      mapBtn.click();
+    }
+  });
+</script>
+</body>
+</html>
