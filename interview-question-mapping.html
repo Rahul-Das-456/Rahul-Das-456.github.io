@@ -519,6 +519,68 @@
 
   .callout strong { color: var(--navy); font-weight: 600; }
 
+  /* ── TABS ── */
+  .tool-tabs {
+    display: flex;
+    gap: 0;
+    border-bottom: 2px solid var(--rule);
+    margin-bottom: 1.75rem;
+  }
+  .tool-tab {
+    font-family: var(--mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink-light);
+    background: none;
+    border: none;
+    border-bottom: 2px solid transparent;
+    margin-bottom: -2px;
+    padding: 0.65rem 1.25rem;
+    cursor: pointer;
+    transition: color 0.2s, border-color 0.2s;
+  }
+  .tool-tab:hover { color: var(--navy); }
+  .tool-tab.active { color: var(--gold); border-bottom-color: var(--gold); }
+
+  .tool-pane { display: none; }
+  .tool-pane.active { display: block; }
+
+  /* JD bullet label */
+  .jd-label {
+    font-family: var(--mono);
+    font-size: 0.58rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--navy-light);
+    display: block;
+    margin-bottom: 0.25rem;
+    margin-top: 0.65rem;
+  }
+
+  .jd-pattern-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-top: 1.25rem;
+    margin-bottom: 1.25rem;
+  }
+  .jd-pattern-item {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    gap: 1rem;
+    background: var(--cream-dark);
+    border: 1px solid var(--rule);
+    padding: 0.65rem 1rem;
+    font-size: 0.88rem;
+  }
+  [data-theme="dark"] .jd-pattern-item { background: #112235; border-color: #1c3048; }
+  .jd-in  { font-family: var(--mono); font-size: 0.75rem; color: var(--ink-mid); }
+  .jd-arr { font-family: var(--mono); font-size: 0.7rem; color: var(--gold); white-space: nowrap; }
+  .jd-out { font-family: var(--mono); font-size: 0.75rem; color: var(--navy); }
+
   /* ── BACK LINK ── */
   .back-link {
     display: inline-flex;
@@ -771,27 +833,189 @@
     </div>
   </div>
 
+  <!-- SECTION 4.5: JD-FIRST MAPPING -->
+  <div class="content-section">
+    <p class="section-eyebrow">The Other Direction</p>
+    <h2 class="content-title">Start from the Job Description Instead</h2>
+    <p class="content-body">
+      If resume bullets are the answer sheet, job description bullets are the question sheet — written in advance by the hiring team. Every requirement in a JD is a competency they plan to test for in the interview. That means you can read the JD before the call and predict every behavioral question you'll be asked, with near-certainty.
+    </p>
+    <p class="content-body">
+      The technique is the same three stems, but now you're stripping JD boilerplate instead of rephrasing your own bullet. JD language follows predictable patterns: <strong>"Experience with X," "Ability to Y," "Demonstrated Z," "X+ years of…"</strong> — all of these are just behavioral question completions in disguise.
+    </p>
+
+    <div class="callout">
+      <strong>Strip the boilerplate, keep the topic.</strong> "3+ years of experience conducting trade surveillance investigations" → strip "3+ years of experience" → "conducting trade surveillance investigations" → prepend stem → "Can you tell me about a time when you conducted trade surveillance investigations?" That's the question. That's what they'll ask.
+    </div>
+
+    <h3 style="font-family: var(--serif-display); font-size: 1.1rem; font-weight: 600; color: var(--navy); margin: 2rem 0 0.75rem; letter-spacing: -0.01em;">Common JD Patterns → What to Strip</h3>
+    <ul class="jd-pattern-list">
+      <li class="jd-pattern-item">
+        <span class="jd-in">"Experience [verb]ing / with / in …"</span>
+        <span class="jd-arr">→ strip →</span>
+        <span class="jd-out">"you have experience [verb]ing …"</span>
+      </li>
+      <li class="jd-pattern-item">
+        <span class="jd-in">"Ability to [verb] …"</span>
+        <span class="jd-arr">→ strip →</span>
+        <span class="jd-out">"you [verb]ed …"</span>
+      </li>
+      <li class="jd-pattern-item">
+        <span class="jd-in">"X+ years of experience …"</span>
+        <span class="jd-arr">→ strip →</span>
+        <span class="jd-out">"you have experience …"</span>
+      </li>
+      <li class="jd-pattern-item">
+        <span class="jd-in">"Demonstrated ability/experience …"</span>
+        <span class="jd-arr">→ strip →</span>
+        <span class="jd-out">"you demonstrated …"</span>
+      </li>
+      <li class="jd-pattern-item">
+        <span class="jd-in">"Strong knowledge of / Proficiency in …"</span>
+        <span class="jd-arr">→ strip →</span>
+        <span class="jd-out">"you applied strong knowledge of …"</span>
+      </li>
+      <li class="jd-pattern-item">
+        <span class="jd-in">"Proven track record of …"</span>
+        <span class="jd-arr">→ strip →</span>
+        <span class="jd-out">"you have a proven track record of …"</span>
+      </li>
+    </ul>
+
+    <h3 style="font-family: var(--serif-display); font-size: 1.1rem; font-weight: 600; color: var(--navy); margin: 2rem 0 0.75rem; letter-spacing: -0.01em;">Worked Examples: JD Bullets → Questions</h3>
+
+    <!-- JD Example 1 -->
+    <div class="example-block">
+      <div class="example-header">JD Requirement — Trade Surveillance / Exchange Role</div>
+      <div class="example-bullet">3+ years of experience conducting trade surveillance investigations in a broker-dealer or exchange environment.</div>
+      <div class="example-questions">
+        <div class="q-output">
+          <span class="q-stem">Stem 01</span>
+          Can you tell me about a time when you conducted a trade surveillance investigation in a regulated environment?
+        </div>
+        <div class="q-output">
+          <span class="q-stem">Stem 02</span>
+          Walk me through a time when you identified a potential violation through surveillance activity and took it to conclusion.
+        </div>
+        <div class="q-output">
+          <span class="q-stem">Stem 03</span>
+          Name an instance where you handled a complex or high-priority investigation with regulatory implications.
+        </div>
+      </div>
+    </div>
+
+    <!-- JD Example 2 -->
+    <div class="example-block">
+      <div class="example-header">JD Requirement — Compliance Program / Broker-Dealer Role</div>
+      <div class="example-bullet">Demonstrated ability to translate regulatory requirements into written supervisory procedures (WSPs) and operational controls.</div>
+      <div class="example-questions">
+        <div class="q-output">
+          <span class="q-stem">Stem 01</span>
+          Can you tell me about a time when you translated a regulatory requirement into a written procedure or operational control?
+        </div>
+        <div class="q-output">
+          <span class="q-stem">Stem 02</span>
+          Walk me through a time when you took ambiguous regulatory guidance and turned it into something your team could execute against.
+        </div>
+        <div class="q-output">
+          <span class="q-stem">Stem 03</span>
+          Name an instance where you developed or updated a supervisory procedure in response to a regulatory change.
+        </div>
+      </div>
+    </div>
+
+    <!-- JD Example 3 -->
+    <div class="example-block">
+      <div class="example-header">JD Requirement — Senior Compliance / Program Management Role</div>
+      <div class="example-bullet">Experience managing multiple high-priority compliance initiatives simultaneously while meeting regulatory deadlines.</div>
+      <div class="example-questions">
+        <div class="q-output">
+          <span class="q-stem">Stem 01</span>
+          Can you tell me about a time when you managed multiple competing compliance priorities under a tight deadline?
+        </div>
+        <div class="q-output">
+          <span class="q-stem">Stem 02</span>
+          Walk me through a time when you had to juggle several high-stakes workstreams at once — how did you stay on track?
+        </div>
+        <div class="q-output">
+          <span class="q-stem">Stem 03</span>
+          Name an instance where you had to reprioritize quickly because a new regulatory deadline or escalation came in.
+        </div>
+      </div>
+    </div>
+
+    <!-- JD Example 4 -->
+    <div class="example-block">
+      <div class="example-header">JD Requirement — Data-Driven Surveillance / Fintech Role</div>
+      <div class="example-bullet">Proficiency in SQL, Python, or similar tools to conduct large-scale transaction monitoring and data analysis.</div>
+      <div class="example-questions">
+        <div class="q-output">
+          <span class="q-stem">Stem 01</span>
+          Can you tell me about a time when you used SQL or Python to analyze a large dataset for compliance or surveillance purposes?
+        </div>
+        <div class="q-output">
+          <span class="q-stem">Stem 02</span>
+          Walk me through a time when data analysis was central to an investigation or risk finding you produced.
+        </div>
+        <div class="q-output">
+          <span class="q-stem">Stem 03</span>
+          Name an instance where you built or improved a query or script that meaningfully sped up your team's work.
+        </div>
+      </div>
+    </div>
+
+    <div class="callout" style="margin-top: 2rem;">
+      <strong>The full circle:</strong> read the JD → map each bullet to a question → find the resume bullet that answers it → you now know exactly what they'll ask and exactly which story to tell. You're not preparing in the dark anymore.
+    </div>
+  </div>
+
   <!-- SECTION 5: INTERACTIVE TOOL -->
   <div class="content-section">
     <p class="section-eyebrow">Try It Yourself</p>
     <h2 class="content-title">Paste a Bullet, Get Three Questions</h2>
     <p class="content-body">
-      Paste any resume bullet below. The tool will convert it into the three behavioral question forms — no AI, just the mechanical stem prepend that this technique is built on. The output shows you exactly what you're being asked when an interviewer fires a behavioral question at you.
+      Paste either a resume bullet or a JD requirement below. The tool strips the boilerplate and generates all three question stems — no AI, just the mechanical transformation this technique is built on.
     </p>
 
     <div class="tool-card">
-      <label class="tool-label" for="bullet-input">Your resume bullet</label>
-      <textarea
-        class="tool-textarea"
-        id="bullet-input"
-        placeholder="Paste a bullet here — e.g., 'Conducted 100+ full-cycle investigations, translating data signals into enforcement outcomes that hold up under regulatory scrutiny.'"
-        rows="4"
-      ></textarea>
-      <br>
-      <button class="tool-btn" id="map-btn">Map to Questions →</button>
+      <div class="tool-tabs">
+        <button class="tool-tab active" id="tab-resume">From Resume Bullet</button>
+        <button class="tool-tab" id="tab-jd">From JD Requirement</button>
+      </div>
 
-      <div class="tool-output" id="tool-output">
-        <div class="tool-empty" id="tool-placeholder">Your mapped questions will appear here.</div>
+      <!-- Resume pane -->
+      <div class="tool-pane active" id="pane-resume">
+        <label class="tool-label" for="bullet-input">Your resume bullet</label>
+        <textarea
+          class="tool-textarea"
+          id="bullet-input"
+          placeholder="e.g. 'Conducted 100+ full-cycle investigations, translating data signals into enforcement outcomes that hold up under regulatory scrutiny.'"
+          rows="4"
+        ></textarea>
+        <br>
+        <button class="tool-btn" id="map-btn">Map to Questions →</button>
+        <div class="tool-output" id="tool-output">
+          <div class="tool-empty">Your mapped questions will appear here.</div>
+        </div>
+      </div>
+
+      <!-- JD pane -->
+      <div class="tool-pane" id="pane-jd">
+        <label class="tool-label" for="jd-input">Job description requirement</label>
+        <textarea
+          class="tool-textarea"
+          id="jd-input"
+          placeholder="e.g. '3+ years of experience conducting trade surveillance investigations in a broker-dealer or exchange environment.'"
+          rows="4"
+        ></textarea>
+        <br>
+        <button class="tool-btn" id="map-jd-btn">Map to Questions →</button>
+        <p style="font-family: var(--mono); font-size: 0.62rem; letter-spacing: 0.06em; color: var(--ink-light); margin-top: 0.65rem; line-height: 1.6;">
+          Grammar may need a light touch after stripping JD boilerplate — the question shape is what matters.
+        </p>
+        <div class="tool-output" id="jd-output">
+          <div class="tool-empty">Your mapped questions will appear here.</div>
+        </div>
       </div>
     </div>
   </div>
@@ -941,65 +1165,136 @@
     if (!localStorage.getItem('theme')) applyTheme(e.matches);
   });
 
-  // Question mapping tool
-  const mapBtn      = document.getElementById('map-btn');
-  const bulletInput = document.getElementById('bullet-input');
-  const toolOutput  = document.getElementById('tool-output');
-  const placeholder = document.getElementById('tool-placeholder');
-
+  // ── Shared stems ──
   const STEMS = [
     { label: 'Stem 01', text: 'Can you tell me about a time when you' },
     { label: 'Stem 02', text: 'Walk me through a time when you' },
     { label: 'Stem 03', text: 'Name an instance where you' },
   ];
 
-  function cleanBullet(raw) {
-    // Strip leading bullet characters, whitespace
-    let text = raw.trim().replace(/^[•·\-–—*►▸▶]+\s*/, '');
-    // Remove trailing period
-    text = text.replace(/\.\s*$/, '');
-    // Lowercase first char
-    if (text.length > 0) {
-      text = text.charAt(0).toLowerCase() + text.slice(1);
-    }
-    return text;
+  function escHtml(s) {
+    return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
   }
 
-  function buildQuestions(bulletText) {
-    const cleaned = cleanBullet(bulletText);
-    if (!cleaned) return [];
-    return STEMS.map(stem => ({
-      label: stem.label,
-      question: `${stem.text} ${cleaned}?`
-    }));
-  }
-
-  function renderOutput(questions) {
+  function renderOutput(container, questions, emptyMsg) {
     if (!questions.length) {
-      toolOutput.innerHTML = '<div class="tool-empty" id="tool-placeholder">Your mapped questions will appear here.</div>';
+      container.innerHTML = `<div class="tool-empty">${emptyMsg}</div>`;
       return;
     }
-    toolOutput.innerHTML = questions.map(q => `
+    container.innerHTML = questions.map(q => `
       <div class="q-output">
         <span class="q-stem">${q.label}</span>
-        ${q.question}
+        ${escHtml(q.question)}
       </div>
     `).join('');
+  }
+
+  // ── Resume bullet tool ──
+  const mapBtn      = document.getElementById('map-btn');
+  const bulletInput = document.getElementById('bullet-input');
+  const toolOutput  = document.getElementById('tool-output');
+
+  function cleanResumeBullet(raw) {
+    let text = raw.trim().replace(/^[•·\-–—*►▸▶]+\s*/, '').replace(/\.\s*$/, '');
+    return text.length ? text.charAt(0).toLowerCase() + text.slice(1) : '';
+  }
+
+  function buildResumeQuestions(raw) {
+    const cleaned = cleanResumeBullet(raw);
+    if (!cleaned) return [];
+    return STEMS.map(s => ({ label: s.label, question: `${s.text} ${cleaned}?` }));
   }
 
   mapBtn.addEventListener('click', () => {
     const raw = bulletInput.value;
     if (!raw.trim()) {
-      toolOutput.innerHTML = '<div class="tool-empty">Paste a bullet first, then click Map to Questions.</div>';
+      toolOutput.innerHTML = '<div class="tool-empty">Paste a resume bullet first, then click Map to Questions.</div>';
       return;
     }
-    renderOutput(buildQuestions(raw));
+    renderOutput(toolOutput, buildResumeQuestions(raw), 'Your mapped questions will appear here.');
   });
 
   bulletInput.addEventListener('keydown', e => {
-    if (e.key === 'Enter' && (e.metaKey || e.ctrlKey)) {
-      mapBtn.click();
+    if (e.key === 'Enter' && (e.metaKey || e.ctrlKey)) mapBtn.click();
+  });
+
+  // ── JD bullet tool ──
+  const mapJdBtn = document.getElementById('map-jd-btn');
+  const jdInput  = document.getElementById('jd-input');
+  const jdOutput = document.getElementById('jd-output');
+
+  const JD_PATTERNS = [
+    [/^\d+[\+\-]?\s*(?:to\s*\d+\s*)?years?\s+of\s+(?:relevant\s+)?experience\s+(?:in\s+|with\s+)?/i, 'you have experience '],
+    [/^experience\s+(?:in\s+|with\s+)?/i, 'you have experience '],
+    [/^ability\s+to\s+/i, 'you '],
+    [/^must\s+be\s+able\s+to\s+/i, 'you '],
+    [/^must\s+have\s+/i, 'you have '],
+    [/^demonstrated\s+ability\s+to\s+/i, 'you '],
+    [/^demonstrated\s+(?:experience|expertise)\s+(?:in\s+|with\s+)?/i, 'you demonstrated '],
+    [/^demonstrated\s+/i, 'you demonstrated '],
+    [/^proven\s+track\s+record\s+of\s+/i, 'you have a proven track record of '],
+    [/^proven\s+ability\s+to\s+/i, 'you '],
+    [/^proven\s+/i, 'you demonstrated a proven '],
+    [/^strong\s+knowledge\s+of\s+/i, 'you applied strong knowledge of '],
+    [/^knowledge\s+of\s+/i, 'you applied your knowledge of '],
+    [/^proficiency\s+(?:in\s+|with\s+)/i, 'you demonstrated proficiency in '],
+    [/^proficient\s+(?:in\s+|with\s+)/i, 'you demonstrated proficiency in '],
+    [/^familiarity\s+with\s+/i, 'you demonstrated familiarity with '],
+    [/^(?:a\s+)?(?:deep\s+|solid\s+)?understanding\s+of\s+/i, 'you demonstrated understanding of '],
+    [/^excellent\s+/i, 'you demonstrated excellent '],
+    [/^strong\s+/i, 'you demonstrated strong '],
+  ];
+
+  function transformJDBullet(raw) {
+    let text = raw.trim()
+      .replace(/^[•·\-–—*►▸▶]+\s*/, '')
+      .replace(/\.\s*$/, '')
+      .trim();
+
+    for (const [pattern, replacement] of JD_PATTERNS) {
+      if (pattern.test(text)) {
+        const rest = text.replace(pattern, '');
+        const restLower = rest.length ? rest.charAt(0).toLowerCase() + rest.slice(1) : '';
+        return replacement + restLower;
+      }
     }
+
+    const lower = text.charAt(0).toLowerCase() + text.slice(1);
+    return 'you ' + lower;
+  }
+
+  function buildJDQuestions(raw) {
+    const transformed = transformJDBullet(raw);
+    if (!transformed || transformed.trim() === 'you') return [];
+    return STEMS.map(s => ({ label: s.label, question: `${s.text} ${transformed}?` }));
+  }
+
+  mapJdBtn.addEventListener('click', () => {
+    const raw = jdInput.value;
+    if (!raw.trim()) {
+      jdOutput.innerHTML = '<div class="tool-empty">Paste a JD requirement first, then click Map to Questions.</div>';
+      return;
+    }
+    renderOutput(jdOutput, buildJDQuestions(raw), 'Your mapped questions will appear here.');
+  });
+
+  jdInput.addEventListener('keydown', e => {
+    if (e.key === 'Enter' && (e.metaKey || e.ctrlKey)) mapJdBtn.click();
+  });
+
+  // ── Tab switching ──
+  const tabResume  = document.getElementById('tab-resume');
+  const tabJd      = document.getElementById('tab-jd');
+  const paneResume = document.getElementById('pane-resume');
+  const paneJd     = document.getElementById('pane-jd');
+
+  tabResume.addEventListener('click', () => {
+    tabResume.classList.add('active'); tabJd.classList.remove('active');
+    paneResume.classList.add('active'); paneJd.classList.remove('active');
+  });
+  tabJd.addEventListener('click', () => {
+    tabJd.classList.add('active'); tabResume.classList.remove('active');
+    paneJd.classList.add('active'); paneResume.classList.remove('active');
   });
 </script>
 </body>
