@@ -39,9 +39,18 @@
   nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:0 3rem;height:64px;background:rgba(248,245,240,.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--rule);transition:background .3s,border-color .3s;}
   [data-theme="dark"] nav{background:rgba(13,28,46,.95);border-bottom-color:#1c3048;}
   .nav-mark{font-family:var(--serif-display);font-size:1rem;font-weight:600;color:var(--navy);letter-spacing:.02em;text-decoration:none;}
-  .nav-links{display:flex;gap:2rem;list-style:none;align-items:center;}
-  .nav-links a{font-family:var(--mono);font-size:.72rem;font-weight:300;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-light);text-decoration:none;transition:color .2s;}
-  .nav-links a:hover{color:var(--navy);}
+  .hamburger-btn{background:none;border:1px solid var(--rule);color:var(--ink-light);cursor:pointer;padding:.38rem .5rem;display:flex;flex-direction:column;gap:4px;align-items:center;justify-content:center;transition:color .2s,border-color .2s;}
+  .hamburger-btn:hover{color:var(--navy);border-color:var(--navy);}
+  .hamburger-btn span{display:block;width:18px;height:2px;background:currentColor;transition:transform .3s,opacity .3s;}
+  .hamburger-btn.open span:nth-child(1){transform:rotate(45deg) translate(4px,4px);}
+  .hamburger-btn.open span:nth-child(2){opacity:0;}
+  .hamburger-btn.open span:nth-child(3){transform:rotate(-45deg) translate(4px,-4px);}
+  .nav-menu{position:fixed;top:64px;left:0;right:0;z-index:99;background:rgba(248,245,240,.97);backdrop-filter:blur(12px);border-bottom:1px solid var(--rule);padding:1.5rem 3rem;display:none;flex-direction:column;transition:background .3s;}
+  [data-theme="dark"] .nav-menu{background:rgba(13,28,46,.97);border-bottom-color:#1c3048;}
+  .nav-menu.open{display:flex;}
+  .nav-menu a{font-family:var(--mono);font-size:.75rem;font-weight:300;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-light);text-decoration:none;transition:color .2s;padding:.85rem 0;border-bottom:1px solid var(--rule);}
+  .nav-menu a:last-child{border-bottom:none;}
+  .nav-menu a:hover{color:var(--navy);}
   .nav-right{display:flex;align-items:center;gap:.75rem;}
   .nav-back{font-family:var(--mono);font-size:.72rem;font-weight:400;letter-spacing:.1em;text-transform:uppercase;color:var(--white);background:var(--navy);padding:.5rem 1.25rem;text-decoration:none;transition:background .2s;}
   .nav-back:hover{background:var(--navy-mid);}
@@ -112,28 +121,61 @@
   @media(max-width:768px){
     nav{padding:0 1.5rem;}
     .page-header,.notes-wrap,.ref-wrap{padding-left:1.5rem;padding-right:1.5rem;}
-    .nav-links{display:none;}
     .qa-body-inner{padding-left:2.25rem;}
     .order-grid,.factor-grid{grid-template-columns:1fr;}
+    .nav-menu{padding:1.5rem;}
   }
+
+  /* Greeks quiz styles */
+  .quiz-intro{font-family:var(--serif-body);font-size:.93rem;font-weight:300;color:var(--ink-mid);line-height:1.8;margin-bottom:2rem;max-width:65ch;}
+  .quiz-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1.25rem;margin-bottom:2rem;}
+  .flip-card{perspective:800px;cursor:pointer;min-height:220px;}
+  .flip-card-inner{position:relative;width:100%;height:100%;min-height:220px;transition:transform .5s ease;transform-style:preserve-3d;}
+  .flip-card.flipped .flip-card-inner{transform:rotateY(180deg);}
+  .flip-face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;padding:1.5rem;border:1px solid var(--rule);display:flex;flex-direction:column;}
+  .flip-front{background:var(--cream-dark);}
+  .flip-back{background:var(--white);transform:rotateY(180deg);border-color:var(--gold);border-left-width:3px;}
+  .flip-greek-name{font-family:var(--serif-display);font-size:1.6rem;font-weight:700;color:var(--navy);margin-bottom:.5rem;}
+  .flip-greek-symbol{font-family:var(--mono);font-size:1rem;color:var(--gold);margin-bottom:auto;}
+  .flip-prompt{font-family:var(--mono);font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-light);margin-top:1rem;}
+  .flip-answer{font-family:var(--serif-body);font-size:.88rem;font-weight:300;color:var(--ink-mid);line-height:1.75;flex:1;}
+  .flip-formula{font-family:var(--mono);font-size:.72rem;background:var(--cream-dark);border-left:2px solid var(--gold);padding:.55rem .8rem;margin:.75rem 0;color:var(--navy);line-height:1.7;white-space:pre-wrap;}
+  .flip-answer-label{font-family:var(--mono);font-size:.6rem;letter-spacing:.15em;text-transform:uppercase;color:var(--gold);margin-bottom:.5rem;}
+  .quiz-score-wrap{border:1px solid var(--rule);padding:1.5rem;margin-top:1rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:gap;}
+  .quiz-score-label{font-family:var(--mono);font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-light);}
+  .quiz-score-val{font-family:var(--serif-display);font-size:1.8rem;font-weight:700;color:var(--navy);}
+  .quiz-btn-row{display:flex;gap:.75rem;margin-top:1.5rem;flex-wrap:wrap;}
+  .quiz-btn{font-family:var(--mono);font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;background:none;border:1px solid var(--rule);color:var(--ink-light);padding:.55rem 1.25rem;cursor:pointer;transition:all .2s;}
+  .quiz-btn:hover{background:var(--navy);color:var(--white);border-color:var(--navy);}
+  .quiz-btn.primary{background:var(--navy);color:var(--white);border-color:var(--navy);}
+  .quiz-btn.primary:hover{background:var(--navy-mid);}
+  .self-grade{display:flex;gap:.5rem;margin-top:auto;padding-top:1rem;}
+  .sg-btn{font-family:var(--mono);font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;border:1px solid var(--rule);background:none;cursor:pointer;padding:.3rem .65rem;transition:all .2s;color:var(--ink-light);}
+  .sg-btn.correct{background:#1a5c3a;color:#fff;border-color:#1a5c3a;}
+  .sg-btn.wrong{background:#8b2020;color:#fff;border-color:#8b2020;}
+  [data-theme="dark"] .sg-btn.correct{background:#5db88a;color:#071420;}
+  [data-theme="dark"] .sg-btn.wrong{background:#e06060;color:#071420;}
 </style>
 </head>
 <body>
 
 <nav>
   <a class="nav-mark" href="./index.html">Rahul Das</a>
-  <ul class="nav-links">
-    <li><a href="./options-visualizer.html">Options</a></li>
-    <li><a href="./futures-visualizer.html">Futures</a></li>
-    <li><a href="./index.html#experience">Portfolio</a></li>
-  </ul>
   <div class="nav-right">
     <button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark mode">
       <svg class="icon-moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
       <svg class="icon-sun" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
     </button>
-    <a class="nav-back" href="./index.html">Back to Portfolio</a>
+    <button class="hamburger-btn" id="hamburger-btn" aria-label="Toggle menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
   </div>
+</nav>
+<nav class="nav-menu" id="nav-menu">
+  <a href="./options-visualizer.html">Options Visualizer</a>
+  <a href="./futures-visualizer.html">Futures Visualizer</a>
+  <a href="./index.html#experience">Portfolio</a>
+  <a href="./index.html">Back to Home</a>
 </nav>
 
 <div class="page-header">
@@ -1042,6 +1084,155 @@ r = risk-free rate</div>
   </div></div></div>
 </div>
 
+<!-- ═══════════════════════════════════════
+     SECTION 6: GREEKS QUIZ
+════════════════════════════════════════ -->
+<div class="section-label" style="margin-top:3.5rem;">Section 6 — Greeks Quiz</div>
+<div class="section-sub">Flip each card to reveal the plain-English explanation</div>
+
+<p class="quiz-intro">Each card shows a Greek. Think about what it means, then flip to check. After you've gone through all five, mark yourself and see your score.</p>
+
+<div class="quiz-grid" id="quiz-grid">
+
+  <div class="flip-card" id="card-delta" data-greek="delta">
+    <div class="flip-card-inner">
+      <div class="flip-face flip-front">
+        <div class="flip-greek-name">Delta</div>
+        <div class="flip-greek-symbol">Δ (delta)</div>
+        <p style="font-family:var(--serif-body);font-size:.88rem;font-weight:300;color:var(--ink-mid);line-height:1.7;margin-top:1rem;">If the stock moves $1, how much does my option move?</p>
+        <div class="flip-prompt">Tap to reveal ↓</div>
+      </div>
+      <div class="flip-face flip-back">
+        <div class="flip-answer-label">Delta explained</div>
+        <div class="flip-answer">
+          <p>Delta tells you how closely your option tracks the stock. A delta of 0.6 means your call gains about $0.60 when the stock rises $1.</p>
+          <p>Calls have positive delta (0 to 1). Puts have negative delta (−1 to 0). An at-the-money option sits around ±0.50 — a coin flip on direction.</p>
+          <div class="flip-formula">Call delta: 0 to +1
+Put delta:  −1 to 0
+ATM delta:  ≈ ±0.50</div>
+          <p style="font-size:.8rem;color:var(--ink-light);">Deep in-the-money call delta → 1 (moves dollar for dollar with stock). Out-of-the-money → near 0 (barely reacts).</p>
+        </div>
+        <div class="self-grade">
+          <button class="sg-btn" data-card="delta" data-val="correct">✓ Got it</button>
+          <button class="sg-btn" data-card="delta" data-val="wrong">✗ Missed it</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="flip-card" id="card-gamma" data-greek="gamma">
+    <div class="flip-card-inner">
+      <div class="flip-face flip-front">
+        <div class="flip-greek-name">Gamma</div>
+        <div class="flip-greek-symbol">Γ (gamma)</div>
+        <p style="font-family:var(--serif-body);font-size:.88rem;font-weight:300;color:var(--ink-mid);line-height:1.7;margin-top:1rem;">How fast does my delta change as the stock moves?</p>
+        <div class="flip-prompt">Tap to reveal ↓</div>
+      </div>
+      <div class="flip-face flip-back">
+        <div class="flip-answer-label">Gamma explained</div>
+        <div class="flip-answer">
+          <p>Delta doesn't stay fixed — it changes as the stock moves. Gamma measures how quickly delta shifts per $1 move in the stock.</p>
+          <p>Think of delta as your speedometer and gamma as your acceleration. A high-gamma option is one where your speed is changing fast — you need to re-hedge more often.</p>
+          <div class="flip-formula">Gamma is highest: ATM options near expiry
+Gamma is lowest: deep ITM or OTM options</div>
+          <p style="font-size:.8rem;color:var(--ink-light);">You can't hedge gamma with just stock — you need another option. High gamma = the option is very sensitive to big moves in either direction.</p>
+        </div>
+        <div class="self-grade">
+          <button class="sg-btn" data-card="gamma" data-val="correct">✓ Got it</button>
+          <button class="sg-btn" data-card="gamma" data-val="wrong">✗ Missed it</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="flip-card" id="card-theta" data-greek="theta">
+    <div class="flip-card-inner">
+      <div class="flip-face flip-front">
+        <div class="flip-greek-name">Theta</div>
+        <div class="flip-greek-symbol">Θ (theta)</div>
+        <p style="font-family:var(--serif-body);font-size:.88rem;font-weight:300;color:var(--ink-mid);line-height:1.7;margin-top:1rem;">How much value does my option lose each day just from time passing?</p>
+        <div class="flip-prompt">Tap to reveal ↓</div>
+      </div>
+      <div class="flip-face flip-back">
+        <div class="flip-answer-label">Theta explained</div>
+        <div class="flip-answer">
+          <p>Options are like ice — they melt as time passes, even if nothing else changes. Theta is the daily melt rate.</p>
+          <p>If you bought a call with theta = −$0.05, you lose $5 per contract every single day just from the clock ticking, regardless of where the stock goes.</p>
+          <div class="flip-formula">Theta is usually negative for option buyers
+Theta accelerates near expiry (ATM options)</div>
+          <p style="font-size:.8rem;color:var(--ink-light);">Option sellers love theta — they're on the other side, collecting that daily decay. The tradeoff: sellers are short gamma and get hurt by big moves.</p>
+        </div>
+        <div class="self-grade">
+          <button class="sg-btn" data-card="theta" data-val="correct">✓ Got it</button>
+          <button class="sg-btn" data-card="theta" data-val="wrong">✗ Missed it</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="flip-card" id="card-vega" data-greek="vega">
+    <div class="flip-card-inner">
+      <div class="flip-face flip-front">
+        <div class="flip-greek-name">Vega</div>
+        <div class="flip-greek-symbol">ν (vega)</div>
+        <p style="font-family:var(--serif-body);font-size:.88rem;font-weight:300;color:var(--ink-mid);line-height:1.7;margin-top:1rem;">How much does my option change when implied volatility moves 1%?</p>
+        <div class="flip-prompt">Tap to reveal ↓</div>
+      </div>
+      <div class="flip-face flip-back">
+        <div class="flip-answer-label">Vega explained</div>
+        <div class="flip-answer">
+          <p>Options are bets on movement. When the market expects more movement (higher implied vol), all options get more expensive — both calls and puts. Vega measures that sensitivity.</p>
+          <p>A vega of 0.20 means your option gains $0.20 in value for every 1% rise in implied volatility, regardless of which direction the stock moves.</p>
+          <div class="flip-formula">Vega is always positive for option buyers
+Both calls and puts gain value when vol rises
+Vega is highest for ATM, long-dated options</div>
+          <p style="font-size:.8rem;color:var(--ink-light);">Buying before earnings? You're buying high vega. After the event, vol collapses (vol crush) and your option loses value even if the stock moved.</p>
+        </div>
+        <div class="self-grade">
+          <button class="sg-btn" data-card="vega" data-val="correct">✓ Got it</button>
+          <button class="sg-btn" data-card="vega" data-val="wrong">✗ Missed it</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="flip-card" id="card-rho" data-greek="rho">
+    <div class="flip-card-inner">
+      <div class="flip-face flip-front">
+        <div class="flip-greek-name">Rho</div>
+        <div class="flip-greek-symbol">ρ (rho)</div>
+        <p style="font-family:var(--serif-body);font-size:.88rem;font-weight:300;color:var(--ink-mid);line-height:1.7;margin-top:1rem;">How does my option change when interest rates go up 1%?</p>
+        <div class="flip-prompt">Tap to reveal ↓</div>
+      </div>
+      <div class="flip-face flip-back">
+        <div class="flip-answer-label">Rho explained</div>
+        <div class="flip-answer">
+          <p>Higher interest rates make calls slightly more valuable and puts slightly less valuable. The intuition: a call lets you defer paying for stock — that deferred cash earns more when rates are higher, so the option is worth more.</p>
+          <div class="flip-formula">Calls: positive rho (rate rise → call worth more)
+Puts:  negative rho (rate rise → put worth less)</div>
+          <p style="font-size:.8rem;color:var(--ink-light);">Rho is the smallest and least-watched Greek for short-dated options. It matters most for long-dated options (LEAPS) or when central banks are actively moving rates.</p>
+        </div>
+        <div class="self-grade">
+          <button class="sg-btn" data-card="rho" data-val="correct">✓ Got it</button>
+          <button class="sg-btn" data-card="rho" data-val="wrong">✗ Missed it</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div style="border:1px solid var(--rule);padding:1.5rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem;">
+  <div>
+    <div style="font-family:var(--mono);font-size:.65rem;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-light);margin-bottom:.35rem;">Score</div>
+    <div style="font-family:var(--serif-display);font-size:2rem;font-weight:700;color:var(--navy);" id="quiz-score">–</div>
+  </div>
+  <div class="quiz-btn-row">
+    <button class="quiz-btn" id="quiz-flip-all">Flip All</button>
+    <button class="quiz-btn primary" id="quiz-reset">Reset Quiz</button>
+  </div>
+</div>
+
 </div>
 
 <div class="ref-wrap">
@@ -1058,6 +1249,7 @@ r = risk-free rate</div>
 
 <script>
 (function(){
+  /* ── accordion ── */
   document.querySelectorAll('.qa-trigger').forEach(function(trigger){
     trigger.addEventListener('click', function(){
       var block = trigger.closest('.qa-block');
@@ -1082,6 +1274,7 @@ r = risk-free rate</div>
     });
   });
 
+  /* ── theme ── */
   var html = document.documentElement;
   var toggle = document.getElementById('theme-toggle');
   function applyTheme(dark){
@@ -1096,6 +1289,62 @@ r = risk-free rate</div>
   });
   window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function(e){
     if(!localStorage.getItem('theme')) applyTheme(e.matches);
+  });
+
+  /* ── hamburger ── */
+  var hamburger = document.getElementById('hamburger-btn');
+  var navMenu = document.getElementById('nav-menu');
+  hamburger.addEventListener('click', function(){
+    var open = navMenu.classList.toggle('open');
+    hamburger.classList.toggle('open', open);
+    hamburger.setAttribute('aria-expanded', open ? 'true' : 'false');
+  });
+  document.addEventListener('click', function(e){
+    if(!hamburger.contains(e.target) && !navMenu.contains(e.target)){
+      navMenu.classList.remove('open');
+      hamburger.classList.remove('open');
+      hamburger.setAttribute('aria-expanded','false');
+    }
+  });
+
+  /* ── greeks quiz ── */
+  var scores = {};
+  function updateScore(){
+    var keys = Object.keys(scores);
+    if(!keys.length){ document.getElementById('quiz-score').textContent = '–'; return; }
+    var correct = keys.filter(function(k){ return scores[k] === 'correct'; }).length;
+    document.getElementById('quiz-score').textContent = correct + ' / ' + keys.length;
+  }
+
+  document.querySelectorAll('.flip-card').forEach(function(card){
+    card.addEventListener('click', function(e){
+      if(e.target.classList.contains('sg-btn')) return;
+      card.classList.toggle('flipped');
+    });
+  });
+
+  document.querySelectorAll('.sg-btn').forEach(function(btn){
+    btn.addEventListener('click', function(e){
+      e.stopPropagation();
+      var cardName = btn.dataset.card;
+      var val = btn.dataset.val;
+      scores[cardName] = val;
+      var card = document.getElementById('card-' + cardName);
+      card.querySelectorAll('.sg-btn').forEach(function(b){ b.classList.remove('correct','wrong'); });
+      btn.classList.add(val);
+      updateScore();
+    });
+  });
+
+  document.getElementById('quiz-flip-all').addEventListener('click', function(){
+    document.querySelectorAll('.flip-card').forEach(function(c){ c.classList.add('flipped'); });
+  });
+
+  document.getElementById('quiz-reset').addEventListener('click', function(){
+    scores = {};
+    document.querySelectorAll('.flip-card').forEach(function(c){ c.classList.remove('flipped'); });
+    document.querySelectorAll('.sg-btn').forEach(function(b){ b.classList.remove('correct','wrong'); });
+    updateScore();
   });
 })();
 </script>
