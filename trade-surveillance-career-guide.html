@@ -7,6 +7,15 @@
     var p=window.matchMedia('(prefers-color-scheme: dark)').matches;
     if(s==='dark'||(!s&&p)){document.documentElement.setAttribute('data-theme','dark');}
   })();
+
+  // Hamburger
+  const hb = document.getElementById('hamburger-btn');
+  const nm = document.getElementById('nav-menu');
+  hb.addEventListener('click', () => {
+    const open = hb.classList.toggle('open');
+    nm.classList.toggle('open', open);
+    hb.setAttribute('aria-expanded', open);
+  });
 </script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -41,10 +50,20 @@
   nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:0 3rem;height:64px;background:rgba(248,245,240,.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--rule);transition:background .3s,border-color .3s;}
   [data-theme="dark"] nav{background:rgba(13,28,46,.95);border-bottom-color:#1c3048;}
   .nav-mark{font-family:var(--serif-display);font-size:1rem;font-weight:600;color:var(--navy);letter-spacing:.02em;text-decoration:none;}
-  .nav-links{display:flex;gap:2rem;list-style:none;align-items:center;}
-  .nav-links a{font-family:var(--mono);font-size:.72rem;font-weight:300;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-light);text-decoration:none;transition:color .2s;}
   .nav-links a:hover{color:var(--navy);}
   .nav-right{display:flex;align-items:center;gap:.75rem;}
+  .hamburger-btn{background:none;border:1px solid var(--rule);color:var(--ink-light);cursor:pointer;padding:.38rem .5rem;display:flex;flex-direction:column;gap:4px;align-items:center;justify-content:center;transition:color .2s,border-color .2s;}
+  .hamburger-btn:hover{color:var(--navy);border-color:var(--navy);}
+  .hamburger-btn span{display:block;width:18px;height:2px;background:currentColor;transition:transform .3s,opacity .3s;}
+  .hamburger-btn.open span:nth-child(1){transform:rotate(45deg) translate(4px,4px);}
+  .hamburger-btn.open span:nth-child(2){opacity:0;}
+  .hamburger-btn.open span:nth-child(3){transform:rotate(-45deg) translate(4px,-4px);}
+  .nav-menu{position:fixed;top:64px;left:0;right:0;z-index:99;background:rgba(248,245,240,.97);backdrop-filter:blur(12px);border-bottom:1px solid var(--rule);padding:1.5rem 3rem;display:none;flex-direction:column;transition:background .3s;}
+  [data-theme="dark"] .nav-menu{background:rgba(13,28,46,.97);border-bottom-color:#1c3048;}
+  .nav-menu.open{display:flex;}
+  .nav-menu a{font-family:var(--mono);font-size:.75rem;font-weight:300;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-light);text-decoration:none;transition:color .2s;padding:.85rem 0;border-bottom:1px solid var(--rule);}
+  .nav-menu a:last-child{border-bottom:none;}
+  .nav-menu a:hover{color:var(--navy);}
   .nav-back{font-family:var(--mono);font-size:.72rem;font-weight:400;letter-spacing:.1em;text-transform:uppercase;color:var(--white);background:var(--navy);padding:.5rem 1.25rem;text-decoration:none;transition:background .2s;}
   .nav-back:hover{background:var(--navy-mid);}
   .theme-toggle{background:none;border:1px solid var(--rule);color:var(--ink-light);cursor:pointer;padding:.38rem .5rem;display:flex;align-items:center;justify-content:center;line-height:0;transition:color .2s,border-color .2s;}
@@ -116,14 +135,6 @@
 
 <nav>
   <a class="nav-mark" href="./index.html">Rahul Das</a>
-  <ul class="nav-links">
-    <li><a href="./index.html#about">About</a></li>
-    <li><a href="./index.html#experience">Experience</a></li>
-    <li><a href="./index.html#skills">Skills</a></li>
-    <li><a href="./index.html#contact">Contact</a></li>
-    <li><a href="./hulls-notes.html">Hull's Notes</a></li>
-    <li><a href="./trade-surveillance-career-guide.html" style="color:var(--gold);">Career Guide</a></li>
-  </ul>
   <div class="nav-right">
     <button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark mode">
       <svg class="icon-moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
