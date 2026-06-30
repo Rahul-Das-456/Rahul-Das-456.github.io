@@ -7,6 +7,15 @@
     var p=window.matchMedia('(prefers-color-scheme: dark)').matches;
     if(s==='dark'||(!s&&p)){document.documentElement.setAttribute('data-theme','dark');}
   })();
+
+  // Hamburger
+  const hb = document.getElementById('hamburger-btn');
+  const nm = document.getElementById('nav-menu');
+  hb.addEventListener('click', () => {
+    const open = hb.classList.toggle('open');
+    nm.classList.toggle('open', open);
+    hb.setAttribute('aria-expanded', open);
+  });
 </script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
