@@ -1,0 +1,953 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script>
+  (function(){
+    var s=localStorage.getItem('theme');
+    var p=window.matchMedia('(prefers-color-scheme: dark)').matches;
+    if(s==='dark'||(!s&&p)){document.documentElement.setAttribute('data-theme','dark');}
+  })();
+</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DAS — Detection Analytics Suite · Rahul Das</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,600;1,8..60,300;1,8..60,400&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#f8f5f0;--cream-dark:#ede9e2;
+    --navy:#1a3a5c;--navy-mid:#2a5280;--navy-light:#3d6b9a;
+    --ink:#1c1c1e;--ink-mid:#3a3a3c;--ink-light:#6e6e73;
+    --rule:#c8bfb0;--gold:#b8976a;
+    --white:#ffffff;
+    --serif-display:'Playfair Display',Georgia,serif;
+    --serif-body:'Source Serif 4',Georgia,serif;
+    --mono:'DM Mono','Courier New',monospace;
+    --term-bg:#0a0e17;--term-fg:#c9d1d9;--term-green:#3fb950;
+    --term-yellow:#d29922;--term-red:#f85149;--term-blue:#58a6ff;
+    --term-purple:#bc8cff;--term-dim:#484f58;--term-border:#21262d;
+  }
+  [data-theme="dark"]{
+    --cream:#0d1c2e;--cream-dark:#112235;
+    --navy:#c4d4e4;--navy-mid:#a4b8cc;--navy-light:#849cb4;
+    --ink:#ddd8d0;--ink-mid:#bcb8b0;--ink-light:#7c7870;
+    --rule:#1c3048;--gold:#c4a472;
+    --white:#0d1c2e;
+  }
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;font-size:16px;overflow-x:hidden;}
+  body{background:var(--cream);color:var(--ink);font-family:var(--serif-body);font-weight:300;line-height:1.7;-webkit-font-smoothing:antialiased;transition:background-color .3s,color .3s;overflow-x:hidden;}
+
+  /* ── NAV ── */
+  nav.top-nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:0 3rem;height:64px;background:rgba(248,245,240,.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--rule);transition:background .3s,border-color .3s;}
+  [data-theme="dark"] nav.top-nav{background:rgba(13,28,46,.95);border-bottom-color:#1c3048;}
+  .nav-mark{font-family:var(--serif-display);font-size:1rem;font-weight:600;color:var(--navy);letter-spacing:.02em;text-decoration:none;}
+  .nav-right{display:flex;align-items:center;gap:.75rem;}
+  .theme-toggle{background:none;border:1px solid var(--rule);color:var(--ink-light);cursor:pointer;padding:.38rem .5rem;display:flex;align-items:center;justify-content:center;line-height:0;transition:color .2s,border-color .2s;}
+  .theme-toggle:hover{color:var(--navy);border-color:var(--navy);}
+  .icon-sun{display:none;}.icon-moon{display:block;}
+  [data-theme="dark"] .icon-moon{display:none;}[data-theme="dark"] .icon-sun{display:block;}
+  .hamburger-btn{background:none;border:1px solid var(--rule);color:var(--ink-light);cursor:pointer;padding:.38rem .5rem;display:flex;flex-direction:column;gap:4px;align-items:center;justify-content:center;transition:color .2s,border-color .2s;}
+  .hamburger-btn:hover{color:var(--navy);border-color:var(--navy);}
+  .hamburger-btn span{display:block;width:18px;height:2px;background:currentColor;transition:transform .3s,opacity .3s;}
+  .hamburger-btn.open span:nth-child(1){transform:rotate(45deg) translate(4px,4px);}
+  .hamburger-btn.open span:nth-child(2){opacity:0;}
+  .hamburger-btn.open span:nth-child(3){transform:rotate(-45deg) translate(4px,-4px);}
+  .nav-overlay{position:fixed;inset:0;z-index:149;background:rgba(0,0,0,.4);opacity:0;pointer-events:none;transition:opacity .3s;}
+  .nav-overlay.open{opacity:1;pointer-events:auto;}
+  .nav-menu{position:fixed;top:0;right:0;bottom:0;width:260px;z-index:150;background:rgba(248,245,240,.98);backdrop-filter:blur(16px);border-left:1px solid var(--rule);padding:5rem 2rem 2rem;display:flex;flex-direction:column;transform:translateX(100%);transition:transform .32s cubic-bezier(.4,0,.2,1);overflow-y:auto;}
+  [data-theme="dark"] .nav-menu{background:rgba(13,28,46,.99);border-left-color:#1c3048;}
+  .nav-menu.open{transform:translateX(0);}
+  .nav-menu a{font-family:var(--mono);font-size:.75rem;font-weight:300;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-light);text-decoration:none;transition:color .2s;padding:.85rem 0;border-bottom:1px solid var(--rule);}
+  .nav-menu a:last-child{border-bottom:none;}
+  .nav-menu a:hover,.nav-menu a.active{color:var(--navy);}
+
+  /* ── PAGE HEADER ── */
+  .page-header{padding:9rem 8vw 4rem;border-bottom:1px solid var(--rule);}
+  .page-eyebrow{font-family:var(--mono);font-size:.72rem;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);margin-bottom:1rem;}
+  .page-title{font-family:var(--serif-display);font-size:clamp(2.8rem,5vw,5rem);font-weight:700;line-height:1.0;color:var(--navy);letter-spacing:-.03em;}
+  .page-title em{font-style:italic;font-weight:400;color:var(--navy-light);}
+  .das-abbr{font-family:var(--mono);font-size:.62rem;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);margin-top:.4rem;}
+  .page-sub{font-family:var(--serif-body);font-size:1rem;font-weight:300;color:var(--ink-light);margin-top:1.25rem;max-width:58ch;line-height:1.65;}
+  .page-tags{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:1.5rem;}
+  .page-tag{font-family:var(--mono);font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;border:1px solid var(--rule);color:var(--ink-light);padding:.3rem .75rem;}
+  .page-tag.hi{border-color:var(--gold);color:var(--gold);}
+
+  /* ── PILLAR GRID ── */
+  .pillars{padding:4rem 8vw 3rem;}
+  .pillars-head{font-family:var(--serif-display);font-size:1.5rem;font-weight:700;color:var(--navy);margin-bottom:.5rem;}
+  .pillars-sub{font-family:var(--mono);font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-light);margin-bottom:2.5rem;}
+  .pillar-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:1.25rem;}
+  .pillar{border:1px solid var(--rule);border-top:3px solid var(--gold);padding:1.5rem;}
+  .pillar-icon{font-family:var(--mono);font-size:1.4rem;color:var(--gold);margin-bottom:.75rem;line-height:1;}
+  .pillar-name{font-family:var(--mono);font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--navy);margin-bottom:.6rem;}
+  .pillar-body{font-family:var(--serif-body);font-size:.88rem;font-weight:300;color:var(--ink-mid);line-height:1.65;}
+
+  /* ── TERMINAL SECTION ── */
+  .terminal-section{padding:0 8vw 4rem;}
+  .terminal-section-head{font-family:var(--serif-display);font-size:1.5rem;font-weight:700;color:var(--navy);margin-bottom:.5rem;padding-top:2rem;border-top:2px solid var(--gold);}
+  .terminal-section-sub{font-family:var(--mono);font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-light);margin-bottom:2rem;}
+  .term-window{background:var(--term-bg);border:1px solid var(--term-border);border-radius:6px;overflow:hidden;}
+  .term-titlebar{background:#161b22;border-bottom:1px solid var(--term-border);padding:.6rem 1rem;display:flex;align-items:center;gap:.5rem;}
+  .term-dot{width:12px;height:12px;border-radius:50%;}
+  .term-dot.red{background:#f85149;}
+  .term-dot.yellow{background:#d29922;}
+  .term-dot.green{background:#3fb950;}
+  .term-title{font-family:var(--mono);font-size:.68rem;color:var(--term-dim);margin-left:.5rem;letter-spacing:.06em;}
+  .term-body{padding:1.5rem;min-height:420px;font-family:var(--mono);font-size:.78rem;line-height:1.75;color:var(--term-fg);overflow:auto;}
+  .term-line{display:block;white-space:pre-wrap;word-break:break-all;}
+  .t-prompt{color:var(--term-green);}
+  .t-cmd{color:var(--term-fg);}
+  .t-info{color:var(--term-blue);}
+  .t-ok{color:var(--term-green);}
+  .t-warn{color:var(--term-yellow);}
+  .t-err{color:var(--term-red);}
+  .t-muted{color:var(--term-dim);}
+  .t-purple{color:var(--term-purple);}
+  .t-gold{color:#d29922;}
+  .t-cursor{display:inline-block;width:8px;height:14px;background:var(--term-green);vertical-align:middle;animation:blink 1s step-end infinite;}
+  @keyframes blink{0%,100%{opacity:1;}50%{opacity:0;}}
+  .term-tabs{display:flex;gap:0;border-bottom:1px solid var(--term-border);}
+  .term-tab{font-family:var(--mono);font-size:.66rem;letter-spacing:.08em;text-transform:uppercase;color:var(--term-dim);padding:.55rem 1.1rem;cursor:pointer;border-right:1px solid var(--term-border);transition:color .2s,background .2s;}
+  .term-tab:hover{color:var(--term-fg);}
+  .term-tab.active{color:var(--term-green);background:#161b22;}
+
+  /* ── LIVE PATTERNS ── */
+  .patterns-section{padding:3rem 8vw 4rem;border-top:1px solid var(--rule);}
+  .ps-head{font-family:var(--serif-display);font-size:1.5rem;font-weight:700;color:var(--navy);margin-bottom:.5rem;}
+  .ps-sub{font-family:var(--mono);font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-light);margin-bottom:2rem;}
+  .live-badge{display:inline-flex;align-items:center;gap:.4rem;font-family:var(--mono);font-size:.6rem;letter-spacing:.14em;text-transform:uppercase;color:#f85149;border:1px solid rgba(248,81,73,.3);padding:.22rem .65rem;margin-left:1rem;vertical-align:middle;}
+  .live-dot{width:6px;height:6px;border-radius:50%;background:#f85149;animation:blink 1.2s step-end infinite;}
+  .alert-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:1rem;}
+  .alert-card{border:1px solid var(--rule);padding:1.25rem;position:relative;overflow:hidden;}
+  .alert-card::before{content:'';position:absolute;top:0;left:0;bottom:0;width:4px;}
+  .alert-card.sev-high::before{background:#f85149;}
+  .alert-card.sev-med::before{background:#d29922;}
+  .alert-card.sev-low::before{background:#3fb950;}
+  .alert-card.sev-clear::before{background:var(--rule);}
+  .ac-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:.75rem;padding-left:.75rem;}
+  .ac-pattern{font-family:var(--mono);font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:var(--ink);}
+  .ac-sev{font-family:var(--mono);font-size:.58rem;letter-spacing:.12em;text-transform:uppercase;padding:.2rem .55rem;border:1px solid;}
+  .ac-sev.high{color:#f85149;border-color:rgba(248,81,73,.4);}
+  .ac-sev.med{color:#d29922;border-color:rgba(210,153,34,.4);}
+  .ac-sev.low{color:#3fb950;border-color:rgba(63,185,80,.4);}
+  .ac-sev.clear{color:var(--ink-light);border-color:var(--rule);}
+  .ac-symbol{font-family:var(--serif-display);font-size:1.1rem;font-weight:700;color:var(--navy);padding-left:.75rem;margin-bottom:.25rem;}
+  .ac-rows{padding-left:.75rem;}
+  .ac-row{display:flex;justify-content:space-between;font-family:var(--mono);font-size:.68rem;padding:.18rem 0;border-bottom:1px solid rgba(200,191,176,.2);}
+  .ac-row:last-child{border-bottom:none;}
+  .ac-lbl{color:var(--ink-light);}
+  .ac-val{color:var(--ink-mid);}
+  .ac-val.bad{color:#f85149;}
+  .ac-val.ok{color:#3fb950;}
+  .ac-val.warn{color:#d29922;}
+  .ac-time{font-family:var(--mono);font-size:.58rem;color:var(--ink-light);padding-left:.75rem;margin-top:.65rem;}
+
+  /* ── SQL LIBRARY ── */
+  .sql-section{padding:3rem 8vw 4rem;border-top:1px solid var(--rule);}
+  .sql-head{font-family:var(--serif-display);font-size:1.5rem;font-weight:700;color:var(--navy);margin-bottom:.5rem;}
+  .sql-sub{font-family:var(--mono);font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-light);margin-bottom:2rem;}
+  .sql-block{border:1px solid var(--rule);margin-bottom:.75rem;}
+  .sql-trigger{width:100%;background:none;border:none;cursor:pointer;text-align:left;padding:1rem 1.25rem;display:flex;align-items:center;justify-content:space-between;gap:1rem;}
+  .sql-trigger:hover .sql-trigger-name{color:var(--navy-mid);}
+  .sql-trigger-left{display:flex;align-items:center;gap:.75rem;}
+  .sql-sev-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;}
+  .sql-sev-dot.high{background:#f85149;}
+  .sql-sev-dot.med{background:#d29922;}
+  .sql-sev-dot.low{background:#3fb950;}
+  .sql-trigger-name{font-family:var(--mono);font-size:.78rem;font-weight:400;color:var(--ink);letter-spacing:.04em;transition:color .2s;}
+  .sql-trigger-meta{font-family:var(--mono);font-size:.62rem;color:var(--ink-light);}
+  .sql-chevron{flex-shrink:0;width:14px;height:14px;color:var(--ink-light);transition:transform .3s;}
+  .sql-block.open .sql-chevron{transform:rotate(180deg);}
+  .sql-body{max-height:0;overflow:hidden;transition:max-height .4s ease;}
+  .sql-body-inner{padding:.25rem 0 1rem;}
+  .code-block{background:var(--term-bg);padding:1.25rem 1.5rem;font-family:var(--mono);font-size:.75rem;line-height:1.85;overflow-x:auto;color:var(--term-fg);}
+  .kw{color:var(--term-purple);}
+  .fn{color:var(--term-blue);}
+  .str{color:#a5d6ff;}
+  .num{color:#79c0ff;}
+  .cmt{color:var(--term-dim);}
+  .col{color:var(--term-fg);}
+  .tbl{color:var(--term-yellow);}
+  .sql-desc{font-family:var(--serif-body);font-size:.88rem;font-weight:300;color:var(--ink-mid);line-height:1.7;padding:1rem 1.5rem 0;border-top:1px solid var(--term-border);}
+
+  /* ── ARCHITECTURE ── */
+  .arch-section{padding:3rem 8vw 4rem;border-top:1px solid var(--rule);}
+  .arch-head{font-family:var(--serif-display);font-size:1.5rem;font-weight:700;color:var(--navy);margin-bottom:.5rem;}
+  .arch-sub{font-family:var(--mono);font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-light);margin-bottom:2.5rem;}
+  .arch-flow{display:flex;align-items:center;gap:0;flex-wrap:wrap;overflow-x:auto;padding-bottom:1rem;}
+  .arch-node{flex-shrink:0;border:1px solid var(--rule);padding:1rem 1.25rem;min-width:140px;text-align:center;}
+  .arch-node-icon{font-family:var(--mono);font-size:1rem;color:var(--gold);margin-bottom:.3rem;}
+  .arch-node-name{font-family:var(--mono);font-size:.68rem;font-weight:400;letter-spacing:.08em;text-transform:uppercase;color:var(--navy);margin-bottom:.2rem;}
+  .arch-node-detail{font-family:var(--mono);font-size:.6rem;color:var(--ink-light);line-height:1.4;}
+  .arch-arrow{flex-shrink:0;display:flex;align-items:center;padding:0 .5rem;color:var(--gold);font-family:var(--mono);font-size:1.1rem;}
+  .arch-legend{display:flex;flex-wrap:wrap;gap:1.25rem;margin-top:2rem;}
+  .arch-legend-item{display:flex;align-items:center;gap:.5rem;font-family:var(--mono);font-size:.66rem;color:var(--ink-light);letter-spacing:.06em;}
+  .arch-legend-dot{width:8px;height:8px;border-radius:50%;}
+
+  /* ── SETUP GUIDE ── */
+  .setup-section{padding:3rem 8vw 5rem;border-top:1px solid var(--rule);}
+  .setup-head{font-family:var(--serif-display);font-size:1.5rem;font-weight:700;color:var(--navy);margin-bottom:.5rem;}
+  .setup-sub{font-family:var(--mono);font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-light);margin-bottom:2rem;}
+  .os-tabs{display:flex;gap:0;border-bottom:1px solid var(--rule);margin-bottom:2rem;}
+  .os-tab{font-family:var(--mono);font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;padding:.6rem 1.25rem;cursor:pointer;color:var(--ink-light);border-bottom:2px solid transparent;transition:color .2s;background:none;border-top:none;border-left:none;border-right:none;}
+  .os-tab.active{color:var(--navy);border-bottom-color:var(--gold);}
+  .os-tab:hover{color:var(--navy);}
+  .os-panel{display:none;}
+  .os-panel.active{display:block;}
+  .setup-step{margin-bottom:1.5rem;}
+  .setup-step-lbl{font-family:var(--mono);font-size:.6rem;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin-bottom:.4rem;}
+  .setup-cmd{background:var(--term-bg);padding:.85rem 1.25rem;font-family:var(--mono);font-size:.8rem;color:var(--term-green);overflow-x:auto;white-space:pre;}
+  .setup-note{font-family:var(--serif-body);font-size:.85rem;font-weight:300;color:var(--ink-light);margin-top:.5rem;line-height:1.6;}
+
+  /* ── REF / FOOTER ── */
+  .ref-wrap{padding:3rem 8vw 4rem;border-top:1px solid var(--rule);}
+  .ref-txt{font-family:var(--mono);font-size:.72rem;letter-spacing:.04em;color:var(--ink-light);line-height:1.75;max-width:65ch;}
+  .viz-links{display:flex;gap:1rem;margin-top:1.5rem;flex-wrap:wrap;}
+  .viz-link{font-family:var(--mono);font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;color:var(--white);background:var(--navy);padding:.55rem 1.25rem;text-decoration:none;transition:background .2s;}
+  .viz-link:hover{background:var(--navy-mid);}
+  footer{background:var(--navy);padding:2rem 8vw;text-align:center;transition:background .3s;}
+  [data-theme="dark"] footer{background:#071420;}
+  .foot-txt{font-family:var(--mono);font-size:.68rem;letter-spacing:.1em;color:rgba(248,245,240,.35);}
+
+  @media(max-width:768px){
+    nav.top-nav{padding:0 1.25rem;}
+    .page-header,.pillars,.terminal-section,.patterns-section,.sql-section,.arch-section,.setup-section,.ref-wrap{padding-left:1.25rem;padding-right:1.25rem;}
+    .pillar-grid,.alert-grid{grid-template-columns:1fr;}
+    .arch-flow{flex-direction:column;align-items:flex-start;}
+    .arch-arrow{transform:rotate(90deg);padding:.3rem 0;}
+    .nav-menu{width:240px;}
+    .page-title{font-size:clamp(2.2rem,8vw,3.5rem);}
+  }
+</style>
+</head>
+<body>
+
+<nav class="top-nav">
+  <a class="nav-mark" href="./index.html">Rahul Das</a>
+  <div class="nav-right">
+    <button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark mode">
+      <svg class="icon-moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      <svg class="icon-sun" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+    </button>
+    <button class="hamburger-btn" id="hamburger-btn" aria-label="Toggle navigation" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+<div class="nav-overlay" id="nav-overlay"></div>
+<nav class="nav-menu" id="nav-menu">
+  <a href="./das.html" class="active">DAS Suite</a>
+  <a href="./options-visualizer.html">Options Visualizer</a>
+  <a href="./futures-visualizer.html">Futures Visualizer</a>
+  <a href="./strategies-visualizer.html">Strategies Visualizer</a>
+  <a href="./hulls-notes.html">Hull's Notes</a>
+  <a href="./greeks-interview-prep.html">Greeks Prep</a>
+  <a href="./trade-surveillance-career-guide.html">Career Guide</a>
+  <a href="./interview-question-mapping.html">Interview Prep</a>
+  <a href="./job-search-history.html">Job Search</a>
+  <a href="./index.html">Back to Home</a>
+</nav>
+
+<!-- PAGE HEADER -->
+<div class="page-header">
+  <p class="page-eyebrow">Financial Surveillance &nbsp;·&nbsp; Cross-Market Intelligence</p>
+  <h1 class="page-title">DAS<br><em>Detection Analytics Suite</em></h1>
+  <p class="das-abbr">D · Detection &nbsp; A · Analytics &nbsp; S · Suite</p>
+  <p class="page-sub">A terminal-native surveillance engine that embeds SQL pattern recognition, WSL runtime isolation, and Claude AI analysis into any operating system. Connect to live market data. Detect manipulation. Act.</p>
+  <div class="page-tags">
+    <span class="page-tag hi">SQL Pattern Engine</span>
+    <span class="page-tag hi">Claude AI</span>
+    <span class="page-tag hi">WSL Runtime</span>
+    <span class="page-tag">CBOE · NYSE · NASDAQ</span>
+    <span class="page-tag">Real-time Alerts</span>
+    <span class="page-tag">Spoofing</span>
+    <span class="page-tag">Gamma Squeeze</span>
+    <span class="page-tag">VIX Manipulation</span>
+    <span class="page-tag">Wash Trading</span>
+  </div>
+</div>
+
+<!-- PILLARS -->
+<div class="pillars">
+  <h2 class="pillars-head">Four Pillars</h2>
+  <p class="pillars-sub">How DAS works across any operating environment</p>
+  <div class="pillar-grid">
+    <div class="pillar">
+      <div class="pillar-icon">⬡</div>
+      <div class="pillar-name">SQL Pattern Engine</div>
+      <div class="pillar-body">DuckDB-powered embedded SQL runs directly against live order flow, options chains, and trade data — no external database required. Sub-millisecond query execution detects spoofing, layering, wash trading, and gamma squeeze conditions the moment they form.</div>
+    </div>
+    <div class="pillar">
+      <div class="pillar-icon">◈</div>
+      <div class="pillar-name">WSL Runtime</div>
+      <div class="pillar-body">Windows users run DAS natively through WSL2. Same binary, same SQL queries, same Claude integration — any OS. No cloud dependency, no containerization overhead. The surveillance engine runs entirely on your hardware, keeping sensitive market data local.</div>
+    </div>
+    <div class="pillar">
+      <div class="pillar-icon">◆</div>
+      <div class="pillar-name">Claude AI Analysis</div>
+      <div class="pillar-body">Pipe any surveillance alert directly to Claude Opus. Get regulatory citation mapping, SAR narrative drafts, escalation recommendations, and pattern context in natural language — instantly. Claude understands options Greeks, manipulation typologies, and regulatory frameworks out of the box.</div>
+    </div>
+    <div class="pillar">
+      <div class="pillar-icon">◉</div>
+      <div class="pillar-name">Live Market Data</div>
+      <div class="pillar-body">WebSocket connections to CBOE, NYSE, NASDAQ, and CME live feeds. Real-time order flow, options chains, implied volatility surfaces, and trade-through reporting. DAS streams, buffers, and queries live data continuously — no batch delays, no stale snapshots.</div>
+    </div>
+  </div>
+</div>
+
+<!-- TERMINAL DEMO -->
+<div class="terminal-section">
+  <h2 class="terminal-section-head">Live Terminal Session</h2>
+  <p class="terminal-section-sub">Spoofing detection · Claude analysis · Case export</p>
+  <div class="term-window">
+    <div class="term-titlebar">
+      <div class="term-dot red"></div>
+      <div class="term-dot yellow"></div>
+      <div class="term-dot green"></div>
+      <span class="term-title">das — surveillance@cboe — 80×24</span>
+    </div>
+    <div class="term-tabs">
+      <div class="term-tab active" data-panel="spoofing">Spoofing Scan</div>
+      <div class="term-tab" data-panel="gamma">Gamma Alert</div>
+      <div class="term-tab" data-panel="vix">VIX Settlement</div>
+    </div>
+    <div class="term-body" id="term-spoofing">
+      <span class="term-line"><span class="t-muted">Last login: Mon Jun 30 06:14:02 on ttys001</span></span>
+      <span class="term-line"> </span>
+      <span class="term-line" id="tl-1"></span>
+      <span class="term-line" id="tl-2"></span>
+      <span class="term-line" id="tl-3"></span>
+      <span class="term-line" id="tl-4"></span>
+      <span class="term-line" id="tl-5"></span>
+      <span class="term-line" id="tl-6"></span>
+      <span class="term-line" id="tl-7"></span>
+      <span class="term-line" id="tl-8"></span>
+      <span class="term-line" id="tl-9"></span>
+      <span class="term-line" id="tl-10"></span>
+      <span class="term-line" id="tl-11"></span>
+      <span class="term-line" id="tl-12"></span>
+      <span class="term-line" id="tl-13"></span>
+      <span class="term-line" id="tl-14"></span>
+      <span class="term-line" id="tl-15"></span>
+      <span class="term-line" id="tl-16"></span>
+      <span class="term-line" id="tl-17"></span>
+      <span class="term-line" id="tl-18"></span>
+      <span class="term-line" id="tl-19"></span>
+      <span class="term-line" id="tl-20"></span>
+      <span class="term-line"><span class="t-cursor"></span></span>
+    </div>
+    <div class="term-body" id="term-gamma" style="display:none">
+      <span class="term-line"><span class="t-muted"># DAS Gamma Squeeze Monitor — CBOE Live Feed</span></span>
+      <span class="term-line"> </span>
+      <span class="term-line"><span class="t-prompt">surveillance@das</span><span class="t-muted">:</span><span class="t-info">~/das</span><span class="t-muted">$</span> <span class="t-cmd">das scan --pattern gamma_squeeze --symbols GME,AMC,TSLA --window 3d</span></span>
+      <span class="term-line"><span class="t-info">[DAS]</span> Computing dealer gamma exposure from open interest...</span>
+      <span class="term-line"><span class="t-info">[DAS]</span> Source: CBOE OI data · Options: 12,847 contracts analyzed</span>
+      <span class="term-line"> </span>
+      <span class="term-line"><span class="t-warn">━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span></span>
+      <span class="term-line"><span class="t-warn">  ALERT [HIGH] GAMMA SQUEEZE RISK — TSLA</span></span>
+      <span class="term-line"><span class="t-warn">━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span></span>
+      <span class="term-line">  Symbol              TSLA</span>
+      <span class="term-line">  Dealer Gamma        <span class="t-err">-$14,220,000 per 1% move</span></span>
+      <span class="term-line">  Days to Expiry      3</span>
+      <span class="term-line">  ATM Strike          $245</span>
+      <span class="term-line">  OI Concentration    87.3% within ±$5 of $245</span>
+      <span class="term-line">  Retail Call Buying  +342% vs 30-day avg (last 48h)</span>
+      <span class="term-line">  Feedback Threshold  <span class="t-err">BREACHED — forced buying cascade likely on move &gt;1.5%</span></span>
+      <span class="term-line"><span class="t-warn">━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span></span>
+      <span class="term-line"> </span>
+      <span class="term-line"><span class="t-prompt">surveillance@das</span><span class="t-muted">:</span><span class="t-info">~/das</span><span class="t-muted">$</span> <span class="t-cmd">das analyze --alert TSLA-GAMMA-240630 --claude --cite-regulations</span></span>
+      <span class="term-line"><span class="t-purple">[Claude]</span> Pattern: Negative dealer gamma with elevated retail call buying</span>
+      <span class="term-line"><span class="t-purple">[Claude]</span> Risk: Forced MM delta-hedging buys will amplify any upside move</span>
+      <span class="term-line"><span class="t-purple">[Claude]</span> Regulatory frame: Monitor for intentional trigger attempts (§10b-5)</span>
+      <span class="term-line"><span class="t-purple">[Claude]</span> Action: Flag unusual underlying orders &gt;$500K in next 48h</span>
+      <span class="term-line"><span class="t-cursor"></span></span>
+    </div>
+    <div class="term-body" id="term-vix" style="display:none">
+      <span class="term-line"><span class="t-muted"># DAS VIX Settlement Monitor — SOQ Window</span></span>
+      <span class="term-line"> </span>
+      <span class="term-line"><span class="t-prompt">surveillance@das</span><span class="t-muted">:</span><span class="t-info">~/das</span><span class="t-muted">$</span> <span class="t-cmd">das monitor --mode vix_settlement --date 2026-07-16 --alert-threshold 0.35</span></span>
+      <span class="term-line"><span class="t-info">[DAS]</span> VIX Settlement Monitor ARMED · Next SOQ: 2026-07-16 09:30 CT</span>
+      <span class="term-line"><span class="t-info">[DAS]</span> Watching SPX OTM options · Strikes: 4200–5600 · VIX futures position scan: ON</span>
+      <span class="term-line"> </span>
+      <span class="term-line"><span class="t-muted">--- SOQ WINDOW OPEN: 09:15:00 ---</span></span>
+      <span class="term-line"><span class="t-info">[DAS] 09:17:22</span> Unusual order: SPX P4850 · 2,400 contracts · BUY · $0.35 avg</span>
+      <span class="term-line"><span class="t-info">[DAS] 09:17:23</span> VIX contribution: +0.18 pts from this strike alone</span>
+      <span class="term-line"><span class="t-info">[DAS] 09:17:31</span> Order cancelled · No fill · Duration: 8.4 seconds</span>
+      <span class="term-line"><span class="t-err">[DAS] 09:17:31</span> <span class="t-err">ANOMALY: Non-economic order pattern at VIX SOQ — escalating</span></span>
+      <span class="term-line"> </span>
+      <span class="term-line"><span class="t-err">━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span></span>
+      <span class="term-line"><span class="t-err">  ALERT [CRITICAL] VIX SOQ MANIPULATION SUSPECTED</span></span>
+      <span class="term-line"><span class="t-err">━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span></span>
+      <span class="term-line">  Account     ACC-0047-X · Pre-positioned: +12,000 VIX Aug futures</span>
+      <span class="term-line">  SPX Orders  <span class="t-err">8 orders · 8 cancelled · 0 fills · SOQ window only</span></span>
+      <span class="term-line">  VIX Impact  +0.62 pts estimated · Settlement delta: +$744,000</span>
+      <span class="term-line">  Jurisdiction <span class="t-warn">CFTC (VIX futures) + SEC (SPX options) — dual referral</span></span>
+      <span class="term-line"><span class="t-cursor"></span></span>
+    </div>
+  </div>
+</div>
+
+<!-- LIVE PATTERN FEED -->
+<div class="patterns-section">
+  <h2 class="ps-head">Active Surveillance Feed <span class="live-badge"><span class="live-dot"></span>Live</span></h2>
+  <p class="ps-sub">Current pattern detection across monitored exchanges · Refreshes every 15 seconds</p>
+  <div class="alert-grid">
+
+    <div class="alert-card sev-high">
+      <div class="ac-top">
+        <span class="ac-pattern">Spoofing — Options</span>
+        <span class="ac-sev high">High</span>
+      </div>
+      <div class="ac-symbol">SPXW 250718 C5800</div>
+      <div class="ac-rows">
+        <div class="ac-row"><span class="ac-lbl">Trader ID</span><span class="ac-val">TRD-7821</span></div>
+        <div class="ac-row"><span class="ac-lbl">Cancel Rate</span><span class="ac-val bad">97.3%</span></div>
+        <div class="ac-row"><span class="ac-lbl">Price Impact</span><span class="ac-val bad">−8.4 bps</span></div>
+        <div class="ac-row"><span class="ac-lbl">Order Lifetime</span><span class="ac-val bad">47ms avg</span></div>
+        <div class="ac-row"><span class="ac-lbl">Volume</span><span class="ac-val">147 orders / 4 fills</span></div>
+      </div>
+      <div class="ac-time">09:31:22 · CBOE · Escalated to supervisor</div>
+    </div>
+
+    <div class="alert-card sev-high">
+      <div class="ac-top">
+        <span class="ac-pattern">Gamma Squeeze Risk</span>
+        <span class="ac-sev high">High</span>
+      </div>
+      <div class="ac-symbol">TSLA Calls — 3 DTE</div>
+      <div class="ac-rows">
+        <div class="ac-row"><span class="ac-lbl">Dealer Gamma</span><span class="ac-val bad">−$14.2M / 1%</span></div>
+        <div class="ac-row"><span class="ac-lbl">Retail Call OI Δ</span><span class="ac-val bad">+342% (48h)</span></div>
+        <div class="ac-row"><span class="ac-lbl">ATM Strike</span><span class="ac-val">$245</span></div>
+        <div class="ac-row"><span class="ac-lbl">Cascade Threshold</span><span class="ac-val bad">Breached</span></div>
+        <div class="ac-row"><span class="ac-lbl">Days to Expiry</span><span class="ac-val warn">3</span></div>
+      </div>
+      <div class="ac-time">06:30:00 pre-market · NYSE Arca · Monitoring</div>
+    </div>
+
+    <div class="alert-card sev-med">
+      <div class="ac-top">
+        <span class="ac-pattern">Expiry Pinning</span>
+        <span class="ac-sev med">Watch</span>
+      </div>
+      <div class="ac-symbol">SPY — $545 Strike</div>
+      <div class="ac-rows">
+        <div class="ac-row"><span class="ac-lbl">OI at Strike</span><span class="ac-val warn">284,000 contracts</span></div>
+        <div class="ac-row"><span class="ac-lbl">Price Drift to Pin</span><span class="ac-val warn">$0.12 in 18 min</span></div>
+        <div class="ac-row"><span class="ac-lbl">Max Pain</span><span class="ac-val">$545.00</span></div>
+        <div class="ac-row"><span class="ac-lbl">Underlying Vol</span><span class="ac-val warn">0.4% — suppressed</span></div>
+        <div class="ac-row"><span class="ac-lbl">Charm Model Δ</span><span class="ac-val">+0.08 (expected)</span></div>
+      </div>
+      <div class="ac-time">15:31–15:52 · NYSE Arca · Vs charm model: 2.1σ</div>
+    </div>
+
+    <div class="alert-card sev-med">
+      <div class="ac-top">
+        <span class="ac-pattern">Vol Surface Shift</span>
+        <span class="ac-sev med">Watch</span>
+      </div>
+      <div class="ac-symbol">QQQ IV Skew — OTM Puts</div>
+      <div class="ac-rows">
+        <div class="ac-row"><span class="ac-lbl">IV Move</span><span class="ac-val warn">+3.8% (25-delta put)</span></div>
+        <div class="ac-row"><span class="ac-lbl">Volume Driver</span><span class="ac-val warn">Single block: 4,200 contracts</span></div>
+        <div class="ac-row"><span class="ac-lbl">Vomma Exposure</span><span class="ac-val warn">Account ACC-1182: long</span></div>
+        <div class="ac-row"><span class="ac-lbl">Economic Basis</span><span class="ac-val warn">No hedge identified</span></div>
+        <div class="ac-row"><span class="ac-lbl">RV Baseline</span><span class="ac-val">IV was 2.1% above RV</span></div>
+      </div>
+      <div class="ac-time">11:14:33 · PHLX · Pending account review</div>
+    </div>
+
+    <div class="alert-card sev-low">
+      <div class="ac-top">
+        <span class="ac-pattern">Wash Trade — Cleared</span>
+        <span class="ac-sev clear">Cleared</span>
+      </div>
+      <div class="ac-symbol">IWM 250630 P210</div>
+      <div class="ac-rows">
+        <div class="ac-row"><span class="ac-lbl">Net Delta Change</span><span class="ac-val ok">0.00 shares</span></div>
+        <div class="ac-row"><span class="ac-lbl">Volume</span><span class="ac-val">500 × 500 offsetting</span></div>
+        <div class="ac-row"><span class="ac-lbl">Resolution</span><span class="ac-val ok">Institutional hedge — documented</span></div>
+        <div class="ac-row"><span class="ac-lbl">Accounts</span><span class="ac-val ok">No common beneficial owner</span></div>
+        <div class="ac-row"><span class="ac-lbl">Review Time</span><span class="ac-val">14 minutes</span></div>
+      </div>
+      <div class="ac-time">08:47:11 · CBOE · Closed — no action</div>
+    </div>
+
+    <div class="alert-card sev-low">
+      <div class="ac-top">
+        <span class="ac-pattern">Layering — Cleared</span>
+        <span class="ac-sev clear">Cleared</span>
+      </div>
+      <div class="ac-symbol">GLD Futures — Dec</div>
+      <div class="ac-rows">
+        <div class="ac-row"><span class="ac-lbl">Order Layers</span><span class="ac-val">7 levels, 200 contracts each</span></div>
+        <div class="ac-row"><span class="ac-lbl">Cancel Pattern</span><span class="ac-val ok">Market maker — bilateral</span></div>
+        <div class="ac-row"><span class="ac-lbl">Net Fill</span><span class="ac-val ok">1,100 contracts filled</span></div>
+        <div class="ac-row"><span class="ac-lbl">Resolution</span><span class="ac-val ok">Legitimate MM quoting</span></div>
+        <div class="ac-row"><span class="ac-lbl">Review Time</span><span class="ac-val">6 minutes</span></div>
+      </div>
+      <div class="ac-time">10:02:45 · CME · Closed — no action</div>
+    </div>
+
+  </div>
+</div>
+
+<!-- SQL LIBRARY -->
+<div class="sql-section">
+  <h2 class="sql-head">SQL Query Library</h2>
+  <p class="sql-sub">Click any pattern to expand the DAS detection query</p>
+
+  <div class="sql-block" id="sql1">
+    <button class="sql-trigger">
+      <div class="sql-trigger-left">
+        <div class="sql-sev-dot high"></div>
+        <span class="sql-trigger-name">Spoofing — High Cancel Rate with Price Impact</span>
+      </div>
+      <div class="sql-trigger-meta">das.order_flow · CEA §4c(a)(5)(C)</div>
+      <svg class="sql-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+    </button>
+    <div class="sql-body">
+      <div class="sql-body-inner">
+        <div class="code-block"><span class="cmt">-- DAS Spoofing Detection · Flags traders with high cancel rates and directional price impact</span>
+<span class="kw">SELECT</span>
+    o.trader_id,
+    o.symbol,
+    <span class="fn">COUNT</span>(*) <span class="kw">AS</span> order_count,
+    <span class="fn">ROUND</span>(<span class="fn">SUM</span>(<span class="kw">CASE WHEN</span> o.status <span class="kw">= </span><span class="str">'CANCELLED'</span> <span class="kw">THEN</span> <span class="num">1.0</span> <span class="kw">ELSE</span> <span class="num">0</span> <span class="kw">END</span>) / <span class="fn">COUNT</span>(*), <span class="num">3</span>) <span class="kw">AS</span> cancel_rate,
+    <span class="fn">AVG</span>(o.lifetime_ms)                                                        <span class="kw">AS</span> avg_lifetime_ms,
+    <span class="fn">ROUND</span>(<span class="fn">AVG</span>(p.price_impact_bps), <span class="num">2</span>)                                         <span class="kw">AS</span> avg_price_impact_bps,
+    <span class="fn">ANY_VALUE</span>(o.side)                                                         <span class="kw">AS</span> dominant_side
+<span class="kw">FROM</span>   <span class="tbl">surveillance.order_flow</span> o
+<span class="kw">JOIN</span>   <span class="tbl">surveillance.price_impact</span> p <span class="kw">ON</span> o.order_id = p.order_id
+<span class="kw">WHERE</span>  o.ts &gt;= <span class="fn">NOW</span>() - <span class="kw">INTERVAL</span> <span class="str">'1 hour'</span>
+<span class="kw">GROUP BY</span> o.trader_id, o.symbol
+<span class="kw">HAVING</span>
+    cancel_rate        &gt; <span class="num">0.85</span>
+    <span class="kw">AND</span> avg_lifetime_ms &lt; <span class="num">500</span>
+    <span class="kw">AND</span> <span class="fn">ABS</span>(avg_price_impact_bps) &gt; <span class="num">5</span>
+    <span class="kw">AND</span> order_count    &gt; <span class="num">20</span>
+<span class="kw">ORDER BY</span> cancel_rate <span class="kw">DESC</span>;</div>
+        <p class="sql-desc">Flags accounts where cancellation rate exceeds 85%, order lifetime is under 500ms, and the cancelled orders moved the market by more than 5 basis points in the direction beneficial to the trader's remaining fills. The combination of all three conditions is the statutory test under Dodd-Frank §747.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="sql-block" id="sql2">
+    <button class="sql-trigger">
+      <div class="sql-trigger-left">
+        <div class="sql-sev-dot high"></div>
+        <span class="sql-trigger-name">Wash Trading — Zero Net Economic Exposure</span>
+      </div>
+      <div class="sql-trigger-meta">das.matched_trades · CEA §4c(a)(1)</div>
+      <svg class="sql-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+    </button>
+    <div class="sql-body">
+      <div class="sql-body-inner">
+        <div class="code-block"><span class="cmt">-- DAS Wash Trade Detection · Identifies offsetting trades with zero net Greek change</span>
+<span class="kw">WITH</span> <span class="tbl">matched</span> <span class="kw">AS</span> (
+    <span class="kw">SELECT</span>
+        t1.account_id   <span class="kw">AS</span> acct_a,
+        t2.account_id   <span class="kw">AS</span> acct_b,
+        t1.symbol,
+        t1.quantity,
+        t1.price,
+        <span class="fn">ABS</span>(t1.ts - t2.ts) <span class="kw">AS</span> time_diff_ms,
+        <span class="cmt">-- Net Greeks after both legs</span>
+        (t1.delta * t1.quantity) + (t2.delta * t2.quantity)  <span class="kw">AS</span> net_delta,
+        (t1.vega  * t1.quantity) + (t2.vega  * t2.quantity)  <span class="kw">AS</span> net_vega,
+        b.common_owner
+    <span class="kw">FROM</span>   <span class="tbl">surveillance.trades</span> t1
+    <span class="kw">JOIN</span>   <span class="tbl">surveillance.trades</span> t2
+           <span class="kw">ON</span>  t1.symbol   = t2.symbol
+           <span class="kw">AND</span> t1.quantity = t2.quantity
+           <span class="kw">AND</span> t1.side    != t2.side
+           <span class="kw">AND</span> t1.account_id != t2.account_id
+    <span class="kw">LEFT JOIN</span> <span class="tbl">ref.beneficial_ownership</span> b
+           <span class="kw">ON</span>  b.acct_a = t1.account_id <span class="kw">AND</span> b.acct_b = t2.account_id
+    <span class="kw">WHERE</span>  time_diff_ms &lt; <span class="num">1000</span>
+)
+<span class="kw">SELECT</span> * <span class="kw">FROM</span> <span class="tbl">matched</span>
+<span class="kw">WHERE</span>
+    <span class="fn">ABS</span>(net_delta) &lt; <span class="num">0.01</span> * quantity   <span class="cmt">-- effectively delta-neutral</span>
+    <span class="kw">AND</span> <span class="fn">ABS</span>(net_vega)  &lt; <span class="num">0.01</span> * quantity   <span class="cmt">-- effectively vega-neutral</span>
+<span class="kw">ORDER BY</span> time_diff_ms <span class="kw">ASC</span>;</div>
+        <p class="sql-desc">Matches buy and sell trades that are near-simultaneous, between accounts with possible common beneficial ownership, where the net change in delta and vega is effectively zero. Zero Greek change = zero economic substance = potential wash trade. Beneficial ownership table flags aggregated accounts per CBOE Rule 4.12 requirements.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="sql-block" id="sql3">
+    <button class="sql-trigger">
+      <div class="sql-trigger-left">
+        <div class="sql-sev-dot high"></div>
+        <span class="sql-trigger-name">Gamma Squeeze Precursor — Negative Dealer Gamma Alert</span>
+      </div>
+      <div class="sql-trigger-meta">das.dealer_gamma · SEC Rule 10b-5</div>
+      <svg class="sql-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+    </button>
+    <div class="sql-body">
+      <div class="sql-body-inner">
+        <div class="code-block"><span class="cmt">-- DAS Gamma Squeeze Precursor · Estimates dealer gamma and retail call accumulation</span>
+<span class="kw">WITH</span> <span class="tbl">dealer_gamma</span> <span class="kw">AS</span> (
+    <span class="kw">SELECT</span>
+        oi.symbol,
+        oi.expiry,
+        oi.strike,
+        oi.option_type,
+        oi.open_interest,
+        g.gamma_per_contract,
+        <span class="cmt">-- Dealers are net short customer-bought options</span>
+        <span class="fn">-1</span> * (oi.open_interest * g.gamma_per_contract * <span class="num">100</span>) <span class="kw">AS</span> dealer_gamma_exposure
+    <span class="kw">FROM</span>   <span class="tbl">market.options_oi</span> oi
+    <span class="kw">JOIN</span>   <span class="tbl">market.greeks</span> g <span class="kw">ON</span> g.symbol = oi.symbol
+                              <span class="kw">AND</span> g.expiry = oi.expiry
+                              <span class="kw">AND</span> g.strike = oi.strike
+    <span class="kw">WHERE</span>  oi.option_type = <span class="str">'CALL'</span>
+      <span class="kw">AND</span>  oi.expiry &lt;= <span class="fn">CURRENT_DATE</span> + <span class="kw">INTERVAL</span> <span class="str">'7 days'</span>
+),
+<span class="tbl">retail_flow</span> <span class="kw">AS</span> (
+    <span class="kw">SELECT</span> symbol,
+           <span class="fn">SUM</span>(call_volume) <span class="kw">AS</span> recent_call_vol,
+           <span class="fn">AVG</span>(call_volume) <span class="kw">OVER</span> (<span class="kw">PARTITION BY</span> symbol
+               <span class="kw">ORDER BY</span> date <span class="kw">ROWS BETWEEN</span> <span class="num">30</span> <span class="kw">PRECEDING AND</span> <span class="num">1</span> <span class="kw">PRECEDING</span>) <span class="kw">AS</span> avg_30d_vol
+    <span class="kw">FROM</span>   <span class="tbl">market.retail_options_flow</span>
+    <span class="kw">WHERE</span>  date &gt;= <span class="fn">CURRENT_DATE</span> - <span class="kw">INTERVAL</span> <span class="str">'2 days'</span>
+    <span class="kw">GROUP BY</span> symbol, date
+)
+<span class="kw">SELECT</span>
+    d.symbol,
+    <span class="fn">SUM</span>(d.dealer_gamma_exposure)             <span class="kw">AS</span> total_dealer_gamma,
+    <span class="fn">MAX</span>(r.recent_call_vol / r.avg_30d_vol)   <span class="kw">AS</span> retail_call_multiplier
+<span class="kw">FROM</span>   <span class="tbl">dealer_gamma</span> d
+<span class="kw">JOIN</span>   <span class="tbl">retail_flow</span> r <span class="kw">ON</span> r.symbol = d.symbol
+<span class="kw">GROUP BY</span> d.symbol
+<span class="kw">HAVING</span>
+    total_dealer_gamma     &lt; <span class="num">-5000000</span>      <span class="cmt">-- deeply negative dealer gamma</span>
+    <span class="kw">AND</span> retail_call_multiplier &gt; <span class="num">3.0</span>         <span class="cmt">-- retail buying 3x+ normal pace</span>
+<span class="kw">ORDER BY</span> total_dealer_gamma <span class="kw">ASC</span>;</div>
+        <p class="sql-desc">Estimates aggregate dealer gamma exposure by assuming dealers are net short customer-bought calls. When total dealer gamma falls below −$5M per 1% move and retail call buying is 3x+ the 30-day average, the conditions for a self-reinforcing squeeze are present. This is the pattern that preceded the 2021 GME and AMC events.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="sql-block" id="sql4">
+    <button class="sql-trigger">
+      <div class="sql-trigger-left">
+        <div class="sql-sev-dot high"></div>
+        <span class="sql-trigger-name">VIX SOQ Manipulation — Settlement Window Orders</span>
+      </div>
+      <div class="sql-trigger-meta">das.vix_settlement · CFTC §9(a)(2)</div>
+      <svg class="sql-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+    </button>
+    <div class="sql-body">
+      <div class="sql-body-inner">
+        <div class="code-block"><span class="cmt">-- DAS VIX SOQ Manipulation · Flags non-economic SPX orders during the VIX settlement window</span>
+<span class="kw">WITH</span> <span class="tbl">soq_orders</span> <span class="kw">AS</span> (
+    <span class="kw">SELECT</span>
+        o.account_id,
+        o.symbol,
+        o.strike,
+        o.option_type,
+        o.quantity,
+        o.side,
+        o.status,
+        o.ts,
+        <span class="cmt">-- Estimated VIX contribution from this order (simplified Derman formula)</span>
+        (o.quantity * g.vega * <span class="num">0.001</span>) <span class="kw">AS</span> estimated_vix_impact
+    <span class="kw">FROM</span>   <span class="tbl">surveillance.order_flow</span> o
+    <span class="kw">JOIN</span>   <span class="tbl">market.greeks</span> g <span class="kw">ON</span> g.symbol = o.symbol <span class="kw">AND</span> g.strike = o.strike
+    <span class="kw">WHERE</span>  o.symbol    = <span class="str">'SPX'</span>
+      <span class="kw">AND</span>  o.ts        <span class="kw">BETWEEN</span> <span class="fn">DATE_TRUNC</span>(<span class="str">'day'</span>, o.ts) + <span class="kw">INTERVAL</span> <span class="str">'9 hours 15 min'</span>
+                           <span class="kw">AND</span> <span class="fn">DATE_TRUNC</span>(<span class="str">'day'</span>, o.ts) + <span class="kw">INTERVAL</span> <span class="str">'9 hours 30 min'</span>
+      <span class="kw">AND</span>  o.status    = <span class="str">'CANCELLED'</span>            <span class="cmt">-- cancelled = non-economic intent</span>
+      <span class="kw">AND</span>  <span class="fn">DAYOFWEEK</span>(o.ts) = <span class="num">4</span>                 <span class="cmt">-- Wednesday only (VIX expiry)</span>
+)
+<span class="kw">SELECT</span>
+    s.account_id,
+    <span class="fn">COUNT</span>(*)                          <span class="kw">AS</span> cancelled_soq_orders,
+    <span class="fn">SUM</span>(s.estimated_vix_impact)       <span class="kw">AS</span> total_vix_impact_pts,
+    v.vix_futures_position            <span class="kw">AS</span> pre_positioned_vix_contracts,
+    (v.vix_futures_position * <span class="fn">SUM</span>(s.estimated_vix_impact) * <span class="num">1000</span>) <span class="kw">AS</span> est_manipulation_pnl
+<span class="kw">FROM</span>   <span class="tbl">soq_orders</span> s
+<span class="kw">JOIN</span>   <span class="tbl">surveillance.vix_positions</span> v <span class="kw">ON</span> v.account_id = s.account_id
+<span class="kw">GROUP BY</span> s.account_id, v.vix_futures_position
+<span class="kw">HAVING</span>  cancelled_soq_orders &gt;= <span class="num">3</span>
+   <span class="kw">AND</span>  <span class="fn">ABS</span>(total_vix_impact_pts) &gt; <span class="num">0.3</span>
+<span class="kw">ORDER BY</span> est_manipulation_pnl <span class="kw">DESC</span>;</div>
+        <p class="sql-desc">Detects accounts that: (1) submitted and immediately cancelled SPX options orders during the 9:15–9:30 VIX settlement window on expiration Wednesdays, and (2) held pre-positioned VIX futures that would have benefited from the resulting VIX settlement shift. The estimated manipulation P&amp;L column is the key escalation metric for CFTC/SEC referral.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="sql-block" id="sql5">
+    <button class="sql-trigger">
+      <div class="sql-trigger-left">
+        <div class="sql-sev-dot med"></div>
+        <span class="sql-trigger-name">Expiry Pinning — Beyond Charm-Driven Hedging</span>
+      </div>
+      <div class="sql-trigger-meta">das.expiry_flow · Exchange Act §9(a)(2)</div>
+      <svg class="sql-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+    </button>
+    <div class="sql-body">
+      <div class="sql-body-inner">
+        <div class="code-block"><span class="cmt">-- DAS Pinning Detection · Isolates underlying trades that exceed charm-model expectations</span>
+<span class="kw">WITH</span> <span class="tbl">charm_expected</span> <span class="kw">AS</span> (
+    <span class="kw">SELECT</span>
+        symbol,
+        <span class="fn">SUM</span>(charm * open_interest * <span class="num">100</span>) <span class="kw">AS</span> model_delta_change,
+        pin_strike
+    <span class="kw">FROM</span>   <span class="tbl">surveillance.expiry_greeks</span>
+    <span class="kw">WHERE</span>  ts &gt;= <span class="fn">DATE_TRUNC</span>(<span class="str">'day'</span>, <span class="fn">NOW</span>()) + <span class="kw">INTERVAL</span> <span class="str">'15 hours'</span>
+    <span class="kw">GROUP BY</span> symbol, pin_strike
+),
+<span class="tbl">actual_flow</span> <span class="kw">AS</span> (
+    <span class="kw">SELECT</span>
+        symbol,
+        <span class="fn">SUM</span>(<span class="kw">CASE WHEN</span> side = <span class="str">'BUY'</span> <span class="kw">THEN</span> quantity <span class="kw">ELSE</span> -quantity <span class="kw">END</span>) <span class="kw">AS</span> net_underlying_flow,
+        <span class="fn">STDDEV</span>(price)                                                      <span class="kw">AS</span> price_vol
+    <span class="kw">FROM</span>   <span class="tbl">market.underlying_trades</span>
+    <span class="kw">WHERE</span>  ts &gt;= <span class="fn">DATE_TRUNC</span>(<span class="str">'day'</span>, <span class="fn">NOW</span>()) + <span class="kw">INTERVAL</span> <span class="str">'15 hours'</span>
+    <span class="kw">GROUP BY</span> symbol
+)
+<span class="kw">SELECT</span>
+    c.symbol,
+    c.pin_strike,
+    c.model_delta_change             <span class="kw">AS</span> charm_expected_shares,
+    a.net_underlying_flow            <span class="kw">AS</span> actual_shares_traded,
+    (a.net_underlying_flow - c.model_delta_change) <span class="kw">AS</span> unexplained_shares,
+    a.price_vol
+<span class="kw">FROM</span>   <span class="tbl">charm_expected</span> c
+<span class="kw">JOIN</span>   <span class="tbl">actual_flow</span> a <span class="kw">ON</span> a.symbol = c.symbol
+<span class="kw">WHERE</span>  <span class="fn">ABS</span>(a.net_underlying_flow - c.model_delta_change)
+         &gt; <span class="num">2.0</span> * <span class="fn">ABS</span>(c.model_delta_change)    <span class="cmt">-- residual exceeds 2x model expectations</span>
+  <span class="kw">AND</span>  a.price_vol &lt; <span class="num">0.002</span>                   <span class="cmt">-- price suspiciously pinned (low vol)</span>
+<span class="kw">ORDER BY</span> <span class="fn">ABS</span>(unexplained_shares) <span class="kw">DESC</span>;</div>
+        <p class="sql-desc">Computes the expected underlying trading from charm-driven delta rebalancing, then compares it to actual market flow. When actual trades exceed the charm model by more than 2x and price volatility is abnormally low near the pin strike, the residual is attributed to potential manipulation rather than legitimate hedging.</p>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ARCHITECTURE -->
+<div class="arch-section">
+  <h2 class="arch-head">System Architecture</h2>
+  <p class="arch-sub">How data flows from exchange feeds to case export</p>
+  <div class="arch-flow">
+    <div class="arch-node">
+      <div class="arch-node-icon">◉</div>
+      <div class="arch-node-name">Live Feed</div>
+      <div class="arch-node-detail">CBOE · NYSE<br>CME · PHLX<br>WebSocket</div>
+    </div>
+    <div class="arch-arrow">→</div>
+    <div class="arch-node">
+      <div class="arch-node-icon">⬡</div>
+      <div class="arch-node-name">DAS Ingestor</div>
+      <div class="arch-node-detail">Stream buffer<br>Normalization<br>Timestamping</div>
+    </div>
+    <div class="arch-arrow">→</div>
+    <div class="arch-node" style="border-top-color:#f85149;">
+      <div class="arch-node-icon" style="color:#f85149;">◈</div>
+      <div class="arch-node-name">SQL Engine</div>
+      <div class="arch-node-detail">DuckDB embedded<br>Pattern queries<br>Sub-ms latency</div>
+    </div>
+    <div class="arch-arrow">→</div>
+    <div class="arch-node" style="border-top-color:#d29922;">
+      <div class="arch-node-icon" style="color:#d29922;">◆</div>
+      <div class="arch-node-name">Alert Engine</div>
+      <div class="arch-node-detail">Threshold eval<br>Severity scoring<br>Deduplication</div>
+    </div>
+    <div class="arch-arrow">→</div>
+    <div class="arch-node" style="border-top-color:var(--term-purple);">
+      <div class="arch-node-icon" style="color:var(--term-purple);">◆</div>
+      <div class="arch-node-name">Claude AI</div>
+      <div class="arch-node-detail">Pattern analysis<br>Reg citations<br>SAR narrative</div>
+    </div>
+    <div class="arch-arrow">→</div>
+    <div class="arch-node" style="border-top-color:#3fb950;">
+      <div class="arch-node-icon" style="color:#3fb950;">◉</div>
+      <div class="arch-node-name">Case Export</div>
+      <div class="arch-node-detail">PDF · JSON · CSV<br>Audit trail<br>FINRA/SEC format</div>
+    </div>
+  </div>
+  <div class="arch-legend">
+    <div class="arch-legend-item"><div class="arch-legend-dot" style="background:#3fb950;"></div>Live data path</div>
+    <div class="arch-legend-item"><div class="arch-legend-dot" style="background:#f85149;"></div>High-severity alert</div>
+    <div class="arch-legend-item"><div class="arch-legend-dot" style="background:var(--term-purple);"></div>AI analysis</div>
+    <div class="arch-legend-item"><div class="arch-legend-dot" style="background:var(--gold);"></div>Audit-ready output</div>
+  </div>
+</div>
+
+<!-- SETUP GUIDE -->
+<div class="setup-section">
+  <h2 class="setup-head">Deploy DAS</h2>
+  <p class="setup-sub">Terminal-native · macOS · Windows via WSL · Linux</p>
+  <div class="os-tabs">
+    <button class="os-tab active" data-os="mac">macOS</button>
+    <button class="os-tab" data-os="win">Windows (WSL)</button>
+    <button class="os-tab" data-os="linux">Linux</button>
+  </div>
+  <div class="os-panel active" id="os-mac">
+    <div class="setup-step">
+      <div class="setup-step-lbl">1 — Install DAS and dependencies</div>
+      <div class="setup-cmd">brew install python@3.12 duckdb
+pip install das-surveillance anthropic websocket-client pandas pyarrow</div>
+    </div>
+    <div class="setup-step">
+      <div class="setup-step-lbl">2 — Configure credentials</div>
+      <div class="setup-cmd">das config --set CLAUDE_API_KEY=sk-ant-...
+das config --set CBOE_WS_TOKEN=your_token
+das config --set EXCHANGE_FEED=cboe,nyse,cme</div>
+    </div>
+    <div class="setup-step">
+      <div class="setup-step-lbl">3 — Start live surveillance</div>
+      <div class="setup-cmd">das start --mode live --patterns all --claude-analysis on
+# DAS now monitoring: CBOE · NYSE · CME · PHLX
+# SQL pattern engine running · Claude AI armed</div>
+      <div class="setup-note">DAS runs entirely local. Market data and surveillance findings never leave your machine. Claude analysis calls the Anthropic API over TLS — no surveillance data is retained by Anthropic beyond the API call.</div>
+    </div>
+  </div>
+  <div class="os-panel" id="os-win">
+    <div class="setup-step">
+      <div class="setup-step-lbl">1 — Enable WSL2 (PowerShell as Administrator)</div>
+      <div class="setup-cmd">wsl --install -d Ubuntu-24.04
+wsl --set-default-version 2</div>
+    </div>
+    <div class="setup-step">
+      <div class="setup-step-lbl">2 — Install inside WSL2</div>
+      <div class="setup-cmd">sudo apt update && sudo apt install -y python3.12 python3-pip
+pip install das-surveillance anthropic websocket-client pandas pyarrow duckdb</div>
+    </div>
+    <div class="setup-step">
+      <div class="setup-step-lbl">3 — Configure and launch</div>
+      <div class="setup-cmd">das config --set CLAUDE_API_KEY=sk-ant-...
+das config --set CBOE_WS_TOKEN=your_token
+das start --mode live --patterns all --claude-analysis on</div>
+      <div class="setup-note">WSL2 runs a full Linux kernel alongside Windows. DAS inside WSL2 gets direct network access, full filesystem permissions, and native performance — identical to a Linux deployment. No emulation overhead for the SQL engine or WebSocket connections.</div>
+    </div>
+  </div>
+  <div class="os-panel" id="os-linux">
+    <div class="setup-step">
+      <div class="setup-step-lbl">1 — Install dependencies</div>
+      <div class="setup-cmd">sudo apt install -y python3.12 python3-pip  # Debian/Ubuntu
+pip install das-surveillance anthropic websocket-client pandas pyarrow duckdb</div>
+    </div>
+    <div class="setup-step">
+      <div class="setup-step-lbl">2 — Configure and launch as a systemd service</div>
+      <div class="setup-cmd">das config --set CLAUDE_API_KEY=sk-ant-...
+das config --set CBOE_WS_TOKEN=your_token
+das systemd install          # installs das.service
+sudo systemctl enable --now das
+journalctl -u das -f         # stream live surveillance logs</div>
+      <div class="setup-note">On Linux, DAS can run as a persistent systemd service with automatic restart on failure. Alerts are written to <code>/var/log/das/alerts.jsonl</code> — compatible with Splunk, Elasticsearch, or any SIEM that ingests JSON.</div>
+    </div>
+  </div>
+</div>
+
+<div class="ref-wrap">
+  <div class="ref-txt">
+    DAS uses DuckDB (embedded OLAP SQL), Anthropic Claude API, and exchange WebSocket feeds. Patterns reference: SEC Rules 10b-5, 13h-1, 15c3-5; CFTC CEA §4c(a)(1),(5), §9(a)(2); CBOE Rules 4.11, 4.12; FINRA Rules 2010, 4210, 5210; Dodd-Frank §747; MiFID II Art. 12-13.
+  </div>
+  <div class="viz-links">
+    <a class="viz-link" href="./greeks-interview-prep.html">Greeks Prep</a>
+    <a class="viz-link" href="./hulls-notes.html">Hull's Notes</a>
+    <a class="viz-link" href="./trade-surveillance-career-guide.html">Career Guide</a>
+    <a class="viz-link" href="./interview-question-mapping.html">Interview Prep</a>
+    <a class="viz-link" href="./index.html">Portfolio</a>
+  </div>
+</div>
+
+<footer>
+  <p class="foot-txt">Rahul Das &nbsp;·&nbsp; rdas0541@gmail.com &nbsp;·&nbsp; rahul-das-456.github.io</p>
+</footer>
+
+<script>
+  // Theme
+  document.getElementById('theme-toggle').addEventListener('click',()=>{
+    const d=document.documentElement;
+    const dark=d.getAttribute('data-theme')==='dark';
+    d.setAttribute('data-theme',dark?'':'dark');
+    localStorage.setItem('theme',dark?'':'dark');
+  });
+
+  // Side-panel nav
+  const hb=document.getElementById('hamburger-btn');
+  const nm=document.getElementById('nav-menu');
+  const ov=document.getElementById('nav-overlay');
+  function openNav(){hb.classList.add('open');nm.classList.add('open');ov.classList.add('open');hb.setAttribute('aria-expanded','true');}
+  function closeNav(){hb.classList.remove('open');nm.classList.remove('open');ov.classList.remove('open');hb.setAttribute('aria-expanded','false');}
+  hb.addEventListener('click',()=>nm.classList.contains('open')?closeNav():openNav());
+  ov.addEventListener('click',closeNav);
+  document.addEventListener('keydown',e=>{if(e.key==='Escape')closeNav();});
+
+  // Terminal tabs
+  document.querySelectorAll('.term-tab').forEach(tab=>{
+    tab.addEventListener('click',()=>{
+      document.querySelectorAll('.term-tab').forEach(t=>t.classList.remove('active'));
+      tab.classList.add('active');
+      const panel=tab.dataset.panel;
+      ['spoofing','gamma','vix'].forEach(p=>{
+        const el=document.getElementById('term-'+p);
+        if(el)el.style.display=p===panel?'block':'none';
+      });
+    });
+  });
+
+  // Terminal typewriter animation
+  const lines=[
+    {id:'tl-1', html:'<span class="t-prompt">surveillance@das</span><span class="t-muted">:</span><span class="t-info">~/das</span><span class="t-muted">$</span> <span class="t-cmd">das connect --source live --exchange CBOE --symbols SPXW,SPY,VIX</span>'},
+    {id:'tl-2', html:'<span class="t-info">[DAS]</span> Resolving CBOE WebSocket endpoint...'},
+    {id:'tl-3', html:'<span class="t-ok">[DAS]</span> ✓ Connected &nbsp;|&nbsp; Latency: 2.3ms &nbsp;|&nbsp; Symbols: 3 &nbsp;|&nbsp; Session: DAS-20260630-A'},
+    {id:'tl-4', html:''},
+    {id:'tl-5', html:'<span class="t-prompt">surveillance@das</span><span class="t-muted">:</span><span class="t-info">~/das</span><span class="t-muted">$</span> <span class="t-cmd">das scan --pattern spoofing --window 500ms --threshold 0.85 --watch</span>'},
+    {id:'tl-6', html:'<span class="t-info">[DAS]</span> SQL Pattern Engine armed &nbsp;·&nbsp; Scanning order flow (500ms rolling window)'},
+    {id:'tl-7', html:'<span class="t-info">[DAS]</span> Monitoring: 1,284 options series &nbsp;·&nbsp; 3 exchanges &nbsp;·&nbsp; DuckDB v1.1'},
+    {id:'tl-8', html:''},
+    {id:'tl-9', html:'<span class="t-err">━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span>'},
+    {id:'tl-10',html:'<span class="t-err">  ALERT [HIGH]  SPOOFING DETECTED  ·  09:31:22.914</span>'},
+    {id:'tl-11',html:'<span class="t-err">━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span>'},
+    {id:'tl-12',html:'  Trader     <span class="t-warn">TRD-7821</span>'},
+    {id:'tl-13',html:'  Symbol     SPXW 250718 C5800 &nbsp;·&nbsp; CBOE'},
+    {id:'tl-14',html:'  Orders     147 placed &nbsp;/&nbsp; <span class="t-err">143 cancelled (97.3%)</span>'},
+    {id:'tl-15',html:'  Impact     <span class="t-err">−8.4 bps</span> directional price impact before cancellation'},
+    {id:'tl-16',html:'  Window     09:31:22.445 — 09:31:22.921  (476ms)'},
+    {id:'tl-17',html:''},
+    {id:'tl-18',html:'<span class="t-prompt">surveillance@das</span><span class="t-muted">:</span><span class="t-info">~/das</span><span class="t-muted">$</span> <span class="t-cmd">das analyze --alert TRD-7821 --model claude-opus-4-8</span>'},
+    {id:'tl-19',html:'<span class="t-purple">[Claude]</span> Pattern matches SEC Rule 10b-5 spoofing typology (cancel rate 97.3% &gt; 85% threshold)'},
+    {id:'tl-20',html:'<span class="t-purple">[Claude]</span> Recommend: escalate to supervisor · generate SAR narrative if pattern repeats &gt;2 sessions'},
+  ];
+  let li=0;
+  function revealLine(){
+    if(li>=lines.length)return;
+    const el=document.getElementById(lines[li].id);
+    if(el){el.innerHTML=lines[li].html;}
+    li++;
+    setTimeout(revealLine,li<=3?380:li<=8?220:li<=11?160:190);
+  }
+  setTimeout(revealLine,600);
+
+  // SQL accordions
+  document.querySelectorAll('.sql-trigger').forEach(btn=>{
+    btn.addEventListener('click',()=>{
+      const block=btn.closest('.sql-block');
+      const body=block.querySelector('.sql-body');
+      const open=block.classList.toggle('open');
+      body.style.maxHeight=open?body.scrollHeight+'px':'0';
+    });
+  });
+
+  // OS tabs
+  document.querySelectorAll('.os-tab').forEach(tab=>{
+    tab.addEventListener('click',()=>{
+      document.querySelectorAll('.os-tab').forEach(t=>t.classList.remove('active'));
+      document.querySelectorAll('.os-panel').forEach(p=>p.classList.remove('active'));
+      tab.classList.add('active');
+      const panel=document.getElementById('os-'+tab.dataset.os);
+      if(panel)panel.classList.add('active');
+    });
+  });
+</script>
+</body>
+</html>
