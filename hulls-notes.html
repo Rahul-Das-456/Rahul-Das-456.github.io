@@ -45,9 +45,11 @@
   .hamburger-btn.open span:nth-child(1){transform:rotate(45deg) translate(4px,4px);}
   .hamburger-btn.open span:nth-child(2){opacity:0;}
   .hamburger-btn.open span:nth-child(3){transform:rotate(-45deg) translate(4px,-4px);}
-  .nav-menu{position:fixed;top:64px;left:0;right:0;z-index:99;background:rgba(248,245,240,.97);backdrop-filter:blur(12px);border-bottom:1px solid var(--rule);padding:1.5rem 3rem;display:none;flex-direction:column;transition:background .3s;}
-  [data-theme="dark"] .nav-menu{background:rgba(13,28,46,.97);border-bottom-color:#1c3048;}
-  .nav-menu.open{display:flex;}
+    .nav-overlay{position:fixed;inset:0;z-index:149;background:rgba(0,0,0,.4);opacity:0;pointer-events:none;transition:opacity .3s;}
+  .nav-overlay.open{opacity:1;pointer-events:auto;}
+  .nav-menu{position:fixed;top:0;right:0;bottom:0;width:260px;z-index:150;background:rgba(248,245,240,.98);backdrop-filter:blur(16px);border-left:1px solid var(--rule);padding:5rem 2rem 2rem;display:flex;flex-direction:column;transform:translateX(100%);transition:transform .32s cubic-bezier(.4,0,.2,1);overflow-y:auto;}
+  [data-theme="dark"] .nav-menu{background:rgba(13,28,46,.99);border-left-color:#1c3048;}
+  .nav-menu.open{transform:translateX(0);}
   .nav-menu a{font-family:var(--mono);font-size:.75rem;font-weight:300;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-light);text-decoration:none;transition:color .2s;padding:.85rem 0;border-bottom:1px solid var(--rule);}
   .nav-menu a:last-child{border-bottom:none;}
   .nav-menu a:hover{color:var(--navy);}
@@ -172,6 +174,7 @@
   </div>
 </nav>
 <nav class="nav-menu" id="nav-menu">
+  <a href="./das.html">DAS Suite</a>
   <a href="./options-visualizer.html">Options Visualizer</a>
   <a href="./futures-visualizer.html">Futures Visualizer</a>
   <a href="./index.html#experience">Portfolio</a>
