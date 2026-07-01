@@ -232,6 +232,17 @@
     position: relative;
   }
 
+  .hero-photo {
+    width: 88px;
+    height: 88px;
+    border-radius: 50%;
+    object-fit: cover;
+    object-position: center top;
+    border: 2px solid var(--gold);
+    margin-bottom: 1.75rem;
+    flex-shrink: 0;
+  }
+
   .hero-left::after {
     content: '';
     position: absolute;
@@ -1542,6 +1553,7 @@
 <!-- HERO -->
 <section class="hero" id="home">
   <div class="hero-left">
+    <img class="hero-photo" src="./rahul-das-photo.png" alt="Rahul Das">
     <p class="hero-eyebrow">Trade Surveillance &amp; Financial Compliance</p>
     <h1 class="hero-name">Rahul<br><em>Das</em></h1>
     <p class="hero-title">Cross Market Investigator at Cboe Global Markets. I detect and dismantle market abuse across derivatives: spoofing, layering, and wash trading, at scale.</p>
