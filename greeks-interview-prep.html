@@ -53,13 +53,17 @@
   .hamburger-btn.open span:nth-child(1){transform:rotate(45deg) translate(4px,4px);}
   .hamburger-btn.open span:nth-child(2){opacity:0;}
   .hamburger-btn.open span:nth-child(3){transform:rotate(-45deg) translate(4px,-4px);}
-  .nav-menu{position:fixed;top:64px;left:0;right:0;z-index:99;background:rgba(248,245,240,.97);backdrop-filter:blur(12px);border-bottom:1px solid var(--rule);display:flex;flex-direction:row;overflow-x:auto;overflow-y:hidden;-webkit-overflow-scrolling:touch;scrollbar-width:none;max-height:0;transition:max-height .3s cubic-bezier(.4,0,.2,1),border-color .3s;}
-  .nav-menu::-webkit-scrollbar{display:none;}
-  [data-theme="dark"] .nav-menu{background:rgba(13,28,46,.97);border-bottom-color:#1c3048;}
-  .nav-menu.open{max-height:48px;}
-  .nav-menu a{font-family:var(--mono);font-size:.7rem;font-weight:300;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-light);text-decoration:none;transition:color .2s;padding:0 1.4rem;height:48px;display:inline-flex;align-items:center;flex-shrink:0;white-space:nowrap;border-right:1px solid var(--rule);}
-  .nav-menu a:last-child{border-right:none;}
-  .nav-menu a:hover{color:var(--navy);background:rgba(0,0,0,.02);}
+  /* dim backdrop */
+  .nav-overlay{position:fixed;inset:0;z-index:98;background:rgba(0,0,0,.35);opacity:0;pointer-events:none;transition:opacity .3s;}
+  .nav-overlay.open{opacity:1;pointer-events:auto;}
+  /* side drawer — slides in from the right */
+  .nav-menu{position:fixed;top:64px;right:0;bottom:0;z-index:99;width:240px;background:var(--cream);border-left:1px solid var(--rule);display:flex;flex-direction:column;overflow-y:auto;overflow-x:hidden;transform:translateX(100%);transition:transform .3s cubic-bezier(.4,0,.2,1);}
+  [data-theme="dark"] .nav-menu{background:#0d1c2e;border-left-color:#1c3048;}
+  .nav-menu.open{transform:translateX(0);}
+  .nav-menu a{font-family:var(--mono);font-size:.72rem;font-weight:300;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-light);text-decoration:none;transition:color .2s,background .2s;padding:.95rem 1.75rem;border-bottom:1px solid var(--rule);white-space:nowrap;flex-shrink:0;}
+  .nav-menu a:last-child{border-bottom:none;}
+  .nav-menu a:hover{color:var(--navy);background:var(--cream-dark);}
+  [data-theme="dark"] .nav-menu a:hover{background:#112235;}
 
   /* PAGE HEADER */
   .page-header{padding:9rem 8vw 4rem;border-bottom:1px solid var(--rule);}
@@ -191,6 +195,7 @@
     </button>
   </div>
 </nav>
+<div class="nav-overlay" id="nav-overlay"></div>
 <nav class="nav-menu" id="nav-menu">
   <a href="./das.html">DAS Suite</a>
   <a href="./options-visualizer.html">Options Visualizer</a>
@@ -1275,21 +1280,16 @@ Volatility risk premium (VRP) = IV − RV  (usually positive)
     localStorage.setItem('theme', isDark ? '' : 'dark');
   });
 
-  // Horizontal drop-down nav strip
+  // Side drawer nav
   const hb=document.getElementById('hamburger-btn');
   const nm=document.getElementById('nav-menu');
-  function toggleNav(){
-    const open=nm.classList.toggle('open');
-    hb.classList.toggle('open',open);
-    hb.setAttribute('aria-expanded',open?'true':'false');
-  }
-  hb.addEventListener('click',toggleNav);
-  document.addEventListener('click',e=>{
-    if(!hb.contains(e.target)&&!nm.contains(e.target)){
-      nm.classList.remove('open');hb.classList.remove('open');hb.setAttribute('aria-expanded','false');
-    }
-  });
-  document.addEventListener('keydown',e=>{if(e.key==='Escape'){nm.classList.remove('open');hb.classList.remove('open');hb.setAttribute('aria-expanded','false');}});
+  const ov=document.getElementById('nav-overlay');
+  function openNav(){nm.classList.add('open');ov.classList.add('open');hb.classList.add('open');hb.setAttribute('aria-expanded','true');}
+  function closeNav(){nm.classList.remove('open');ov.classList.remove('open');hb.classList.remove('open');hb.setAttribute('aria-expanded','false');}
+  hb.addEventListener('click',()=>nm.classList.contains('open')?closeNav():openNav());
+  ov.addEventListener('click',closeNav);
+  document.addEventListener('keydown',e=>{if(e.key==='Escape')closeNav();});
+  nm.querySelectorAll('a').forEach(a=>a.addEventListener('click',closeNav));
 
   // Accordion
   document.querySelectorAll('.qa-trigger').forEach(btn => {
