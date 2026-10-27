@@ -79,6 +79,7 @@
   --accent-ink: #121a30;
   --bid: #45c98f;
   --blue: #8fa8e6;
+  color-scheme: dark;
 
   /* type: Bricolage Grotesque, five steps */
   --font: 'Bricolage Grotesque', system-ui, sans-serif;
@@ -509,7 +510,7 @@ ul, ol { padding: 0; list-style: none; }
 .coupon__left { padding: 48px; display: flex; flex-direction: column; justify-content: space-between; gap: 32px; border-right: 5px dotted var(--bg); }
 .coupon h2 { font-size: var(--step-head); font-weight: 600; letter-spacing: -0.035em; line-height: 0.95; }
 .coupon__left p { max-width: 34ch; }
-.coupon form { padding: 48px; display: grid; gap: 10px; align-content: center; }
+.coupon form { padding: 48px; display: grid; gap: 6px; align-content: center; }
 .coupon input, .coupon textarea {
   width: 100%; min-height: 52px; padding: 14px 16px; border: 0; border-radius: 0; background: #ff8a7e; color: var(--accent-ink);
   font: 400 var(--step-body)/1.4 var(--font); transition: background-color var(--t-hover) var(--ease-out);
@@ -519,6 +520,9 @@ ul, ol { padding: 0; list-style: none; }
 .coupon input:focus, .coupon textarea:focus { background: #ffb1a9; outline: 3px solid var(--accent-ink); outline-offset: 0; }
 .coupon .btn--ink { min-height: 56px; width: 100%; }
 .coupon .note { font-size: var(--step-small); min-height: 1.4em; }
+.coupon .field { font-size: var(--step-small); font-weight: 600; margin-top: 8px; }
+.coupon .field:first-child { margin-top: 0; }
+.coupon .field span { font-weight: 400; }
 @media (max-width: 860px) {
   .coupon { grid-template-columns: 1fr; }
   .coupon::before, .coupon::after { left: auto; top: 50%; margin: -14px 0 0; }
@@ -638,7 +642,7 @@ ul, ol { padding: 0; list-style: none; }
 <section class="intro wrap" aria-labelledby="seats">
   <div class="intro__row">
     <h2 id="seats" data-reveal>Three seats, one question</h2>
-    <p data-reveal style="--i:1">I've watched markets from the exchange, the regulator and a new kind of venue. Different rulebooks, same question every time: is this trading real, or is someone moving the price?</p>
+    <p data-reveal style="--i:1">I've watched markets from the exchange, the regulator and a new kind of venue. The rulebooks differ. The question is always the same: is this trading real, or is someone moving the price?</p>
   </div>
   <ul class="facts">
     <li data-reveal style="--i:0"><b>Polymarket</b><span>Since Aug 2026 · compliance technology, DCM/DCO</span></li>
@@ -647,7 +651,7 @@ ul, ol { padding: 0; list-style: none; }
     <li data-reveal style="--i:3"><b>Hofstra</b><span>BBA, Business Analytics, 2024</span></li>
   </ul>
   <div class="intro__plate">
-    <p data-reveal>Market surveillance is as old as the ticker. The feed got faster; the job of reading it for intent did not change.</p>
+    <p data-reveal>Market surveillance is as old as the ticker. The feed got faster. Reading it for intent is the same job.</p>
     <figure class="shutter" data-reveal>
       <img src="assets/thomas-edison-stock-ticker-nmah-jn2014-3625.jpg" width="1200" height="1484" alt="Thomas Edison's Universal stock printer under a glass dome, brass type wheel and keys" loading="lazy">
       <figcaption>Edison's Universal stock printer, about 1870. Smithsonian National Museum of American History.</figcaption>
@@ -693,9 +697,9 @@ ul, ol { padding: 0; list-style: none; }
       <li class="step" data-step="0"><h3>A quiet book</h3><p>Buyers on the left, sellers on the right, a few dozen lots at each price. Nothing unusual.</p></li>
       <li class="step" data-step="1"><h3>The layers go in</h3><p>One trader adds 900 lots to sell, a few ticks above the market, where they are unlikely to trade.</p></li>
       <li class="step" data-step="2"><h3>The market leans</h3><p>Other traders see a wall of sellers and shade their prices down. The best offer drops to 5,000.25.</p></li>
-      <li class="step" data-step="3"><h3>The real trade</h3><p>The same trader buys 20 lots at the lower price. That was the point all along.</p></li>
+      <li class="step" data-step="3"><h3>The real trade</h3><p>The same trader buys 20 lots at the lower price. That buy was the goal.</p></li>
       <li class="step" data-step="4"><h3>The layers vanish</h3><p>380 milliseconds later, all 900 lots are cancelled. The wall disappears and the price recovers.</p></li>
-      <li class="step" data-step="5"><h3>The alert, then the work</h3><p>Surveillance links the cancels to the buy. Then the real job starts: rebuild the day, test for intent across sessions, and write a memo that holds up in front of enforcement.</p></li>
+      <li class="step" data-step="5"><h3>The alert, then the work</h3><p>Surveillance links the cancels to the buy. Then the work starts: rebuild the day, test for intent across sessions, and write a memo that holds up in front of enforcement.</p></li>
     </ol>
   </div>
 </section>
@@ -797,7 +801,7 @@ ul, ol { padding: 0; list-style: none; }
           <span class="org">Centene Corporation · Westbury, NY</span>
         </header>
         <ul>
-          <li>Data Analyst, Resource Management (May to Jun 2024): built 5 Power BI dashboards giving senior stakeholders real-time visibility into key metrics.</li>
+          <li>Data Analyst, Resource Management (May to Jun 2024): built 5 Power BI dashboards giving senior stakeholders real-time views of their metrics.</li>
           <li>Business Process Analyst (Nov 2023 to Mar 2024): built 5 Power BI dashboards for compliance and licensing oversight with SQL and Snowflake, cutting licensing overuse by 15%.</li>
         </ul>
       </article>
@@ -915,7 +919,7 @@ ul, ol { padding: 0; list-style: none; }
       <h2 id="letter-h" class="sr-only">A note from Rahul</h2>
       <p>I got into surveillance because markets leave a trail. Every order, cancel and fill is on the record. The job is reading that trail well enough to <mark>tell intent from noise</mark>, then writing it up so it holds under scrutiny.</p>
       <p>At Cboe I did that across options and futures with SMARTS, Python and SQL. At FINRA I learned the other side: how an obligation in a rulebook becomes a control someone actually runs. At Polymarket I build both into the systems of a CFTC-regulated exchange and clearinghouse.</p>
-      <p>Outside work, soccer taught me to read movement under pressure. Origami taught me that precision is a practice. The ukulele is still teaching me patience; I wrote an app so I could learn it by ear.</p>
+      <p>Outside work, soccer taught me to read movement under pressure. Origami taught me precision. The ukulele is still teaching me patience; I wrote an app so I could learn it by ear.</p>
       <p>If you're building a surveillance or compliance technology team, I'd like to hear about it.</p>
       <div><p class="sign">Rahul Das</p><p class="role">Compliance Technology Associate, Polymarket</p></div>
     </div>
@@ -935,14 +939,14 @@ ul, ol { padding: 0; list-style: none; }
       <p>Tell me about the role, the team and the markets you cover. I read every message.</p>
     </div>
     <form id="contact-form" action="https://formspree.io/f/mqeoqzkn" method="POST">
-      <label class="sr-only" for="f-name">Name</label>
-      <input id="f-name" name="name" type="text" placeholder="Name" autocomplete="name" required>
-      <label class="sr-only" for="f-email">Email</label>
-      <input id="f-email" name="email" type="email" placeholder="Email" autocomplete="email" required>
-      <label class="sr-only" for="f-company">Company</label>
-      <input id="f-company" name="company" type="text" placeholder="Company" autocomplete="organization">
-      <label class="sr-only" for="f-msg">Message</label>
-      <textarea id="f-msg" name="message" placeholder="Message" required></textarea>
+      <label class="field" for="f-name">Name</label>
+      <input id="f-name" name="name" type="text" placeholder="Jane Smith…" autocomplete="name" required>
+      <label class="field" for="f-email">Email</label>
+      <input id="f-email" name="email" type="email" placeholder="jane@firm.com…" autocomplete="email" spellcheck="false" required>
+      <label class="field" for="f-company">Company <span>(optional)</span></label>
+      <input id="f-company" name="company" type="text" placeholder="Firm name…" autocomplete="organization">
+      <label class="field" for="f-msg">Message</label>
+      <textarea id="f-msg" name="message" placeholder="The role, the team, a good time to talk…" required></textarea>
       <button class="btn btn--ink" type="submit">Send message <span class="arrow" aria-hidden="true">&#8594;</span></button>
       <p class="note" id="form-note" role="status"></p>
     </form>

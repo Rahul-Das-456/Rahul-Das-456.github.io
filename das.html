@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>DAS — Detection Analytics Suite · Rahul Das</title>
+<title>DAS: Detection Analytics Suite · Rahul Das</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600&display=swap" rel="stylesheet">
@@ -111,7 +111,7 @@
   .ps-head{font-family:var(--serif-display);font-size:1.5rem;font-weight:700;color:var(--navy);margin-bottom:.5rem;}
   .ps-sub{font-family:var(--mono);font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-light);margin-bottom:2rem;}
   .live-badge{display:inline-flex;align-items:center;gap:.4rem;font-family:var(--mono);font-size:.6rem;letter-spacing:.14em;text-transform:uppercase;color:#f85149;border:1px solid rgba(248,81,73,.3);padding:.22rem .65rem;margin-left:1rem;vertical-align:middle;}
-  .live-dot{width:6px;height:6px;border-radius:50%;background:#f85149;animation:blink 1.2s step-end infinite;}
+  .live-dot{width:8px;height:8px;border-radius:50%;background:#f85149;}
   .alert-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:1rem;}
   .alert-card{border:1px solid var(--rule);padding:1.25rem;position:relative;overflow:hidden;}
   .alert-card::before{content:'';position:absolute;top:0;left:0;bottom:0;width:4px;}
@@ -254,22 +254,22 @@
     <div class="pillar">
       <div class="pillar-icon">⬡</div>
       <div class="pillar-name">SQL Pattern Engine</div>
-      <div class="pillar-body">DuckDB-powered embedded SQL runs directly against live order flow, options chains, and trade data — no external database required. Sub-millisecond query execution detects spoofing, layering, wash trading, and gamma squeeze conditions the moment they form.</div>
+      <div class="pillar-body">Embedded DuckDB SQL runs straight against live order flow, options chains and trade data. You need no external database. Queries return in under a millisecond, so spoofing, layering, wash trading and gamma squeeze setups show up as they form.</div>
     </div>
     <div class="pillar">
       <div class="pillar-icon">◈</div>
       <div class="pillar-name">WSL Runtime</div>
-      <div class="pillar-body">Windows users run DAS natively through WSL2. Same binary, same SQL queries, same Claude integration — any OS. No cloud dependency, no containerization overhead. The surveillance engine runs entirely on your hardware, keeping sensitive market data local.</div>
+      <div class="pillar-body">Windows users run DAS natively through WSL2. It uses the same binary, SQL queries and Claude integration on any OS. Nothing runs in the cloud or in containers. The engine runs on your own hardware, so market data stays local.</div>
     </div>
     <div class="pillar">
       <div class="pillar-icon">◆</div>
       <div class="pillar-name">Claude AI Analysis</div>
-      <div class="pillar-body">Pipe any surveillance alert directly to Claude Opus. Get regulatory citation mapping, SAR narrative drafts, escalation recommendations, and pattern context in natural language — instantly. Claude understands options Greeks, manipulation typologies, and regulatory frameworks out of the box.</div>
+      <div class="pillar-body">Send any alert to Claude Opus. It maps the rule citations, drafts the SAR narrative, recommends escalation and explains the pattern in plain language. It knows options Greeks, manipulation typologies and the regulatory rules without setup.</div>
     </div>
     <div class="pillar">
       <div class="pillar-icon">◉</div>
       <div class="pillar-name">Live Market Data</div>
-      <div class="pillar-body">WebSocket connections to CBOE, NYSE, NASDAQ, and CME live feeds. Real-time order flow, options chains, implied volatility surfaces, and trade-through reporting. DAS streams, buffers, and queries live data continuously — no batch delays, no stale snapshots.</div>
+      <div class="pillar-body">WebSocket connections to CBOE, NYSE, NASDAQ, and CME live feeds. Real-time order flow, options chains, implied volatility surfaces, and trade-through reporting. DAS streams, buffers and queries live data without batch delays or stale snapshots.</div>
     </div>
   </div>
 </div>
@@ -374,7 +374,7 @@
 
     <div class="alert-card sev-high">
       <div class="ac-top">
-        <span class="ac-pattern">Spoofing — Options</span>
+        <span class="ac-pattern">Spoofing: options</span>
         <span class="ac-sev high">High</span>
       </div>
       <div class="ac-symbol">SPXW 250718 C5800</div>
@@ -393,7 +393,7 @@
         <span class="ac-pattern">Gamma Squeeze Risk</span>
         <span class="ac-sev high">High</span>
       </div>
-      <div class="ac-symbol">TSLA Calls — 3 DTE</div>
+      <div class="ac-symbol">TSLA calls, 3 DTE</div>
       <div class="ac-rows">
         <div class="ac-row"><span class="ac-lbl">Dealer Gamma</span><span class="ac-val bad">−$14.2M / 1%</span></div>
         <div class="ac-row"><span class="ac-lbl">Retail Call OI Δ</span><span class="ac-val bad">+342% (48h)</span></div>
@@ -409,12 +409,12 @@
         <span class="ac-pattern">Expiry Pinning</span>
         <span class="ac-sev med">Watch</span>
       </div>
-      <div class="ac-symbol">SPY — $545 Strike</div>
+      <div class="ac-symbol">SPY $545 strike</div>
       <div class="ac-rows">
         <div class="ac-row"><span class="ac-lbl">OI at Strike</span><span class="ac-val warn">284,000 contracts</span></div>
         <div class="ac-row"><span class="ac-lbl">Price Drift to Pin</span><span class="ac-val warn">$0.12 in 18 min</span></div>
         <div class="ac-row"><span class="ac-lbl">Max Pain</span><span class="ac-val">$545.00</span></div>
-        <div class="ac-row"><span class="ac-lbl">Underlying Vol</span><span class="ac-val warn">0.4% — suppressed</span></div>
+        <div class="ac-row"><span class="ac-lbl">Underlying Vol</span><span class="ac-val warn">0.4%, suppressed</span></div>
         <div class="ac-row"><span class="ac-lbl">Charm Model Δ</span><span class="ac-val">+0.08 (expected)</span></div>
       </div>
       <div class="ac-time">15:31–15:52 · NYSE Arca · Vs charm model: 2.1σ</div>
@@ -425,7 +425,7 @@
         <span class="ac-pattern">Vol Surface Shift</span>
         <span class="ac-sev med">Watch</span>
       </div>
-      <div class="ac-symbol">QQQ IV Skew — OTM Puts</div>
+      <div class="ac-symbol">QQQ IV skew, OTM puts</div>
       <div class="ac-rows">
         <div class="ac-row"><span class="ac-lbl">IV Move</span><span class="ac-val warn">+3.8% (25-delta put)</span></div>
         <div class="ac-row"><span class="ac-lbl">Volume Driver</span><span class="ac-val warn">Single block: 4,200 contracts</span></div>
@@ -438,34 +438,34 @@
 
     <div class="alert-card sev-low">
       <div class="ac-top">
-        <span class="ac-pattern">Wash Trade — Cleared</span>
+        <span class="ac-pattern">Wash trade: cleared</span>
         <span class="ac-sev clear">Cleared</span>
       </div>
       <div class="ac-symbol">IWM 250630 P210</div>
       <div class="ac-rows">
         <div class="ac-row"><span class="ac-lbl">Net Delta Change</span><span class="ac-val ok">0.00 shares</span></div>
         <div class="ac-row"><span class="ac-lbl">Volume</span><span class="ac-val">500 × 500 offsetting</span></div>
-        <div class="ac-row"><span class="ac-lbl">Resolution</span><span class="ac-val ok">Institutional hedge — documented</span></div>
+        <div class="ac-row"><span class="ac-lbl">Resolution</span><span class="ac-val ok">Institutional hedge, documented</span></div>
         <div class="ac-row"><span class="ac-lbl">Accounts</span><span class="ac-val ok">No common beneficial owner</span></div>
         <div class="ac-row"><span class="ac-lbl">Review Time</span><span class="ac-val">14 minutes</span></div>
       </div>
-      <div class="ac-time">08:47:11 · CBOE · Closed — no action</div>
+      <div class="ac-time">08:47:11 · CBOE · Closed, no action</div>
     </div>
 
     <div class="alert-card sev-low">
       <div class="ac-top">
-        <span class="ac-pattern">Layering — Cleared</span>
+        <span class="ac-pattern">Layering: cleared</span>
         <span class="ac-sev clear">Cleared</span>
       </div>
-      <div class="ac-symbol">GLD Futures — Dec</div>
+      <div class="ac-symbol">GLD futures, Dec</div>
       <div class="ac-rows">
         <div class="ac-row"><span class="ac-lbl">Order Layers</span><span class="ac-val">7 levels, 200 contracts each</span></div>
-        <div class="ac-row"><span class="ac-lbl">Cancel Pattern</span><span class="ac-val ok">Market maker — bilateral</span></div>
+        <div class="ac-row"><span class="ac-lbl">Cancel Pattern</span><span class="ac-val ok">Market maker, bilateral</span></div>
         <div class="ac-row"><span class="ac-lbl">Net Fill</span><span class="ac-val ok">1,100 contracts filled</span></div>
         <div class="ac-row"><span class="ac-lbl">Resolution</span><span class="ac-val ok">Legitimate MM quoting</span></div>
         <div class="ac-row"><span class="ac-lbl">Review Time</span><span class="ac-val">6 minutes</span></div>
       </div>
-      <div class="ac-time">10:02:45 · CME · Closed — no action</div>
+      <div class="ac-time">10:02:45 · CME · Closed, no action</div>
     </div>
 
   </div>
@@ -480,7 +480,7 @@
     <button class="sql-trigger">
       <div class="sql-trigger-left">
         <div class="sql-sev-dot high"></div>
-        <span class="sql-trigger-name">Spoofing — High Cancel Rate with Price Impact</span>
+        <span class="sql-trigger-name">Spoofing: high cancel rate with price impact</span>
       </div>
       <div class="sql-trigger-meta">das.order_flow · CEA §4c(a)(5)(C)</div>
       <svg class="sql-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
@@ -515,7 +515,7 @@
     <button class="sql-trigger">
       <div class="sql-trigger-left">
         <div class="sql-sev-dot high"></div>
-        <span class="sql-trigger-name">Wash Trading — Zero Net Economic Exposure</span>
+        <span class="sql-trigger-name">Wash trading: zero net economic exposure</span>
       </div>
       <div class="sql-trigger-meta">das.matched_trades · CEA §4c(a)(1)</div>
       <svg class="sql-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
@@ -559,7 +559,7 @@
     <button class="sql-trigger">
       <div class="sql-trigger-left">
         <div class="sql-sev-dot high"></div>
-        <span class="sql-trigger-name">Gamma Squeeze Precursor — Negative Dealer Gamma Alert</span>
+        <span class="sql-trigger-name">Gamma squeeze precursor: negative dealer gamma</span>
       </div>
       <div class="sql-trigger-meta">das.dealer_gamma · SEC Rule 10b-5</div>
       <svg class="sql-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
@@ -613,7 +613,7 @@
     <button class="sql-trigger">
       <div class="sql-trigger-left">
         <div class="sql-sev-dot high"></div>
-        <span class="sql-trigger-name">VIX SOQ Manipulation — Settlement Window Orders</span>
+        <span class="sql-trigger-name">VIX SOQ manipulation: settlement window orders</span>
       </div>
       <div class="sql-trigger-meta">das.vix_settlement · CFTC §9(a)(2)</div>
       <svg class="sql-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
@@ -653,7 +653,7 @@
 <span class="kw">HAVING</span>  cancelled_soq_orders &gt;= <span class="num">3</span>
    <span class="kw">AND</span>  <span class="fn">ABS</span>(total_vix_impact_pts) &gt; <span class="num">0.3</span>
 <span class="kw">ORDER BY</span> est_manipulation_pnl <span class="kw">DESC</span>;</div>
-        <p class="sql-desc">Detects accounts that: (1) submitted and immediately cancelled SPX options orders during the 9:15–9:30 VIX settlement window on expiration Wednesdays, and (2) held pre-positioned VIX futures that would have benefited from the resulting VIX settlement shift. The estimated manipulation P&amp;L column is the key escalation metric for CFTC/SEC referral.</p>
+        <p class="sql-desc">Detects accounts that: (1) submitted and immediately cancelled SPX options orders during the 9:15–9:30 VIX settlement window on expiration Wednesdays, and (2) held pre-positioned VIX futures that would have benefited from the resulting VIX settlement shift. The estimated manipulation P&amp;L column drives the CFTC/SEC referral decision.</p>
       </div>
     </div>
   </div>
@@ -662,7 +662,7 @@
     <button class="sql-trigger">
       <div class="sql-trigger-left">
         <div class="sql-sev-dot med"></div>
-        <span class="sql-trigger-name">Expiry Pinning — Beyond Charm-Driven Hedging</span>
+        <span class="sql-trigger-name">Expiry pinning beyond charm-driven hedging</span>
       </div>
       <div class="sql-trigger-meta">das.expiry_flow · Exchange Act §9(a)(2)</div>
       <svg class="sql-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
@@ -768,57 +768,57 @@
   </div>
   <div class="os-panel active" id="os-mac">
     <div class="setup-step">
-      <div class="setup-step-lbl">1 — Install DAS and dependencies</div>
+      <div class="setup-step-lbl">Install DAS and dependencies</div>
       <div class="setup-cmd">brew install python@3.12 duckdb
 pip install das-surveillance anthropic websocket-client pandas pyarrow</div>
     </div>
     <div class="setup-step">
-      <div class="setup-step-lbl">2 — Configure credentials</div>
+      <div class="setup-step-lbl">Configure credentials</div>
       <div class="setup-cmd">das config --set CLAUDE_API_KEY=sk-ant-...
 das config --set CBOE_WS_TOKEN=your_token
 das config --set EXCHANGE_FEED=cboe,nyse,cme</div>
     </div>
     <div class="setup-step">
-      <div class="setup-step-lbl">3 — Start live surveillance</div>
+      <div class="setup-step-lbl">Start live surveillance</div>
       <div class="setup-cmd">das start --mode live --patterns all --claude-analysis on
 # DAS now monitoring: CBOE · NYSE · CME · PHLX
 # SQL pattern engine running · Claude AI armed</div>
-      <div class="setup-note">DAS runs entirely local. Market data and surveillance findings never leave your machine. Claude analysis calls the Anthropic API over TLS — no surveillance data is retained by Anthropic beyond the API call.</div>
+      <div class="setup-note">DAS runs entirely local. Market data and surveillance findings never leave your machine. Claude calls go to the Anthropic API over TLS. Anthropic does not keep surveillance data past the call.</div>
     </div>
   </div>
   <div class="os-panel" id="os-win">
     <div class="setup-step">
-      <div class="setup-step-lbl">1 — Enable WSL2 (PowerShell as Administrator)</div>
+      <div class="setup-step-lbl">Enable WSL2 (PowerShell as Administrator)</div>
       <div class="setup-cmd">wsl --install -d Ubuntu-24.04
 wsl --set-default-version 2</div>
     </div>
     <div class="setup-step">
-      <div class="setup-step-lbl">2 — Install inside WSL2</div>
+      <div class="setup-step-lbl">Install inside WSL2</div>
       <div class="setup-cmd">sudo apt update && sudo apt install -y python3.12 python3-pip
 pip install das-surveillance anthropic websocket-client pandas pyarrow duckdb</div>
     </div>
     <div class="setup-step">
-      <div class="setup-step-lbl">3 — Configure and launch</div>
+      <div class="setup-step-lbl">Configure and launch</div>
       <div class="setup-cmd">das config --set CLAUDE_API_KEY=sk-ant-...
 das config --set CBOE_WS_TOKEN=your_token
 das start --mode live --patterns all --claude-analysis on</div>
-      <div class="setup-note">WSL2 runs a full Linux kernel alongside Windows. DAS inside WSL2 gets direct network access, full filesystem permissions, and native performance — identical to a Linux deployment. No emulation overhead for the SQL engine or WebSocket connections.</div>
+      <div class="setup-note">WSL2 runs a full Linux kernel alongside Windows. DAS inside WSL2 gets direct network access, full filesystem permissions, and native performance, the same as a Linux install. The SQL engine and WebSocket connections run without emulation.</div>
     </div>
   </div>
   <div class="os-panel" id="os-linux">
     <div class="setup-step">
-      <div class="setup-step-lbl">1 — Install dependencies</div>
+      <div class="setup-step-lbl">Install dependencies</div>
       <div class="setup-cmd">sudo apt install -y python3.12 python3-pip  # Debian/Ubuntu
 pip install das-surveillance anthropic websocket-client pandas pyarrow duckdb</div>
     </div>
     <div class="setup-step">
-      <div class="setup-step-lbl">2 — Configure and launch as a systemd service</div>
+      <div class="setup-step-lbl">Configure and launch as a systemd service</div>
       <div class="setup-cmd">das config --set CLAUDE_API_KEY=sk-ant-...
 das config --set CBOE_WS_TOKEN=your_token
 das systemd install          # installs das.service
 sudo systemctl enable --now das
 journalctl -u das -f         # stream live surveillance logs</div>
-      <div class="setup-note">On Linux, DAS can run as a persistent systemd service with automatic restart on failure. Alerts are written to <code>/var/log/das/alerts.jsonl</code> — compatible with Splunk, Elasticsearch, or any SIEM that ingests JSON.</div>
+      <div class="setup-note">On Linux, DAS can run as a persistent systemd service with automatic restart on failure. Alerts are written to <code>/var/log/das/alerts.jsonl</code>, which Splunk, Elasticsearch or any SIEM that reads JSON can ingest.</div>
     </div>
   </div>
 </div>

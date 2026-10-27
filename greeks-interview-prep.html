@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Greeks &amp; Market Maker Compliance — Rahul Das</title>
+<title>Greeks &amp; Market Maker Compliance · Rahul Das</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600&display=swap" rel="stylesheet">
@@ -198,7 +198,7 @@
     <h1 id="page-title" class="exhibit__title">Greeks and the compliance lens</h1>
     <p class="exhibit__sub">A deep-dive interview prep guide covering every Greek from delta to vomma, mapped to the surveillance, risk, and regulatory questions that come up at market makers like Optiver, Citadel Securities, and IMC.</p>
     <dl class="exhibit__fields">
-      <dt>Re</dt><dd>Market Maker Compliance — Optiver &amp; Peers</dd>
+      <dt>Re</dt><dd>Market Maker Compliance: Optiver &amp; Peers</dd>
       <dt>Covers</dt><dd>Delta, Gamma Squeeze, Vega Manipulation, Position Limits, VIX Settlement, Expiry Surveillance, Rule 15c3-5, Spoofing</dd>
       <dt>From</dt><dd>Rahul Das, Compliance Technology Associate</dd>
     </dl>
@@ -224,7 +224,7 @@
           <div class="flip-answer-label">Definition &amp; Compliance Use</div>
           <div class="flip-formula">Δ = ∂V/∂S
 Call: 0 → +1  |  Put: -1 → 0</div>
-          <div class="flip-answer">Rate of change of option value with the underlying. Used to compute <strong>delta-equivalent position limits</strong> — converting options exposure to notional share equivalents for regulatory aggregation.</div>
+          <div class="flip-answer">Rate of change of option value with the underlying. Used to compute <strong>delta-equivalent position limits</strong> , which converts options exposure to share equivalents for regulatory aggregation.</div>
         </div>
       </div>
     </div>
@@ -256,7 +256,7 @@ Max at ATM, near expiry</div>
           <div class="flip-answer-label">Definition &amp; Compliance Use</div>
           <div class="flip-formula">Θ = ∂V/∂t  (negative for long)
 Accelerates as expiry nears</div>
-          <div class="flip-answer">Time decay. MMs are structurally <strong>theta-positive</strong> (net short options). Explains elevated expiry-day activity — theta decay is near-vertical in final hours, driving legitimate trading that surveillance must distinguish from manipulation.</div>
+          <div class="flip-answer">Time decay. MMs are structurally <strong>theta-positive</strong> (net short options). It explains heavy expiry-day activity. Theta decay is near-vertical in the final hours, which drives legitimate trading that surveillance must tell apart from manipulation.</div>
         </div>
       </div>
     </div>
@@ -272,7 +272,7 @@ Accelerates as expiry nears</div>
           <div class="flip-answer-label">Definition &amp; Compliance Use</div>
           <div class="flip-formula">ν = ∂V/∂σ  (always positive)
 Peak for ATM, longer-dated</div>
-          <div class="flip-answer"><strong>Key manipulation vector.</strong> Trading options specifically to move implied volatility — benefiting a vega position — constitutes market manipulation. Detectable via IV spike patterns followed by position-beneficial trades.</div>
+          <div class="flip-answer"><strong>Key manipulation vector.</strong> Trading options to move implied volatility in favor of a vega position is market manipulation. Detectable via IV spike patterns followed by position-beneficial trades.</div>
         </div>
       </div>
     </div>
@@ -288,7 +288,7 @@ Peak for ATM, longer-dated</div>
           <div class="flip-answer-label">Definition &amp; Compliance Use</div>
           <div class="flip-formula">ρ = ∂V/∂r
 Calls positive, puts negative</div>
-          <div class="flip-answer">Interest rate sensitivity. Most relevant for <strong>LEAPS and long-dated exotics</strong>. Compliance context: sudden rate moves can cause large P&amp;L swings on options books — helps compliance understand risk report anomalies that aren't manipulation.</div>
+          <div class="flip-answer">Interest rate sensitivity. Most relevant for <strong>LEAPS and long-dated exotics</strong>. Compliance context: sudden rate moves can swing P&amp;L on options books. Knowing this helps compliance explain risk report anomalies that aren't manipulation.</div>
         </div>
       </div>
     </div>
@@ -304,7 +304,7 @@ Calls positive, puts negative</div>
           <div class="flip-answer-label">Definition &amp; Compliance Use</div>
           <div class="flip-formula">Vanna = ∂²V/∂S∂σ = ∂Δ/∂σ
 Cross-sensitivity: spot × vol</div>
-          <div class="flip-answer">When vol moves, delta changes — forcing correlated hedges. Large vanna positions mean a vol spike triggers <strong>systematic equity buying or selling</strong>. Surveillance must not flag this as a manipulation-driven cascade.</div>
+          <div class="flip-answer">When vol moves, delta changes and forces correlated hedges. Large vanna positions mean a vol spike triggers <strong>systematic equity buying or selling</strong>. Surveillance must not flag this as a manipulation-driven cascade.</div>
         </div>
       </div>
     </div>
@@ -320,7 +320,7 @@ Cross-sensitivity: spot × vol</div>
           <div class="flip-answer-label">Definition &amp; Compliance Use</div>
           <div class="flip-formula">Vomma = ∂²V/∂σ²  (also: Volga)
 Large for OTM options</div>
-          <div class="flip-answer">Sensitivity of vega to vol changes (vol-of-vol). A trader long vomma profits from vol spikes. This creates an <strong>incentive to cause sudden vol explosions</strong> — a manipulation typology that surveillance monitors via unusual OTM options accumulation.</div>
+          <div class="flip-answer">Sensitivity of vega to vol changes (vol-of-vol). A trader long vomma profits from vol spikes. This creates an <strong>incentive to cause sudden vol explosions</strong> , a manipulation typology that surveillance tracks through unusual OTM options buildup.</div>
         </div>
       </div>
     </div>
@@ -336,7 +336,7 @@ Large for OTM options</div>
           <div class="flip-answer-label">Definition &amp; Compliance Use</div>
           <div class="flip-formula">Charm = ∂²V/∂S∂t = ∂Θ/∂S
 Accelerates sharply near expiry</div>
-          <div class="flip-answer">Delta changes with time — even without a price move. Near expiry, ATM options see rapid delta drift, requiring constant rebalancing. Surveillance must distinguish <strong>charm-driven hedging from intentional pinning</strong> of the underlying.</div>
+          <div class="flip-answer">Delta changes with time, even without a price move. Near expiry, ATM options see rapid delta drift, requiring constant rebalancing. Surveillance must distinguish <strong>charm-driven hedging from intentional pinning</strong> of the underlying.</div>
         </div>
       </div>
     </div>
@@ -355,7 +355,7 @@ Accelerates sharply near expiry</div>
 <div class="qa-block section-first" id="q1">
   <button class="qa-trigger" aria-expanded="false">
     <span class="q-num">01</span>
-    <span class="q-text">Delta — What is it and how does a compliance officer use it?</span>
+    <span class="q-text">Delta: what is it and how does a compliance officer use it?</span>
     <svg class="q-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
   </button>
   <div class="qa-body">
@@ -369,15 +369,15 @@ Black-Scholes:
   Put delta  = N(d₁) − 1
 
 where d₁ = [ln(S/K) + (r + σ²/2)T] / (σ√T)</div>
-        <p><strong>Compliance use — Position Limits:</strong> Exchange rules (CBOE Rule 4.11, SEC Rule 9b-1) impose position limits expressed in number of contracts. But when a trader holds a complex options book, regulators and exchanges require <strong>delta-equivalent aggregation</strong>: multiply each option's delta by its contract size (100 shares) to compute the effective directional exposure. A book of 10,000 short calls with Δ = 0.50 is equivalent to being short 500,000 shares — potentially triggering large-trader reporting.</p>
+        <p><strong>Compliance use, position limits:</strong> Exchange rules (CBOE Rule 4.11, SEC Rule 9b-1) impose position limits expressed in number of contracts. But when a trader holds a complex options book, regulators and exchanges require <strong>delta-equivalent aggregation</strong>: multiply each option's delta by its contract size (100 shares) to compute the effective directional exposure. A book of 10,000 short calls with Δ = 0.50 is equivalent to being short 500,000 shares. That can trigger large-trader reporting.</p>
         <div class="reg-box">
           <div class="reg-lbl">Regulatory Anchor</div>
           <p>SEC Rule 13h-1 (Large Trader Reporting): requires reporting when a person's transactions equal or exceed 2 million shares or $20 million on any given day. Delta-equivalent share count is used for options positions. FINRA Rule 4560 also covers short-interest reporting and uses delta adjustments.</p>
         </div>
-        <p><strong>Compliance use — Pre-Trade Risk Controls:</strong> Under SEC Rule 15c3-5 (the Market Access Rule), broker-dealers must impose pre-trade controls. At a market maker, this means delta limits per trader — preventing accumulation of a large directional book through options that would otherwise go undetected as "just options."</p>
+        <p><strong>Compliance use, pre-trade risk controls:</strong> Under SEC Rule 15c3-5 (the Market Access Rule), broker-dealers must impose pre-trade controls. At a market maker, this means delta limits per trader. They stop a trader from building a large directional book through options that would otherwise pass as "just options."</p>
         <div class="alert-box">
           <div class="alert-lbl">Surveillance Red Flag</div>
-          <p>Sudden large delta shifts not explained by market moves or known hedging activity. A trader with a near-zero delta book that becomes strongly directional without a corresponding hedge trade warrants review — especially near earnings or macro events.</p>
+          <p>Sudden large delta shifts not explained by market moves or known hedging activity. A trader with a near-zero delta book that becomes strongly directional without a corresponding hedge trade warrants review, especially near earnings or macro events.</p>
         </div>
       </div>
     </div>
@@ -387,13 +387,13 @@ where d₁ = [ln(S/K) + (r + σ²/2)T] / (σ√T)</div>
 <div class="qa-block" id="q2">
   <button class="qa-trigger" aria-expanded="false">
     <span class="q-num">02</span>
-    <span class="q-text">Gamma — What is a gamma squeeze and how do you surveil it?</span>
+    <span class="q-text">Gamma: what is a gamma squeeze and how do you surveil it?</span>
     <svg class="q-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
   </button>
   <div class="qa-body">
     <div class="qa-body-inner">
       <div class="a-body">
-        <p><strong>Gamma (Γ)</strong> is the rate of change of delta with the underlying price — it tells you how fast a delta-neutral book becomes directional when the market moves. Gamma is highest for at-the-money options close to expiry.</p>
+        <p><strong>Gamma (Γ)</strong> is the rate of change of delta with the underlying price. It tells you how fast a delta-neutral book becomes directional when the market moves. Gamma is highest for at-the-money options close to expiry.</p>
         <div class="formula">Formula:  Γ = ∂²V / ∂S²  =  ∂Δ / ∂S
 
 Black-Scholes:  Γ = N'(d₁) / (S · σ · √T)
@@ -426,13 +426,13 @@ Key behaviors:
 <div class="qa-block" id="q3">
   <button class="qa-trigger" aria-expanded="false">
     <span class="q-num">03</span>
-    <span class="q-text">Theta — Why does it explain so much of expiry-day compliance work?</span>
+    <span class="q-text">Theta: why does it explain so much of expiry-day compliance work?</span>
     <svg class="q-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
   </button>
   <div class="qa-body">
     <div class="qa-body-inner">
       <div class="a-body">
-        <p><strong>Theta (Θ)</strong> is the daily dollar loss in option value due to the passage of time, with everything else held constant. Long options holders lose theta; short options holders collect it. Market makers who sell options to customers are structurally theta-positive — they collect time value as long as they stay delta-hedged.</p>
+        <p><strong>Theta (Θ)</strong> is the daily dollar loss in option value due to the passage of time, with everything else held constant. Long options holders lose theta; short options holders collect it. Market makers who sell options to customers are structurally theta-positive. They collect time value as long as they stay delta-hedged.</p>
         <div class="formula">Formula:  Θ = ∂V / ∂t  (typically quoted per calendar day)
 
 Black-Scholes (call):
@@ -458,7 +458,7 @@ Practical rule: theta for an ATM option ≈ −option price / (2T)
 <div class="qa-block" id="q4">
   <button class="qa-trigger" aria-expanded="false">
     <span class="q-num">04</span>
-    <span class="q-text">Vega — How do you detect implied volatility manipulation?</span>
+    <span class="q-text">Vega: how do you detect implied volatility manipulation?</span>
     <svg class="q-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
   </button>
   <div class="qa-body">
@@ -501,7 +501,7 @@ Example: ATM call with S=$100, T=30 days, σ=20%
 <div class="qa-block" id="q5">
   <button class="qa-trigger" aria-expanded="false">
     <span class="q-num">05</span>
-    <span class="q-text">Rho — When does interest rate sensitivity actually matter for compliance?</span>
+    <span class="q-text">Rho: when does interest rate sensitivity matter for compliance?</span>
     <svg class="q-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
   </button>
   <div class="qa-body">
@@ -518,7 +518,7 @@ Rule of thumb: 1% rate rise adds ~ρ to call value
         <p><strong>Compliance relevance:</strong> In 2022–2023, when the Fed raised rates aggressively, firms with large LEAPS books saw material P&amp;L swings from rho. Compliance officers should understand that:</p>
         <ul>
           <li>Sudden risk report anomalies following FOMC announcements may be rho-driven, not manipulation</li>
-          <li>For interest rate derivatives (caps, floors, swaptions), rho is the primary Greek — compliance at fixed-income desks must understand it thoroughly</li>
+          <li>For interest rate derivatives (caps, floors, swaptions), rho is the primary Greek. Compliance at fixed-income desks must know it well</li>
           <li>Rho is not typically a surveillance metric at equity options desks, but it matters for explaining P&amp;L attribution to risk managers and regulators</li>
         </ul>
       </div>
@@ -528,12 +528,12 @@ Rule of thumb: 1% rate rise adds ~ρ to call value
 
 <!-- ═══ SECTION 2: HIGHER-ORDER GREEKS ═══ -->
 <h2 class="section-label">Higher-Order Greeks</h2>
-<div class="section-sub">Vanna · Vomma · Charm · Speed · Color — what a sharp compliance officer knows</div>
+<div class="section-sub">Vanna, vomma, charm, speed and color for compliance officers</div>
 
 <div class="qa-block section-first" id="q6">
   <button class="qa-trigger" aria-expanded="false">
     <span class="q-num">06</span>
-    <span class="q-text">Vanna — Why does a vol move trigger equity hedging?</span>
+    <span class="q-text">Vanna: why does a vol move trigger equity hedging?</span>
     <svg class="q-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
   </button>
   <div class="qa-body">
@@ -565,13 +565,13 @@ Size: Largest for near-ATM options, small for deep ITM/OTM</div>
 <div class="qa-block" id="q7">
   <button class="qa-trigger" aria-expanded="false">
     <span class="q-num">07</span>
-    <span class="q-text">Vomma (Volga) — How does it create vol manipulation incentives?</span>
+    <span class="q-text">Vomma (volga): how does it create vol manipulation incentives?</span>
     <svg class="q-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
   </button>
   <div class="qa-body">
     <div class="qa-body-inner">
       <div class="a-body">
-        <p><strong>Vomma</strong> (also called Volga) is the sensitivity of vega to changes in implied volatility — it tells you how your vega exposure changes as vol moves. A positive vomma position means you become more vega-long as vol rises, which further increases your gains during volatility explosions.</p>
+        <p><strong>Vomma</strong> (also called Volga) is the sensitivity of vega to changes in implied volatility. It tells you how your vega exposure changes as vol moves. A positive vomma position means you become more vega-long as vol rises, which further increases your gains during volatility explosions.</p>
         <div class="formula">Vomma = ∂²V / ∂σ²  =  ∂ν / ∂σ
 
 Black-Scholes:  Vomma = ν · (d₁ · d₂) / σ
@@ -597,13 +597,13 @@ Positive for long options, largest for OTM options
 <div class="qa-block" id="q8">
   <button class="qa-trigger" aria-expanded="false">
     <span class="q-num">08</span>
-    <span class="q-text">Charm — Why does it make pinning vs. hedging hard to distinguish?</span>
+    <span class="q-text">Charm: why does it make pinning hard to tell apart from hedging?</span>
     <svg class="q-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
   </button>
   <div class="qa-body">
     <div class="qa-body-inner">
       <div class="a-body">
-        <p><strong>Charm</strong> (also called delta decay) measures how delta changes over time — even without any price move. As expiry approaches, an option that was 50-delta doesn't stay at 50-delta; it either drifts toward 0 (if it's becoming OTM) or toward 1 (if it's becoming ITM). Charm is what drives this drift.</p>
+        <p><strong>Charm</strong> (also called delta decay) measures how delta changes over time, even without a price move. As expiry approaches, an option that was 50-delta doesn't stay at 50-delta; it either drifts toward 0 (if it's becoming OTM) or toward 1 (if it's becoming ITM). Charm is what drives this drift.</p>
         <div class="formula">Charm = ∂²V / (∂S · ∂t)  =  ∂Θ / ∂S  =  ∂Δ / ∂t
 
 Practical effect (expiry day):
@@ -620,7 +620,7 @@ Practical effect (expiry day):
         </ul>
         <div class="key-point">
           <div class="key-point-lbl">Interview Answer Frame</div>
-          <p>"I would never call expiry-day underlying activity suspicious purely because it correlates with a strike. First I'd model the expected delta hedging flows from charm across all open positions, then compare actual trades to that model. The residual — what can't be explained by legitimate hedging — is what gets flagged for review."</p>
+          <p>"I would never call expiry-day underlying activity suspicious purely because it correlates with a strike. First I'd model the expected delta hedging flows from charm across all open positions, then compare actual trades to that model. The residual, what legitimate hedging can't explain, is what gets flagged for review."</p>
         </div>
       </div>
     </div>
@@ -629,7 +629,7 @@ Practical effect (expiry day):
 
 <!-- ═══ SECTION 3: MARKET MAKING OPERATIONS ═══ -->
 <h2 class="section-label">Greeks in Market Making Operations</h2>
-<div class="section-sub">How Optiver and peers actually use Greeks day-to-day</div>
+<div class="section-sub">How Optiver and peers use Greeks day to day</div>
 
 <div class="qa-block section-first" id="q9">
   <button class="qa-trigger" aria-expanded="false">
@@ -643,11 +643,11 @@ Practical effect (expiry day):
         <p>A market maker like Optiver continuously quotes bid and ask prices in options, profiting from the bid-ask spread. To do this profitably, they manage Greeks across thousands of positions simultaneously:</p>
         <ul>
           <li><strong>Delta-neutral:</strong> The book is delta-hedged continuously using the underlying stock or futures. The goal is near-zero net delta at all times, achieved through automated hedging algorithms.</li>
-          <li><strong>Gamma management:</strong> MMs are typically net short gamma (they sell options). When the underlying moves, gamma forces delta to change, requiring more hedging. A large gamma event (big move) is expensive — MMs pay the "gamma tax."</li>
-          <li><strong>Theta collection:</strong> The flip side of being short gamma is being long theta — the book collects time value daily. The gamma-theta tradeoff is central to MM economics.</li>
+          <li><strong>Gamma management:</strong> MMs are typically net short gamma (they sell options). When the underlying moves, gamma forces delta to change, requiring more hedging. A large gamma event (a big move) is expensive. MMs pay the "gamma tax."</li>
+          <li><strong>Theta collection:</strong> The flip side of being short gamma is being long theta. The book collects time value daily. The gamma-theta tradeoff is central to MM economics.</li>
           <li><strong>Vega exposure:</strong> MMs maintain a target vega exposure, often slightly long or flat. Extreme vega positions are risky (vol can spike against you). Vega is managed by trading across maturities and strikes.</li>
         </ul>
-        <p><strong>Risk limits by Greek — what compliance monitors:</strong></p>
+        <p><strong>Risk limits by Greek that compliance monitors:</strong></p>
         <div class="table-scroll">
         <table class="scenario-table">
           <thead>
@@ -681,14 +681,14 @@ Practical effect (expiry day):
   If you're long gamma (long options) and delta-hedge frequently:
   Each hedge rebalance captures:  ½ · Γ · (ΔS)²
 
-  This is the "gamma cash" — it offsets the theta you pay.
+  This is the "gamma cash." It offsets the theta you pay.
   Profitability requires:  realized vol > implied vol (i.e., "vol is cheap")</div>
-        <p><strong>Why regulators might question it:</strong> From the outside, gamma scalping looks like: buy stock aggressively after a price drop, sell aggressively after a price rise. This pattern could superficially resemble wash trading (if positions are unwound quickly), spoofing, or — if large enough — manipulation. Regulators may see the rapid reversal of positions and flag it.</p>
+        <p><strong>Why regulators might question it:</strong> From the outside, gamma scalping looks like: buy stock aggressively after a price drop, sell aggressively after a price rise. This pattern could superficially resemble wash trading (if positions are unwound quickly), spoofing or, if large enough, manipulation. Regulators may see the rapid reversal of positions and flag it.</p>
         <p><strong>How to explain it to a regulator:</strong></p>
         <ul>
           <li>Show the options book: demonstrate that the underlying trades are each individually explainable as the delta hedge required by the gamma profile at that moment</li>
           <li>Provide the model outputs: risk system logs showing delta before/after each hedge</li>
-          <li>Show P&amp;L decomposition: the underlying trades generated small gains individually; the P&amp;L is dominated by options theta and gamma — not by directional gains in the stock</li>
+          <li>Show P&amp;L decomposition: the underlying trades generated small gains individually; the P&amp;L is driven by options theta and gamma, not by directional gains in the stock</li>
           <li>Compare realized vol to IV: demonstrate the strategy requires and exploited realized vol exceeding implied vol</li>
         </ul>
         <div class="key-point">
@@ -725,8 +725,8 @@ Practical effect (expiry day):
         <p><strong>Compliance monitoring steps:</strong></p>
         <ul>
           <li><strong>End-of-day position reports:</strong> Aggregate all options positions by beneficial owner across all accounts, compute delta-equivalent shares, compare to limit</li>
-          <li><strong>Cross-account aggregation:</strong> Affiliated accounts, managed accounts, and accounts under common control must be aggregated — this is where manipulation schemes often hide (spreading positions across accounts to stay under limits)</li>
-          <li><strong>Intraday monitoring:</strong> Under Rule 15c3-5, firms need pre-trade controls — if an order would push delta-equivalent exposure over the limit, it should be blocked or flagged</li>
+          <li><strong>Cross-account aggregation:</strong> Affiliated accounts, managed accounts, and accounts under common control must be aggregated. Manipulation schemes often hide here (spreading positions across accounts to stay under limits)</li>
+          <li><strong>Intraday monitoring:</strong> Under Rule 15c3-5, firms need pre-trade controls. If an order would push delta-equivalent exposure over the limit, it should be blocked or flagged</li>
           <li><strong>Reporting:</strong> Positions exceeding specified thresholds must be reported to the exchange (CBOE Form 24-K); SEC Rule 13h-1 requires large trader IDs for reportable positions</li>
         </ul>
         <div class="reg-box">
@@ -741,14 +741,14 @@ Practical effect (expiry day):
 <div class="qa-block" id="q12">
   <button class="qa-trigger" aria-expanded="false">
     <span class="q-num">12</span>
-    <span class="q-text">Walk me through the VIX settlement manipulation — how is it done and how do you catch it?</span>
+    <span class="q-text">Walk me through VIX settlement manipulation. How is it done and how do you catch it?</span>
     <svg class="q-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
   </button>
   <div class="qa-body">
     <div class="qa-body-inner">
       <div class="a-body">
         <p><strong>How VIX is calculated:</strong> VIX is computed from a strip of out-of-the-money SPX puts and calls, weighted by their price and strike spacing. It represents the market's expectation of 30-day realized volatility in the S&amp;P 500.</p>
-        <div class="formula">VIX Settlement (SOQ — Special Opening Quotation):
+        <div class="formula">VIX Settlement (SOQ, Special Opening Quotation):
   Occurs ~9:15am–9:30am on VIX expiration Wednesday
   Uses the opening prices (not last-sale) of SPX options
 
@@ -768,7 +768,7 @@ Practical effect (expiry day):
         </ul>
         <div class="alert-box">
           <div class="alert-lbl">Documented Pattern (Griffin &amp; Shams, 2018)</div>
-          <p>Researchers found statistical anomalies in VIX settlement values — VIX settled significantly higher than overnight futures implied, specifically on settlement Wednesdays when large VIX futures positions had been accumulated. The suspicious SPX orders appeared in deep OTM strikes at exactly the settlement window, then disappeared immediately after.</p>
+          <p>Researchers found statistical anomalies in VIX settlement values. VIX settled well higher than overnight futures implied, specifically on settlement Wednesdays when large VIX futures positions had been accumulated. The suspicious SPX orders appeared in deep OTM strikes at exactly the settlement window, then disappeared immediately after.</p>
         </div>
         <p><strong>Surveillance approach:</strong></p>
         <ul>
@@ -776,7 +776,7 @@ Practical effect (expiry day):
           <li>Flag SPX options orders during the 9:15–9:30 window that are large, in OTM strikes, and inconsistent with prior trading patterns</li>
           <li>Compare VIX settlement to overnight VIX futures price (a large gap is a red flag)</li>
           <li>Check whether the SPX orders are cancelled or reversed after the SOQ prints (non-economic intent)</li>
-          <li>This requires coordination between SPX options surveillance and VIX derivatives surveillance — a cross-product monitoring framework</li>
+          <li>This requires coordination between SPX options surveillance and VIX derivatives surveillance, a cross-product monitoring setup</li>
         </ul>
         <div class="reg-box">
           <div class="reg-lbl">Regulatory Anchor</div>
@@ -802,13 +802,13 @@ Practical effect (expiry day):
           <li><strong>Underlying-directed spoofing:</strong> Place large spoof orders in the underlying stock to move its price, then profit on options that are now ITM/OTM. The options position is the real trade; the spoof is in the underlying.</li>
           <li><strong>Vol surface manipulation:</strong> Place non-bona-fide bids/offers at specific strikes to shift the mid-price used for mark-to-market, benefiting a position in that strike or related derivatives.</li>
           <li><strong>Quote stuffing:</strong> Flood an options exchange with rapid-fire quotes to slow competitors' algorithms, gaining a latency advantage in the underlying.</li>
-          <li><strong>Cross-market spoofing:</strong> Spoof in one options class to move another — e.g., spoof in SPY options to move SPX options pricing.</li>
+          <li><strong>Cross-market spoofing:</strong> Spoof in one options class to move another, e.g. spoof in SPY options to move SPX options pricing.</li>
         </ul>
         <div class="alert-box">
           <div class="alert-lbl">Surveillance Parameters</div>
           <p>Order-to-trade ratio (OTR): flag when cancellations exceed 80%+ within 500ms in a single strike. Order size: large orders (10x+ normal) placed and cancelled without execution. Directional test: did the trader have a pre-existing position that would benefit from the price move induced? Price impact: did the spoof order move the NBBO? Timing: did the trader execute a trade in that security within 100ms of the cancellation?</p>
         </div>
-        <p><strong>Key legal provisions:</strong> Commodity Exchange Act §4c(a)(5)(C) bans "bidding or offering with intent to cancel before execution" — the spoofing provision. For equities and options on securities, SEC Rule 10b-5 and Exchange Act §9(a)(2) are the relevant manipulation prohibitions. FINRA Rule 5210 (Publication of Transactions and Quotations) and Rule 2010 are also applicable.</p>
+        <p><strong>Key legal provisions:</strong> Commodity Exchange Act §4c(a)(5)(C) bans "bidding or offering with intent to cancel before execution": the spoofing provision. For equities and options on securities, SEC Rule 10b-5 and Exchange Act §9(a)(2) are the relevant manipulation prohibitions. FINRA Rule 5210 (Publication of Transactions and Quotations) and Rule 2010 are also applicable.</p>
       </div>
     </div>
   </div>
@@ -823,7 +823,7 @@ Practical effect (expiry day):
   <div class="qa-body">
     <div class="qa-body-inner">
       <div class="a-body">
-        <p>A <strong>wash trade</strong> is a transaction where the same beneficial owner is both buyer and seller — creating artificial volume without any change in economic exposure. In options, wash trades may be done to:</p>
+        <p>A <strong>wash trade</strong> is a transaction where the same beneficial owner is both buyer and seller, creating artificial volume without any change in economic exposure. In options, wash trades may be done to:</p>
         <ul>
           <li>Inflate reported volume in a thinly-traded option (to attract other participants)</li>
           <li>Establish a tax loss while maintaining economic exposure (bed-and-breakfast trades)</li>
@@ -838,8 +838,8 @@ Net Theta:  +100 × Θ + (−100 × Θ) = 0
         <p><strong>Surveillance approach:</strong></p>
         <ul>
           <li>Flag options transactions where the net change in delta, gamma, and vega is near zero for the aggregate book, but significant volume was transacted</li>
-          <li>Account aggregation: wash trades often involve two affiliated accounts — look for simultaneous offsetting orders from accounts with common beneficial ownership or control</li>
-          <li>Price test: wash trades often occur at mid-market or at prices that don't disadvantage either party — no arm's-length bargaining</li>
+          <li>Account aggregation: wash trades often involve two affiliated accounts. Look for simultaneous offsetting orders from accounts with common beneficial ownership or control</li>
+          <li>Price test: wash trades often occur at mid-market or at prices that don't disadvantage either party, with no arm's-length bargaining</li>
           <li>Temporal test: near-simultaneous entry of offsetting orders (within seconds) is suspicious</li>
         </ul>
         <div class="reg-box">
@@ -860,7 +860,7 @@ Net Theta:  +100 × Θ + (−100 × Θ) = 0
   <div class="qa-body">
     <div class="qa-body-inner">
       <div class="a-body">
-        <p><strong>Max pain</strong> is the strike price at which the combined dollar value of expiring options (both puts and calls in terms of in-the-money amounts) is minimized — meaning option holders collectively lose the most money and sellers (typically market makers) gain the most. It is computed by:</p>
+        <p><strong>Max pain</strong> is the strike price at which the combined dollar value of expiring options (both puts and calls in terms of in-the-money amounts) is smallest. Option holders as a group lose the most money and sellers (typically market makers) gain the most. It is computed by:</p>
         <div class="formula">For each strike K, compute the total payout if the stock expires at K:
   Pain(K) = Σ [open_interest_calls × max(K_i − K, 0) × 100]
            + Σ [open_interest_puts × max(K − K_j, 0) × 100]
@@ -868,7 +868,7 @@ Net Theta:  +100 × Θ + (−100 × Θ) = 0
 Max Pain Strike = argmin Pain(K)
 
 The strike where the total payout to option holders is minimized.</div>
-        <p><strong>Is it a real phenomenon?</strong> Academic literature is mixed. There is evidence that stocks tend to close near high open-interest strikes on expiry — but the mechanism is debated. It may simply be the charm/gamma effects discussed earlier (legitimate hedging flows), not active manipulation.</p>
+        <p><strong>Is it a real phenomenon?</strong> Academic literature is mixed. There is evidence that stocks tend to close near high open-interest strikes on expiry, but the mechanism is debated. It may simply be the charm/gamma effects discussed earlier (legitimate hedging flows), not active manipulation.</p>
         <p><strong>The manipulation concern:</strong> A market maker or large option writer who is short many contracts at a specific strike has a financial incentive to keep the underlying near that strike at expiry (so the options expire worthless). This is <strong>"pinning"</strong> and it is manipulation when done through intentional underlying trades designed to hold the price at the strike.</p>
         <p><strong>Surveillance approach:</strong></p>
         <ul>
@@ -884,7 +884,7 @@ The strike where the total payout to option holders is minimized.</div>
 
 <!-- ═══ SECTION 5: TECHNICAL INTERVIEW Q&A ═══ -->
 <h2 class="section-label">Technical Interview Q&amp;A</h2>
-<div class="section-sub">Questions Optiver and market maker compliance teams actually ask</div>
+<div class="section-sub">Questions Optiver and market maker compliance teams ask</div>
 
 <div class="qa-block section-first" id="q16">
   <button class="qa-trigger" aria-expanded="false">
@@ -920,7 +920,7 @@ The strike where the total payout to option holders is minimized.</div>
       <div class="a-body">
         <p><strong>Strong answer:</strong></p>
         <p>"I understand that's the explanation. To close out the review I need to verify it. Could you walk me through the client orders or market conditions that prompted those specific orders at that time? I'll also need the risk system records showing the delta positions that these trades were hedging."</p>
-        <p>The key is to be respectful but not deferential. I'm not accusing the trader of anything — I'm doing my job, which requires documentation of the rationale. "Market making" is a legitimate explanation for many things, but it needs to be supported by: (a) evidence of two-sided quoting or a customer order being filled, not just one-directional buying of OTM SPX puts, and (b) proportionality — was the size consistent with the customer flow?</p>
+        <p>The key is to be respectful but not deferential. I'm doing my job, and my job requires a documented rationale. "Market making" is a legitimate explanation for many things, but it needs to be supported by: (a) evidence of two-sided quoting or a customer order being filled, not just one-directional buying of OTM SPX puts, and (b) proportionality: was the size consistent with the customer flow?</p>
         <p>If the orders occurred during the narrow VIX SOQ window, were concentrated in OTM strikes, and the firm held large VIX futures positions that benefited from the resulting settlement, those facts need to be reconciled with the market making explanation. I would document the trader's explanation alongside those facts and escalate to General Counsel if the explanation is not satisfying.</p>
         <div class="alert-box">
           <div class="alert-lbl">What They're Testing</div>
@@ -953,9 +953,9 @@ The strike where the total payout to option holders is minimized.</div>
         <ul>
           <li><strong>Unlimited loss risk:</strong> Short straddle has theoretically unlimited upside loss (short call) and large downside loss (short put). This creates enormous tail risk. Pre-trade suitability checks must confirm the account can handle this exposure.</li>
           <li><strong>Margin requirements:</strong> FINRA Rule 4210 requires significant margin for naked short options. Compliance monitors margin calls and whether they're being met.</li>
-          <li><strong>Delta hedging creates activity:</strong> Being short gamma means any move requires delta hedging. Surveillance sees heavy bidirectional underlying activity — must be explained by the Greek profile, not flagged as wash trading.</li>
-          <li><strong>Vega manipulation incentive:</strong> A short-vega position loses money if IV rises. A trader might be motivated to suppress IV to protect a short straddle — placing offers in options to push IV down. This is manipulation if done with that intent.</li>
-          <li><strong>Position limits:</strong> A large short straddle has both bullish (short put) and bearish (short call) components — depending on how the exchange aggregates these, both sides may count toward the same-side position limit.</li>
+          <li><strong>Delta hedging creates activity:</strong> Being short gamma means any move requires delta hedging. Surveillance sees heavy two-way underlying activity. The Greek profile should explain it before anyone flags wash trading.</li>
+          <li><strong>Vega manipulation incentive:</strong> A short-vega position loses money if IV rises. A trader might be motivated to suppress IV to protect a short straddle by placing offers in options to push IV down. This is manipulation if done with that intent.</li>
+          <li><strong>Position limits:</strong> A large short straddle has both bullish (short put) and bearish (short call) components. Depending on how the exchange aggregates them, both sides may count toward the same-side position limit.</li>
         </ul>
       </div>
     </div>
@@ -971,18 +971,17 @@ The strike where the total payout to option holders is minimized.</div>
   <div class="qa-body">
     <div class="qa-body-inner">
       <div class="a-body">
-        <p><strong>Strong answer — building the alert from first principles:</strong></p>
-        <p><strong>Step 1 — Detect unusual call buying accumulation:</strong> Flag when single-name call open interest grows by more than 3 standard deviations from the 30-day average in a short window (2–3 days), particularly concentrated in near-ATM strikes with 0–30 DTE. This is the early signal.</p>
-        <p><strong>Step 2 — Compute dealer gamma:</strong> Using publicly available options data (or internal data if at the firm), estimate the aggregate market maker gamma position in that name. Dealers are typically short gamma to retail/institutional buyers. A highly negative dealer gamma position means large price moves will force large hedging flows.</p>
+        <p><strong>Strong answer: build the alert from first principles.</strong></p>
+        <p><strong>Detect unusual call buying:</strong> Flag when single-name call open interest grows by more than 3 standard deviations from the 30-day average in a short window (2–3 days), particularly concentrated in near-ATM strikes with 0–30 DTE. This is the early signal.</p>
+        <p><strong>Compute dealer gamma:</strong> Using publicly available options data (or internal data if at the firm), estimate the aggregate market maker gamma position in that name. Dealers are typically short gamma to retail/institutional buyers. A highly negative dealer gamma position means large price moves will force large hedging flows.</p>
         <div class="formula">Estimated dealer gamma exposure ≈
   −1 × [retail call OI − retail put OI] × avg_gamma × 100
 
   A negative dealer gamma of $5M/% means:
-  For every 1% move in the stock, dealers must buy/sell
-  $5M worth of stock to rebalance — potentially amplifying the move.</div>
-        <p><strong>Step 3 — Flag the feedback loop conditions:</strong> Alert when: (a) dealer gamma is deeply negative, AND (b) the stock is near a high-OI strike, AND (c) the stock has been trending toward that strike for 2+ days.</p>
-        <p><strong>Step 4 — Monitor execution:</strong> When the conditions above are met, watch for: unusual execution patterns in the underlying (large market orders, not limit orders), options volume that exceeds normal patterns in the 0DTE space, and social media/forum activity correlated with call buying (the GME lesson).</p>
-        <p><strong>Step 5 — Coordination:</strong> In a potential gamma squeeze, alert market risk, senior management, and if necessary, the exchange's market surveillance team. Document everything.</p>
+  For every 1% move in the stock, dealers must buy or sell $5M of stock to rebalance, which can amplify the move.</div>
+        <p><strong>Flag the feedback loop conditions:</strong> Alert when: (a) dealer gamma is deeply negative, AND (b) the stock is near a high-OI strike, AND (c) the stock has been trending toward that strike for 2+ days.</p>
+        <p><strong>Monitor execution:</strong> When the conditions above are met, watch for: unusual execution patterns in the underlying (large market orders, not limit orders), options volume that exceeds normal patterns in the 0DTE space, and social media/forum activity correlated with call buying (the GME lesson).</p>
+        <p><strong>Coordinate:</strong> In a potential gamma squeeze, alert market risk, senior management, and if necessary, the exchange's market surveillance team. Document everything.</p>
       </div>
     </div>
   </div>
@@ -997,7 +996,7 @@ The strike where the total payout to option holders is minimized.</div>
   <div class="qa-body">
     <div class="qa-body-inner">
       <div class="a-body">
-        <p><strong>Implied volatility (IV)</strong> is the market's forward-looking expectation of volatility embedded in options prices — it's what you back out of the Black-Scholes formula given the current option price. <strong>Realized volatility (RV)</strong> is the actual historical volatility of the underlying, measured over a past period.</p>
+        <p><strong>Implied volatility (IV)</strong> is the market's forward-looking expectation of volatility embedded in options prices. It's what you back out of the Black-Scholes formula given the current option price. <strong>Realized volatility (RV)</strong> is the actual historical volatility of the underlying, measured over a past period.</p>
         <div class="formula">IV:  backed out from option price via Black-Scholes  (forward-looking)
 RV:  √[Σ(ln(Sₜ/Sₜ₋₁))² × (252/n)]  (backward-looking)
 
@@ -1006,10 +1005,10 @@ Volatility risk premium (VRP) = IV − RV  (usually positive)
   when realized vol comes in below implied vol.</div>
         <p><strong>Why it matters for compliance:</strong></p>
         <ul>
-          <li><strong>Manipulation detection:</strong> If IV moves dramatically without a corresponding change in actual market conditions (no earnings, no macro event, no underlying price move), that IV move may be artificial — driven by non-economic options orders. Surveillance compares IV moves to RV measures to identify anomalies.</li>
+          <li><strong>Manipulation detection:</strong> If IV moves dramatically without a corresponding change in actual market conditions (no earnings, no macro event, no underlying price move), that IV move may be artificial, driven by non-economic options orders. Surveillance compares IV moves to RV measures to identify anomalies.</li>
           <li><strong>P&amp;L explanation:</strong> When a risk report shows large vega P&amp;L that doesn't correspond to news, compliance needs to understand whether it reflects genuine IV changes or a marking anomaly.</li>
           <li><strong>Model validation:</strong> If the firm uses Black-Scholes for risk purposes, the inputs (including IV) must be reliable. Using manipulated IV in risk models violates model governance standards.</li>
-          <li><strong>VWAP / benchmark manipulation:</strong> Options whose prices are determined by IV benchmarks (e.g., VIX-linked products) are vulnerable to benchmark manipulation — covered by the same framework as LIBOR manipulation.</li>
+          <li><strong>VWAP / benchmark manipulation:</strong> Options whose prices are determined by IV benchmarks (e.g., VIX-linked products) are open to benchmark manipulation. The same framework as LIBOR manipulation covers them.</li>
         </ul>
       </div>
     </div>
@@ -1030,14 +1029,14 @@ Volatility risk premium (VRP) = IV − RV  (usually positive)
     <div class="qa-body-inner">
       <div class="a-body">
         <p><strong>Answer framework (CAR: Challenge → Action → Result):</strong></p>
-        <p>At Cboe Global Markets, my surveillance tools flagged a cross-market pattern where a single account was placing large, rapid-fire orders in an equity options series that consistently preceded moves in the underlying. The pattern triggered our layering alert but also had characteristics consistent with legitimate market making — high cancellation rates, bidirectional quoting.</p>
+        <p>At Cboe Global Markets, my surveillance tools flagged a cross-market pattern where a single account was placing large, rapid-fire orders in an equity options series that consistently preceded moves in the underlying. The pattern triggered our layering alert but also had characteristics consistent with legitimate market making: high cancellation rates and two-sided quoting.</p>
         <p><strong>Process:</strong></p>
         <ul>
           <li><strong>Data first:</strong> I pulled the full order history for the account over 30 days. I built a timeline of order submission, modification, and cancellation events alongside the underlying price feed.</li>
           <li><strong>Greek context:</strong> I computed what the account's delta exposure was at each point in time. If the cancellations corresponded to moments where the delta book needed to be rebalanced, that's a legitimate explanation. If cancellations preceded underlying moves and the account benefited directionally, that's a red flag.</li>
-          <li><strong>Pattern test:</strong> I ran a statistical test — did the cancellations predict underlying price moves at greater than chance probability? The result: yes, with >90% confidence over 30 days.</li>
+          <li><strong>Pattern test:</strong> I ran a statistical test: did the cancellations predict underlying price moves at greater than chance probability? The result: yes, with >90% confidence over 30 days.</li>
           <li><strong>Escalation:</strong> I documented the pattern, ruled out obvious benign explanations (no earnings, no news corresponding to the events), and escalated to senior surveillance and Legal. We provided the findings to FINRA's cross-market surveillance team.</li>
-          <li><strong>Result:</strong> The case was referred for regulatory review. I don't disclose outcomes, but the process — data-driven, Greek-aware, well-documented — is the standard I apply.</li>
+          <li><strong>Result:</strong> The case was referred for regulatory review. I don't disclose outcomes, but I hold every case to the same process: data first, Greek-aware and well documented.</li>
         </ul>
       </div>
     </div>
@@ -1053,8 +1052,8 @@ Volatility risk premium (VRP) = IV − RV  (usually positive)
   <div class="qa-body">
     <div class="qa-body-inner">
       <div class="a-body">
-        <p><strong>Strong answer — be specific, not generic:</strong></p>
-        <p>I track regulatory developments through a combination of primary sources (SEC.gov, CFTC.gov, FINRA.org rulemaking pages) and secondary digests (Latham &amp; Watkins regulatory briefings, Sidley derivatives newsletters, ISDA publications). I also follow enforcement actions closely — the SEC's litigation releases and CFTC's enforcement orders tell you what regulators are actually prioritizing, not just what the rules say on paper.</p>
+        <p><strong>Strong answer: be specific.</strong></p>
+        <p>I track regulatory developments through a combination of primary sources (SEC.gov, CFTC.gov, FINRA.org rulemaking pages) and secondary digests (Latham &amp; Watkins regulatory briefings, Sidley derivatives newsletters, ISDA publications). I also follow enforcement actions closely: the SEC's litigation releases and CFTC's enforcement orders tell you what regulators are actually prioritizing, not just what the rules say on paper.</p>
         <p>A specific recent development: the SEC's October 2023 amendments to Rules 13h-1 and 13f-1 (Large Trader and 13F reporting), which extended reporting obligations to certain options positions and brought new aggregation requirements. For a market maker's compliance team, this meant updating position aggregation logic to include additional delta-equivalent computations and ensuring reporting systems could handle the new thresholds.</p>
         <p>I also monitor CFTC's ongoing work on position limits for derivatives (Regulation 150.x) and the 2024 proposed amendments to swap reporting rules, which affect how firms like Optiver handle their OTC options and ETF options positions for DTCC/SDR reporting purposes.</p>
       </div>
@@ -1074,7 +1073,7 @@ Volatility risk premium (VRP) = IV − RV  (usually positive)
         <p><strong>Strong answer:</strong></p>
         <p>Speed in compliance decisions comes from preparation, not shortcuts. At Cboe, I managed real-time surveillance during market hours where I had to assess patterns and make escalation decisions rapidly. The framework I use:</p>
         <ul>
-          <li><strong>Pre-built decision trees:</strong> For the most common scenarios (large delta breach, unusual options activity, position limit proximity), I have a documented escalation procedure that I've internalized. When something happens, I'm not starting from scratch — I'm running the playbook.</li>
+          <li><strong>Pre-built decision trees:</strong> For the most common scenarios (large delta breach, unusual options activity, position limit proximity), I have a documented escalation procedure that I've internalized. When something happens, I run the playbook.</li>
           <li><strong>Quantitative fluency:</strong> Understanding Greeks means I can evaluate "is this unusual?" in seconds by knowing what's expected. A 70% cancellation rate in options is normal for a market maker; 99.5% in 10-second windows is not. Having calibrated baselines means fast judgment calls.</li>
           <li><strong>Lean toward documenting in real time:</strong> In a fast environment, I open a document the moment I start investigating something. I type as I think. If the situation resolves as benign, I have a closed record. If it escalates, I already have a timeline. I never rely on memory after the fact.</li>
           <li><strong>Know who to call:</strong> At a market maker, compliance has to be closely integrated with risk and legal. Knowing exactly who the escalation path is before something happens means the 3-minute call is to someone already briefed on the firm's risk profile, not a cold explanation.</li>
@@ -1098,7 +1097,7 @@ Volatility risk premium (VRP) = IV − RV  (usually positive)
         <p><strong>Most relevant compliance risks for Optiver specifically:</strong></p>
         <ul>
           <li><strong>Designated Market Maker (DMM) obligations:</strong> As a DMM on exchanges including Cboe, Optiver has affirmative obligations to maintain continuous two-sided quotes within specified width and size parameters. Compliance monitors adherence to these quoting obligations, particularly during fast markets where pulling quotes is tempting but potentially prohibited.</li>
-          <li><strong>Cross-market and cross-product surveillance:</strong> Optiver trades equity options, ETF options, index options, and volatility derivatives simultaneously. The VIX manipulation risk described above is directly relevant — surveillance must be coordinated across SPX options and VIX products.</li>
+          <li><strong>Cross-market and cross-product surveillance:</strong> Optiver trades equity options, ETF options, index options, and volatility derivatives simultaneously. The VIX manipulation risk above applies directly. Surveillance must be coordinated across SPX options and VIX products.</li>
           <li><strong>Gamma squeeze dynamics:</strong> As a major MM in equity options, Optiver's own hedging activity can move markets. Compliance must document that hedging flows are driven by the Greeks book, not by intent to move prices.</li>
           <li><strong>Algorithmic trading compliance (SEC Rule 15c3-5):</strong> Optiver's trading is highly automated. The Market Access Rule requires pre-trade risk controls embedded in the algo infrastructure. Compliance oversees the design and calibration of these controls.</li>
           <li><strong>Expiration day surveillance:</strong> As a major options MM, Optiver participates heavily in expiry trading. Surveillance must distinguish legitimate charm/gamma-driven hedging from pinning or marking-the-close.</li>
@@ -1118,8 +1117,8 @@ Volatility risk premium (VRP) = IV − RV  (usually positive)
   <div class="qa-body">
     <div class="qa-body-inner">
       <div class="a-body">
-        <p><strong>Answer framework — choose a real example, sanitize if needed:</strong></p>
-        <p>The hardest decisions are when the data is ambiguous — the pattern could be legitimate or could be manipulative, and the trader has a compelling explanation. At Cboe, I reviewed a case where a trader's options book showed a large vega position that was benefiting from an IV spike in a thinly-traded name. The IV spike corresponded to some options orders the trader's own desk had placed earlier in the day.</p>
+        <p><strong>Answer framework: pick a real example and sanitize it if needed.</strong></p>
+        <p>The hardest decisions are when the data is ambiguous: the pattern could be legitimate or manipulative, and the trader has a compelling explanation. At Cboe, I reviewed a case where a trader's options book showed a large vega position that was benefiting from an IV spike in a thinly-traded name. The IV spike corresponded to some options orders the trader's own desk had placed earlier in the day.</p>
         <p>The trader's explanation was that those orders were hedging a customer position. I couldn't immediately disprove it, but the timing and size were disproportionate to any apparent customer flow in the records available to me.</p>
         <p><strong>My approach:</strong></p>
         <ul>
@@ -1128,7 +1127,7 @@ Volatility risk premium (VRP) = IV − RV  (usually positive)
           <li>I escalated to senior compliance with a neutral framing: here are the facts, here is the trader's explanation, here is what I cannot reconcile, here is what additional information I need.</li>
           <li>I kept the investigation open and documented every response and non-response from the trader.</li>
         </ul>
-        <p>The lesson: compliance decisions in gray areas are not about winning an argument with a trader. They're about building a complete factual record so that the firm, legal, and — if it comes to it — a regulator can make an informed judgment. My job is to make sure that record exists, not to render a verdict unilaterally.</p>
+        <p>In gray areas, compliance builds a complete factual record. The firm, legal and, if needed, a regulator use it to judge. My job is to make sure that record exists.</p>
       </div>
     </div>
   </div>
@@ -1147,11 +1146,11 @@ Volatility risk premium (VRP) = IV − RV  (usually positive)
   <div class="qa-body">
     <div class="qa-body-inner">
       <div class="a-body">
-        <p>Optiver is not a typical compliance culture. They expect compliance to be intellectually on par with the trading desk — not a checkpoint, but a genuine risk management partner. What differentiates strong candidates:</p>
+        <p>Optiver expects compliance to match the trading desk on derivatives knowledge and to act as a risk partner. What differentiates strong candidates:</p>
         <ul>
-          <li><strong>Derivatives fluency, not just regulatory knowledge:</strong> Most compliance candidates can cite rules. Optiver compliance interviewers will ask you to explain a gamma squeeze, describe how delta changes near expiry, or walk through why a short straddle creates unusual surveillance challenges. If you need to look these up, you're not ready.</li>
-          <li><strong>Quantitative comfort:</strong> You don't need to code, but you need to be comfortable reading a risk report, understanding what the Greeks numbers mean, and spotting when something is off. "The delta jumped from 10K to 80K" — you should immediately think about whether a large gamma position explains it before assuming manipulation.</li>
-          <li><strong>Directness over diplomacy:</strong> Optiver's culture values direct communication. When asked for an opinion, give one. "It's possible that..." is not the answer — "My assessment is X, because Y and Z" is.</li>
+          <li><strong>Derivatives fluency as well as rule knowledge:</strong> Most compliance candidates can cite rules. Optiver compliance interviewers will ask you to explain a gamma squeeze, describe how delta changes near expiry, or walk through why a short straddle creates unusual surveillance challenges. If you need to look these up, you're not ready.</li>
+          <li><strong>Quantitative comfort:</strong> You don't need to code, but you need to be comfortable reading a risk report, understanding what the Greeks numbers mean, and spotting when something is off. If "the delta jumped from 10K to 80K," think first about whether a large gamma position explains it before assuming manipulation.</li>
+          <li><strong>Directness over diplomacy:</strong> Optiver's culture values direct communication. When asked for an opinion, give one. Say "My assessment is X, because Y and Z," not "It's possible that..."</li>
           <li><strong>Intellectual humility:</strong> They also value knowing what you don't know. "I'd need to verify that with the risk system before I could say definitively" is a better answer than confidently stating something wrong.</li>
           <li><strong>Speed:</strong> Be concise. Optiver compliance deals with real-time issues during market hours. Candidates who ramble or over-qualify every statement signal that they'd slow things down in a live situation.</li>
         </ul>
@@ -1167,7 +1166,7 @@ Volatility risk premium (VRP) = IV − RV  (usually positive)
 <div class="qa-block" id="q27">
   <button class="qa-trigger" aria-expanded="false">
     <span class="q-num">27</span>
-    <span class="q-text">Surveillance scenario table — classify these patterns as legitimate or red flag</span>
+    <span class="q-text">Surveillance scenarios: legitimate or red flag?</span>
     <svg class="q-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
   </button>
   <div class="qa-body">
@@ -1186,42 +1185,42 @@ Volatility risk premium (VRP) = IV − RV  (usually positive)
             <tr>
               <td>MM buys stock aggressively as price drops on expiry day</td>
               <td>Charm / negative gamma hedge</td>
-              <td class="ok">Likely legitimate — delta rebalancing</td>
+              <td class="ok">Likely legitimate: delta rebalancing</td>
             </tr>
             <tr>
               <td>Large OTM put buying in SPX at 9:17am on VIX Wednesday, cancelled after 9:30am</td>
               <td>Vega / VIX settlement manipulation</td>
-              <td class="flag">Red flag — investigate VIX position</td>
+              <td class="flag">Red flag: investigate VIX position</td>
             </tr>
             <tr>
               <td>Equity selling when VIX spikes 5 points, no underlying price move</td>
               <td>Vanna hedging (delta drift from vol)</td>
-              <td class="ok">Likely legitimate — vanna rebalancing</td>
+              <td class="ok">Likely legitimate: vanna rebalancing</td>
             </tr>
             <tr>
               <td>Large OTM call accumulation in meme stock, 3 days before 80% squeeze</td>
               <td>Gamma squeeze trigger</td>
-              <td class="flag">Red flag — potential squeeze initiation</td>
+              <td class="flag">Red flag: possible squeeze setup</td>
             </tr>
             <tr>
               <td>Rapid bidirectional stock trading within ±$0.10 of ATM strike on expiry</td>
               <td>Charm / pinning ambiguous</td>
-              <td class="flag">Ambiguous — compare to model hedge requirement</td>
+              <td class="flag">Ambiguous: compare to model hedge</td>
             </tr>
             <tr>
               <td>Short straddle + delta hedging → constant buy/sell of underlying</td>
               <td>Short gamma delta rebalancing</td>
-              <td class="ok">Likely legitimate — gamma scalping</td>
+              <td class="ok">Likely legitimate: gamma scalping</td>
             </tr>
             <tr>
               <td>Two affiliated accounts buy/sell same 100 calls simultaneously</td>
               <td>Zero net Greek change</td>
-              <td class="flag">Red flag — potential wash trade</td>
+              <td class="flag">Red flag: possible wash trade</td>
             </tr>
             <tr>
               <td>Large call order placed at market open, cancelled after 50ms, repeated 40x</td>
               <td>No Greek rationale</td>
-              <td class="flag">Red flag — likely spoofing pattern</td>
+              <td class="flag">Red flag: likely spoofing</td>
             </tr>
           </tbody>
         </table>
