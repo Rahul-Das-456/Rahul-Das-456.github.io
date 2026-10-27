@@ -87,6 +87,7 @@ html:root, html[data-theme] {
 html { scroll-behavior: smooth; scroll-padding-top: 88px; }
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
 body {
+  margin: 0;
   background: var(--bg) !important; color: var(--ink-hi) !important;
   font-family: var(--font) !important; font-size: var(--step-body); font-weight: 400 !important; line-height: 1.5;
   font-optical-sizing: auto; -webkit-font-smoothing: antialiased; overflow-x: clip;
@@ -440,3 +441,15 @@ input[type=range]::-moz-range-track { height: 10px; background: var(--surface-2)
 /* numbered cards lost their numbers above; give the text the whole card */
 .step-card { grid-template-columns: minmax(0, 1fr) !important; }
 .callout { font-size: var(--step-body) !important; line-height: 1.6 !important; }
+
+/* ---------- motion layer: Lenis, Vanta, React Bits ---------- */
+html.lenis, html.lenis body { height: auto; }
+.lenis.lenis-smooth { scroll-behavior: auto !important; }
+.lenis.lenis-smooth [data-lenis-prevent] { overscroll-behavior: contain; }
+.lenis.lenis-stopped { overflow: clip; }
+.vanta-layer { position: absolute; inset: 0; opacity: 0; transition: opacity 1200ms var(--ease-out); pointer-events: none; }
+.vanta-layer.is-on { opacity: 1; }
+.vanta-layer > canvas { width: 100% !important; height: 100% !important; }
+.rb-split { display: inline; }
+.rb-split > .split-parent { display: block !important; }
+.magnet-host, .magnet__slot { display: contents; }

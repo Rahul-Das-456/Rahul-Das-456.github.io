@@ -335,7 +335,7 @@ ul, ol { padding: 0; list-style: none; }
 /* ---------- ledger: decimal-aligned figures ---------- */
 .ledger { padding-top: var(--gap-section); }
 .ledger__grid { display: grid; grid-template-columns: repeat(12, 1fr); gap: 24px; }
-.ledger h2 { grid-column: 1 / 5; align-self: center; position: sticky; top: 30vh; }
+.ledger h2 { grid-column: 1 / 5; align-self: start; }
 .ledger h2 span { display: block; }
 .ledger h2 span:first-child { color: var(--muted); }
 .ledger ol { grid-column: 5 / 13; display: grid; grid-template-columns: max-content 0 minmax(0, 1fr); align-items: baseline; column-gap: 24px; row-gap: 20px; }
@@ -403,7 +403,7 @@ ul, ol { padding: 0; list-style: none; }
 .cv__sheet { position: relative; background: var(--paper); aspect-ratio: 8.5 / 11; transform: rotate(-0.8deg); transition: transform var(--t-reveal) var(--ease-expo); }
 .cv__sheet:hover { transform: rotate(0deg); }
 .cv__sheet canvas, .cv__sheet iframe { display: block; width: 100%; height: 100%; border: 0; }
-.cv__sheet .cv__wait { position: absolute; inset: 0; display: grid; place-items: center; color: var(--paper-muted); font-size: var(--step-small); }
+.cv__sheet .cv__wait { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 .cv__sheet.is-ready .cv__wait { display: none; }
 .cv__side { position: sticky; top: 10vh; display: grid; gap: 24px; }
 .cv__side p { font-size: var(--step-lead); line-height: 1.35; max-width: 30ch; }
@@ -549,6 +549,28 @@ ul, ol { padding: 0; list-style: none; }
   .postcard__addr { padding-top: 0; }
   .stamp { position: static; justify-self: end; width: 64px; order: -1; }
 }
+
+/* ---------- motion layer: Lenis, Vanta, React Bits ---------- */
+html.lenis, html.lenis body { height: auto; }
+.lenis.lenis-smooth { scroll-behavior: auto !important; }
+.lenis.lenis-smooth [data-lenis-prevent] { overscroll-behavior: contain; }
+.lenis.lenis-stopped { overflow: clip; }
+.vanta-layer { position: absolute; inset: 0; opacity: 0; transition: opacity 1200ms var(--ease-out); pointer-events: none; }
+.vanta-layer.is-on { opacity: 1; }
+.vanta-layer > canvas { width: 100% !important; height: 100% !important; }
+.has-vanta { position: relative; isolation: isolate; }
+.vanta-layer--bleed { left: 50%; right: auto; width: 100vw; transform: translateX(-50%); z-index: -1; }
+.ledger .vanta-layer.is-on { opacity: 0.55; }
+.contact .vanta-layer--bleed { top: calc(var(--gap-section) * -0.5); bottom: calc(var(--gap-section) * -0.5); }
+.rb-split { display: inline; }
+.rb-split > .split-parent { display: block !important; }
+.memo h1 .rb-split > .split-parent { display: inline-block !important; }
+.magnet-host, .magnet__slot { display: contents; }
+.velocity { width: min(var(--max), 100% - 2 * var(--m)); margin-inline: auto; padding-top: var(--gap-section); overflow: clip; display: grid; gap: 4px; }
+.velocity__row { position: relative; overflow: hidden; }
+.velocity__track { display: flex; white-space: nowrap; font-size: var(--step-head); font-weight: 600; letter-spacing: -0.035em; line-height: 1.12; color: var(--ink); }
+.velocity__track span { flex-shrink: 0; }
+.velocity .velocity__row:nth-child(2) .velocity__track { color: var(--accent); }
 
 /* ---------- motion ---------- */
 @media (prefers-reduced-motion: no-preference) {
@@ -726,6 +748,9 @@ ul, ol { padding: 0; list-style: none; }
   </ul>
 </section>
 
+<!-- ============ THE TAPE: React Bits ScrollVelocity ============ -->
+<div class="velocity" id="velocity" aria-hidden="true"></div>
+
 <!-- ============ THE LEDGER ============ -->
 <section class="ledger wrap" aria-labelledby="ledger-h">
   <div class="ledger__grid">
@@ -826,7 +851,7 @@ ul, ol { padding: 0; list-style: none; }
 <section class="cv wrap" id="resume" aria-labelledby="cv-h">
   <div class="cv__grid">
     <figure class="cv__sheet" id="cv-sheet" data-reveal data-src="./Rahul_Das_Resume.pdf">
-      <span class="cv__wait">Loading résumé…</span>
+      <span class="cv__wait" role="status">Loading résumé…</span>
       <noscript><iframe src="./Rahul_Das_Resume.pdf" title="Rahul Das résumé, PDF"></iframe></noscript>
     </figure>
     <div class="cv__side">
@@ -1059,7 +1084,7 @@ ul, ol { padding: 0; list-style: none; }
   const update = () => {
     ticking = false;
     const p = Math.min(1, Math.max(0, scrollY / innerHeight));
-    if (!calm) memo.style.transform = `translateY(${p * 12}vh) scale(${1 - p * 0.14})`;
+    if (!calm && !document.documentElement.classList.contains('motion-ready')) memo.style.transform = `translateY(${p * 12}vh) scale(${1 - p * 0.14})`;
     stub.classList.toggle('is-on', hero.getBoundingClientRect().bottom < innerHeight * 0.25);
   };
   memo.addEventListener('animationend', () => { memo.style.animation = 'none'; update(); }, { once: true });
@@ -1147,37 +1172,6 @@ ul, ol { padding: 0; list-style: none; }
   show(0);
 })();
 
-// Ledger figures count up once as they come into view
-(() => {
-  const els = [...document.querySelectorAll('[data-roll]')];
-  const calm = matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const fmt = new Intl.NumberFormat('en-US');
-  const items = els.map((el) => {
-    const value = el.textContent.trim();
-    const target = Number(value.replace(/,/g, ''));
-    const said = Object.assign(document.createElement('span'), { className: 'sr-only', textContent: value });
-    const shown = Object.assign(document.createElement('span'), { textContent: value });
-    shown.setAttribute('aria-hidden', 'true');
-    el.replaceChildren(said, shown);
-    return { el, shown, target };
-  });
-  if (calm || !('IntersectionObserver' in window)) return;
-  const run = ({ shown, target }) => {
-    const t0 = performance.now(), dur = 1100;
-    const tick = (now) => {
-      const p = Math.min(1, (now - t0) / dur), e = 1 - Math.pow(2, -10 * p);
-      shown.textContent = fmt.format(Math.round(target * (p === 1 ? 1 : e)));
-      if (p < 1) requestAnimationFrame(tick);
-    };
-    requestAnimationFrame(tick);
-  };
-  items.forEach((it) => { it.shown.textContent = '0'; });
-  const io = new IntersectionObserver((entries) => {
-    for (const e of entries) if (e.isIntersecting) { run(items.find((it) => it.el === e.target)); io.unobserve(e.target); }
-  }, { rootMargin: '0px 0px -15% 0px' });
-  els.forEach((el) => io.observe(el));
-})();
-
 // Experience: mark the role in view
 (() => {
   const links = [...document.querySelectorAll('#exp-nav a')];
@@ -1206,5 +1200,6 @@ ul, ol { padding: 0; list-style: none; }
   });
 })();
 </script>
+<script type="module" src="assets/motion/main.js"></script>
 </body>
 </html>
