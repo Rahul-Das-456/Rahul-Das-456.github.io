@@ -398,6 +398,28 @@ ul, ol { padding: 0; list-style: none; }
   .earlier li span { text-align: left; }
 }
 
+/* ---------- résumé: the sheet itself ---------- */
+.cv { padding-top: var(--gap-section); }
+.cv__grid { display: grid; grid-template-columns: 7fr 5fr; gap: clamp(32px, 5vw, 88px); align-items: start; }
+.cv__sheet { position: relative; background: var(--paper); aspect-ratio: 8.5 / 11; transform: rotate(-0.8deg); transition: transform var(--t-reveal) var(--ease-expo); }
+.cv__sheet:hover { transform: rotate(0deg); }
+.cv__sheet canvas, .cv__sheet iframe { display: block; width: 100%; height: 100%; border: 0; }
+.cv__sheet .cv__wait { position: absolute; inset: 0; display: grid; place-items: center; color: var(--paper-muted); font-size: var(--step-small); }
+.cv__sheet.is-ready .cv__wait { display: none; }
+.cv__side { position: sticky; top: 10vh; display: grid; gap: 24px; }
+.cv__side p { font-size: var(--step-lead); line-height: 1.35; max-width: 30ch; }
+.cv__facts { display: grid; grid-template-columns: auto 1fr; gap: 6px 18px; font-size: var(--step-body); }
+.cv__facts dt { font-weight: 600; }
+.cv__facts dd { color: var(--muted); }
+.cv__acts { display: flex; flex-wrap: wrap; align-items: center; gap: 16px 24px; }
+.cv__acts .link { font-weight: 500; }
+@media (max-width: 860px) {
+  .cv__grid { grid-template-columns: 1fr; }
+  .cv__side { position: static; order: -1; }
+  .cv__sheet { transform: none; }
+  .cv__acts .btn { width: 100%; }
+}
+
 /* ---------- tools: book-spine index ---------- */
 .tools { padding-top: var(--gap-section); padding-bottom: 64px; }
 .tools__head { display: flex; align-items: baseline; gap: 24px; flex-wrap: wrap; margin-bottom: 28px; }
@@ -541,6 +563,8 @@ ul, ol { padding: 0; list-style: none; }
   .js .slip[data-reveal].is-in:nth-child(4) { transform: rotate(1.2deg); }
   .js .slip[data-reveal].is-in:nth-child(6) { transform: rotate(-0.9deg); }
   .js .slip[data-reveal].is-in:hover { transform: translateY(-14px); }
+  .js .cv__sheet[data-reveal].is-in { transform: rotate(-0.8deg); }
+  .js .cv__sheet[data-reveal].is-in:hover { transform: rotate(0deg); }
   .js .shutter[data-reveal] { opacity: 1; transform: none; clip-path: inset(0 0 100% 0); transition: clip-path 1100ms var(--ease-in-out); }
   .js .shutter[data-reveal] img { transform: scale(1.12); transition: transform 1500ms var(--ease-soft); }
   .js .shutter[data-reveal].is-in { clip-path: inset(0); }
@@ -569,6 +593,7 @@ ul, ol { padding: 0; list-style: none; }
       <nav class="memo__nav" aria-label="Sections">
         <a href="#exhibit">Exhibit A</a>
         <a href="#experience">Experience</a>
+        <a href="#resume">Résumé</a>
         <a href="#tools">Tools</a>
         <a href="#toolkit">Toolkit</a>
         <a href="#contact">Contact</a>
@@ -792,6 +817,29 @@ ul, ol { padding: 0; list-style: none; }
   </div>
 </section>
 
+<!-- ============ RÉSUMÉ: the sheet ============ -->
+<section class="cv wrap" id="resume" aria-labelledby="cv-h">
+  <div class="cv__grid">
+    <figure class="cv__sheet" id="cv-sheet" data-reveal data-src="./Rahul_Das_Resume.pdf">
+      <span class="cv__wait">Loading résumé…</span>
+      <noscript><iframe src="./Rahul_Das_Resume.pdf" title="Rahul Das résumé, PDF"></iframe></noscript>
+    </figure>
+    <div class="cv__side">
+      <h2 id="cv-h" class="head" data-reveal>The résumé, on one page</h2>
+      <p data-reveal style="--i:1">The same record as above, in the PDF I send to hiring teams. Read it here, or keep a copy.</p>
+      <dl class="cv__facts" data-reveal style="--i:2">
+        <dt>Now</dt><dd>Polymarket, compliance technology</dd>
+        <dt>Before</dt><dd>Cboe, FINRA, Centene</dd>
+        <dt>Holds</dt><dd>SIE, CAPM, Prosci, Lean Six Sigma</dd>
+      </dl>
+      <div class="cv__acts" data-reveal style="--i:3">
+        <a class="btn" href="./Rahul_Das_Resume.pdf" download>Download PDF <span class="arrow" aria-hidden="true">&#8595;</span></a>
+        <a class="link" href="./Rahul_Das_Resume.pdf" target="_blank" rel="noopener">Open full size</a>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- ============ TOOLS: the shelf ============ -->
 <section class="tools wrap" id="tools" aria-labelledby="tools-h">
   <div class="tools__head">
@@ -935,6 +983,45 @@ ul, ol { padding: 0; list-style: none; }
   const d = new Date();
   t.dateTime = d.toISOString().slice(0, 10);
   t.textContent = d.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+})();
+
+// Résumé: draw the PDF onto the sheet when it nears the screen
+(() => {
+  const sheet = document.getElementById('cv-sheet');
+  const src = sheet.dataset.src;
+  const fallback = () => {
+    sheet.querySelector('canvas')?.remove();
+    const f = document.createElement('iframe');
+    f.src = src; f.title = 'Rahul Das résumé, PDF';
+    sheet.appendChild(f); sheet.classList.add('is-ready');
+  };
+  const draw = async () => {
+    const lib = window.pdfjsLib;
+    lib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+    const page = await (await lib.getDocument(src).promise).getPage(1);
+    const canvas = document.createElement('canvas');
+    canvas.setAttribute('role', 'img');
+    canvas.setAttribute('aria-label', 'Rahul Das résumé, page 1');
+    const render = async () => {
+      const w = sheet.clientWidth * Math.min(devicePixelRatio || 1, 3);
+      const vp = page.getViewport({ scale: w / page.getViewport({ scale: 1 }).width });
+      canvas.width = vp.width; canvas.height = vp.height;
+      await page.render({ canvasContext: canvas.getContext('2d'), viewport: vp }).promise;
+    };
+    await render();
+    sheet.appendChild(canvas); sheet.classList.add('is-ready');
+    let t; addEventListener('resize', () => { clearTimeout(t); t = setTimeout(render, 250); });
+  };
+  const load = () => {
+    const s = document.createElement('script');
+    s.src = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js';
+    s.onload = () => draw().catch(fallback);
+    s.onerror = fallback;
+    document.head.appendChild(s);
+  };
+  if (!('IntersectionObserver' in window)) return load();
+  const io = new IntersectionObserver((e) => { if (e[0].isIntersecting) { io.disconnect(); load(); } }, { rootMargin: '600px 0px' });
+  io.observe(sheet);
 })();
 
 // Reveal once on entry; never leaves content hidden
