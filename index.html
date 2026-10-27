@@ -1,2326 +1,1109 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<script>
-  (function(){
-    var s=localStorage.getItem('theme');
-    var p=window.matchMedia('(prefers-color-scheme: dark)').matches;
-    if(s==='dark'||(!s&&p)){document.documentElement.setAttribute('data-theme','dark');}
-  })();
-</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script>document.documentElement.classList.add('js')</script>
 
 <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-2008615M0E">
-  // Contact form: AJAX via Formspree
-  const contactForm = document.getElementById('contact-form');
-  if (contactForm) {
-    contactForm.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const btn = contactForm.querySelector('.form-submit');
-      btn.textContent = 'Sending...';
-      btn.disabled = true;
-      try {
-        const res = await fetch(contactForm.action, {
-          method: 'POST',
-          body: new FormData(contactForm),
-          headers: { 'Accept': 'application/json' }
-        });
-        if (res.ok) {
-          contactForm.reset();
-          document.getElementById('form-success').style.display = 'block';
-          btn.style.display = 'none';
-        } else {
-          btn.textContent = 'Try Again';
-          btn.disabled = false;
-        }
-      } catch {
-        btn.textContent = 'Try Again';
-        btn.disabled = false;
-      }
-    });
-  }
-</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-2008615M0E"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
   gtag('config', 'G-2008615M0E');
 </script>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Rahul Das | ex-Cboe, ex-FINRA | Trade Surveillance & Financial Compliance</title>
+
+<title>Rahul Das | Trade Surveillance &amp; Compliance Technology | Polymarket, ex-Cboe, ex-FINRA</title>
 
 <!-- SEO -->
-<meta name="description" content="Rahul Das, former Cross Market Investigator at Cboe Global Markets (ex-Cboe, ex-FINRA). Trade surveillance and financial compliance professional who specialized in spoofing, layering, and wash trade detection across options and futures derivatives markets. Chicago, IL.">
-<meta name="keywords" content="trade surveillance, financial compliance, market abuse detection, spoofing, layering, wash trading, cross-market investigation, SMARTS, FINRA, Cboe Global Markets, derivatives, options, futures, compliance analyst Chicago, trade reconstruction">
+<meta name="description" content="Rahul Das, Compliance Technology Associate at Polymarket (ex-Cboe, ex-FINRA). Trade surveillance and compliance technology across futures, options and swaps: spoofing, layering, wash trading and market abuse investigations. Chicago, IL.">
+<meta name="keywords" content="trade surveillance, compliance technology, financial compliance, market abuse detection, spoofing, layering, wash trading, cross-market investigation, SMARTS, Polymarket, Cboe Global Markets, FINRA, CFTC, NFA, derivatives, futures, options, swaps, Chicago">
 <meta name="author" content="Rahul Das">
 <meta name="robots" content="index, follow">
+<meta name="theme-color" content="#121a30">
 <link rel="canonical" href="https://rahul-das-456.github.io/">
 
 <!-- Open Graph -->
 <meta property="og:type" content="profile">
-<meta property="og:title" content="Rahul Das | Trade Surveillance & Financial Compliance | ex-Cboe, ex-FINRA">
-<meta property="og:description" content="Former Cross Market Investigator at Cboe Global Markets (ex-Cboe, ex-FINRA). 100+ full-cycle investigations, 250K+ daily transactions monitored. Specialized in derivatives surveillance, market abuse detection, and data-driven regulatory enforcement.">
+<meta property="og:title" content="Rahul Das | Trade Surveillance &amp; Compliance Technology">
+<meta property="og:description" content="Compliance Technology Associate at Polymarket. Previously Cross Market Investigator at Cboe and Associate Analyst at FINRA. 250,000+ derivatives transactions surveilled daily, 40+ investigative memoranda.">
 <meta property="og:url" content="https://rahul-das-456.github.io/">
+<meta property="og:image" content="https://rahul-das-456.github.io/assets/rahul-das-headshot.jpg">
 <meta property="og:locale" content="en_US">
 <meta property="profile:first_name" content="Rahul">
 <meta property="profile:last_name" content="Das">
-
-<!-- Twitter Card -->
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Rahul Das | Trade Surveillance & Financial Compliance | ex-Cboe">
-<meta name="twitter:description" content="Former Cross Market Investigator at Cboe Global Markets (ex-Cboe, ex-FINRA). Spoofing, layering, and wash trade detection across derivatives markets at scale.">
 
-<!-- JSON-LD Structured Data -->
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "Person",
   "name": "Rahul Das",
-  "jobTitle": "Former Cross Market Investigator",
-  "address": {
-    "@type": "PostalAddress",
-    "addressLocality": "Chicago",
-    "addressRegion": "IL",
-    "addressCountry": "US"
-  },
+  "jobTitle": "Compliance Technology Associate",
+  "worksFor": { "@type": "Organization", "name": "Polymarket" },
+  "image": "https://rahul-das-456.github.io/assets/rahul-das-headshot.jpg",
+  "address": { "@type": "PostalAddress", "addressLocality": "Chicago", "addressRegion": "IL", "addressCountry": "US" },
   "email": "rdas0541@gmail.com",
   "telephone": "+1-516-220-8652",
   "url": "https://rahul-das-456.github.io/",
-  "sameAs": [
-    "https://www.linkedin.com/in/rahul-das-capm/"
-  ],
-  "alumniOf": [
-    {
-      "@type": "CollegeOrUniversity",
-      "name": "Hofstra University"
-    },
-    {
-      "@type": "CollegeOrUniversity",
-      "name": "Roosevelt University"
-    }
-  ],
+  "sameAs": ["https://www.linkedin.com/in/rahul-das-capm/"],
+  "alumniOf": [{ "@type": "CollegeOrUniversity", "name": "Hofstra University" }],
   "hasCredential": [
     { "@type": "EducationalOccupationalCredential", "name": "Securities Industry Essentials (SIE)", "credentialCategory": "license", "recognizedBy": { "@type": "Organization", "name": "FINRA" } },
     { "@type": "EducationalOccupationalCredential", "name": "Certified Associate in Project Management (CAPM)", "credentialCategory": "certification", "recognizedBy": { "@type": "Organization", "name": "Project Management Institute" } },
-    { "@type": "EducationalOccupationalCredential", "name": "Lean Six Sigma Yellow Belt", "credentialCategory": "certification" },
-    { "@type": "EducationalOccupationalCredential", "name": "Prosci Certified Change Practitioner", "credentialCategory": "certification" }
+    { "@type": "EducationalOccupationalCredential", "name": "Prosci Certified Change Practitioner", "credentialCategory": "certification" },
+    { "@type": "EducationalOccupationalCredential", "name": "Lean Six Sigma Yellow Belt", "credentialCategory": "certification" }
   ],
-  "knowsAbout": [
-    "Trade Surveillance", "Market Abuse Detection", "Financial Compliance",
-    "Spoofing Detection", "Layering Detection", "Wash Trade Analysis",
-    "Cross-Market Investigation", "Derivatives Markets", "Options", "Futures",
-    "Nasdaq SMARTS", "Python", "SQL", "Snowflake", "FINRA Regulatory Compliance",
-    "Broker-Dealer Compliance", "Written Supervisory Procedures", "Trade Reconstruction"
-  ]
+  "knowsAbout": ["Trade Surveillance", "Compliance Technology", "Market Abuse Detection", "Spoofing Detection", "Layering Detection", "Wash Trade Analysis", "Cross-Market Investigation", "Futures", "Options", "Swaps", "CFTC and NFA Compliance", "Nasdaq SMARTS", "Python", "SQL", "Snowflake"]
 }
 </script>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,600;1,8..60,300;1,8..60,400&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600&display=swap" rel="stylesheet">
+
 <style>
-  :root {
-    --cream: #f8f5f0;
-    --cream-dark: #ede9e2;
-    --navy: #1a3a5c;
-    --navy-mid: #2a5280;
-    --navy-light: #3d6b9a;
-    --ink: #1c1c1e;
-    --ink-mid: #3a3a3c;
-    --ink-light: #6e6e73;
-    --rule: #c8bfb0;
-    --gold: #b8976a;
-    --gold-light: #d4b48a;
-    --white: #ffffff;
-    --serif-display: 'Playfair Display', Georgia, serif;
-    --serif-body: 'Source Serif 4', Georgia, serif;
-    --mono: 'DM Mono', 'Courier New', monospace;
-  }
-
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-  html { scroll-behavior: smooth; font-size: 16px; }
-
-  body {
-    background: var(--cream);
-    color: var(--ink);
-    font-family: var(--serif-body);
-    font-weight: 300;
-    line-height: 1.7;
-    -webkit-font-smoothing: antialiased;
-  }
-
-
-  /* ── NAV ── */
-  nav {
-    position: fixed;
-    top: 0; left: 0; right: 0;
-    z-index: 100;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0 3rem;
-    height: 64px;
-    background: rgba(248, 245, 240, 0.92);
-    backdrop-filter: blur(12px);
-    border-bottom: 1px solid var(--rule);
-  }
-
-  .nav-mark {
-    font-family: var(--serif-display);
-    font-size: 1rem;
-    font-weight: 600;
-    color: var(--navy);
-    letter-spacing: 0.02em;
-    text-decoration: none;
-  }
-
-  .nav-links {
-    display: flex;
-    gap: 2.5rem;
-    list-style: none;
-  }
-
-  .nav-links a {
-    font-family: var(--mono);
-    font-size: 0.72rem;
-    font-weight: 300;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: var(--ink-light);
-    text-decoration: none;
-    transition: color 0.2s;
-  }
-
-  .nav-links a:hover { color: var(--navy); }
-
-  .nav-download {
-    font-family: var(--mono);
-    font-size: 0.72rem;
-    font-weight: 400;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--white);
-    background: var(--navy);
-    padding: 0.5rem 1.25rem;
-    text-decoration: none;
-    transition: background 0.2s;
-  }
-
-  .nav-download:hover { background: var(--navy-mid); }
-
-  /* ── HERO ── */
-  .hero {
-    min-height: 100vh;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    padding-top: 64px;
-  }
-
-  .hero-left {
-    padding: 8rem 4rem 6rem 8vw;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    border-right: 1px solid var(--rule);
-    position: relative;
-  }
-
-  .hero-photo {
-    width: 88px;
-    height: 88px;
-    border-radius: 50%;
-    object-fit: cover;
-    object-position: center top;
-    border: 2px solid var(--gold);
-    margin-bottom: 1.75rem;
-    flex-shrink: 0;
-  }
-
-  .hero-left::after {
-    content: '';
-    position: absolute;
-    bottom: 0; left: 0; right: 0;
-    height: 1px;
-    background: var(--rule);
-  }
-
-  .hero-eyebrow {
-    font-family: var(--mono);
-    font-size: 0.72rem;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: var(--gold);
-    margin-bottom: 1.5rem;
-    opacity: 0;
-    animation: fadeUp 0.8s ease 0.1s forwards;
-  }
-
-  .hero-name {
-    font-family: var(--serif-display);
-    font-size: clamp(3rem, 5vw, 5.5rem);
-    font-weight: 700;
-    line-height: 1.05;
-    color: var(--navy);
-    letter-spacing: -0.02em;
-    opacity: 0;
-    animation: fadeUp 0.8s ease 0.25s forwards;
-  }
-
-  .hero-name em {
-    font-style: italic;
-    font-weight: 400;
-    color: var(--navy-light);
-  }
-
-  .hero-title {
-    font-family: var(--serif-body);
-    font-size: 1.15rem;
-    font-weight: 300;
-    color: var(--ink-mid);
-    margin-top: 1.5rem;
-    line-height: 1.5;
-    max-width: 38ch;
-    opacity: 0;
-    animation: fadeUp 0.8s ease 0.4s forwards;
-  }
-
-  .hero-location {
-    font-family: var(--mono);
-    font-size: 0.75rem;
-    color: var(--ink-light);
-    letter-spacing: 0.08em;
-    margin-top: 2rem;
-    opacity: 0;
-    animation: fadeUp 0.8s ease 0.55s forwards;
-  }
-
-  .hero-cta-row {
-    display: flex;
-    gap: 1rem;
-    margin-top: 3rem;
-    opacity: 0;
-    animation: fadeUp 0.8s ease 0.7s forwards;
-  }
-
-  .btn-primary {
-    font-family: var(--mono);
-    font-size: 0.75rem;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: var(--white);
-    background: var(--navy);
-    padding: 0.85rem 2rem;
-    text-decoration: none;
-    transition: background 0.2s, transform 0.15s;
-    display: inline-block;
-  }
-
-  .btn-primary:hover { background: var(--navy-mid); transform: translateY(-1px); }
-
-  .btn-secondary {
-    font-family: var(--mono);
-    font-size: 0.75rem;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: var(--navy);
-    border: 1px solid var(--navy);
-    padding: 0.85rem 2rem;
-    text-decoration: none;
-    transition: background 0.2s, color 0.2s;
-    display: inline-block;
-  }
-
-  .btn-secondary:hover { background: var(--navy); color: var(--white); }
-
-  .hero-right {
-    padding: 8rem 8vw 6rem 4rem;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-  }
-
-  .stat-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 2.5rem 3rem;
-  }
-
-  .stat-item {
-    opacity: 0;
-    animation: fadeUp 0.7s ease forwards;
-  }
-
-  .stat-item:nth-child(1) { animation-delay: 0.4s; }
-  .stat-item:nth-child(2) { animation-delay: 0.55s; }
-  .stat-item:nth-child(3) { animation-delay: 0.7s; }
-  .stat-item:nth-child(4) { animation-delay: 0.85s; }
-  .stat-item:nth-child(5) { animation-delay: 1.0s; }
-  .stat-item:nth-child(6) { animation-delay: 1.15s; }
-
-  .stat-number {
-    font-family: var(--serif-display);
-    font-size: 2.8rem;
-    font-weight: 600;
-    color: var(--navy);
-    line-height: 1;
-    letter-spacing: -0.03em;
-  }
-
-  .stat-number span {
-    font-size: 1.4rem;
-    color: var(--gold);
-    font-weight: 400;
-  }
-
-  .stat-label {
-    font-family: var(--mono);
-    font-size: 0.68rem;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--ink-light);
-    margin-top: 0.35rem;
-    line-height: 1.4;
-  }
-
-  .stat-rule {
-    width: 2rem;
-    height: 2px;
-    background: var(--gold);
-    margin-bottom: 0.6rem;
-  }
-
-  /* ── SECTION SCAFFOLDING ── */
-  section { padding: 7rem 8vw; border-top: 1px solid var(--rule); }
-
-  .section-header {
-    display: flex;
-    align-items: baseline;
-    gap: 2rem;
-    margin-bottom: 5rem;
-  }
-
-  .section-number {
-    font-family: var(--mono);
-    font-size: 0.68rem;
-    letter-spacing: 0.15em;
-    color: var(--gold);
-    white-space: nowrap;
-  }
-
-  .section-title {
-    font-family: var(--serif-display);
-    font-size: clamp(2rem, 3vw, 3rem);
-    font-weight: 700;
-    color: var(--navy);
-    line-height: 1.1;
-    letter-spacing: -0.02em;
-  }
-
-  .section-title em {
-    font-style: italic;
-    font-weight: 400;
-  }
-
-  /* ── ABOUT ── */
-  #about {
-    background: var(--navy);
-    color: var(--cream);
-    padding: 7rem 8vw;
-  }
-
-  #about .section-number { color: var(--gold-light); }
-  #about .section-title { color: var(--cream); }
-
-  .about-grid {
-    display: grid;
-    grid-template-columns: 1fr 2fr;
-    gap: 5rem;
-    align-items: start;
-  }
-
-  .about-aside { border-top: 2px solid var(--gold); padding-top: 2rem; }
-
-  .about-aside-label {
-    font-family: var(--mono);
-    font-size: 0.68rem;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    color: var(--gold-light);
-    margin-bottom: 1rem;
-  }
-
-  .expertise-list {
-    list-style: none;
-    display: flex;
-    flex-direction: column;
-    gap: 0.75rem;
-  }
-
-  .expertise-list li {
-    font-family: var(--serif-body);
-    font-size: 0.9rem;
-    color: rgba(248,245,240,0.8);
-    padding-left: 1.25rem;
-    position: relative;
-    line-height: 1.4;
-  }
-
-  .expertise-list li::before {
-    content: '·';
-    position: absolute;
-    left: 0;
-    color: var(--gold);
-    font-family: var(--mono);
-  }
-
-  .about-body p {
-    font-size: 1.15rem;
-    line-height: 1.85;
-    color: rgba(248,245,240,0.88);
-    margin-bottom: 1.5rem;
-    font-weight: 300;
-  }
-
-  .about-body p:first-child {
-    font-size: 1.35rem;
-    color: var(--cream);
-    font-weight: 300;
-    font-style: italic;
-  }
-
-  /* ── EXPERIENCE ── */
-  .timeline { position: relative; }
-
-  .timeline::before {
-    content: '';
-    position: absolute;
-    left: 0;
-    top: 0.5rem;
-    bottom: 0;
-    width: 1px;
-    background: var(--rule);
-  }
-
-  .timeline-item {
-    padding-left: 3rem;
-    padding-bottom: 4rem;
-    position: relative;
-  }
-
-  .timeline-item:last-child { padding-bottom: 0; }
-
-  .timeline-dot {
-    position: absolute;
-    left: -4px;
-    top: 0.5rem;
-    width: 9px;
-    height: 9px;
-    border-radius: 50%;
-    background: var(--navy);
-    border: 2px solid var(--cream);
-    outline: 1px solid var(--navy);
-  }
-
-  .timeline-dot.current { background: var(--gold); outline-color: var(--gold); }
-
-  .timeline-meta {
-    display: flex;
-    align-items: baseline;
-    gap: 1.5rem;
-    margin-bottom: 0.25rem;
-    flex-wrap: wrap;
-  }
-
-  .timeline-date {
-    font-family: var(--mono);
-    font-size: 0.7rem;
-    letter-spacing: 0.1em;
-    color: var(--gold);
-  }
-
-  .timeline-company {
-    font-family: var(--mono);
-    font-size: 0.72rem;
-    letter-spacing: 0.08em;
-    color: var(--ink-light);
-    text-transform: uppercase;
-  }
-
-  .timeline-location {
-    font-family: var(--mono);
-    font-size: 0.68rem;
-    color: var(--ink-light);
-  }
-
-  .timeline-role {
-    font-family: var(--serif-display);
-    font-size: 1.5rem;
-    font-weight: 600;
-    color: var(--navy);
-    line-height: 1.2;
-    margin-bottom: 1.25rem;
-  }
-
-  .timeline-bullets {
-    list-style: none;
-    display: flex;
-    flex-direction: column;
-    gap: 0.6rem;
-  }
-
-  .timeline-bullets li {
-    font-size: 0.95rem;
-    color: var(--ink-mid);
-    padding-left: 1.5rem;
-    position: relative;
-    line-height: 1.65;
-  }
-
-  .timeline-bullets li::before {
-    content: '·';
-    position: absolute;
-    left: 0.35rem;
-    color: var(--gold);
-    font-size: 1.2rem;
-    line-height: 1.3;
-  }
-
-  /* ── TIMELINE TECH TAGS ── */
-  .timeline-tags {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.4rem;
-    margin-top: 1.1rem;
-  }
-
-  .timeline-tag {
-    font-family: var(--mono);
-    font-size: 0.65rem;
-    letter-spacing: 0.06em;
-    color: var(--navy-mid);
-    background: var(--cream-dark);
-    border: 1px solid var(--rule);
-    padding: 0.2rem 0.65rem;
-    transition: background 0.15s, color 0.15s, border-color 0.15s;
-    cursor: default;
-  }
-
-  .timeline-tag:hover {
-    background: var(--navy);
-    color: var(--cream);
-    border-color: var(--navy);
-  }
-
-  /* ── SKILLS ── */
-  #skills { background: var(--cream-dark); }
-
-  .skills-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 3rem 4rem;
-  }
-
-  .skill-group { border-top: 2px solid var(--navy); padding-top: 1.5rem; }
-
-  .skill-group-label {
-    font-family: var(--mono);
-    font-size: 0.68rem;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    color: var(--navy);
-    margin-bottom: 1.25rem;
-  }
-
-  .skill-tags {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-  }
-
-  .skill-tag {
-    font-family: var(--mono);
-    font-size: 0.7rem;
-    letter-spacing: 0.06em;
-    color: var(--ink-mid);
-    background: var(--cream);
-    border: 1px solid var(--rule);
-    padding: 0.3rem 0.7rem;
-    transition: background 0.15s, color 0.15s, border-color 0.15s;
-    cursor: default;
-  }
-
-  .skill-tag:hover {
-    background: var(--navy);
-    color: var(--cream);
-    border-color: var(--navy);
-  }
-
-  /* ── EDUCATION & CERTS ── */
-  .edu-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 5rem;
-  }
-
-  .edu-item { border-top: 1px solid var(--rule); padding-top: 1.5rem; }
-
-  .edu-degree {
-    font-family: var(--serif-display);
-    font-size: 1.25rem;
-    font-weight: 600;
-    color: var(--navy);
-    line-height: 1.25;
-    margin-bottom: 0.25rem;
-  }
-
-  .edu-school {
-    font-family: var(--serif-body);
-    font-size: 0.95rem;
-    color: var(--ink-mid);
-    font-style: italic;
-  }
-
-  .edu-date {
-    font-family: var(--mono);
-    font-size: 0.7rem;
-    letter-spacing: 0.08em;
-    color: var(--ink-light);
-    margin-top: 0.35rem;
-  }
-
-  .cert-list { list-style: none; display: flex; flex-direction: column; gap: 1.25rem; }
-
-  .cert-item { display: flex; flex-direction: column; }
-
-  .cert-name {
-    font-family: var(--serif-display);
-    font-size: 1rem;
-    font-weight: 600;
-    color: var(--navy);
-  }
-
-  .cert-body {
-    font-family: var(--mono);
-    font-size: 0.7rem;
-    letter-spacing: 0.06em;
-    color: var(--ink-light);
-    margin-top: 0.15rem;
-  }
-
-  /* ── CONTACT ── */
-  #contact {
-    background: var(--navy);
-    color: var(--cream);
-    text-align: center;
-    padding: 7rem 8vw;
-  }
-
-  #contact .section-title { color: var(--cream); text-align: center; }
-  #contact .section-header { justify-content: center; margin-bottom: 3rem; }
-
-  .contact-sub {
-    font-size: 1.1rem;
-    color: rgba(248,245,240,0.7);
-    max-width: 48ch;
-    margin: 0 auto 3rem;
-    line-height: 1.7;
-  }
-
-  .contact-links {
-    display: flex;
-    justify-content: center;
-    gap: 1.5rem;
-    flex-wrap: wrap;
-    margin-bottom: 4rem;
-  }
-
-  .contact-link {
-    font-family: var(--mono);
-    font-size: 0.75rem;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--cream);
-    border: 1px solid rgba(248,245,240,0.3);
-    padding: 0.85rem 2rem;
-    text-decoration: none;
-    transition: background 0.2s, border-color 0.2s;
-  }
-
-  .contact-link:hover { background: rgba(255,255,255,0.1); border-color: var(--cream); }
-
-  .footer-rule {
-    width: 100%;
-    height: 1px;
-    background: rgba(248,245,240,0.15);
-    margin-bottom: 2rem;
-  }
-
-  .footer-text {
-    font-family: var(--mono);
-    font-size: 0.68rem;
-    letter-spacing: 0.1em;
-    color: rgba(248,245,240,0.35);
-  }
-
-  /* ── ANIMATIONS ── */
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(20px); }
-    to   { opacity: 1; transform: translateY(0); }
-  }
-
-  .reveal {
-    opacity: 0;
-    transform: translateY(24px);
-    transition: opacity 0.7s ease, transform 0.7s ease;
-  }
-
-  .reveal.visible {
-    opacity: 1;
-    transform: translateY(0);
-  }
-
-  /* ── RESPONSIVE ── */
-  @media (max-width: 900px) {
-    nav { padding: 0 1.5rem; }
-    .nav-links { display: none; }
-    .hero { grid-template-columns: 1fr; }
-    .hero-left { padding: 5rem 1.5rem 3rem; border-right: none; }
-    .hero-right { padding: 3rem 1.5rem 5rem; }
-    .stat-grid { grid-template-columns: 1fr 1fr; }
-    section { padding: 5rem 1.5rem; }
-    .about-grid { grid-template-columns: 1fr; gap: 3rem; }
-    .skills-grid { grid-template-columns: 1fr 1fr; }
-    .edu-grid { grid-template-columns: 1fr; gap: 3rem; }
-    .interests-grid { grid-template-columns: 1fr; gap: 2.5rem; }
-  }
-
-  @media (max-width: 600px) {
-    .skills-grid { grid-template-columns: 1fr; }
-    .hero-cta-row { flex-direction: column; }
-    .stat-grid { gap: 2rem; }
-  }
-
-  /* ── CONTACT FORM ── */
-  .contact-form {
-    max-width: 560px;
-    margin: 0 auto 4rem;
-  }
-  .form-group { margin-bottom: 1.25rem; }
-  .form-label {
-    display: block;
-    font-family: var(--mono);
-    font-size: 0.68rem;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: rgba(248,245,240,0.5);
-    margin-bottom: 0.5rem;
-  }
-  .form-input, .form-textarea {
-    width: 100%;
-    background: rgba(255,255,255,0.05);
-    border: 1px solid rgba(248,245,240,0.2);
-    color: var(--cream);
-    font-family: var(--serif-body);
-    font-size: 0.95rem;
-    font-weight: 300;
-    padding: 0.85rem 1rem;
-    outline: none;
-    transition: border-color 0.2s;
-    -webkit-appearance: none;
-    border-radius: 0;
-  }
-  .form-input:focus, .form-textarea:focus { border-color: var(--gold); }
-  .form-input::placeholder, .form-textarea::placeholder { color: rgba(248,245,240,0.25); }
-  .form-textarea { resize: vertical; min-height: 130px; }
-  .form-submit {
-    font-family: var(--mono);
-    font-size: 0.75rem;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: var(--navy);
-    background: var(--cream);
-    border: none;
-    padding: 0.85rem 2.5rem;
-    cursor: pointer;
-    transition: background 0.2s, transform 0.15s;
-    width: 100%;
-    margin-top: 0.5rem;
-  }
-  .form-submit:hover { background: var(--gold-light); transform: translateY(-1px); }
-  .form-submit:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
-  .form-success {
-    display: none;
-    font-family: var(--mono);
-    font-size: 0.8rem;
-    letter-spacing: 0.08em;
-    color: var(--gold-light);
-    text-align: center;
-    padding: 1.5rem;
-    border: 1px solid rgba(184,151,106,0.3);
-    margin-top: 1rem;
-  }
-
-  /* ── DARK MODE ── */
-  body, nav, section, .timeline-item, .skill-tag, .timeline-tag,
-  .nav-download, .btn-primary, .btn-secondary, .contact-link,
-  .form-input, .form-textarea, .edu-item, .cert-item, .about-aside {
-    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
-  }
-
-  [data-theme="dark"] {
-    --cream:      #0d1c2e;
-    --cream-dark: #112235;
-    --navy:       #c4d4e4;
-    --navy-mid:   #a4b8cc;
-    --navy-light: #849cb4;
-    --ink:        #ddd8d0;
-    --ink-mid:    #bcb8b0;
-    --ink-light:  #7c7870;
-    --rule:       #1c3048;
-    --gold:       #c4a472;
-    --gold-light: #d4b48a;
-    --white:      #0d1c2e;
-  }
-
-  [data-theme="dark"] nav {
-    background: rgba(13, 28, 46, 0.95);
-    border-bottom-color: #1c3048;
-  }
-
-  [data-theme="dark"] #about,
-  [data-theme="dark"] #contact {
-    background: #071420;
-  }
-
-  [data-theme="dark"] .skill-tag,
-  [data-theme="dark"] .timeline-tag {
-    background: #112235;
-  }
-
-  [data-theme="dark"] .skill-tag:hover,
-  [data-theme="dark"] .timeline-tag:hover {
-    background: var(--navy);
-    color: #0d1c2e;
-    border-color: var(--navy);
-  }
-
-  [data-theme="dark"] .form-input,
-  [data-theme="dark"] .form-textarea {
-    background: rgba(255,255,255,0.04);
-    border-color: rgba(196,212,228,0.15);
-    color: var(--ink);
-  }
-
-  [data-theme="dark"] .timeline::before {
-    background: #1c3048;
-  }
-
-  [data-theme="dark"] .timeline-dot {
-    border-color: #0d1c2e;
-  }
-
-  /* ── Theme toggle button ── */
-  .theme-toggle {
-    background: none;
-    border: 1px solid var(--rule);
-    color: var(--ink-light);
-    cursor: pointer;
-    padding: 0.38rem 0.5rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-right: 0.75rem;
-    line-height: 0;
-    transition: color 0.2s, border-color 0.2s;
-  }
-
-  .theme-toggle:hover {
-    color: var(--navy);
-    border-color: var(--navy);
-  }
-
-  .icon-sun  { display: none;  }
-  .icon-moon { display: block; }
-
-  [data-theme="dark"] .icon-moon { display: none;  }
-  [data-theme="dark"] .icon-sun  { display: block; }
-
-  [data-theme="dark"] .contact-link {
-    color: var(--gold);
-    border-color: rgba(196, 164, 114, 0.35);
-  }
-
-  [data-theme="dark"] .contact-link:hover {
-    background: rgba(196, 164, 114, 0.1);
-    border-color: var(--gold);
-    color: var(--gold-light);
-  }
-
-  /* ── INTERESTS ── */
-  .interests-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 3.5rem;
-  }
-
-  .interest-card {
-    border-top: 2px solid var(--gold);
-    padding-top: 2rem;
-  }
-
-  .interest-eyebrow {
-    font-family: var(--mono);
-    font-size: 0.68rem;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    color: var(--gold);
-    margin-bottom: 0.75rem;
-  }
-
-  .interest-title {
-    font-family: var(--serif-display);
-    font-size: 1.4rem;
-    font-weight: 600;
-    color: var(--navy);
-    line-height: 1.2;
-    margin-bottom: 1rem;
-  }
-
-  .interest-body {
-    font-size: 0.95rem;
-    color: var(--ink-mid);
-    line-height: 1.8;
-    font-weight: 300;
-  }
-
-  /* ── REGULATION ROADMAP ── */
-  #regulation { background: var(--cream-dark); }
-
-  .roadmap-intro {
-    font-size: 1.05rem;
-    color: var(--ink-mid);
-    max-width: 72ch;
-    line-height: 1.8;
-    margin-bottom: 4rem;
-    font-weight: 300;
-  }
-
-  .roadmap-wrapper { display: flex; flex-direction: column; gap: 0; }
-  .roadmap-tier { padding: 2rem 0; }
-
-  .roadmap-tier-top {
-    display: flex;
-    justify-content: center;
-    padding-bottom: 0;
-    position: relative;
-  }
-
-  .roadmap-tier-top::after {
-    content: '';
-    position: absolute;
-    bottom: 0; left: 50%;
-    transform: translateX(-50%);
-    width: 1px; height: 2rem;
-    background: var(--rule);
-  }
-
-  .roadmap-federal-cols {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 3rem;
-  }
-
-  .roadmap-branch { display: flex; flex-direction: column; gap: 1.5rem; }
-
-  .roadmap-branch-label {
-    font-family: var(--mono);
-    font-size: 0.65rem;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    color: var(--ink-light);
-    border-left: 2px solid var(--gold);
-    padding-left: 0.75rem;
-    margin-bottom: 0.25rem;
-  }
-
-  .roadmap-branch-label.branch-cftc { border-left-color: #3d9966; }
-  .roadmap-support-label { border-left-color: var(--ink-light); margin-bottom: 1.5rem; }
-
-  .roadmap-sro-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1rem;
-  }
-
-  .roadmap-support-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1.5rem;
-  }
-
-  .roadmap-tier-federal {
-    border-top: 1px dashed var(--rule);
-    padding-top: 2rem;
-    margin-top: 2rem;
-  }
-
-  .roadmap-tier-sro {
-    border-top: 1px dashed var(--rule);
-    padding-top: 2rem;
-  }
-
-  .roadmap-tier-support {
-    border-top: 2px solid var(--rule);
-    padding-top: 2rem;
-    margin-top: 1rem;
-  }
-
-  .roadmap-card {
-    background: var(--cream);
-    border: 1px solid var(--rule);
-    padding: 1.25rem 1.5rem;
-    transition: border-color 0.2s, box-shadow 0.2s;
-  }
-
-  .roadmap-card:hover {
-    border-color: var(--navy-light);
-    box-shadow: 0 4px 16px rgba(26,58,92,0.08);
-  }
-
-  .congress-card  { border-left: 3px solid var(--ink-mid); max-width: 640px; width: 100%; text-align: center; }
-  .sec-card       { border-left: 3px solid var(--navy); }
-  .cftc-card      { border-left: 3px solid #2e7d52; }
-  .sro-card       { border-left: 3px solid var(--gold); }
-  .sro-cftc       { border-left-color: #3d9966; }
-  .support-card   { border-left: 3px solid var(--ink-light); }
-
-  .rn-eyebrow {
-    font-family: var(--mono);
-    font-size: 0.6rem;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    color: var(--gold);
-    margin-bottom: 0.4rem;
-  }
-  .sec-card .rn-eyebrow      { color: var(--navy-light); }
-  .cftc-card .rn-eyebrow     { color: #3d9966; }
-  .sro-cftc .rn-eyebrow      { color: #3d9966; }
-  .support-card .rn-eyebrow  { color: var(--ink-light); }
-  .congress-card .rn-eyebrow { color: var(--ink-mid); }
-
-  .rn-abbr {
-    font-family: var(--serif-display);
-    font-size: 1.25rem;
-    font-weight: 700;
-    color: var(--navy);
-    line-height: 1;
-    margin-bottom: 0.2rem;
-    letter-spacing: -0.01em;
-  }
-
-  .rn-name {
-    font-family: var(--mono);
-    font-size: 0.62rem;
-    letter-spacing: 0.04em;
-    color: var(--ink-light);
-    margin-bottom: 0.5rem;
-    line-height: 1.4;
-  }
-
-  .rn-desc {
-    font-family: var(--serif-body);
-    font-size: 0.83rem;
-    color: var(--ink-mid);
-    line-height: 1.6;
-    font-weight: 300;
-  }
-
-  .rn-tags { display: flex; flex-wrap: wrap; gap: 0.3rem; margin-top: 0.75rem; }
-
-  .rn-tag {
-    font-family: var(--mono);
-    font-size: 0.58rem;
-    letter-spacing: 0.06em;
-    color: var(--ink-mid);
-    background: var(--cream-dark);
-    border: 1px solid var(--rule);
-    padding: 0.15rem 0.5rem;
-  }
-
-  [data-theme="dark"] .roadmap-card { background: #0d1c2e; }
-  [data-theme="dark"] .rn-tag { background: #071420; border-color: #1c3048; }
-
-  @media (max-width: 900px) {
-    .roadmap-federal-cols { grid-template-columns: 1fr; }
-    .roadmap-sro-grid     { grid-template-columns: 1fr; }
-    .roadmap-support-grid { grid-template-columns: 1fr 1fr; }
-  }
-  @media (max-width: 600px) {
-    .roadmap-support-grid { grid-template-columns: 1fr; }
-  }
-
-
-  /* ── MOBILE NAV ── */
-  .hamburger {
-    display: none;
-    flex-direction: column;
-    justify-content: center;
-    gap: 4px;
-    background: none;
-    border: 1px solid var(--rule);
-    color: var(--ink-light);
-    cursor: pointer;
-    padding: 0.5rem;
-    margin-right: 0.5rem;
-    transition: color 0.2s, border-color 0.2s;
-  }
-  .hamburger:hover { color: var(--navy); border-color: var(--navy); }
-  .hamburger span {
-    display: block;
-    width: 18px;
-    height: 1.5px;
-    background: currentColor;
-    transition: transform 0.25s ease, opacity 0.25s ease;
-    transform-origin: center;
-  }
-  .hamburger.open span:nth-child(1) { transform: translateY(5.5px) rotate(45deg); }
-  .hamburger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
-  .hamburger.open span:nth-child(3) { transform: translateY(-5.5px) rotate(-45deg); }
-
-  @media (max-width: 900px) {
-    .hamburger { display: flex; }
-  }
-
-  /* Full-screen slide-in overlay */
-  .mobile-overlay {
-    position: fixed;
-    inset: 0;
-    z-index: 300;
-    background: var(--cream);
-    display: flex;
-    flex-direction: column;
-    transform: translateX(100%);
-    transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
-    overflow-y: auto;
-    -webkit-overflow-scrolling: touch;
-  }
-  .mobile-overlay.open {
-    transform: translateX(0);
-  }
-
-  .mobile-overlay-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0 1.5rem;
-    height: 64px;
-    border-bottom: 1px solid var(--rule);
-    flex-shrink: 0;
-    position: sticky;
-    top: 0;
-    background: var(--cream);
-    z-index: 1;
-  }
-
-  .mobile-overlay-close {
-    background: none;
-    border: 1px solid var(--rule);
-    color: var(--ink-light);
-    cursor: pointer;
-    padding: 0.4rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: color 0.2s, border-color 0.2s;
-  }
-  .mobile-overlay-close:hover { color: var(--navy); border-color: var(--navy); }
-
-  .mobile-overlay-body {
-    padding: 1.5rem;
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    gap: 2rem;
-  }
-
-  .mobile-overlay-group-label {
-    font-family: var(--mono);
-    font-size: 0.6rem;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--gold);
-    margin-bottom: 0.5rem;
-    padding-bottom: 0.5rem;
-    border-bottom: 1px solid var(--rule);
-  }
-
-  .mobile-nav-links-list {
-    list-style: none;
-    display: flex;
-    flex-direction: column;
-  }
-
-  .mobile-nav-link {
-    display: flex;
-    align-items: center;
-    gap: 1.25rem;
-    padding: 1.1rem 0;
-    border-bottom: 1px solid var(--rule);
-    text-decoration: none;
-    color: var(--navy);
-    transition: color 0.15s, padding-left 0.15s;
-  }
-  .mobile-nav-link:last-child { border-bottom: none; }
-  .mobile-nav-link:hover { color: var(--gold); padding-left: 0.35rem; }
-
-  .mobile-nav-num {
-    font-family: var(--mono);
-    font-size: 0.62rem;
-    letter-spacing: 0.12em;
-    color: var(--gold);
-    min-width: 2rem;
-    flex-shrink: 0;
-  }
-
-  .mobile-nav-label {
-    font-family: var(--serif-display);
-    font-size: 1.5rem;
-    font-weight: 600;
-    letter-spacing: -0.01em;
-    line-height: 1;
-  }
-
-  .mobile-tool-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 0.6rem;
-  }
-
-  .mobile-tool-link {
-    font-family: var(--mono);
-    font-size: 0.7rem;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--ink-mid);
-    border: 1px solid var(--rule);
-    padding: 0.8rem 1rem;
-    text-decoration: none;
-    text-align: center;
-    transition: background 0.15s, color 0.15s, border-color 0.15s;
-  }
-  .mobile-tool-link:hover { background: var(--navy); color: var(--cream); border-color: var(--navy); }
-
-  .mobile-overlay-footer {
-    padding: 1.5rem;
-    border-top: 1px solid var(--rule);
-    flex-shrink: 0;
-    display: flex;
-    flex-direction: column;
-    gap: 0.75rem;
-  }
-
-  .mobile-overlay-dl {
-    display: block;
-    font-family: var(--mono);
-    font-size: 0.75rem;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: var(--white);
-    background: var(--navy);
-    padding: 1rem;
-    text-decoration: none;
-    text-align: center;
-    transition: background 0.2s;
-  }
-  .mobile-overlay-dl:hover { background: var(--navy-mid); }
-
-  .mobile-overlay-contact-row {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 0.6rem;
-  }
-
-  .mobile-contact-pill {
-    font-family: var(--mono);
-    font-size: 0.65rem;
-    letter-spacing: 0.06em;
-    color: var(--ink-mid);
-    border: 1px solid var(--rule);
-    padding: 0.65rem 0.75rem;
-    text-decoration: none;
-    text-align: center;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    transition: background 0.15s, color 0.15s;
-  }
-  .mobile-contact-pill:hover { background: var(--navy); color: var(--cream); border-color: var(--navy); }
-
-  /* Scroll-to-top button */
-  .scroll-top {
-    position: fixed;
-    bottom: 1.5rem;
-    right: 1.5rem;
-    z-index: 90;
-    width: 44px;
-    height: 44px;
-    background: var(--navy);
-    color: var(--cream);
-    border: none;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    opacity: 0;
-    transform: translateY(8px);
-    transition: opacity 0.25s, transform 0.25s, background 0.15s;
-    pointer-events: none;
-  }
-  .scroll-top.visible { opacity: 1; transform: translateY(0); pointer-events: auto; }
-  .scroll-top:hover { background: var(--navy-mid); }
-
-  /* Dark mode overlay */
-  [data-theme="dark"] .mobile-overlay { background: #0d1c2e; }
-  [data-theme="dark"] .mobile-overlay-header { background: #0d1c2e; }
-  [data-theme="dark"] .mobile-overlay-dl { color: #0d1c2e; background: var(--navy); }
-
-  /* Fix: section titles on dark-bg sections should be gold in dark mode */
-  [data-theme="dark"] #about .section-title { color: var(--gold); }
-  [data-theme="dark"] #contact .section-title { color: var(--gold); }
-
-
-  /* ── COLLAPSIBLE SECTIONS ── */
-  .section-body {
-    display: grid;
-    grid-template-rows: 1fr;
-    transition: grid-template-rows 0.45s cubic-bezier(0.4, 0, 0.2, 1);
-    overflow: hidden;
-  }
-  .section-body.collapsed {
-    grid-template-rows: 0fr;
-  }
-  .section-body-inner {
-    overflow: hidden;
-    min-height: 0;
-  }
-
-  .section-toggle {
-    margin-left: auto;
-    flex-shrink: 0;
-    background: none;
-    border: 1px solid var(--rule);
-    color: var(--ink-light);
-    cursor: pointer;
-    width: 36px;
-    height: 36px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: color 0.2s, border-color 0.2s;
-    align-self: flex-start;
-    margin-top: 0.35rem;
-  }
-  .section-toggle:hover {
-    color: var(--navy);
-    border-color: var(--navy);
-  }
-  .toggle-chevron {
-    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  }
-  .section-toggle[aria-expanded="false"] .toggle-chevron {
-    transform: rotate(180deg);
-  }
-
-  /* About section has dark bg, needs white toggle */
-  #about .section-toggle {
-    border-color: rgba(248,245,240,0.25);
-    color: rgba(248,245,240,0.55);
-  }
-  #about .section-toggle:hover {
-    border-color: var(--gold-light);
-    color: var(--gold-light);
-  }
-  /* Contact section same */
-  #contact .section-toggle {
-    border-color: rgba(248,245,240,0.25);
-    color: rgba(248,245,240,0.55);
-  }
-  #contact .section-toggle:hover {
-    border-color: var(--gold-light);
-    color: var(--gold-light);
-  }
-
+:root {
+  /* colour: navy ground, memo paper, alert red */
+  --bg: #121a30;
+  --surface: #1a2442;
+  --surface-2: #222e52;
+  --ink: #e7e5df;
+  --muted: #aeb5c9;
+  --paper: #e7e5df;
+  --paper-2: #d6d3cb;
+  --paper-ink: #121a30;
+  --paper-muted: #4a5169;
+  --accent: #ff5a4a;
+  --accent-ink: #121a30;
+  --bid: #45c98f;
+  --blue: #8fa8e6;
+
+  /* type: Bricolage Grotesque, five steps */
+  --font: 'Bricolage Grotesque', system-ui, sans-serif;
+  --step-small: clamp(0.8125rem, 0.79rem + 0.1vw, 0.875rem);
+  --step-body: clamp(1.0625rem, 1rem + 0.25vw, 1.1875rem);
+  --step-lead: clamp(1.25rem, 1.1rem + 0.7vw, 1.625rem);
+  --step-head: clamp(2rem, 1.3rem + 3.2vw, 4rem);
+  --step-display: clamp(3.5rem, 1rem + 9vw, 9rem);
+
+  /* frame */
+  --m: clamp(16px, 4vw, 56px);
+  --max: 1320px;
+  --gap-section: clamp(96px, 12vw, 200px);
+
+  /* motion */
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out: cubic-bezier(0.76, 0, 0.24, 1);
+  --ease-soft: cubic-bezier(0.33, 1, 0.68, 1);
+  --t-press: 140ms;
+  --t-hover: 180ms;
+  --t-ui: 240ms;
+  --t-reveal: 800ms;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+body {
+  margin: 0; background: var(--bg); color: var(--ink);
+  font-family: var(--font); font-size: var(--step-body); line-height: 1.5;
+  font-optical-sizing: auto; -webkit-font-smoothing: antialiased;
+  overflow-x: clip;
+}
+img { display: block; max-width: 100%; height: auto; }
+a { color: inherit; }
+h1, h2, h3, h4, p, ul, ol, dl, dd, figure, blockquote { margin: 0; }
+ul, ol { padding: 0; list-style: none; }
+.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
+::selection { background: var(--accent); color: var(--accent-ink); }
+:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
+
+.wrap { width: min(var(--max), 100% - 2 * var(--m)); margin-inline: auto; }
+.head { font-size: var(--step-head); font-weight: 600; letter-spacing: -0.035em; line-height: 0.98; }
+.lead { font-size: var(--step-lead); line-height: 1.35; letter-spacing: -0.01em; }
+.small { font-size: var(--step-small); }
+.num { font-variant-numeric: tabular-nums lining-nums; }
+
+/* one button shape: square, flat */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+  min-height: 52px; padding: 0 26px; border: 0; border-radius: 0;
+  background: var(--accent); color: var(--accent-ink);
+  font: 600 var(--step-body)/1 var(--font); text-decoration: none; cursor: pointer;
+  transition: transform var(--t-press) var(--ease-out), background-color var(--t-hover) var(--ease-out);
+}
+.btn:hover { background: #ff7466; }
+.btn:active { transform: scale(0.97); }
+.btn--ink { background: var(--paper-ink); color: var(--paper); }
+.btn--ink:hover { background: #24305a; }
+.btn .arrow { transition: transform var(--t-ui) var(--ease-out); }
+.btn:hover .arrow { transform: translateX(4px); }
+
+.link {
+  text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 5px;
+  text-decoration-color: color-mix(in srgb, currentColor 35%, transparent);
+  transition: text-decoration-color var(--t-hover) var(--ease-out), color var(--t-hover) var(--ease-out);
+}
+.link:hover { text-decoration-color: var(--accent); }
+
+/* ---------- hero: the memo over the trading floor ---------- */
+.hero { position: relative; min-height: 100svh; display: grid; place-items: center; padding: clamp(16px, 4vh, 48px) var(--m); overflow: clip; isolation: isolate; }
+.hero__room { position: absolute; inset: 0; z-index: -1; }
+.hero__room img { width: 100%; height: 100%; object-fit: cover; filter: grayscale(1) brightness(0.42) contrast(1.1); transform: scale(1.08); }
+.memo {
+  position: relative; width: min(1120px, 100%); background: var(--paper); color: var(--paper-ink);
+  padding: clamp(20px, 2.6vw, 36px); display: grid; gap: clamp(16px, 2.2vh, 28px);
+  transform-origin: 50% 0;
+}
+.memo__top { display: flex; justify-content: flex-start; align-items: baseline; gap: 16px; flex-wrap: wrap; }
+.memo__nav { display: flex; gap: clamp(14px, 2vw, 28px); flex-wrap: wrap; }
+.memo__nav a { position: relative; font-size: var(--step-small); font-weight: 500; text-decoration: none; padding: 6px 0; }
+.memo__nav a::after { content: ""; position: absolute; left: 0; right: 0; bottom: 2px; height: 2px; background: var(--accent); transform: scaleX(0); transform-origin: 0 50%; transition: transform var(--t-ui) var(--ease-out); }
+.memo__nav a:hover::after, .memo__nav a:focus-visible::after { transform: scaleX(1); }
+.memo__date { font-size: var(--step-small); color: var(--paper-muted); }
+.memo h1 {
+  font-size: var(--step-display); font-weight: 600; letter-spacing: -0.045em; line-height: 0.86;
+  display: flex; justify-content: space-between; gap: 0.25em;
+}
+.memo__body { display: grid; grid-template-columns: 1fr auto; gap: clamp(20px, 3vw, 48px); align-items: start; }
+.memo__lede { font-size: var(--step-lead); line-height: 1.3; letter-spacing: -0.01em; max-width: 30ch; margin-bottom: clamp(16px, 2.4vh, 28px); }
+.memo__fields { display: grid; grid-template-columns: auto 1fr; column-gap: 18px; row-gap: 6px; font-size: var(--step-body); line-height: 1.35; max-width: 56ch; }
+.memo__fields dt { font-weight: 600; }
+.memo__fields dd { color: var(--paper-ink); }
+.memo__photo { width: clamp(150px, 19vw, 250px); margin-top: -12px; transform: rotate(1.6deg); transition: transform var(--t-reveal) var(--ease-expo); }
+.memo__photo:hover { transform: rotate(0deg) scale(1.02); }
+.memo__photo img { aspect-ratio: 4 / 5; object-fit: cover; object-position: 50% 22%; width: 100%; }
+.memo__photo figcaption { font-size: var(--step-small); color: var(--paper-muted); margin-top: 8px; }
+.memo__foot { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 16px; padding-top: clamp(4px, 1vh, 12px); }
+.memo__foot .credit { font-size: var(--step-small); color: var(--paper-muted); }
+.memo__foot .link { justify-self: end; font-weight: 500; }
+
+@media (max-width: 760px) {
+  .memo__nav { display: none; }
+  .memo h1 { flex-direction: column; gap: 0; font-size: clamp(3.5rem, 19vw, 6rem); }
+  .memo__body { grid-template-columns: 1fr; }
+  .memo__photo { width: 46%; justify-self: end; margin-top: -8px; }
+  .memo__foot { grid-template-columns: 1fr; }
+  .memo__foot .btn { width: 100%; }
+  .memo__foot .credit { order: 3; }
+  .memo__foot .link { justify-self: start; }
+}
+
+/* the stub that stays after the memo leaves */
+.stub {
+  position: fixed; left: var(--m); bottom: 16px; z-index: 40;
+  display: flex; align-items: center; gap: 14px; padding: 10px 12px 10px 16px;
+  background: var(--paper); color: var(--paper-ink);
+  clip-path: polygon(0 0, 100% 0, 100% calc(50% - 7px), calc(100% - 7px) 50%, 100% calc(50% + 7px), 100% 100%, 0 100%);
+  transform: translateY(140%); transition: transform 500ms var(--ease-expo);
+}
+.stub.is-on { transform: none; }
+.stub strong { font-weight: 600; font-size: var(--step-small); }
+.stub a { font-size: var(--step-small); font-weight: 500; }
+.stub .btn { min-height: 36px; padding: 0 14px; font-size: var(--step-small); }
+@media (max-width: 760px) { .stub { display: none; } }
+
+/* ---------- intro: three seats ---------- */
+.intro { padding-block: var(--gap-section) 0; }
+.intro__row { display: grid; grid-template-columns: repeat(12, 1fr); gap: 24px; align-items: end; }
+.intro__row h2 { grid-column: 1 / 8; font-size: var(--step-display); font-weight: 400; letter-spacing: -0.045em; line-height: 0.9; }
+.intro__row p { grid-column: 9 / 13; color: var(--ink); }
+.facts { display: flex; justify-content: space-between; gap: 24px; margin-top: clamp(64px, 8vw, 120px); flex-wrap: wrap; }
+.facts li { display: grid; gap: 6px; }
+.facts b { font-size: var(--step-head); font-weight: 400; letter-spacing: -0.035em; line-height: 1; }
+.facts span { font-size: var(--step-small); color: var(--muted); }
+.intro__plate { display: grid; grid-template-columns: repeat(12, 1fr); gap: 24px; margin-top: clamp(48px, 6vw, 88px); align-items: end; }
+.intro__plate figure { grid-column: 7 / 13; }
+.intro__plate img { aspect-ratio: 4 / 3; object-fit: cover; width: 100%; filter: grayscale(1) contrast(1.05); }
+.intro__plate figcaption, .cap { font-size: var(--step-small); color: var(--muted); margin-top: 10px; }
+.intro__plate p { grid-column: 1 / 6; font-size: var(--step-lead); line-height: 1.35; }
+@media (max-width: 860px) {
+  .intro__row h2 { grid-column: 1 / -1; font-size: clamp(3rem, 13vw, 5rem); }
+  .intro__row p { grid-column: 1 / -1; }
+  .facts { display: grid; grid-template-columns: 1fr 1fr; row-gap: 32px; }
+  .intro__plate p, .intro__plate figure { grid-column: 1 / -1; }
+}
+
+/* ---------- exhibit A: the replay (pinned story) ---------- */
+.exhibit { padding-top: var(--gap-section); }
+.exhibit__head { display: grid; grid-template-columns: repeat(12, 1fr); gap: 24px; align-items: end; margin-bottom: clamp(40px, 5vw, 72px); }
+.exhibit__head h2 { grid-column: 1 / 8; }
+.exhibit__head p { grid-column: 9 / 13; color: var(--muted); }
+.story { display: grid; grid-template-columns: 7fr 5fr; gap: clamp(24px, 4vw, 72px); align-items: start; }
+.board { position: sticky; top: 4vh; }
+.book[data-ui] {
+  background: var(--surface); padding: clamp(16px, 2vw, 28px); color: var(--ink);
+  border: 1px solid #2c3a63;
+}
+.book__bar { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; margin-bottom: 14px; }
+.book__title { font-weight: 600; }
+.book__last { font-size: var(--step-small); color: var(--muted); }
+.book__last b { color: var(--ink); font-size: var(--step-body); }
+.book__last .dn { color: var(--accent); }
+.book__last .up { color: var(--bid); }
+.ladder { width: 100%; border-collapse: collapse; table-layout: fixed; font-variant-numeric: tabular-nums; }
+.ladder th { font-size: var(--step-small); font-weight: 500; color: var(--muted); text-align: left; padding: 0 0 8px; }
+.ladder th:nth-child(1) { text-align: right; }
+.ladder th:nth-child(2) { text-align: center; width: 30%; }
+.ladder td { height: 30px; padding: 0; border-top: 1px solid #26335a; font-size: var(--step-small); }
+.ladder td.px { text-align: center; color: var(--ink); font-weight: 500; transition: background-color 400ms var(--ease-out); }
+.ladder tr.is-touch td.px { background: #26335a; }
+.cell { position: relative; height: 22px; display: flex; align-items: center; }
+.cell--bid { justify-content: flex-end; }
+.cell .q { position: relative; z-index: 1; padding: 0 8px; }
+.bar { position: absolute; top: 0; bottom: 0; left: 0; right: 0; display: flex; }
+.cell--bid .bar { flex-direction: row-reverse; }
+.bar i { display: block; height: 100%; transition: width 600ms var(--ease-expo), background-color 400ms var(--ease-out); }
+.cell--bid .bar i.own { background: color-mix(in srgb, var(--bid) 38%, var(--surface)); }
+.cell--ask .bar i.own { background: color-mix(in srgb, var(--accent) 30%, var(--surface)); }
+.cell--ask .bar i.spoof { background: color-mix(in srgb, var(--accent) 30%, var(--surface)); }
+.book.is-xray .cell--ask .bar i.spoof { background: var(--accent); }
+.book.is-xray .cell--ask .q.has-spoof { color: var(--accent-ink); font-weight: 600; }
+.fill { font-size: var(--step-small); font-weight: 600; color: var(--bid); padding-left: 8px; }
+.book__controls { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-top: 16px; }
+.book__controls button {
+  min-height: 40px; min-width: 40px; padding: 0 14px; border: 0; background: var(--surface-2); color: var(--ink);
+  font: 500 var(--step-small)/1 var(--font); cursor: pointer;
+  transition: background-color var(--t-hover) var(--ease-out), transform var(--t-press) var(--ease-out);
+}
+.book__controls button:hover { background: #2d3b66; }
+.book__controls button:active { transform: scale(0.95); }
+.book__controls input[type=range] { flex: 1 1 140px; accent-color: var(--accent); min-height: 40px; }
+.xray { display: inline-flex; align-items: center; gap: 8px; font-size: var(--step-small); cursor: pointer; min-height: 40px; }
+.xray input { width: 18px; height: 18px; accent-color: var(--accent); }
+.alert {
+  display: grid; gap: 4px; margin-top: 14px; padding: 14px 16px; background: var(--accent); color: var(--accent-ink);
+  font-size: var(--step-small); opacity: 0; transform: translateY(8px); transition: opacity 400ms var(--ease-out), transform 500ms var(--ease-expo);
+}
+.alert b { font-size: var(--step-body); }
+.book.is-alert .alert { opacity: 1; transform: none; }
+.steps { display: grid; }
+.step { min-height: 72vh; display: flex; flex-direction: column; justify-content: center; gap: 12px; padding-block: 24px; color: var(--muted); transition: color 400ms var(--ease-out); }
+.step:first-child { min-height: 48vh; justify-content: flex-start; padding-top: 8vh; }
+.step:last-child { min-height: 60vh; }
+.step h3 { font-size: var(--step-lead); font-weight: 600; letter-spacing: -0.01em; line-height: 1.2; color: var(--muted); transition: color 400ms var(--ease-out); }
+.step.is-on, .step.is-on h3 { color: var(--ink); }
+.step.is-on h3 { color: var(--accent); }
+.step p { max-width: 38ch; }
+@media (max-width: 900px) {
+  .exhibit__head h2, .exhibit__head p { grid-column: 1 / -1; }
+  .story { grid-template-columns: 1fr; gap: 0; }
+  .board { top: 0; z-index: 5; margin-inline: calc(-1 * var(--m)); }
+  .book[data-ui] { padding: 12px var(--m); }
+  .ladder td { height: 22px; }
+  .cell { height: 18px; }
+  .book__controls { margin-top: 10px; }
+  .step, .step:first-child, .step:last-child { min-height: 56vh; padding-top: 24px; }
+  .alert { display: none; margin-top: 10px; }
+  .book.is-alert .alert { display: grid; }
+}
+
+/* ---------- showcase: what I look for, slips along the edge ---------- */
+.look { position: relative; margin-top: var(--gap-section); min-height: 96svh; overflow: clip; isolation: isolate; display: grid; }
+.look__photo { position: absolute; inset: 0; z-index: -1; }
+.look__photo img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 30%; filter: grayscale(1) brightness(0.55) contrast(1.05); }
+.look__copy { padding: clamp(56px, 9vh, 120px) var(--m) 0 18vw; max-width: calc(18vw + 760px); }
+.look__copy > div { background: rgba(10, 14, 28, 0.72); padding: clamp(20px, 2.4vw, 32px); display: grid; gap: 16px; }
+.look__copy p { font-size: var(--step-lead); line-height: 1.35; max-width: 34ch; }
+.slips { align-self: end; display: flex; gap: 12px; padding: 0 var(--m); margin-top: 48px; }
+.slip {
+  flex: 1 1 0; background: var(--paper); color: var(--paper-ink); padding: 18px 18px 0; font-size: var(--step-small); line-height: 1.45;
+  transition: transform var(--t-reveal) var(--ease-expo);
+}
+.slip:nth-child(1) { height: 40svh; }
+.slip:nth-child(2) { height: 32svh; transform: rotate(-1.4deg); transform-origin: 50% 100%; }
+.slip:nth-child(3) { height: 44svh; }
+.slip:nth-child(4) { height: 28svh; transform: rotate(1.2deg); transform-origin: 50% 100%; }
+.slip:nth-child(5) { height: 38svh; }
+.slip:nth-child(6) { height: 34svh; transform: rotate(-0.9deg); transform-origin: 50% 100%; }
+.slip:hover { transform: translateY(-14px) rotate(0deg); }
+.slip h3 { font-size: var(--step-body); font-weight: 600; }
+.slip .cut { color: var(--paper-muted); letter-spacing: 0.1em; white-space: nowrap; overflow: hidden; }
+@media (max-width: 900px) {
+  .look__copy { padding: 56px var(--m) 0; max-width: none; }
+  .slips { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .slip { font-size: var(--step-small); padding: 16px 14px 24px; }
+  .slip:nth-child(n) { height: auto; }
+  .slip .cut { letter-spacing: 0.04em; }
+}
+
+/* ---------- ledger: decimal-aligned figures ---------- */
+.ledger { padding-top: var(--gap-section); }
+.ledger__grid { display: grid; grid-template-columns: repeat(12, 1fr); gap: 24px; }
+.ledger h2 { grid-column: 1 / 5; align-self: center; position: sticky; top: 30vh; }
+.ledger h2 span { display: block; }
+.ledger h2 span:first-child { color: var(--muted); }
+.ledger ol { grid-column: 5 / 13; display: grid; grid-template-columns: max-content 0 minmax(0, 1fr); align-items: baseline; column-gap: 24px; row-gap: 20px; }
+.ledger li { display: contents; }
+.ledger .fig { font-size: var(--step-display); font-weight: 500; letter-spacing: -0.04em; line-height: 1; text-align: right; font-variant-numeric: tabular-nums lining-nums; }
+.ledger li > span:last-child { font-size: var(--step-body); line-height: 1.35; max-width: 26ch; }
+.roll__digits { display: inline-flex; font-variant-numeric: tabular-nums; line-height: 1; }
+.roll__col { display: inline-block; height: 1em; overflow: clip; }
+.roll__strip { display: flex; flex-direction: column; transform: translateY(calc(var(--d) * -1em)); }
+.roll__strip > span { height: 1em; }
+.roll__strip > span::before { content: attr(data-n); }
+@media (prefers-reduced-motion: no-preference) {
+  .roll:not(.is-in) .roll__strip { transform: none; }
+  .roll.is-in .roll__strip { transition: transform 1100ms var(--ease-expo) calc(var(--i) * 70ms); }
+}
+@media (max-width: 860px) {
+  .ledger h2 { grid-column: 1 / -1; position: static; }
+  .ledger ol { grid-column: 1 / -1; column-gap: 20px; }
+  .ledger .fig { font-size: clamp(3.5rem, 14vw, 7rem); }
+}
+@media (max-width: 520px) {
+  .ledger ol { grid-template-columns: 1fr; row-gap: 6px; }
+  .ledger .fig { text-align: left; font-size: 19vw; }
+  .ledger li > span:nth-child(2) { display: none; }
+  .ledger li > span:last-child { margin-bottom: 22px; }
+}
+
+/* ---------- experience: pages of the file ---------- */
+.record { padding-top: var(--gap-section); }
+.record__grid { display: grid; grid-template-columns: 4fr 8fr; gap: clamp(24px, 4vw, 64px); align-items: start; }
+.record__side { display: grid; gap: 28px; align-self: stretch; grid-template-rows: auto 1fr; }
+.record__side .pin { position: sticky; top: 10vh; align-self: start; display: grid; gap: 28px; }
+.record__side ol { display: grid; gap: 4px; }
+#exp-nav a { display: grid; grid-template-columns: 1fr auto; gap: 12px; padding: 10px 0; text-decoration: none; color: var(--muted); transition: color var(--t-hover) var(--ease-out); }
+#exp-nav a b { font-weight: 500; color: var(--ink); }
+#exp-nav a:hover b, #exp-nav a.is-on b { color: var(--accent); }
+#exp-nav a span { font-size: var(--step-small); }
+.record__side .btn { justify-self: start; }
+.pages { display: grid; gap: 16px; }
+.page { background: var(--paper); color: var(--paper-ink); padding: clamp(24px, 3vw, 44px); display: grid; gap: 18px; scroll-margin-top: 8vh; }
+.page:nth-child(even) { background: var(--paper-2); }
+.page header { display: grid; grid-template-columns: 1fr auto; gap: 6px 24px; align-items: baseline; }
+.page h3 { font-size: var(--step-lead); font-weight: 600; letter-spacing: -0.03em; line-height: 1.05; }
+.page .when { font-size: var(--step-small); color: var(--paper-muted); text-align: right; }
+.page .org { font-weight: 500; color: var(--paper-muted); grid-column: 1 / -1; }
+.page ul { display: grid; gap: 10px; }
+.page li { padding-left: 22px; position: relative; }
+.page li::before { content: ""; position: absolute; left: 0; top: 0.62em; width: 8px; height: 8px; background: var(--accent); }
+.earlier { display: grid; gap: 10px; }
+.earlier li::before { display: none; }
+.earlier li { padding-left: 0; display: grid; grid-template-columns: 1fr auto; gap: 4px 16px; }
+.earlier li span { color: var(--paper-muted); font-size: var(--step-small); text-align: right; }
+.earlier li em { font-style: normal; grid-column: 1 / -1; color: var(--paper-muted); font-size: var(--step-small); }
+@media (max-width: 860px) {
+  .record__grid { grid-template-columns: 1fr; }
+  .record__side { position: static; }
+  .record__side .pin { position: static; }
+  .record__side ol { display: none; }
+  .page header { grid-template-columns: 1fr; }
+  .page .when { text-align: left; }
+  .earlier li { grid-template-columns: 1fr; }
+  .earlier li span { text-align: left; }
+}
+
+/* ---------- tools: book-spine index ---------- */
+.tools { padding-top: var(--gap-section); padding-bottom: 64px; }
+.tools__head { display: flex; align-items: baseline; gap: 24px; flex-wrap: wrap; margin-bottom: 28px; }
+.tools__head p { color: var(--muted); max-width: 52ch; }
+.shelf { display: flex; gap: 6px; height: 440px; }
+.spine {
+  flex: 1 1 0; min-width: 0; display: flex; flex-direction: row; justify-content: flex-start; align-items: center; gap: 12px;
+  padding: 16px 0; background: var(--surface); color: var(--ink); text-decoration: none;
+  writing-mode: vertical-rl; transition: background-color var(--t-hover) var(--ease-out), transform var(--t-ui) var(--ease-out), color var(--t-hover) var(--ease-out);
+}
+.spine b { font-size: var(--step-body); font-weight: 500; letter-spacing: -0.01em; }
+.spine span { font-size: var(--step-small); font-weight: 500; padding: 8px 3px; color: var(--paper-ink); }
+.spine[data-k=deriv] span { background: var(--accent); }
+.spine[data-k=career] span { background: var(--paper); }
+.spine[data-k=study] span { background: var(--blue); }
+.spine[data-k=data] span { background: var(--bid); }
+.spine:hover, .spine:focus-visible { background: var(--paper); color: var(--paper-ink); transform: translateY(-10px); }
+.shelf:hover .spine:not(:hover) b { color: var(--muted); }
+@media (max-width: 760px) {
+  .shelf { height: auto; flex-wrap: wrap; gap: 10px; }
+  .spine { writing-mode: horizontal-tb; flex: 0 1 auto; flex-direction: row; padding: 10px 12px; gap: 10px; }
+  .spine span { padding: 2px 6px; }
+}
+
+/* ---------- toolkit: giant word, filled bars ---------- */
+.kit { padding-top: var(--gap-section); }
+.kit__col { width: min(640px, 100%); margin-inline: auto; container-type: inline-size; }
+.kit h2 { font-size: 23.5cqw; font-weight: 600; letter-spacing: -0.06em; line-height: 0.8; margin-bottom: 20px; }
+.bars { display: grid; gap: 6px; }
+.bars details { background: var(--surface); }
+.bars summary {
+  min-height: 56px; display: flex; align-items: center; justify-content: space-between; gap: 16px;
+  padding: 0 18px; font-weight: 500; cursor: pointer; list-style: none;
+  transition: background-color var(--t-hover) var(--ease-out);
+}
+.bars summary::-webkit-details-marker { display: none; }
+.bars summary:hover { background: var(--surface-2); }
+.bars summary .plus { font-size: var(--step-lead); font-weight: 400; line-height: 1; transition: transform var(--t-ui) var(--ease-out); }
+.bars details[open] summary .plus { transform: rotate(45deg); color: var(--accent); }
+.bars ul { display: grid; gap: 14px; padding: 4px 18px 22px; }
+.bars li { display: flex; justify-content: space-between; gap: 16px; }
+.bars li span { color: var(--muted); font-size: var(--step-small); text-align: right; }
+
+/* ---------- regulators: the printed list ---------- */
+.rules { margin-top: var(--gap-section); background: var(--surface); height: clamp(760px, 92vh, 980px); overflow: hidden; padding-top: 96px; }
+.card {
+  width: min(56vw, 760px); margin-inline: auto; background: var(--paper); color: var(--paper-ink);
+  padding: 56px; transform: rotate(-1.4deg); display: grid; gap: 28px; text-align: center; min-height: 1060px;
+}
+.card h2 { font-size: var(--step-lead); font-weight: 600; letter-spacing: -0.03em; line-height: 1.05; }
+.card img { aspect-ratio: 16 / 9; object-fit: cover; object-position: 50% 62%; width: 100%; filter: grayscale(1) contrast(1.05); }
+.card figcaption { font-size: var(--step-small); color: var(--paper-muted); margin-top: 8px; }
+.card h3 { font-size: var(--step-small); font-weight: 600; color: var(--paper-muted); }
+.card p.names { font-size: var(--step-body); line-height: 1.7; }
+.card abbr { text-decoration: none; cursor: help; border-bottom: 2px solid color-mix(in srgb, var(--accent) 60%, transparent); }
+@media (max-width: 760px) {
+  .rules { height: auto; max-height: 1180px; padding-top: 56px; }
+  .card { width: 92vw; padding: 28px; transform: rotate(-1deg); min-height: 0; }
+}
+
+/* ---------- letter ---------- */
+.letter { padding-block: var(--gap-section) 0; }
+.sheet { width: min(640px, 100%); margin-inline: auto; background: var(--paper); color: var(--paper-ink); }
+.sheet__body { padding: 60px 60px 40px; display: grid; gap: 20px; font-size: var(--step-body); line-height: 1.55; }
+.sheet__body img.avatar { width: 56px; height: 56px; border-radius: 50%; object-fit: cover; object-position: 50% 20%; }
+.sheet mark { background: color-mix(in srgb, var(--accent) 35%, var(--paper)); color: inherit; padding: 0 3px; }
+.sheet .sign { font-size: var(--step-lead); font-weight: 500; letter-spacing: -0.01em; }
+.sheet .role { font-size: var(--step-small); color: var(--paper-muted); }
+.edge { display: block; width: 100%; height: 14px; color: var(--bg); }
+.tear { border-top: 5px dotted var(--bg); display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 14px 60px 18px; min-height: 72px; flex-wrap: wrap; }
+.tear a.link { font-weight: 500; }
+@media (max-width: 600px) {
+  .sheet__body { padding: 32px 24px 28px; }
+  .tear { padding: 16px 24px 20px; flex-direction: column; align-items: stretch; }
+  .tear .btn { width: 100%; }
+}
+
+/* ---------- contact: the coupon ---------- */
+.contact { padding-block: var(--gap-section); }
+.coupon {
+  position: relative; display: grid; grid-template-columns: 46fr 54fr; background: var(--accent); color: var(--accent-ink);
+  min-height: 420px;
+}
+.coupon::before, .coupon::after { content: ""; position: absolute; left: 46%; width: 28px; height: 28px; margin-left: -14px; border-radius: 50%; background: var(--bg); }
+.coupon::before { top: -14px; }
+.coupon::after { bottom: -14px; }
+.coupon__left { padding: 48px; display: flex; flex-direction: column; justify-content: space-between; gap: 32px; border-right: 5px dotted var(--bg); }
+.coupon h2 { font-size: var(--step-head); font-weight: 600; letter-spacing: -0.035em; line-height: 0.95; }
+.coupon__left p { max-width: 34ch; }
+.coupon form { padding: 48px; display: grid; gap: 10px; align-content: center; }
+.coupon input, .coupon textarea {
+  width: 100%; min-height: 52px; padding: 14px 16px; border: 0; border-radius: 0; background: #ff8a7e; color: var(--accent-ink);
+  font: 400 var(--step-body)/1.4 var(--font); transition: background-color var(--t-hover) var(--ease-out);
+}
+.coupon textarea { min-height: 112px; resize: vertical; }
+.coupon input::placeholder, .coupon textarea::placeholder { color: #4a1a16; }
+.coupon input:focus, .coupon textarea:focus { background: #ffb1a9; outline: 3px solid var(--accent-ink); outline-offset: 0; }
+.coupon .btn--ink { min-height: 56px; width: 100%; }
+.coupon .note { font-size: var(--step-small); min-height: 1.4em; }
+@media (max-width: 860px) {
+  .coupon { grid-template-columns: 1fr; }
+  .coupon::before, .coupon::after { left: auto; top: 50%; margin: -14px 0 0; }
+  .coupon::before { left: -14px; }
+  .coupon::after { right: -14px; bottom: auto; }
+  .coupon__left { border-right: 0; border-bottom: 5px dotted var(--bg); padding: 32px 24px; }
+  .coupon form { padding: 28px 24px 32px; }
+}
+
+/* ---------- footer: the back of the card ---------- */
+.back { padding-bottom: 96px; }
+.postcard { background: var(--paper); color: var(--paper-ink); width: min(1120px, 100%); margin-inline: auto; }
+.postcard__in { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; padding: 48px 56px 28px; min-height: 380px; }
+.postcard h2 { font-size: var(--step-lead); font-weight: 600; letter-spacing: -0.03em; line-height: 1.05; margin-bottom: 16px; }
+.postcard__msg p { max-width: 40ch; }
+.postcard__addr { position: relative; display: grid; align-content: end; gap: 12px; padding-top: 140px; }
+.postcard__addr a, .postcard__addr span { font-size: var(--step-body); }
+.postcard__addr a { width: fit-content; }
+.stamp { position: absolute; top: 0; right: 0; width: 88px; padding: 6px; background: var(--paper-2); transform: rotate(3deg); transition: transform var(--t-ui) var(--ease-out); }
+.stamp:hover { transform: rotate(-2deg) scale(1.06); }
+.stamp img { aspect-ratio: 3 / 4; object-fit: cover; object-position: 50% 30%; filter: grayscale(1); }
+.imprint { grid-column: 1 / -1; text-align: center; font-size: var(--step-small); color: var(--paper-muted); display: grid; gap: 6px; }
+.imprint a { color: inherit; }
+@media (max-width: 760px) {
+  .postcard__in { grid-template-columns: 1fr; padding: 32px 24px 24px; gap: 32px; }
+  .postcard__addr { padding-top: 0; }
+  .stamp { position: static; justify-self: end; width: 64px; order: -1; }
+}
+
+/* ---------- motion ---------- */
+@media (prefers-reduced-motion: no-preference) {
+  .js .hero__room img { animation: drift 2400ms var(--ease-soft) both; }
+  @keyframes drift { from { transform: scale(1.18); } to { transform: scale(1.08); } }
+  .js .memo > * { opacity: 0; transform: translateY(18px); animation: rise var(--t-reveal) var(--ease-expo) forwards; animation-delay: calc(var(--i, 0) * 90ms + 200ms); }
+  .js .memo { animation: card-in 900ms var(--ease-expo) both; }
+  @keyframes card-in { from { opacity: 0; transform: translateY(40px) rotate(-1deg); } to { opacity: 1; transform: none; } }
+  @keyframes rise { to { opacity: 1; transform: none; } }
+  .js [data-reveal] { opacity: 0; transform: translateY(24px); transition: opacity 700ms var(--ease-out), transform 900ms var(--ease-expo); transition-delay: calc(var(--i, 0) * 80ms); }
+  .js [data-reveal].is-in { opacity: 1; transform: none; }
+  .js .slip[data-reveal] { transform: translateY(80px); transition: opacity 600ms var(--ease-out), transform 1000ms var(--ease-expo); transition-delay: calc(var(--i, 0) * 90ms); }
+  .js .slip[data-reveal].is-in:nth-child(2) { transform: rotate(-1.4deg); }
+  .js .slip[data-reveal].is-in:nth-child(4) { transform: rotate(1.2deg); }
+  .js .slip[data-reveal].is-in:nth-child(6) { transform: rotate(-0.9deg); }
+  .js .slip[data-reveal].is-in:hover { transform: translateY(-14px); }
+  .js .shutter[data-reveal] { opacity: 1; transform: none; clip-path: inset(0 0 100% 0); transition: clip-path 1100ms var(--ease-in-out); }
+  .js .shutter[data-reveal] img { transform: scale(1.12); transition: transform 1500ms var(--ease-soft); }
+  .js .shutter[data-reveal].is-in { clip-path: inset(0); }
+  .js .shutter[data-reveal].is-in img { transform: none; }
+  .js .spine[data-reveal] { transform: translateY(40px); }
+  .js .spine[data-reveal].is-in { transform: none; }
+  .js .spine[data-reveal].is-in:hover { transform: translateY(-10px); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .memo__photo, .slip:hover, .spine:hover { transform: none !important; }
+}
 </style>
 </head>
 <body>
-<!-- MOBILE FULL-SCREEN NAV OVERLAY -->
-<div class="mobile-overlay" id="mobile-overlay" aria-hidden="true" role="dialog" aria-label="Navigation">
 
-  <div class="mobile-overlay-header">
-    <a class="nav-mark" href="#" id="overlay-logo">Rahul Das</a>
-    <button class="mobile-overlay-close" id="mobile-overlay-close" aria-label="Close navigation">
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-    </button>
+<a class="sr-only" href="#main">Skip to content</a>
+
+<!-- ============ HERO: the memo ============ -->
+<header class="hero" id="top">
+  <div class="hero__room" aria-hidden="true">
+    <img src="assets/board-of-trade-pit-of-craziness-265184314.jpg" width="1600" height="1200" alt="" fetchpriority="high">
   </div>
 
-  <div class="mobile-overlay-body">
+  <article class="memo" aria-labelledby="name">
+    <div class="memo__top" style="--i:0">
+      <nav class="memo__nav" aria-label="Sections">
+        <a href="#exhibit">Exhibit A</a>
+        <a href="#experience">Experience</a>
+        <a href="#tools">Tools</a>
+        <a href="#toolkit">Toolkit</a>
+        <a href="#contact">Contact</a>
+      </nav>
+          </div>
 
-    <div>
-      <div class="mobile-overlay-group-label">Sections</div>
-      <ul class="mobile-nav-links-list">
-        <li><a class="mobile-nav-link" href="#about"><span class="mobile-nav-num">01</span><span class="mobile-nav-label">About</span></a></li>
-        <li><a class="mobile-nav-link" href="#experience"><span class="mobile-nav-num">02</span><span class="mobile-nav-label">Experience</span></a></li>
-        <li><a class="mobile-nav-link" href="#skills"><span class="mobile-nav-num">03</span><span class="mobile-nav-label">Skills</span></a></li>
-        <li><a class="mobile-nav-link" href="#education"><span class="mobile-nav-num">04</span><span class="mobile-nav-label">Education</span></a></li>
-        <li><a class="mobile-nav-link" href="#interests"><span class="mobile-nav-num">05</span><span class="mobile-nav-label">Interests</span></a></li>
-        <li><a class="mobile-nav-link" href="#regulation"><span class="mobile-nav-num">06</span><span class="mobile-nav-label">Regulation</span></a></li>
-        <li><a class="mobile-nav-link" href="#contact"><span class="mobile-nav-num">07</span><span class="mobile-nav-label">Contact</span></a></li>
-      </ul>
-    </div>
+    <h1 id="name" style="--i:1"><span>Rahul</span><span>Das</span></h1>
 
-    <div>
-      <div class="mobile-overlay-group-label">Tools &amp; Projects</div>
-      <div class="mobile-tool-grid">
-        <a class="mobile-tool-link" href="./options-visualizer.html">Options</a>
-        <a class="mobile-tool-link" href="./futures-visualizer.html">Futures</a>
-        <a class="mobile-tool-link" href="./strategies-visualizer.html">Strategies</a>
-        <a class="mobile-tool-link" href="./das.html">DAS Suite</a>
-        <a class="mobile-tool-link" href="./hulls-notes.html">Hull's Notes</a>
-        <a class="mobile-tool-link" href="./trade-surveillance-career-guide.html">Career Guide</a>
-        <a class="mobile-tool-link" href="./interview-question-mapping.html">Interview Prep</a>
-        <a class="mobile-tool-link" href="./greeks-interview-prep.html">Greeks Prep</a>
-        <a class="mobile-tool-link" href="https://soccer-shot-dashboard-cgjvzk8sfh8fpxgjxjjpl5.streamlit.app" target="_blank" rel="noopener">Soccer</a>
+    <div class="memo__body" style="--i:2">
+      <div>
+        <p class="memo__lede">Trade surveillance and compliance technology. Now at Polymarket; before that, Cboe and FINRA.</p>
+        <dl class="memo__fields">
+          <dt>To</dt><dd>Hiring teams in trade surveillance and compliance</dd>
+          <dt>From</dt><dd>Rahul Das, Compliance Technology Associate</dd>
+          <dt>Date</dt><dd><time id="today" datetime="2026">2026</time></dd>
+          <dt>Re</dt><dd>Finding market abuse in futures, options and swaps, and building the controls that catch it</dd>
+        </dl>
       </div>
+      <figure class="memo__photo">
+        <img src="assets/rahul-das-headshot.jpg" width="800" height="1200" alt="Rahul Das in a navy suit and tie">
+        <figcaption>Rahul Das, Chicago</figcaption>
+      </figure>
     </div>
 
-  </div>
-
-  <div class="mobile-overlay-footer">
-    <a class="mobile-overlay-dl" href="./Rahul_Das_Resume.pdf" download="Rahul_Das_Resume.pdf">Download CV</a>
-    <div class="mobile-overlay-contact-row">
-      <a class="mobile-contact-pill" href="mailto:rdas0541@gmail.com">rdas0541@gmail.com</a>
-      <a class="mobile-contact-pill" href="https://www.linkedin.com/in/rahul-das-capm/" target="_blank" rel="noopener">LinkedIn</a>
+    <div class="memo__foot" style="--i:3">
+      <span class="credit">SIE · CAPM · Prosci · Lean Six Sigma</span>
+      <a class="btn" href="./Rahul_Das_Resume.pdf" download>Download résumé <span class="arrow" aria-hidden="true">&#8595;</span></a>
+      <a class="link" href="mailto:rdas0541@gmail.com">Email me</a>
     </div>
-  </div>
+  </article>
+</header>
 
+<div class="stub" id="stub" aria-label="Quick actions">
+  <strong>Rahul Das</strong>
+  <a class="link" href="mailto:rdas0541@gmail.com">Email</a>
+  <a class="btn" href="./Rahul_Das_Resume.pdf" download>Résumé</a>
 </div>
 
-<!-- SCROLL TO TOP -->
-<button class="scroll-top" id="scroll-top" aria-label="Back to top">
-  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="12" y1="19" x2="12" y2="5"/><polyline points="5 12 12 5 19 12"/></svg>
-</button>
+<main id="main">
 
-
-<!-- NAV -->
-<nav>
-  <a class="nav-mark" href="#">Rahul Das</a>
-  <ul class="nav-links">
-    <li><a href="#about">About</a></li>
-    <li><a href="#experience">Experience</a></li>
-    <li><a href="#skills">Skills</a></li>
-    <li><a href="#education">Education</a></li>
-    <li><a href="#interests">Interests</a></li>
-    <li><a href="#regulation">Regulation</a></li>
-    <li><a href="#contact">Contact</a></li>
-    <li><a href="./options-visualizer.html">Options</a></li>
-    <li><a href="./futures-visualizer.html">Futures</a></li>
-    <li><a href="./strategies-visualizer.html">Strategies</a></li>
-    <li><a href="./das.html">DAS Suite</a></li>
-    <li><a href="./hulls-notes.html">Hull's Notes</a></li>
-    <li><a href="./trade-surveillance-career-guide.html">Career Guide</a></li>
-    <li><a href="./interview-question-mapping.html">Interview Prep</a></li>
-    <li><a href="./greeks-interview-prep.html">Greeks Prep</a></li>
-    <li><a href="https://soccer-shot-dashboard-cgjvzk8sfh8fpxgjxjjpl5.streamlit.app" target="_blank" rel="noopener">Soccer</a></li>
-    <li><a href="./job-search-history.html">Job Search</a></li>
+<!-- ============ INTRO: three seats ============ -->
+<section class="intro wrap" aria-labelledby="seats">
+  <div class="intro__row">
+    <h2 id="seats" data-reveal>Three seats, one question</h2>
+    <p data-reveal style="--i:1">I've watched markets from the exchange, the regulator and a new kind of venue. Different rulebooks, same question every time: is this trading real, or is someone moving the price?</p>
+  </div>
+  <ul class="facts">
+    <li data-reveal style="--i:0"><b>Polymarket</b><span>Since Aug 2026 · compliance technology, DCM/DCO</span></li>
+    <li data-reveal style="--i:1"><b>Cboe</b><span>2025 to 2026 · cross-market investigations</span></li>
+    <li data-reveal style="--i:2"><b>FINRA</b><span>2024 to 2025 · broker-dealer compliance processes</span></li>
+    <li data-reveal style="--i:3"><b>Hofstra</b><span>BBA, Business Analytics, 2024</span></li>
   </ul>
-<button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark mode">
-    <svg class="icon-moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
-    <svg class="icon-sun" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
-  </button>
-<button class="hamburger" id="hamburger" aria-label="Open navigation" aria-expanded="false">
-    <span></span><span></span><span></span>
-  </button>
-    <a class="nav-download" href="./Rahul_Das_Resume.pdf" download="Rahul_Das_Resume.pdf">Download CV</a>
-</nav>
+  <div class="intro__plate">
+    <p data-reveal>Market surveillance is as old as the ticker. The feed got faster; the job of reading it for intent did not change.</p>
+    <figure class="shutter" data-reveal>
+      <img src="assets/thomas-edison-stock-ticker-nmah-jn2014-3625.jpg" width="1200" height="1484" alt="Thomas Edison's Universal stock printer under a glass dome, brass type wheel and keys" loading="lazy">
+      <figcaption>Edison's Universal stock printer, about 1870. Smithsonian National Museum of American History.</figcaption>
+    </figure>
+  </div>
+</section>
 
-<!-- HERO -->
-<section class="hero" id="home">
-  <div class="hero-left">
-    <img class="hero-photo" src="./rahul-das-photo.png" alt="Rahul Das">
-    <p class="hero-eyebrow">Trade Surveillance &amp; Financial Compliance</p>
-    <h1 class="hero-name">Rahul<br><em>Das</em></h1>
-    <p class="hero-title">Former Cross Market Investigator at Cboe Global Markets (ex-Cboe, ex-FINRA). Detected and dismantled market abuse across derivatives: spoofing, layering, and wash trading, at scale.</p>
-    <p class="hero-location">📍 Chicago, IL &nbsp;·&nbsp; CAPM &nbsp;·&nbsp; SIE &nbsp;·&nbsp; Lean Six Sigma Yellow Belt</p>
-    <div class="hero-cta-row">
-      <a class="btn-primary" href="#experience">View Experience</a>
-      <a class="btn-secondary" href="#contact">Get in Touch</a>
+<!-- ============ EXHIBIT A: the replay ============ -->
+<section class="exhibit wrap" id="exhibit" aria-labelledby="exhibit-h">
+  <div class="exhibit__head">
+    <h2 id="exhibit-h" class="head" data-reveal>Exhibit A: a spoof, replayed</h2>
+    <p data-reveal style="--i:1">An illustrative order book with made-up numbers, the kind of pattern I reviewed every day. Scroll, or drive it yourself.</p>
+  </div>
+
+  <div class="story">
+    <div class="board">
+      <div class="book" id="book" data-ui>
+        <div class="book__bar">
+          <span class="book__title">Index futures, front month</span>
+          <span class="book__last" aria-live="polite">Last <b class="num" id="last">5,000.50</b> <span id="chg"></span></span>
+        </div>
+        <table class="ladder" aria-describedby="exhibit-h">
+          <thead><tr><th scope="col">Bids</th><th scope="col">Price</th><th scope="col">Offers</th></tr></thead>
+          <tbody id="ladder"></tbody>
+        </table>
+        <noscript><p class="small">The replay needs JavaScript. The six steps are written out beside it.</p></noscript>
+        <div class="book__controls">
+          <button type="button" id="prev" aria-label="Previous step">&#8592;</button>
+          <button type="button" id="play">Play</button>
+          <button type="button" id="next" aria-label="Next step">&#8594;</button>
+          <label class="sr-only" for="scrub">Replay step</label>
+          <input type="range" id="scrub" min="0" max="5" step="1" value="0">
+          <label class="xray"><input type="checkbox" id="xray"> Show Trader X's orders</label>
+        </div>
+        <div class="alert" role="status" id="alert">
+          <b>Alert: possible spoofing, Trader X</b>
+          <span>900 lots offered, 0 filled, all cancelled 380 ms after a 20-lot buy. Order-to-trade ratio 45 to 1.</span>
+        </div>
+      </div>
+    </div>
+
+    <ol class="steps" id="steps">
+      <li class="step" data-step="0"><h3>A quiet book</h3><p>Buyers on the left, sellers on the right, a few dozen lots at each price. Nothing unusual.</p></li>
+      <li class="step" data-step="1"><h3>The layers go in</h3><p>One trader adds 900 lots to sell, a few ticks above the market, where they are unlikely to trade.</p></li>
+      <li class="step" data-step="2"><h3>The market leans</h3><p>Other traders see a wall of sellers and shade their prices down. The best offer drops to 5,000.25.</p></li>
+      <li class="step" data-step="3"><h3>The real trade</h3><p>The same trader buys 20 lots at the lower price. That was the point all along.</p></li>
+      <li class="step" data-step="4"><h3>The layers vanish</h3><p>380 milliseconds later, all 900 lots are cancelled. The wall disappears and the price recovers.</p></li>
+      <li class="step" data-step="5"><h3>The alert, then the work</h3><p>Surveillance links the cancels to the buy. Then the real job starts: rebuild the day, test for intent across sessions, and write a memo that holds up in front of enforcement.</p></li>
+    </ol>
+  </div>
+</section>
+
+<!-- ============ WHAT I LOOK FOR: slips ============ -->
+<section class="look" aria-labelledby="look-h">
+  <div class="look__photo" aria-hidden="true">
+    <img src="assets/in-the-wheat-pit-of-the-board.jpg" width="1536" height="1169" alt="" loading="lazy">
+  </div>
+  <div class="look__copy">
+    <div data-reveal>
+      <h2 id="look-h" class="head">What I look for</h2>
+      <p>The same handful of schemes, in every pit since the wheat traders of 1920. Each one leaves a pattern in orders, cancels and fills.</p>
     </div>
   </div>
-  <div class="hero-right">
-    <div class="stat-grid">
-      <div class="stat-item">
-        <div class="stat-rule"></div>
-        <div class="stat-number">100<span>+</span></div>
-        <div class="stat-label">Full-cycle investigations<br>completed</div>
+  <ul class="slips" aria-label="Market abuse patterns">
+    <li class="slip" data-reveal style="--i:0"><h3>Spoofing</h3><p class="cut" aria-hidden="true">- - - - - - - - - - - - - -</p><p>Big orders, one side<br>Small fill, other side<br>Cancelled in milliseconds<br>Tell: no intent to trade</p></li>
+    <li class="slip" data-reveal style="--i:1"><h3>Layering</h3><p class="cut" aria-hidden="true">- - - - - - - - - - - - - -</p><p>Orders stacked at<br>several price levels<br>Same trader, same side<br>Pulled after the fill</p></li>
+    <li class="slip" data-reveal style="--i:2"><h3>Wash trading</h3><p class="cut" aria-hidden="true">- - - - - - - - - - - - - -</p><p>Same owner, both sides<br>No change in position<br>Prints fake volume<br>Tell: linked accounts</p></li>
+    <li class="slip" data-reveal style="--i:3"><h3>Marking the close</h3><p class="cut" aria-hidden="true">- - - - - - - - - - - - - -</p><p>Orders bunched in<br>the closing window<br>Aim: the settlement price</p></li>
+    <li class="slip" data-reveal style="--i:4"><h3>Front-running</h3><p class="cut" aria-hidden="true">- - - - - - - - - - - - - -</p><p>Trades just ahead of<br>a known customer order<br>Same direction<br>Profits from its impact</p></li>
+    <li class="slip" data-reveal style="--i:5"><h3>Pre-arranged</h3><p class="cut" aria-hidden="true">- - - - - - - - - - - - - -</p><p>Both sides agreed<br>before the order hits<br>Skips open competition</p></li>
+  </ul>
+</section>
+
+<!-- ============ THE LEDGER ============ -->
+<section class="ledger wrap" aria-labelledby="ledger-h">
+  <div class="ledger__grid">
+    <h2 id="ledger-h" class="head" data-reveal><span>The record,</span><span>in numbers</span></h2>
+    <ol>
+      <li><span class="fig" data-roll data-reveal>250,000</span><span></span><span>derivatives transactions and more, surveilled every day at Cboe in Nasdaq SMARTS</span></li>
+      <li><span class="fig" data-roll data-reveal>15</span><span></span><span>million-plus order and execution records analyzed in Python and SQL</span></li>
+      <li><span class="fig" data-roll data-reveal>100</span><span></span><span>trade surveillance reviews and counting at Polymarket, across futures and swaps</span></li>
+      <li><span class="fig" data-roll data-reveal>40</span><span></span><span>investigative memoranda and more, written for regulatory and enforcement decision makers</span></li>
+      <li><span class="fig" data-roll data-reveal>30</span><span></span><span>percent shorter review cycles across 100+ broker-dealer processes at FINRA</span></li>
+      <li><span class="fig" data-roll data-reveal>40</span><span></span><span>percent less compliance risk exposure, root causes traced across 15+ departments</span></li>
+    </ol>
+  </div>
+</section>
+
+<!-- ============ EXPERIENCE ============ -->
+<section class="record wrap" id="experience" aria-labelledby="exp-h">
+  <div class="record__grid">
+    <div class="record__side">
+      <h2 id="exp-h" class="head" data-reveal>Experience</h2>
+      <div class="pin">
+      <ol id="exp-nav">
+        <li><a href="#job-polymarket"><b>Polymarket</b><span>2026</span></a></li>
+        <li><a href="#job-cboe"><b>Cboe Global Markets</b><span>2025</span></a></li>
+        <li><a href="#job-finra"><b>FINRA</b><span>2024</span></a></li>
+        <li><a href="#job-centene"><b>Centene</b><span>2023</span></a></li>
+        <li><a href="#job-earlier"><b>Earlier</b><span>2022</span></a></li>
+      </ol>
+      <a class="btn" href="./Rahul_Das_Resume.pdf" download>Full résumé, PDF <span class="arrow" aria-hidden="true">&#8595;</span></a>
       </div>
-      <div class="stat-item">
-        <div class="stat-rule"></div>
-        <div class="stat-number">250<span>k+</span></div>
-        <div class="stat-label">Derivatives transactions<br>reviewed daily</div>
-      </div>
-      <div class="stat-item">
-        <div class="stat-rule"></div>
-        <div class="stat-number">15<span>M+</span></div>
-        <div class="stat-label">Order &amp; execution<br>records analyzed</div>
-      </div>
-      <div class="stat-item">
-        <div class="stat-rule"></div>
-        <div class="stat-number">10<span>×</span></div>
-        <div class="stat-label">Query performance gain<br>via Snowflake migration</div>
-      </div>
-      <div class="stat-item">
-        <div class="stat-rule"></div>
-        <div class="stat-number">20<span>+</span></div>
-        <div class="stat-label">Surveillance frameworks<br>built &amp; standardized</div>
-      </div>
-      <div class="stat-item">
-        <div class="stat-rule"></div>
-        <div class="stat-number">25<span>%</span></div>
-        <div class="stat-label">Faster turnaround via<br>Python automation</div>
-      </div>
+    </div>
+
+    <div class="pages">
+      <article class="page" id="job-polymarket" data-reveal>
+        <header>
+          <h3>Compliance Technology Associate</h3><span class="when">Aug 2026 to now</span>
+          <span class="org">Polymarket · Chicago, IL</span>
+        </header>
+        <ul>
+          <li>Architect 10+ regulatory compliance workflows aligning Polymarket's DCM/DCO systems with NFA and CFTC requirements, turning regulatory obligations into scalable technology controls.</li>
+          <li>Run and refine 15+ agentic AI workflows, improving automation, orchestration and governance across compliance use cases.</li>
+          <li>Lead 100+ trade surveillance reviews across futures and swaps: spoofing, layering, wash trading, front-running, disruptive trading, marking the close, and pre-arranged and position-related violations.</li>
+          <li>Run surveillance system health monitoring across 10+ internal databases and repositories, catching data-quality issues, control gaps, system exceptions and regulatory risk.</li>
+        </ul>
+      </article>
+
+      <article class="page" id="job-cboe" data-reveal>
+        <header>
+          <h3>Cross Market Investigator</h3><span class="when">Aug 2025 to Jul 2026</span>
+          <span class="org">Cboe Global Markets · Chicago, IL</span>
+        </header>
+        <ul>
+          <li>Ran cross-market surveillance on 250,000+ derivatives transactions a day in Nasdaq SMARTS, detecting spoofing, layering, wash trading and index expiration manipulation.</li>
+          <li>Performed forensic analysis of 15M+ order and execution records in Python (Pandas, NumPy) and SQL to identify potential exchange rule violations.</li>
+          <li>Produced 40+ investigative memoranda presenting evidence of potential market manipulation to regulatory and enforcement decision makers.</li>
+        </ul>
+      </article>
+
+      <article class="page" id="job-finra" data-reveal>
+        <header>
+          <h3>Associate Analyst, Business Enablement</h3><span class="when">Jul 2024 to Aug 2025</span>
+          <span class="org">FINRA · Westbury, NY</span>
+        </header>
+        <ul>
+          <li>Evaluated 100+ broker-dealer compliance processes, converting regulatory obligations into streamlined workflows and shortening review cycles by 30%.</li>
+          <li>Traced the root causes of inefficiency across 15+ departments, reducing compliance risk exposure by 40%.</li>
+          <li>Wrote executive-level reports linking regulatory requirements to business outcomes, informing C-suite compliance strategy.</li>
+        </ul>
+      </article>
+
+      <article class="page" id="job-centene" data-reveal>
+        <header>
+          <h3>Data and Business Process Analyst Intern</h3><span class="when">Nov 2023 to Jun 2024</span>
+          <span class="org">Centene Corporation · Westbury, NY</span>
+        </header>
+        <ul>
+          <li>Data Analyst, Resource Management (May to Jun 2024): built 5 Power BI dashboards giving senior stakeholders real-time visibility into key metrics.</li>
+          <li>Business Process Analyst (Nov 2023 to Mar 2024): built 5 Power BI dashboards for compliance and licensing oversight with SQL and Snowflake, cutting licensing overuse by 15%.</li>
+        </ul>
+      </article>
+
+      <article class="page" id="job-earlier" data-reveal>
+        <header>
+          <h3>Earlier</h3><span class="when">2022 to 2023</span>
+        </header>
+        <ul class="earlier">
+          <li><b>Problem Management Business Data Analyst Intern, Centene</b><span>May to Aug 2023</span><em>Fixed incomplete datasets behind forecasts, improving forecasting accuracy by 25%.</em></li>
+          <li><b>Junior Project Management Intern, International Benefits Administrators</b><span>Sep to Oct 2023</span><em>Found $100K in annual savings in financial and operational data.</em></li>
+          <li><b>Project Management Intern, International Benefits Administrators</b><span>Aug 2022 to May 2023</span><em>Redesigned data workflows, cutting turnaround time by 20%.</em></li>
+          <li><b>Machine Learning Intern, Nomorobo</b><span>Jan 2022</span><em>Cut false positives by 25% through feature engineering and validation.</em></li>
+        </ul>
+      </article>
     </div>
   </div>
 </section>
 
-<!-- ABOUT -->
-<section id="about">
-  <div class="section-header">
-    <span class="section-number">01</span>
-    <h2 class="section-title">The Work<br><em>Behind the Numbers</em></h2>
+<!-- ============ TOOLS: the shelf ============ -->
+<section class="tools wrap" id="tools" aria-labelledby="tools-h">
+  <div class="tools__head">
+    <h2 id="tools-h" class="head" data-reveal>Things I built</h2>
+    <p data-reveal style="--i:1">Free visualizers and study guides for derivatives and surveillance careers. Pick a spine.</p>
   </div>
-  <div class="about-grid">
-    <div class="about-aside reveal">
-      <div class="about-aside-label">Areas of Expertise</div>
-      <ul class="expertise-list">
-        <li>Trade Surveillance (Options &amp; Futures)</li>
-        <li>Market Abuse Detection (Spoofing, Layering, Wash Trades)</li>
-        <li>Cross-Market &amp; Multi-Venue Analysis</li>
-        <li>Trade Reconstruction &amp; Event Analysis</li>
-        <li>Alert Review &amp; Tuning (SMARTS)</li>
-        <li>Regulatory Escalation &amp; Case Building</li>
-        <li>Process Design &amp; Surveillance Controls</li>
-        <li>Data-Driven Investigations</li>
-      </ul>
-    </div>
-    <div class="about-body reveal">
-      <p>I specialized in finding what markets try to hide, reconstructing the full chain of intent behind suspicious trading activity and turning it into defensible, enforcement-ready findings.</p>
-      <p>At Cboe Global Markets, I conducted end-to-end cross-market surveillance across options and futures, using Nasdaq SMARTS alongside Python, SQL, and TB-scale Snowflake pipelines. My work covered the full lifecycle: from alert triage and order-level forensics to investigative memos that reached regulatory decision-makers.</p>
-      <p>Before Cboe, I built compliance process infrastructure at FINRA, converting regulatory obligations into measurable controls, leading senior working groups, and reducing risk exposure across broker-dealer operations. That dual background in investigation and institutional compliance is what I brought to every engagement.</p>
-      <p>I believe rigorous surveillance is not just about catching bad actors. It is about building systems precise enough to distinguish intent from noise, at scale, under scrutiny.</p>
+  <div class="shelf">
+    <a class="spine" data-k="deriv" href="./options-visualizer.html" data-reveal style="--i:0"><b>Options payoff visualizer</b><span>Derivatives</span></a>
+    <a class="spine" data-k="deriv" href="./futures-visualizer.html" data-reveal style="--i:1"><b>Futures payoff visualizer</b><span>Derivatives</span></a>
+    <a class="spine" data-k="deriv" href="./strategies-visualizer.html" data-reveal style="--i:2"><b>Option strategies visualizer</b><span>Derivatives</span></a>
+    <a class="spine" data-k="data" href="./das.html" data-reveal style="--i:3"><b>Detection Analytics Suite</b><span>Surveillance</span></a>
+    <a class="spine" data-k="study" href="./hulls-notes.html" data-reveal style="--i:4"><b>Hull's notes</b><span>Study notes</span></a>
+    <a class="spine" data-k="study" href="./greeks-interview-prep.html" data-reveal style="--i:5"><b>Greeks and market maker compliance</b><span>Study notes</span></a>
+    <a class="spine" data-k="career" href="./trade-surveillance-career-guide.html" data-reveal style="--i:6"><b>Trade surveillance career guide</b><span>Career</span></a>
+    <a class="spine" data-k="career" href="./interview-question-mapping.html" data-reveal style="--i:7"><b>Interview question mapping</b><span>Career</span></a>
+    <a class="spine" data-k="career" href="./job-search-history.html" data-reveal style="--i:8"><b>Job search history</b><span>Career</span></a>
+    <a class="spine" data-k="data" href="https://soccer-shot-dashboard-cgjvzk8sfh8fpxgjxjjpl5.streamlit.app" data-reveal style="--i:9"><b>Soccer shot dashboard</b><span>Data</span></a>
+  </div>
+</section>
+
+<!-- ============ TOOLKIT ============ -->
+<section class="kit wrap" id="toolkit" aria-labelledby="kit-h">
+  <div class="kit__col">
+    <h2 id="kit-h" data-reveal>Toolkit</h2>
+    <div class="bars">
+      <details open data-reveal style="--i:0"><summary>Surveillance and compliance systems <span class="plus" aria-hidden="true">+</span></summary>
+        <ul><li>Nasdaq SMARTS <span>Cboe</span></li><li>NICE Actimize</li><li>Cboe S3 <span>Cboe</span></li></ul></details>
+      <details data-reveal style="--i:1"><summary>Data analysis <span class="plus" aria-hidden="true">+</span></summary>
+        <ul><li>Python (Pandas, NumPy)</li><li>SQL</li><li>R</li><li>Excel</li><li>Power BI <span>Centene</span></li><li>Tableau</li><li>Alteryx</li></ul></details>
+      <details data-reveal style="--i:2"><summary>Databases and query tools <span class="plus" aria-hidden="true">+</span></summary>
+        <ul><li>Snowflake</li><li>PostgreSQL</li><li>MySQL</li><li>MS SQL Server</li></ul></details>
+      <details data-reveal style="--i:3"><summary>Case management and workflow <span class="plus" aria-hidden="true">+</span></summary>
+        <ul><li>ServiceNow</li><li>Salesforce</li><li>Jira Service Management</li><li>Archer GRC</li><li>IBM OpenPages</li></ul></details>
+      <details data-reveal style="--i:4"><summary>Automation and scripting <span class="plus" aria-hidden="true">+</span></summary>
+        <ul><li>Python</li><li>VBA</li><li>Power Query</li><li>Shell scripting</li></ul></details>
+      <details data-reveal style="--i:5"><summary>Regulatory reporting <span class="plus" aria-hidden="true">+</span></summary>
+        <ul><li>CAT</li><li>OATS</li><li>Blue Sheets</li><li>FINRA Gateway</li><li>SEC EDGAR</li></ul></details>
+      <details data-reveal style="--i:6"><summary>Certifications <span class="plus" aria-hidden="true">+</span></summary>
+        <ul><li>Securities Industry Essentials <span>FINRA</span></li><li>Certified Associate in Project Management <span>PMI</span></li><li>Certified Change Practitioner <span>Prosci</span></li><li>Lean Six Sigma Yellow Belt</li></ul></details>
+      <details data-reveal style="--i:7"><summary>Education <span class="plus" aria-hidden="true">+</span></summary>
+        <ul><li>BBA, Business Analytics, Hofstra University <span>2020 to 2024</span></li><li>Dean's List <span>Fall 2021, Spring 2022</span></li></ul></details>
     </div>
   </div>
 </section>
 
-<!-- EXPERIENCE -->
-<section id="experience">
-  <div class="section-header">
-    <span class="section-number">02</span>
-    <h2 class="section-title">Professional<br><em>Experience</em></h2>
-  </div>
-  <div class="timeline">
-
-    <div class="timeline-item reveal">
-      <div class="timeline-dot"></div>
-      <div class="timeline-meta">
-        <span class="timeline-date">Aug 2025 – Jul 2026</span>
-        <span class="timeline-company">Cboe Global Markets</span>
-        <span class="timeline-location">Chicago, IL</span>
-      </div>
-      <div class="timeline-role">Cross Market Investigator</div>
-      <ul class="timeline-bullets">
-        <li>Conducted cross-market surveillance on 250,000+ derivatives transactions daily using Nasdaq SMARTS and internal tools to detect spoofing, layering, wash trading, and index expiration manipulation.</li>
-        <li>Performed forensic analysis of 15M+ order and execution records using Python (Pandas, NumPy), SQL, and Snowflake to identify exchange rule violations and market abuse patterns.</li>
-        <li>Designed 20+ cross-market surveillance frameworks covering options and futures, closing detection gaps for front-running, spoofing, and settlement abuse.</li>
-        <li>Re-architected surveillance data stack on Snowflake (TB-scale), cutting query time up to 10× and enabling faster, deeper cross-venue analysis.</li>
-        <li>Delivered 100+ full-cycle investigations, translating data signals into enforcement outcomes that hold up under regulatory scrutiny.</li>
-        <li>Built Python-based automation tools to streamline data extraction and investigative workflows, accelerating analysis turnaround by 25%.</li>
-      </ul>
-      <div class="timeline-tags">
-        <span class="timeline-tag">Nasdaq SMARTS</span>
-        <span class="timeline-tag">Python (Pandas, NumPy)</span>
-        <span class="timeline-tag">SQL</span>
-        <span class="timeline-tag">Snowflake</span>
-        <span class="timeline-tag">Cboe S3</span>
-        <span class="timeline-tag">Cross-Market Surveillance</span>
-        <span class="timeline-tag">Market Abuse Detection</span>
-        <span class="timeline-tag">Trade Reconstruction</span>
-        <span class="timeline-tag">Spoofing &amp; Layering</span>
-        <span class="timeline-tag">Wash Trade Analysis</span>
-        <span class="timeline-tag">Alert Review &amp; Tuning</span>
-        <span class="timeline-tag">Workflow Automation</span>
-      </div>
-    </div>
-
-    <div class="timeline-item reveal">
-      <div class="timeline-dot"></div>
-      <div class="timeline-meta">
-        <span class="timeline-date">Jul 2024 – Aug 2025</span>
-        <span class="timeline-company">FINRA</span>
-        <span class="timeline-location">Westbury, NY</span>
-      </div>
-      <div class="timeline-role">Associate Analyst, Member Supervision Operations Procedures &amp; Standards</div>
-      <ul class="timeline-bullets">
-        <li>Closed critical broker-dealer compliance gaps by partnering with executives and front-office stakeholders, delivering 10+ surveillance and control improvements tied to regulatory risk.</li>
-        <li>Directed 5–8 parallel compliance and surveillance programs from design to rollout with consistent on-time delivery.</li>
-        <li>Ran 15+ senior-level working sessions, converting regulatory guidance into concrete surveillance controls that reduced risk exposure by 40%.</li>
-        <li>Implemented governance frameworks clarifying roles, escalation protocols, and accountability metrics, improving audit readiness by 22%.</li>
-        <li>Authored executive-level reports linking regulatory requirements to business outcomes, influencing C-suite decisions on compliance strategy.</li>
-      </ul>
-      <div class="timeline-tags">
-        <span class="timeline-tag">Broker-Dealer Compliance</span>
-        <span class="timeline-tag">Written Supervisory Procedures (WSPs)</span>
-        <span class="timeline-tag">FINRA Gateway</span>
-        <span class="timeline-tag">Regulatory Risk Management</span>
-        <span class="timeline-tag">Governance &amp; Controls</span>
-        <span class="timeline-tag">Power BI</span>
-        <span class="timeline-tag">Excel VBA</span>
-        <span class="timeline-tag">Audit Readiness</span>
-        <span class="timeline-tag">Escalation Protocols</span>
-        <span class="timeline-tag">Compliance Program Management</span>
-      </div>
-    </div>
-
-    <div class="timeline-item reveal">
-      <div class="timeline-dot"></div>
-      <div class="timeline-meta">
-        <span class="timeline-date">May 2024 – Jun 2024</span>
-        <span class="timeline-company">Centene Corporation</span>
-        <span class="timeline-location">Westbury, NY</span>
-      </div>
-      <div class="timeline-role">Data Analyst, Resource Management Intern</div>
-      <ul class="timeline-bullets">
-        <li>Developed 5 Power BI dashboards for real-time visibility supporting data-driven oversight for senior stakeholders.</li>
-        <li>Designed dashboards and Excel-based tools reducing licensing overuse by 15%, improving compliance adherence.</li>
-        <li>Implemented structured workflow tracking using Microsoft Planner and Kanban boards, improving coordination across 10 high-priority initiatives.</li>
-      </ul>
-      <div class="timeline-tags">
-        <span class="timeline-tag">Power BI</span>
-        <span class="timeline-tag">Excel</span>
-        <span class="timeline-tag">Microsoft Planner</span>
-        <span class="timeline-tag">Kanban</span>
-        <span class="timeline-tag">Dashboard Design</span>
-        <span class="timeline-tag">Compliance Reporting</span>
-        <span class="timeline-tag">Technical Documentation</span>
-      </div>
-    </div>
-
-    <div class="timeline-item reveal">
-      <div class="timeline-dot"></div>
-      <div class="timeline-meta">
-        <span class="timeline-date">Nov 2023 – Mar 2024</span>
-        <span class="timeline-company">Centene Corporation</span>
-        <span class="timeline-location">United States</span>
-      </div>
-      <div class="timeline-role">Business Process Analyst Intern</div>
-      <ul class="timeline-bullets">
-        <li>Built dashboards and control frameworks with licensing teams, cutting overuse by 15% and strengthening monitoring and governance.</li>
-        <li>Bridged business and technical teams by defining requirements and producing detailed specifications for data-driven solutions.</li>
-      </ul>
-      <div class="timeline-tags">
-        <span class="timeline-tag">Control Frameworks</span>
-        <span class="timeline-tag">Requirements Analysis</span>
-        <span class="timeline-tag">Data Governance</span>
-        <span class="timeline-tag">Dashboard Design</span>
-        <span class="timeline-tag">Process Documentation</span>
-      </div>
-    </div>
-
-    <div class="timeline-item reveal">
-      <div class="timeline-dot"></div>
-      <div class="timeline-meta">
-        <span class="timeline-date">May 2023 – Aug 2023</span>
-        <span class="timeline-company">Centene Corporation</span>
-        <span class="timeline-location">United States</span>
-      </div>
-      <div class="timeline-role">Problem Management Business Data Analyst Intern</div>
-      <ul class="timeline-bullets">
-        <li>Engineered solutions to address incomplete datasets, improving forecasting accuracy by 25%.</li>
-        <li>Optimized data extraction workflows using advanced SQL, improving speed and accuracy of analysis.</li>
-        <li>Led cost-reduction initiatives that lowered operational spend by 15% through data-driven identification of inefficiencies and control gaps.</li>
-      </ul>
-      <div class="timeline-tags">
-        <span class="timeline-tag">SQL</span>
-        <span class="timeline-tag">Forecasting Analytics</span>
-        <span class="timeline-tag">Data Quality Engineering</span>
-        <span class="timeline-tag">Cost Analysis</span>
-        <span class="timeline-tag">Process Improvement</span>
-      </div>
-    </div>
-
-    <div class="timeline-item reveal">
-      <div class="timeline-dot"></div>
-      <div class="timeline-meta">
-        <span class="timeline-date">Sep 2023 – Oct 2023</span>
-        <span class="timeline-company">International Benefits Administrators</span>
-        <span class="timeline-location">United States</span>
-      </div>
-      <div class="timeline-role">Junior Project Management Intern</div>
-      <ul class="timeline-bullets">
-        <li>Built analytics frameworks across Cognos, SPSS, Power BI, and Excel, increasing efficiency by 30%.</li>
-        <li>Uncovered $100K in annual savings by analyzing financial and operational data, identifying control gaps.</li>
-        <li>Delivered multiple high-impact projects with a 98% on-time rate.</li>
-      </ul>
-      <div class="timeline-tags">
-        <span class="timeline-tag">Cognos</span>
-        <span class="timeline-tag">SPSS</span>
-        <span class="timeline-tag">Power BI</span>
-        <span class="timeline-tag">Excel</span>
-        <span class="timeline-tag">Financial Analysis</span>
-        <span class="timeline-tag">Control Gap Analysis</span>
-      </div>
-    </div>
-
-    <div class="timeline-item reveal">
-      <div class="timeline-dot"></div>
-      <div class="timeline-meta">
-        <span class="timeline-date">Aug 2022 – May 2023</span>
-        <span class="timeline-company">International Benefits Administrators</span>
-        <span class="timeline-location">Garden City, NY</span>
-      </div>
-      <div class="timeline-role">Project Management Intern</div>
-      <ul class="timeline-bullets">
-        <li>Enforced data quality controls through systematic validation, improving reliability of datasets used for analysis and reporting.</li>
-        <li>Redesigned data workflows to streamline processing, reducing turnaround time by 20%.</li>
-        <li>Delivered training on analytics tools and techniques, improving team capability in data interpretation and reporting.</li>
-      </ul>
-      <div class="timeline-tags">
-        <span class="timeline-tag">Data Quality Controls</span>
-        <span class="timeline-tag">Workflow Design</span>
-        <span class="timeline-tag">Process Improvement</span>
-        <span class="timeline-tag">Analytics Training</span>
-        <span class="timeline-tag">Reporting</span>
-      </div>
-    </div>
-
-    <div class="timeline-item reveal">
-      <div class="timeline-dot"></div>
-      <div class="timeline-meta">
-        <span class="timeline-date">Jan 2022</span>
-        <span class="timeline-company">Nomorobo</span>
-        <span class="timeline-location">New York, NY</span>
-      </div>
-      <div class="timeline-role">Machine Learning Intern</div>
-      <ul class="timeline-bullets">
-        <li>Built Python-based pipelines for data extraction, cleaning, and analysis, improving classification performance by 20%.</li>
-        <li>Enhanced model precision by 15% and reduced false positives by 25% through targeted feature engineering and validation.</li>
-      </ul>
-      <div class="timeline-tags">
-        <span class="timeline-tag">Python</span>
-        <span class="timeline-tag">Machine Learning</span>
-        <span class="timeline-tag">Feature Engineering</span>
-        <span class="timeline-tag">Pipeline Development</span>
-        <span class="timeline-tag">False Positive Reduction</span>
-      </div>
-    </div>
-
-  </div>
-</section>
-
-<!-- SKILLS -->
-<section id="skills">
-  <div class="section-header">
-    <span class="section-number">03</span>
-    <h2 class="section-title">Technical<br><em>Capabilities</em></h2>
-  </div>
-  <div class="skills-grid">
-    <div class="skill-group reveal">
-      <div class="skill-group-label">Surveillance &amp; Compliance Systems</div>
-      <div class="skill-tags">
-        <span class="skill-tag">Nasdaq SMARTS</span>
-        <span class="skill-tag">NICE Actimize</span>
-        <span class="skill-tag">Cboe S3</span>
-        <span class="skill-tag">Archer GRC</span>
-        <span class="skill-tag">IBM OpenPages</span>
-      </div>
-    </div>
-    <div class="skill-group reveal">
-      <div class="skill-group-label">Data Analysis &amp; Visualization</div>
-      <div class="skill-tags">
-        <span class="skill-tag">Python (Pandas, NumPy)</span>
-        <span class="skill-tag">SQL</span>
-        <span class="skill-tag">R</span>
-        <span class="skill-tag">Excel</span>
-        <span class="skill-tag">Power BI</span>
-        <span class="skill-tag">Tableau</span>
-        <span class="skill-tag">Alteryx</span>
-      </div>
-    </div>
-    <div class="skill-group reveal">
-      <div class="skill-group-label">Database &amp; Query Tools</div>
-      <div class="skill-tags">
-        <span class="skill-tag">Snowflake</span>
-        <span class="skill-tag">PostgreSQL</span>
-        <span class="skill-tag">MySQL</span>
-        <span class="skill-tag">MS SQL Server</span>
-      </div>
-    </div>
-    <div class="skill-group reveal">
-      <div class="skill-group-label">Automation &amp; Scripting</div>
-      <div class="skill-tags">
-        <span class="skill-tag">Python</span>
-        <span class="skill-tag">VBA</span>
-        <span class="skill-tag">Power Query</span>
-        <span class="skill-tag">Shell scripting</span>
-      </div>
-    </div>
-    <div class="skill-group reveal">
-      <div class="skill-group-label">Regulatory Reporting</div>
-      <div class="skill-tags">
-        <span class="skill-tag">CAT</span>
-        <span class="skill-tag">OATS</span>
-        <span class="skill-tag">Blue Sheets</span>
-        <span class="skill-tag">FINRA Gateway</span>
-        <span class="skill-tag">SEC EDGAR</span>
-      </div>
-    </div>
-    <div class="skill-group reveal">
-      <div class="skill-group-label">Case Management &amp; Workflow</div>
-      <div class="skill-tags">
-        <span class="skill-tag">ServiceNow</span>
-        <span class="skill-tag">Salesforce</span>
-        <span class="skill-tag">Jira Service Management</span>
-        <span class="skill-tag">Cognos</span>
-        <span class="skill-tag">SPSS</span>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- EDUCATION & CERTIFICATIONS -->
-<section id="education">
-  <div class="section-header">
-    <span class="section-number">04</span>
-    <h2 class="section-title">Education &amp;<br><em>Certifications</em></h2>
-  </div>
-  <div class="edu-grid">
+<!-- ============ THE RULEBOOKS ============ -->
+<section class="rules" aria-labelledby="rules-h">
+  <div class="card" data-reveal>
+    <h2 id="rules-h">The rulebooks I work under</h2>
+    <figure>
+      <img src="assets/randolph-street-east-from-lasalle-street-chicago.jpg" width="1087" height="1400" alt="Randolph Street looking east from LaSalle Street in Chicago, 1900, with streetcars and stone office buildings" loading="lazy">
+      <figcaption>Randolph Street from LaSalle, Chicago, 1900. Detroit Publishing Co.</figcaption>
+    </figure>
     <div>
-      <div class="edu-item reveal">
-        <div class="edu-degree">Bachelor of Business Administration<br>in Business Analytics</div>
-        <div class="edu-school">Hofstra University</div>
-        <div class="edu-date">Sep 2020 – May 2024 &nbsp;·&nbsp; Hempstead, NY</div>
-        <div class="edu-date" style="margin-top:0.5rem; color: var(--gold)">Dean's List Fall 2021 &amp; Spring 2022</div>
-      </div>
+      <h3>Derivatives, under the CFTC</h3>
+      <p class="names"><abbr title="Commodity Futures Trading Commission">CFTC</abbr>&nbsp;·&nbsp;<abbr title="National Futures Association">NFA</abbr>&nbsp;·&nbsp;CME Group&nbsp;·&nbsp;Cboe Futures Exchange&nbsp;·&nbsp;ICE Futures U.S.&nbsp;·&nbsp;Polymarket</p>
     </div>
     <div>
-      <ul class="cert-list">
-        <li class="cert-item reveal">
-          <span class="cert-name">Certified Associate in Project Management (CAPM)</span>
-          <span class="cert-body">PMI</span>
-        </li>
-        <li class="cert-item reveal">
-          <span class="cert-name">Securities Industry Essentials (SIE)</span>
-          <span class="cert-body">FINRA</span>
-        </li>
-        <li class="cert-item reveal">
-          <span class="cert-name">Prosci® Certified Change Practitioner</span>
-          <span class="cert-body">Prosci</span>
-        </li>
-        <li class="cert-item reveal">
-          <span class="cert-name">Lean Six Sigma Yellow Belt</span>
-          <span class="cert-body">Lean Six Sigma</span>
-        </li>
-        <li class="cert-item reveal">
-          <span class="cert-name">Lean Six Sigma White Belt</span>
-          <span class="cert-body">Lean Six Sigma</span>
-        </li>
-      </ul>
+      <h3>Securities, under the SEC</h3>
+      <p class="names"><abbr title="Securities and Exchange Commission">SEC</abbr>&nbsp;·&nbsp;<abbr title="Financial Industry Regulatory Authority">FINRA</abbr>&nbsp;·&nbsp;Cboe Global Markets&nbsp;·&nbsp;NYSE&nbsp;·&nbsp;Nasdaq&nbsp;·&nbsp;<abbr title="Municipal Securities Rulemaking Board">MSRB</abbr>&nbsp;·&nbsp;<abbr title="Options Clearing Corporation">OCC</abbr>&nbsp;·&nbsp;<abbr title="Depository Trust &amp; Clearing Corporation">DTCC</abbr></p>
+    </div>
+    <div>
+      <h3>Across both markets</h3>
+      <p class="names"><abbr title="Financial Crimes Enforcement Network">FinCEN</abbr>&nbsp;·&nbsp;<abbr title="Office of Foreign Assets Control">OFAC</abbr>&nbsp;·&nbsp;Federal Reserve&nbsp;·&nbsp;<abbr title="Office of the Comptroller of the Currency">OCC</abbr>&nbsp;·&nbsp;<abbr title="Federal Deposit Insurance Corporation">FDIC</abbr>&nbsp;·&nbsp;<abbr title="North American Securities Administrators Association">NASAA</abbr></p>
     </div>
   </div>
 </section>
 
-<!-- INTERESTS -->
-<section id="interests">
-  <div class="section-header">
-    <span class="section-number">05</span>
-    <h2 class="section-title">Beyond<br><em>the Work</em></h2>
-  </div>
-  <div class="interests-grid">
-
-    <div class="interest-card reveal">
-      <div class="interest-eyebrow">On the Pitch</div>
-      <div class="interest-title">Soccer</div>
-      <p class="interest-body">Football was the first system I learned to read. Growing up, I spent weekends on pitches in New York learning that positioning and pattern recognition matter as much as pace. The instinct for reading movement under pressure carries over into surveillance work more than I expected. I still follow the game closely and play pickup whenever I can in Chicago.</p>
-      <a href="https://soccer-shot-dashboard-cgjvzk8sfh8fpxgjxjjpl5.streamlit.app" target="_blank" rel="noopener" style="display:inline-block;margin-top:0.75rem;padding:0.4rem 1rem;border:1px solid var(--gold);color:var(--gold);border-radius:4px;font-size:0.8rem;text-decoration:none;letter-spacing:0.05em;">Launch Shot Dashboard →</a>
+<!-- ============ LETTER ============ -->
+<section class="letter wrap" aria-labelledby="letter-h">
+  <div class="sheet" data-reveal>
+    <div class="sheet__body">
+      <img class="avatar" src="assets/rahul-das-headshot.jpg" width="800" height="1200" alt="" loading="lazy">
+      <h2 id="letter-h" class="sr-only">A note from Rahul</h2>
+      <p>I got into surveillance because markets leave a trail. Every order, cancel and fill is on the record. The job is reading that trail well enough to <mark>tell intent from noise</mark>, then writing it up so it holds under scrutiny.</p>
+      <p>At Cboe I did that across options and futures with SMARTS, Python and SQL. At FINRA I learned the other side: how an obligation in a rulebook becomes a control someone actually runs. At Polymarket I build both into the systems of a CFTC-regulated exchange and clearinghouse.</p>
+      <p>Outside work, soccer taught me to read movement under pressure, and I built a shot dashboard to prove it. Origami taught me that precision is a practice. The ukulele is still teaching me patience; I wrote an app so I could learn it by ear.</p>
+      <p>If you're building a surveillance or compliance technology team, I'd like to hear about it.</p>
+      <div><p class="sign">Rahul Das</p><p class="role">Compliance Technology Associate, Polymarket</p></div>
     </div>
-
-    <div class="interest-card reveal">
-      <div class="interest-eyebrow">Paper Folding</div>
-      <div class="interest-title">Origami</div>
-      <p class="interest-body">Origami taught me that precision is a practice, not a given. There is something deeply satisfying about transforming a single sheet of paper into something structurally complex through nothing but deliberate folds. It is a discipline in following constraints exactly while holding an end form in mind. That kind of methodical patience translates well to detail-intensive investigative work.</p>
+    <svg class="edge" viewBox="0 0 640 14" preserveAspectRatio="none" aria-hidden="true"><path fill="currentColor" d="M0 14V7a8 7 0 0 0 16 0a8 7 0 0 0 16 0a8 7 0 0 0 16 0a8 7 0 0 0 16 0a8 7 0 0 0 16 0a8 7 0 0 0 16 0a8 7 0 0 0 16 0a8 7 0 0 0 16 0a8 7 0 0 0 16 0a8 7 0 0 0 16 0a8 7 0 0 0 16 0a8 7 0 0 0 16 0a8 7 0 0 0 16 0a8 7 0 0 0 16 0a8 7 0 0 0 16 0a8 7 0 0 0 16 0a8 7 0 0 0 16 0a8 7 0 0 0 16 0a8 7 0 0 0 16 0a8 7 0 0 0 16 0a8 7 0 0 0 16 0a8 7 0 0 0 16 0a8 7 0 0 0 16 0a8 7 0 0 0 16 0a8 7 0 0 0 16 0a8 7 0 0 0 16 0a8 7 0 0 0 16 0a8 7 0 0 0 16 0a8 7 0 0 0 16 0a8 7 0 0 0 16 0a8 7 0 0 0 16 0a8 7 0 0 0 16 0a8 7 0 0 0 16 0a8 7 0 0 0 16 0a8 7 0 0 0 16 0a8 7 0 0 0 16 0a8 7 0 0 0 16 0a8 7 0 0 0 16 0a8 7 0 0 0 16 0V14Z"/></svg>
+    <div class="tear">
+      <a class="link" href="mailto:rdas0541@gmail.com">rdas0541@gmail.com</a>
+      <a class="btn btn--ink" href="mailto:rdas0541@gmail.com?subject=Hello%20Rahul">Email me <span class="arrow" aria-hidden="true">&#8594;</span></a>
     </div>
-
-    <div class="interest-card reveal">
-      <div class="interest-eyebrow">Still Learning</div>
-      <div class="interest-title">Ukulele</div>
-      <p class="interest-body">Picked up ukulele as an adult and immediately ran into the obvious problem: tuning by ear when you have no ear yet. So I started a small Python side project that pulls pitch data through audio APIs and gives semi-automated feedback on whether each string is in tune. It is a genuinely useful excuse to work with real-time audio processing and keep building in Python outside of work. Still very much a beginner on both fronts.</p>
-    </div>
-
   </div>
 </section>
 
-<!-- REGULATION ROADMAP -->
-<section id="regulation">
-  <div class="section-header">
-    <span class="section-number">06</span>
-    <h2 class="section-title">U.S. Financial SRO<br><em>Regulation Roadmap</em></h2>
-  </div>
-
-  <p class="roadmap-intro">Congress empowers two federal commissions, the SEC for securities and the CFTC for derivatives, which delegate front-line oversight to Self-Regulatory Organizations (SROs), while Treasury agencies handle cross-market financial crimes and sanctions.</p>
-
-  <div class="roadmap-wrapper reveal">
-
-    <!-- CONGRESS -->
-    <div class="roadmap-tier roadmap-tier-top">
-      <div class="roadmap-card congress-card">
-        <div class="rn-eyebrow">Legislative Foundation</div>
-        <div class="rn-abbr">U.S. Congress</div>
-        <div class="rn-desc">Securities Exchange Act (1934) &nbsp;·&nbsp; Commodity Exchange Act (1936) &nbsp;·&nbsp; Dodd-Frank Act (2010) &nbsp;·&nbsp; Sarbanes-Oxley (2002) &nbsp;·&nbsp; Investment Advisers Act (1940)</div>
-      </div>
+<!-- ============ CONTACT: the coupon ============ -->
+<section class="contact wrap" id="contact" aria-labelledby="contact-h">
+  <div class="coupon" data-reveal>
+    <div class="coupon__left">
+      <h2 id="contact-h">Hiring for surveillance?</h2>
+      <p>Tell me about the role, the team and the markets you cover. I read every message.</p>
     </div>
-
-    <!-- FEDERAL REGULATORS -->
-    <div class="roadmap-tier roadmap-tier-federal">
-      <div class="roadmap-federal-cols">
-
-        <div class="roadmap-branch">
-          <div class="roadmap-card sec-card">
-            <div class="rn-eyebrow">Securities Markets</div>
-            <div class="rn-abbr">SEC</div>
-            <div class="rn-name">Securities and Exchange Commission</div>
-            <div class="rn-desc">Regulates U.S. securities markets, broker-dealers, investment advisers, and public company disclosure.</div>
-            <div class="rn-tags"><span class="rn-tag">Est. 1934</span><span class="rn-tag">Reg BI</span><span class="rn-tag">Rule 10b-5</span><span class="rn-tag">17a-4</span></div>
-          </div>
-        </div>
-
-        <div class="roadmap-branch">
-          <div class="roadmap-card cftc-card">
-            <div class="rn-eyebrow">Derivatives &amp; Futures Markets</div>
-            <div class="rn-abbr">CFTC</div>
-            <div class="rn-name">Commodity Futures Trading Commission</div>
-            <div class="rn-desc">Regulates futures, options on futures, swaps, and commodity derivatives markets, including FCMs and swap dealers.</div>
-            <div class="rn-tags"><span class="rn-tag">Est. 1974</span><span class="rn-tag">CEA</span><span class="rn-tag">DCM</span><span class="rn-tag">Dodd-Frank</span></div>
-          </div>
-        </div>
-
-      </div>
-    </div>
-
-    <!-- SROs -->
-    <div class="roadmap-tier roadmap-tier-sro">
-      <div class="roadmap-federal-cols">
-
-        <!-- SEC SROs -->
-        <div class="roadmap-branch">
-          <div class="roadmap-branch-label">SROs Under SEC Oversight</div>
-          <div class="roadmap-sro-grid">
-
-            <div class="roadmap-card sro-card">
-              <div class="rn-eyebrow">Broker-Dealer SRO</div>
-              <div class="rn-abbr">FINRA</div>
-              <div class="rn-name">Financial Industry Regulatory Authority</div>
-              <div class="rn-desc">Licenses, examines, and disciplines broker-dealers and their 624K+ registered representatives across the U.S.</div>
-              <div class="rn-tags"><span class="rn-tag">WSPs</span><span class="rn-tag">CAT</span><span class="rn-tag">Rule 3110</span><span class="rn-tag">BrokerCheck</span></div>
-            </div>
-
-            <div class="roadmap-card sro-card">
-              <div class="rn-eyebrow">Municipal Securities SRO</div>
-              <div class="rn-abbr">MSRB</div>
-              <div class="rn-name">Municipal Securities Rulemaking Board</div>
-              <div class="rn-desc">Writes conduct rules for muni securities dealers and advisors but relies on SEC and FINRA to enforce them.</div>
-              <div class="rn-tags"><span class="rn-tag">EMMA</span><span class="rn-tag">Rule G-17</span><span class="rn-tag">Rule G-37</span></div>
-            </div>
-
-            <div class="roadmap-card sro-card">
-              <div class="rn-eyebrow">Derivatives Exchange SRO</div>
-              <div class="rn-abbr">Cboe</div>
-              <div class="rn-name">Cboe Global Markets</div>
-              <div class="rn-desc">World's largest options exchange, self-regulating trade practice and member conduct for listed options and equity markets.</div>
-              <div class="rn-tags"><span class="rn-tag">SMARTS</span><span class="rn-tag">VIX</span><span class="rn-tag">Exchange Act §6</span></div>
-            </div>
-
-            <div class="roadmap-card sro-card">
-              <div class="rn-eyebrow">Equity Exchange SROs</div>
-              <div class="rn-abbr">NYSE / Nasdaq</div>
-              <div class="rn-name">National Securities Exchanges</div>
-              <div class="rn-desc">Operate listing standards, real-time market surveillance, and member oversight as SEC-registered national exchanges.</div>
-              <div class="rn-tags"><span class="rn-tag">Reg NMS</span><span class="rn-tag">Listing Standards</span></div>
-            </div>
-
-            <div class="roadmap-card sro-card">
-              <div class="rn-eyebrow">Options Clearing SRO</div>
-              <div class="rn-abbr">OCC</div>
-              <div class="rn-name">Options Clearing Corporation</div>
-              <div class="rn-desc">Central counterparty that issues, clears, and guarantees all U.S. exchange-listed options contracts, clearing 40M+ daily.</div>
-              <div class="rn-tags"><span class="rn-tag">CCP</span><span class="rn-tag">CFTC co-supervised</span></div>
-            </div>
-
-            <div class="roadmap-card sro-card">
-              <div class="rn-eyebrow">Clearing &amp; Settlement SRO</div>
-              <div class="rn-abbr">DTCC</div>
-              <div class="rn-name">Depository Trust &amp; Clearing Corporation</div>
-              <div class="rn-desc">Provides post-trade clearing, settlement, and custody for U.S. equities and fixed income, processing ~$2.5 quadrillion/year.</div>
-              <div class="rn-tags"><span class="rn-tag">T+1 Settlement</span><span class="rn-tag">NSCC</span><span class="rn-tag">DTC</span></div>
-            </div>
-
-          </div>
-        </div>
-
-        <!-- CFTC SROs -->
-        <div class="roadmap-branch">
-          <div class="roadmap-branch-label branch-cftc">SROs Under CFTC Oversight</div>
-          <div class="roadmap-sro-grid">
-
-            <div class="roadmap-card sro-card sro-cftc">
-              <div class="rn-eyebrow">Futures Industry SRO</div>
-              <div class="rn-abbr">NFA</div>
-              <div class="rn-name">National Futures Association</div>
-              <div class="rn-desc">Mandatory SRO that registers and examines all U.S. futures participants: FCMs, IBs, CPOs, CTAs, and swap dealers.</div>
-              <div class="rn-tags"><span class="rn-tag">BASIC</span><span class="rn-tag">FCM</span><span class="rn-tag">Swap Dealer</span></div>
-            </div>
-
-            <div class="roadmap-card sro-card sro-cftc">
-              <div class="rn-eyebrow">Futures Exchange SRO</div>
-              <div class="rn-abbr">CME Group</div>
-              <div class="rn-name">Chicago Mercantile Exchange Group</div>
-              <div class="rn-desc">World's largest futures exchange operator (CME, CBOT, NYMEX, COMEX), self-regulating trade practice and position limits under CFTC designation.</div>
-              <div class="rn-tags"><span class="rn-tag">DCM</span><span class="rn-tag">CME Globex</span><span class="rn-tag">CBOT</span></div>
-            </div>
-
-            <div class="roadmap-card sro-card sro-cftc">
-              <div class="rn-eyebrow">ICE / Volatility SRO</div>
-              <div class="rn-abbr">ICE &amp; CFE</div>
-              <div class="rn-name">Intercontinental Exchange &amp; Cboe Futures Exchange</div>
-              <div class="rn-desc">ICE Futures U.S. handles soft commodity and financial futures; CFE lists VIX futures. Both are CFTC-designated contract markets.</div>
-              <div class="rn-tags"><span class="rn-tag">ICE Futures U.S.</span><span class="rn-tag">VIX Futures</span></div>
-            </div>
-
-          </div>
-        </div>
-
-      </div>
-    </div>
-
-    <!-- SUPPORTING AGENCIES -->
-    <div class="roadmap-tier roadmap-tier-support">
-      <div class="roadmap-branch-label roadmap-support-label">Cross-Market Supporting Agencies</div>
-      <div class="roadmap-support-grid">
-
-        <div class="roadmap-card support-card">
-          <div class="rn-eyebrow">Financial Crimes</div>
-          <div class="rn-abbr">FinCEN</div>
-          <div class="rn-name">Financial Crimes Enforcement Network</div>
-          <div class="rn-desc">Treasury bureau that administers BSA/AML compliance, mandating SARs, CTRs, and KYC/CDD for all financial institutions.</div>
-          <div class="rn-tags"><span class="rn-tag">AML/BSA</span><span class="rn-tag">SAR</span><span class="rn-tag">CTR</span><span class="rn-tag">CDD</span></div>
-        </div>
-
-        <div class="roadmap-card support-card">
-          <div class="rn-eyebrow">Sanctions Enforcement</div>
-          <div class="rn-abbr">OFAC</div>
-          <div class="rn-name">Office of Foreign Assets Control</div>
-          <div class="rn-desc">Enforces U.S. sanctions programs via the SDN list. All firms must screen transactions and counterparties or face strict-liability penalties.</div>
-          <div class="rn-tags"><span class="rn-tag">SDN List</span><span class="rn-tag">50% Rule</span><span class="rn-tag">VSD</span></div>
-        </div>
-
-        <div class="roadmap-card support-card">
-          <div class="rn-eyebrow">Systemic Risk</div>
-          <div class="rn-abbr">Federal Reserve</div>
-          <div class="rn-name">Board of Governors, Federal Reserve System</div>
-          <div class="rn-desc">Supervises bank holding companies and SIFIs, sets capital requirements under Basel III, and oversees Regulation T margin rules.</div>
-          <div class="rn-tags"><span class="rn-tag">Reg T</span><span class="rn-tag">SIFI</span><span class="rn-tag">Basel III</span></div>
-        </div>
-
-        <div class="roadmap-card support-card">
-          <div class="rn-eyebrow">National Banks</div>
-          <div class="rn-abbr">OCC</div>
-          <div class="rn-name">Office of the Comptroller of the Currency</div>
-          <div class="rn-desc">Charters and supervises national banks and federal savings associations, including bank-affiliated broker-dealers and custodians.</div>
-          <div class="rn-tags"><span class="rn-tag">National Banks</span><span class="rn-tag">Trust Companies</span></div>
-        </div>
-
-        <div class="roadmap-card support-card">
-          <div class="rn-eyebrow">Deposit Insurance</div>
-          <div class="rn-abbr">FDIC</div>
-          <div class="rn-name">Federal Deposit Insurance Corporation</div>
-          <div class="rn-desc">Insures bank deposits up to $250K and supervises state-chartered non-Fed-member banks, coordinating with SIPC for broker-dealer insolvency.</div>
-          <div class="rn-tags"><span class="rn-tag">$250K Coverage</span><span class="rn-tag">SIPC</span></div>
-        </div>
-
-        <div class="roadmap-card support-card">
-          <div class="rn-eyebrow">State Level</div>
-          <div class="rn-abbr">NASAA</div>
-          <div class="rn-name">North American Securities Administrators Assoc.</div>
-          <div class="rn-desc">Coordinates state "blue sky" laws, registering investment advisers under $100M AUM and handling retail investor complaints.</div>
-          <div class="rn-tags"><span class="rn-tag">Blue Sky Laws</span><span class="rn-tag">IA Registration</span></div>
-        </div>
-
-      </div>
-    </div>
-
+    <form id="contact-form" action="https://formspree.io/f/mqeoqzkn" method="POST">
+      <label class="sr-only" for="f-name">Name</label>
+      <input id="f-name" name="name" type="text" placeholder="Name" autocomplete="name" required>
+      <label class="sr-only" for="f-email">Email</label>
+      <input id="f-email" name="email" type="email" placeholder="Email" autocomplete="email" required>
+      <label class="sr-only" for="f-company">Company</label>
+      <input id="f-company" name="company" type="text" placeholder="Company" autocomplete="organization">
+      <label class="sr-only" for="f-msg">Message</label>
+      <textarea id="f-msg" name="message" placeholder="Message" required></textarea>
+      <button class="btn btn--ink" type="submit">Send message <span class="arrow" aria-hidden="true">&#8594;</span></button>
+      <p class="note" id="form-note" role="status"></p>
+    </form>
   </div>
 </section>
 
-<!-- CONTACT -->
-<section id="contact">
-  <div class="section-header">
-    <span class="section-number">07</span>
-    <h2 class="section-title">Let's<br><em>Connect</em></h2>
-  </div>
-  <p class="contact-sub">Whether you're building a surveillance function, investigating complex trading activity, or looking for a compliance professional who can bridge data and regulation: reach out.</p>
-  <div class="contact-links">
-    <a class="contact-link" href="mailto:rdas0541@gmail.com">rdas0541@gmail.com</a>
-    <a class="contact-link" href="tel:5162208652">516-220-8652</a>
-    <a class="contact-link" href="https://www.linkedin.com/in/rahul-das-capm/" target="_blank" rel="noopener">LinkedIn Profile</a>
-    <a class="contact-link" href="./Rahul_Das_Resume.pdf" download="Rahul_Das_Resume.pdf">Download Resume</a>
-  </div>
+</main>
 
-  <form class="contact-form" id="contact-form" action="https://formspree.io/f/mqeoqzkn" method="POST">
-    <div class="form-group">
-      <label class="form-label" for="name">Name</label>
-      <input class="form-input" type="text" id="name" name="name" placeholder="Your name" required>
+<!-- ============ FOOTER: the back of the card ============ -->
+<footer class="back wrap">
+  <div class="postcard" data-reveal>
+    <svg class="edge" viewBox="0 0 1200 22" preserveAspectRatio="none" aria-hidden="true" style="height:22px;color:var(--bg);transform:scaleY(-1)"><path fill="currentColor" d="M0 22V11a50 11 0 0 0 100 0a50 11 0 0 0 100 0a50 11 0 0 0 100 0a50 11 0 0 0 100 0a50 11 0 0 0 100 0a50 11 0 0 0 100 0a50 11 0 0 0 100 0a50 11 0 0 0 100 0a50 11 0 0 0 100 0a50 11 0 0 0 100 0a50 11 0 0 0 100 0a50 11 0 0 0 100 0V22Z"/></svg>
+    <div class="postcard__in">
+      <div class="postcard__msg">
+        <h2>Thanks for reading</h2>
+        <p>This page is the short version. The résumé has the rest, and every tool on the shelf is free to use.</p>
+      </div>
+      <address class="postcard__addr" style="font-style:normal">
+        <figure class="stamp"><img src="assets/chicago-board-of-trade-1885.jpg" width="900" height="1304" alt="Engraving of the Chicago Board of Trade building, 1885" loading="lazy"></figure>
+        <a class="link" href="mailto:rdas0541@gmail.com">rdas0541@gmail.com</a>
+        <a class="link" href="tel:5162208652">(516) 220-8652</a>
+        <a class="link" href="https://www.linkedin.com/in/rahul-das-capm/" rel="noopener">LinkedIn</a>
+        <a class="link" href="./Rahul_Das_Resume.pdf" download>Résumé, PDF</a>
+        <span>Chicago, Illinois</span>
+      </address>
+      <div class="imprint">
+        <p>© 2026 Rahul Das · Trade surveillance and compliance technology</p>
+        <p>Pictures: <a href="https://commons.wikimedia.org/wiki/File:Board_Of_Trade_Pit_Of_Craziness_(265184314).jpg">Board of Trade pit</a> by Richie Diesterheft, <a href="https://creativecommons.org/licenses/by/2.0">CC BY 2.0</a>; <a href="https://commons.wikimedia.org/wiki/File:In_the_wheat_pit_of_the_Board_of_Trade_of_the_city_of_Chicago_LCCN2013646364.jpg">In the wheat pit</a>, Library of Congress; <a href="https://commons.wikimedia.org/wiki/File:Thomas_Edison_stock_ticker_NMAH-JN2014-3625.jpg">Edison stock ticker</a>, Jaclyn Nash, Smithsonian; <a href="https://commons.wikimedia.org/wiki/File:Randolph_Street_east_from_Lasalle_Street,_Chicago,_Illinois,_1900.jpg">Randolph Street, 1900</a>, Detroit Publishing Co.; <a href="https://commons.wikimedia.org/wiki/File:Chicago_Board_of_Trade_1885.jpg">Chicago Board of Trade, 1885</a>, A.T. Andreas. All public domain except where a licence is named.</p>
+      </div>
     </div>
-    <div class="form-group">
-      <label class="form-label" for="email">Email</label>
-      <input class="form-input" type="email" id="email" name="email" placeholder="your@email.com" required>
-    </div>
-    <div class="form-group">
-      <label class="form-label" for="message">Message</label>
-      <textarea class="form-textarea" id="message" name="message" placeholder="Tell me about the role or opportunity..." required></textarea>
-    </div>
-    <button class="form-submit" type="submit">Send Message</button>
-    <div class="form-success" id="form-success">Message sent. I will be in touch shortly.</div>
-  </form>
-  <div class="footer-rule"></div>
-  <p class="footer-text">© 2026 Rahul Das &nbsp;·&nbsp; Trade Surveillance &amp; Financial Compliance Professional &nbsp;·&nbsp; Chicago, IL</p>
-</section>
+  </div>
+</footer>
 
 <script>
-  // Scroll reveal
-  const reveals = document.querySelectorAll('.reveal');
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach((entry, i) => {
-      if (entry.isIntersecting) {
-        setTimeout(() => entry.target.classList.add('visible'), i * 60);
-        observer.unobserve(entry.target);
-      }
+// Today's date on the memo
+(() => {
+  const t = document.getElementById('today');
+  const d = new Date();
+  t.dateTime = d.toISOString().slice(0, 10);
+  t.textContent = d.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+})();
+
+// Reveal once on entry; never leaves content hidden
+(() => {
+  const targets = document.querySelectorAll('[data-reveal]');
+  if (!('IntersectionObserver' in window)) { targets.forEach((el) => el.classList.add('is-in')); return; }
+  const io = new IntersectionObserver((entries) => {
+    for (const e of entries) if (e.isIntersecting) { e.target.classList.add('is-in'); io.unobserve(e.target); }
+  }, { rootMargin: '0px 0px -10% 0px', threshold: 0.08 });
+  targets.forEach((el) => io.observe(el));
+  addEventListener('load', () => setTimeout(() => {
+    targets.forEach((el) => { const r = el.getBoundingClientRect(); if (r.top < innerHeight && r.bottom > 0) el.classList.add('is-in'); });
+  }, 2500));
+})();
+
+// The memo recedes as you scroll; the stub takes over
+(() => {
+  const memo = document.querySelector('.memo');
+  const stub = document.getElementById('stub');
+  const hero = document.querySelector('.hero');
+  const calm = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let ticking = false;
+  const update = () => {
+    ticking = false;
+    const p = Math.min(1, Math.max(0, scrollY / innerHeight));
+    if (!calm) memo.style.transform = `translateY(${p * 12}vh) scale(${1 - p * 0.14})`;
+    stub.classList.toggle('is-on', hero.getBoundingClientRect().bottom < innerHeight * 0.25);
+  };
+  memo.addEventListener('animationend', () => { memo.style.animation = 'none'; update(); }, { once: true });
+  addEventListener('scroll', () => { if (!ticking) { ticking = true; requestAnimationFrame(update); } }, { passive: true });
+  update();
+})();
+
+// Exhibit A: the spoofing replay
+(() => {
+  const prices = [5001.50, 5001.25, 5001.00, 5000.75, 5000.50, 5000.25, 5000.00, 4999.75, 4999.50, 4999.25];
+  // per step: price -> [side, size, spoofSize, fill]
+  const S = [
+    { last: 5000.50, rows: { 5001.50:['a',42], 5001.25:['a',35], 5001.00:['a',28], 5000.75:['a',22], 5000.50:['a',15], 5000.25:['b',18], 5000.00:['b',26], 4999.75:['b',31], 4999.50:['b',38], 4999.25:['b',44] } },
+    { last: 5000.50, rows: { 5001.50:['a',42,350], 5001.25:['a',35,300], 5001.00:['a',28,250], 5000.75:['a',22], 5000.50:['a',15], 5000.25:['b',18], 5000.00:['b',26], 4999.75:['b',31], 4999.50:['b',38], 4999.25:['b',44] } },
+    { last: 5000.25, rows: { 5001.50:['a',30,350], 5001.25:['a',26,300], 5001.00:['a',24,250], 5000.75:['a',31], 5000.50:['a',27], 5000.25:['a',20], 5000.00:['b',9], 4999.75:['b',22], 4999.50:['b',30], 4999.25:['b',41] } },
+    { last: 5000.25, rows: { 5001.50:['a',30,350], 5001.25:['a',26,300], 5001.00:['a',24,250], 5000.75:['a',31], 5000.50:['a',27], 5000.25:['a',0,0,'X bought 20'], 5000.00:['b',9], 4999.75:['b',22], 4999.50:['b',30], 4999.25:['b',41] } },
+    { last: 5000.50, rows: { 5001.50:['a',30], 5001.25:['a',26], 5001.00:['a',24], 5000.75:['a',31], 5000.50:['a',17], 5000.25:['b',22], 5000.00:['b',24], 4999.75:['b',29], 4999.50:['b',36], 4999.25:['b',42] } },
+  ];
+  S.push(S[4]);
+  const MAX = 420;
+  const book = document.getElementById('book');
+  const body = document.getElementById('ladder');
+  const last = document.getElementById('last');
+  const chg = document.getElementById('chg');
+  const scrub = document.getElementById('scrub');
+  const xray = document.getElementById('xray');
+  const steps = [...document.querySelectorAll('.step')];
+  const fmt = (n) => n.toLocaleString('en-US', { minimumFractionDigits: 2 });
+  let cur = -1, timer = null, userXray = false;
+
+  body.innerHTML = prices.map((p) => `<tr data-p="${p}"><td><div class="cell cell--bid"><span class="q"></span><span class="bar"><i class="own"></i></span></div></td><td class="px num">${fmt(p)}</td><td><div class="cell cell--ask"><span class="bar"><i class="own"></i><i class="spoof"></i></span><span class="q"></span><span class="fill"></span></div></td></tr>`).join('');
+  const rows = [...body.rows];
+
+  function show(i) {
+    i = Math.max(0, Math.min(S.length - 1, i));
+    if (i === cur) return;
+    const prev = cur < 0 ? S[0] : S[cur];
+    cur = i;
+    const s = S[i];
+    let bestAsk = Infinity, bestBid = -Infinity;
+    for (const [p, [side, size]] of Object.entries(s.rows)) { if (side === 'a' && size > 0) bestAsk = Math.min(bestAsk, +p); if (side === 'b') bestBid = Math.max(bestBid, +p); }
+    rows.forEach((tr) => {
+      const p = +tr.dataset.p;
+      const [side, size = 0, spoof = 0, fill = ''] = s.rows[p] || [];
+      const bid = tr.querySelector('.cell--bid'), ask = tr.querySelector('.cell--ask');
+      bid.querySelector('.q').textContent = side === 'b' ? size : '';
+      bid.querySelector('.own').style.width = side === 'b' ? (size / MAX * 100) + '%' : '0';
+      const aq = ask.querySelector('.q');
+      aq.textContent = side === 'a' && size + spoof > 0 ? size + spoof : '';
+      aq.classList.toggle('has-spoof', spoof > 0);
+      ask.querySelector('.own').style.width = side === 'a' ? (size / MAX * 100) + '%' : '0';
+      ask.querySelector('.spoof').style.width = side === 'a' ? (spoof / MAX * 100) + '%' : '0';
+      ask.querySelector('.fill').textContent = fill;
+      tr.classList.toggle('is-touch', p === bestAsk || p === bestBid);
     });
-  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
-  reveals.forEach(el => observer.observe(el));
-
-  // ── Dark mode (Option C: OS default + manual toggle + localStorage) ──
-  const htmlEl       = document.documentElement;
-  const themeToggle  = document.getElementById('theme-toggle');
-
-  function applyTheme(dark) {
-    htmlEl.setAttribute('data-theme', dark ? 'dark' : 'light');
-    themeToggle.setAttribute('aria-label', dark ? 'Switch to light mode' : 'Switch to dark mode');
-    localStorage.setItem('theme', dark ? 'dark' : 'light');
+    last.textContent = fmt(s.last);
+    const d = s.last - S[0].last;
+    chg.textContent = d < 0 ? `down ${fmt(-d)}` : d > 0 ? `up ${fmt(d)}` : '';
+    chg.className = d < 0 ? 'dn' : d > 0 ? 'up' : '';
+    book.classList.toggle('is-alert', i === 5);
+    if (!userXray) { xray.checked = i >= 3; book.classList.toggle('is-xray', xray.checked); }
+    scrub.value = i;
+    scrub.setAttribute('aria-valuetext', `Step ${i + 1} of 6: ${steps[i].querySelector('h3').textContent}`);
+    steps.forEach((el, k) => el.classList.toggle('is-on', k === i));
   }
 
-  const savedTheme = localStorage.getItem('theme');
-  const systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-  applyTheme(savedTheme ? savedTheme === 'dark' : systemDark);
+  function stop() { clearInterval(timer); timer = null; document.getElementById('play').textContent = 'Play'; }
+  document.getElementById('prev').onclick = () => { stop(); show(cur - 1); };
+  document.getElementById('next').onclick = () => { stop(); show(cur + 1); };
+  document.getElementById('play').onclick = (e) => {
+    if (timer) return stop();
+    if (cur >= 5) show(0);
+    e.currentTarget.textContent = 'Pause';
+    timer = setInterval(() => { if (cur >= 5) return stop(); show(cur + 1); }, 1600);
+  };
+  scrub.oninput = () => { stop(); show(+scrub.value); };
+  xray.onchange = () => { userXray = true; book.classList.toggle('is-xray', xray.checked); };
 
-  themeToggle.addEventListener('click', () => {
-    applyTheme(htmlEl.getAttribute('data-theme') !== 'dark');
-  });
-
-  window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
-    if (!localStorage.getItem('theme')) applyTheme(e.matches);
-  });
-
-  // ── Collapsible sections ──
-  document.querySelectorAll('section[id]:not(#home)').forEach(section => {
-    const header = section.querySelector('.section-header');
-    if (!header) return;
-
-    // Toggle button
-    const btn = document.createElement('button');
-    btn.className = 'section-toggle';
-    btn.setAttribute('aria-expanded', 'true');
-    btn.setAttribute('aria-label', 'Toggle section');
-    btn.innerHTML = '<svg class="toggle-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"/></svg>';
-    header.appendChild(btn);
-
-    // Wrap all content after header
-    const body = document.createElement('div');
-    body.className = 'section-body';
-    const inner = document.createElement('div');
-    inner.className = 'section-body-inner';
-    body.appendChild(inner);
-
-    const siblings = [];
-    let el = header.nextElementSibling;
-    while (el) { siblings.push(el); el = el.nextElementSibling; }
-    siblings.forEach(s => inner.appendChild(s));
-    section.appendChild(body);
-
-    btn.addEventListener('click', () => {
-      const expanded = btn.getAttribute('aria-expanded') === 'true';
-      btn.setAttribute('aria-expanded', String(!expanded));
-      body.classList.toggle('collapsed', expanded);
-    });
-  });
-
-
-  // ── Mobile nav ──
-  const hamburgerBtn  = document.getElementById('hamburger');
-  const mobileOverlay = document.getElementById('mobile-overlay');
-  const overlayClose  = document.getElementById('mobile-overlay-close');
-  const overlayLogo   = document.getElementById('overlay-logo');
-
-  function openMobileNav() {
-    hamburgerBtn.classList.add('open');
-    hamburgerBtn.setAttribute('aria-expanded', 'true');
-    mobileOverlay.classList.add('open');
-    mobileOverlay.setAttribute('aria-hidden', 'false');
-    document.body.style.overflow = 'hidden';
+  if ('IntersectionObserver' in window) {
+    const io = new IntersectionObserver((entries) => {
+      for (const e of entries) if (e.isIntersecting && !timer) show(+e.target.dataset.step);
+    }, { rootMargin: '-45% 0px -45% 0px' });
+    steps.forEach((el) => io.observe(el));
   }
+  show(0);
+})();
 
-  function closeMobileNav() {
-    hamburgerBtn.classList.remove('open');
-    hamburgerBtn.setAttribute('aria-expanded', 'false');
-    mobileOverlay.classList.remove('open');
-    mobileOverlay.setAttribute('aria-hidden', 'true');
-    document.body.style.overflow = '';
-  }
-
-  hamburgerBtn.addEventListener('click', () => {
-    mobileOverlay.classList.contains('open') ? closeMobileNav() : openMobileNav();
+// Rolling figures in the ledger
+(() => {
+  const els = [...document.querySelectorAll('[data-roll]')];
+  els.forEach((el) => {
+    const value = el.textContent.trim();
+    const said = Object.assign(document.createElement('span'), { className: 'sr-only', textContent: value });
+    const shown = Object.assign(document.createElement('span'), { className: 'roll__digits' });
+    shown.setAttribute('aria-hidden', 'true');
+    let i = 0;
+    for (const ch of value) {
+      if (!/\d/.test(ch)) { shown.append(ch); continue; }
+      const col = Object.assign(document.createElement('span'), { className: 'roll__col' });
+      const strip = Object.assign(document.createElement('span'), { className: 'roll__strip' });
+      strip.style.setProperty('--d', ch);
+      strip.style.setProperty('--i', i++);
+      for (let n = 0; n < 10; n++) { const d = document.createElement('span'); d.dataset.n = n; strip.append(d); }
+      col.append(strip); shown.append(col);
+    }
+    el.classList.add('roll');
+    el.replaceChildren(said, shown);
   });
-  overlayClose.addEventListener('click', closeMobileNav);
-  overlayLogo.addEventListener('click', closeMobileNav);
+  if (!('IntersectionObserver' in window)) { els.forEach((el) => el.classList.add('is-in')); return; }
+  const io = new IntersectionObserver((entries) => {
+    for (const e of entries) if (e.isIntersecting) { e.target.classList.add('is-in'); io.unobserve(e.target); }
+  }, { rootMargin: '0px 0px -15% 0px' });
+  els.forEach((el) => io.observe(el));
+})();
 
-  // Close on any overlay link click
-  mobileOverlay.querySelectorAll('a[href^="#"]').forEach(link => {
-    link.addEventListener('click', closeMobileNav);
+// Experience: mark the role in view
+(() => {
+  const links = [...document.querySelectorAll('#exp-nav a')];
+  if (!links.length || !('IntersectionObserver' in window)) return;
+  const io = new IntersectionObserver((entries) => {
+    for (const e of entries) if (e.isIntersecting) links.forEach((a) => a.classList.toggle('is-on', a.hash === '#' + e.target.id));
+  }, { rootMargin: '-40% 0px -55% 0px' });
+  document.querySelectorAll('.page').forEach((el) => io.observe(el));
+})();
+
+// Contact form: send through Formspree without leaving the page
+(() => {
+  const form = document.getElementById('contact-form');
+  const note = document.getElementById('form-note');
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const btn = form.querySelector('button');
+    btn.disabled = true; note.textContent = 'Sending…';
+    try {
+      const res = await fetch(form.action, { method: 'POST', body: new FormData(form), headers: { Accept: 'application/json' } });
+      if (!res.ok) throw new Error();
+      form.reset(); note.textContent = 'Message sent. I will be in touch shortly.';
+    } catch {
+      note.textContent = 'That did not send. Email me at rdas0541@gmail.com instead.';
+    } finally { btn.disabled = false; }
   });
-
-  // Close on swipe right
-  let touchStartX = 0;
-  mobileOverlay.addEventListener('touchstart', e => { touchStartX = e.touches[0].clientX; }, { passive: true });
-  mobileOverlay.addEventListener('touchend', e => {
-    if (e.changedTouches[0].clientX - touchStartX > 60) closeMobileNav();
-  }, { passive: true });
-
-  // ── Scroll-to-top ──
-  const scrollTopBtn = document.getElementById('scroll-top');
-  window.addEventListener('scroll', () => {
-    scrollTopBtn.classList.toggle('visible', window.scrollY > 400);
-  }, { passive: true });
-  scrollTopBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
-
+})();
 </script>
 </body>
 </html>
