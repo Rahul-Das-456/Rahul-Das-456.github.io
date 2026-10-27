@@ -436,3 +436,7 @@ input[type=range]::-moz-range-track { height: 10px; background: var(--surface-2)
   .section-label, .content-title { font-size: clamp(1.5rem, 6.6vw, 1.85rem) !important; }
 }
 @media (max-width: 900px) { .type-tab { flex: 1 1 calc(50% - 6px) !important; min-width: 0 !important; } }
+
+/* numbered cards lost their numbers above; give the text the whole card */
+.step-card { grid-template-columns: minmax(0, 1fr) !important; }
+.callout { font-size: var(--step-body) !important; line-height: 1.6 !important; }

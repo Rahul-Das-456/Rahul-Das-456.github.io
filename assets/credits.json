@@ -22,28 +22,6 @@
   "saved": "2026-10-27T15:47:59.830Z"
  },
  {
-  "file": "assets/in-the-wheat-pit-of-the-board.jpg",
-  "media": "image",
-  "ref": "commons:67977522",
-  "title": "In the wheat pit of the Board of Trade of the city of Chicago LCCN2013646364",
-  "creator": "Miscellaneous Items in High Demand, PPOC, Library of Congress",
-  "creatorUrl": null,
-  "date": "1920",
-  "license": "public domain",
-  "licenseCode": "pd",
-  "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
-  "creditRequired": false,
-  "page": "https://commons.wikimedia.org/wiki/File:In_the_wheat_pit_of_the_Board_of_Trade_of_the_city_of_Chicago_LCCN2013646364.jpg",
-  "via": "Wikimedia Commons",
-  "image": "https://upload.wikimedia.org/wikipedia/commons/c/c3/In_the_wheat_pit_of_the_Board_of_Trade_of_the_city_of_Chicago_LCCN2013646364.jpg",
-  "width": 1536,
-  "height": 1169,
-  "bytes": 186110,
-  "credit": "\"In the wheat pit of the Board of Trade of the city of Chicago LCCN2013646364\" by Miscellaneous Items in High Demand, PPOC, Library of Congre…, public domain, via Wikimedia Commons",
-  "notes": [],
-  "saved": "2026-10-27T15:48:00.317Z"
- },
- {
   "file": "assets/chicago-board-of-trade-1885.jpg",
   "media": "image",
   "ref": "commons:24665183",
@@ -108,5 +86,27 @@
   "credit": "\"Randolph Street east from Lasalle Street, Chicago, Illinois, 1900\" by Detroit Publishing Co., public domain, via Wikimedia Commons",
   "notes": [],
   "saved": "2026-10-27T15:48:01.919Z"
+ },
+ {
+  "file": "assets/nyse-floor.mp4",
+  "also": [
+   "assets/nyse-floor.webm",
+   "assets/nyse-floor-poster.jpg"
+  ],
+  "media": "video",
+  "ref": "archive:big_board",
+  "title": "Big Board, The",
+  "creator": "On Film, Inc.",
+  "date": null,
+  "license": "public domain",
+  "licenseCode": "pd",
+  "licenseUrl": "https://creativecommons.org/licenses/publicdomain/",
+  "creditRequired": false,
+  "page": "https://archive.org/details/big_board",
+  "credit": "\"The Big Board\" by On Film, Inc., public domain, via Internet Archive (Prelinger Archives)",
+  "notes": [
+   "8-second cut at 0:49.6 to 0:57.6, 640x480, no audio"
+  ],
+  "saved": "2026-10-27T16:10:00.000Z"
  }
 ]

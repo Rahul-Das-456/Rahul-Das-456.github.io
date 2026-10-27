@@ -220,6 +220,7 @@ ul, ol { padding: 0; list-style: none; }
 .intro__plate figure { grid-column: 7 / 13; }
 .intro__plate img { aspect-ratio: 4 / 3; object-fit: cover; width: 100%; filter: grayscale(1) contrast(1.05); }
 .intro__plate figcaption, .cap { font-size: var(--step-small); color: var(--muted); margin-top: 10px; }
+.intro__plate figcaption { text-align: right; }
 .intro__plate p { grid-column: 1 / 6; font-size: var(--step-lead); line-height: 1.35; }
 @media (max-width: 860px) {
   .intro__row h2 { grid-column: 1 / -1; font-size: clamp(3rem, 13vw, 5rem); }
@@ -288,7 +289,7 @@ ul, ol { padding: 0; list-style: none; }
 .step h3 { font-size: var(--step-lead); font-weight: 600; letter-spacing: -0.01em; line-height: 1.2; color: var(--muted); transition: color 400ms var(--ease-out); }
 .step.is-on, .step.is-on h3 { color: var(--ink); }
 .step.is-on h3 { color: var(--accent); }
-.step p { max-width: 38ch; }
+.step p { max-width: none; text-wrap: pretty; }
 @media (max-width: 900px) {
   .exhibit__head h2, .exhibit__head p { grid-column: 1 / -1; }
   .story { grid-template-columns: 1fr; gap: 0; }
@@ -305,7 +306,7 @@ ul, ol { padding: 0; list-style: none; }
 /* ---------- showcase: what I look for, slips along the edge ---------- */
 .look { position: relative; margin-top: var(--gap-section); min-height: 96svh; overflow: clip; isolation: isolate; display: grid; }
 .look__photo { position: absolute; inset: 0; z-index: -1; }
-.look__photo img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 30%; filter: grayscale(1) brightness(0.55) contrast(1.05); }
+.look__photo video { display: block; width: 100%; height: 100%; object-fit: cover; object-position: 50% 40%; filter: grayscale(1) brightness(0.55) contrast(1.05); }
 .look__copy { padding: clamp(56px, 9vh, 120px) var(--m) 0 18vw; max-width: calc(18vw + 760px); }
 .look__copy > div { background: rgba(10, 14, 28, 0.72); padding: clamp(20px, 2.4vw, 32px); display: grid; gap: 16px; }
 .look__copy p { font-size: var(--step-lead); line-height: 1.35; max-width: 34ch; }
@@ -314,12 +315,12 @@ ul, ol { padding: 0; list-style: none; }
   flex: 1 1 0; background: var(--paper); color: var(--paper-ink); padding: 18px 18px 0; font-size: var(--step-small); line-height: 1.45;
   transition: transform var(--t-reveal) var(--ease-expo);
 }
-.slip:nth-child(1) { height: 40svh; }
-.slip:nth-child(2) { height: 32svh; transform: rotate(-1.4deg); transform-origin: 50% 100%; }
-.slip:nth-child(3) { height: 44svh; }
-.slip:nth-child(4) { height: 28svh; transform: rotate(1.2deg); transform-origin: 50% 100%; }
-.slip:nth-child(5) { height: 38svh; }
-.slip:nth-child(6) { height: 34svh; transform: rotate(-0.9deg); transform-origin: 50% 100%; }
+.slip:nth-child(1) { height: 40svh; flex-grow: 1.15; }
+.slip:nth-child(2) { height: 32svh; flex-grow: 0.9; transform: rotate(-1.4deg); transform-origin: 50% 100%; }
+.slip:nth-child(3) { height: 44svh; flex-grow: 1.05; }
+.slip:nth-child(4) { height: 28svh; flex-grow: 1.25; transform: rotate(1.2deg); transform-origin: 50% 100%; }
+.slip:nth-child(5) { height: 38svh; flex-grow: 0.95; }
+.slip:nth-child(6) { height: 34svh; flex-grow: 0.8; transform: rotate(-0.9deg); transform-origin: 50% 100%; }
 .slip:hover { transform: translateY(-14px) rotate(0deg); }
 .slip h3 { font-size: var(--step-body); font-weight: 600; }
 .slip .cut { color: var(--paper-muted); letter-spacing: 0.1em; white-space: nowrap; overflow: hidden; }
@@ -340,16 +341,7 @@ ul, ol { padding: 0; list-style: none; }
 .ledger ol { grid-column: 5 / 13; display: grid; grid-template-columns: max-content 0 minmax(0, 1fr); align-items: baseline; column-gap: 24px; row-gap: 20px; }
 .ledger li { display: contents; }
 .ledger .fig { font-size: var(--step-display); font-weight: 500; letter-spacing: -0.04em; line-height: 1; text-align: right; font-variant-numeric: tabular-nums lining-nums; }
-.ledger li > span:last-child { font-size: var(--step-body); line-height: 1.35; max-width: 26ch; }
-.roll__digits { display: inline-flex; font-variant-numeric: tabular-nums; line-height: 1; }
-.roll__col { display: inline-block; height: 1em; overflow: clip; }
-.roll__strip { display: flex; flex-direction: column; transform: translateY(calc(var(--d) * -1em)); }
-.roll__strip > span { height: 1em; }
-.roll__strip > span::before { content: attr(data-n); }
-@media (prefers-reduced-motion: no-preference) {
-  .roll:not(.is-in) .roll__strip { transform: none; }
-  .roll.is-in .roll__strip { transition: transform 1100ms var(--ease-expo) calc(var(--i) * 70ms); }
-}
+.ledger li > span:last-child { font-size: var(--step-body); line-height: 1.35; text-wrap: pretty; }
 @media (max-width: 860px) {
   .ledger h2 { grid-column: 1 / -1; position: static; }
   .ledger ol { grid-column: 1 / -1; column-gap: 20px; }
@@ -376,6 +368,11 @@ ul, ol { padding: 0; list-style: none; }
 .pages { display: grid; gap: 16px; }
 .page { background: var(--paper); color: var(--paper-ink); padding: clamp(24px, 3vw, 44px); display: grid; gap: 18px; scroll-margin-top: 8vh; }
 .page:nth-child(even) { background: var(--paper-2); }
+.page { margin-right: calc(var(--k, 0) * 3%); }
+.page:nth-child(2) { --k: 1; }
+.page:nth-child(3) { --k: 2; }
+.page:nth-child(4) { --k: 3; }
+.page:nth-child(5) { --k: 4; }
 .page header { display: grid; grid-template-columns: 1fr auto; gap: 6px 24px; align-items: baseline; }
 .page h3 { font-size: var(--step-lead); font-weight: 600; letter-spacing: -0.03em; line-height: 1.05; }
 .page .when { font-size: var(--step-small); color: var(--paper-muted); text-align: right; }
@@ -393,6 +390,7 @@ ul, ol { padding: 0; list-style: none; }
   .record__side { position: static; }
   .record__side .pin { position: static; }
   .record__side ol { display: none; }
+  .page { margin-right: calc(var(--k, 0) * 6px); }
   .page header { grid-template-columns: 1fr; }
   .page .when { text-align: left; }
   .earlier li { grid-template-columns: 1fr; }
@@ -707,7 +705,10 @@ ul, ol { padding: 0; list-style: none; }
 <!-- ============ WHAT I LOOK FOR: slips ============ -->
 <section class="look" aria-labelledby="look-h">
   <div class="look__photo" aria-hidden="true">
-    <img src="assets/in-the-wheat-pit-of-the-board.jpg" width="1536" height="1169" alt="" loading="lazy">
+    <video id="floor" muted loop playsinline preload="metadata" poster="assets/nyse-floor-poster.jpg" width="640" height="480">
+      <source src="assets/nyse-floor.webm" type="video/webm">
+      <source src="assets/nyse-floor.mp4" type="video/mp4">
+    </video>
   </div>
   <div class="look__copy">
     <div data-reveal>
@@ -974,7 +975,7 @@ ul, ol { padding: 0; list-style: none; }
       </address>
       <div class="imprint">
         <p>© 2026 Rahul Das · Trade surveillance and compliance technology</p>
-        <p>Pictures: <a href="https://commons.wikimedia.org/wiki/File:Board_Of_Trade_Pit_Of_Craziness_(265184314).jpg">Board of Trade pit</a> by Richie Diesterheft, <a href="https://creativecommons.org/licenses/by/2.0">CC BY 2.0</a>; <a href="https://commons.wikimedia.org/wiki/File:In_the_wheat_pit_of_the_Board_of_Trade_of_the_city_of_Chicago_LCCN2013646364.jpg">In the wheat pit</a>, Library of Congress; <a href="https://commons.wikimedia.org/wiki/File:Thomas_Edison_stock_ticker_NMAH-JN2014-3625.jpg">Edison stock ticker</a>, Jaclyn Nash, Smithsonian; <a href="https://commons.wikimedia.org/wiki/File:Randolph_Street_east_from_Lasalle_Street,_Chicago,_Illinois,_1900.jpg">Randolph Street, 1900</a>, Detroit Publishing Co.; <a href="https://commons.wikimedia.org/wiki/File:Chicago_Board_of_Trade_1885.jpg">Chicago Board of Trade, 1885</a>, A.T. Andreas. All public domain except where a licence is named.</p>
+        <p>Pictures: <a href="https://commons.wikimedia.org/wiki/File:Board_Of_Trade_Pit_Of_Craziness_(265184314).jpg">Board of Trade pit</a> by Richie Diesterheft, <a href="https://creativecommons.org/licenses/by/2.0">CC BY 2.0</a>; trading floor footage from <a href="https://archive.org/details/big_board">The Big Board</a>, On Film, Inc., Prelinger Archives; <a href="https://commons.wikimedia.org/wiki/File:Thomas_Edison_stock_ticker_NMAH-JN2014-3625.jpg">Edison stock ticker</a>, Jaclyn Nash, Smithsonian; <a href="https://commons.wikimedia.org/wiki/File:Randolph_Street_east_from_Lasalle_Street,_Chicago,_Illinois,_1900.jpg">Randolph Street, 1900</a>, Detroit Publishing Co.; <a href="https://commons.wikimedia.org/wiki/File:Chicago_Board_of_Trade_1885.jpg">Chicago Board of Trade, 1885</a>, A.T. Andreas. All public domain except where a licence is named.</p>
       </div>
     </div>
   </div>
@@ -1039,6 +1040,13 @@ ul, ol { padding: 0; list-style: none; }
   addEventListener('load', () => setTimeout(() => {
     targets.forEach((el) => { const r = el.getBoundingClientRect(); if (r.top < innerHeight && r.bottom > 0) el.classList.add('is-in'); });
   }, 2500));
+})();
+
+// The trading floor film plays only while it is on screen, and never under reduced motion
+(() => {
+  const film = document.getElementById('floor');
+  if (!film || matchMedia('(prefers-reduced-motion: reduce)').matches || !('IntersectionObserver' in window)) return;
+  new IntersectionObserver(([e]) => { if (e.isIntersecting) film.play().catch(() => {}); else film.pause(); }, { threshold: 0.15 }).observe(film);
 })();
 
 // The memo recedes as you scroll; the stub takes over
@@ -1139,30 +1147,33 @@ ul, ol { padding: 0; list-style: none; }
   show(0);
 })();
 
-// Rolling figures in the ledger
+// Ledger figures count up once as they come into view
 (() => {
   const els = [...document.querySelectorAll('[data-roll]')];
-  els.forEach((el) => {
+  const calm = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const fmt = new Intl.NumberFormat('en-US');
+  const items = els.map((el) => {
     const value = el.textContent.trim();
+    const target = Number(value.replace(/,/g, ''));
     const said = Object.assign(document.createElement('span'), { className: 'sr-only', textContent: value });
-    const shown = Object.assign(document.createElement('span'), { className: 'roll__digits' });
+    const shown = Object.assign(document.createElement('span'), { textContent: value });
     shown.setAttribute('aria-hidden', 'true');
-    let i = 0;
-    for (const ch of value) {
-      if (!/\d/.test(ch)) { shown.append(ch); continue; }
-      const col = Object.assign(document.createElement('span'), { className: 'roll__col' });
-      const strip = Object.assign(document.createElement('span'), { className: 'roll__strip' });
-      strip.style.setProperty('--d', ch);
-      strip.style.setProperty('--i', i++);
-      for (let n = 0; n < 10; n++) { const d = document.createElement('span'); d.dataset.n = n; strip.append(d); }
-      col.append(strip); shown.append(col);
-    }
-    el.classList.add('roll');
     el.replaceChildren(said, shown);
+    return { el, shown, target };
   });
-  if (!('IntersectionObserver' in window)) { els.forEach((el) => el.classList.add('is-in')); return; }
+  if (calm || !('IntersectionObserver' in window)) return;
+  const run = ({ shown, target }) => {
+    const t0 = performance.now(), dur = 1100;
+    const tick = (now) => {
+      const p = Math.min(1, (now - t0) / dur), e = 1 - Math.pow(2, -10 * p);
+      shown.textContent = fmt.format(Math.round(target * (p === 1 ? 1 : e)));
+      if (p < 1) requestAnimationFrame(tick);
+    };
+    requestAnimationFrame(tick);
+  };
+  items.forEach((it) => { it.shown.textContent = '0'; });
   const io = new IntersectionObserver((entries) => {
-    for (const e of entries) if (e.isIntersecting) { e.target.classList.add('is-in'); io.unobserve(e.target); }
+    for (const e of entries) if (e.isIntersecting) { run(items.find((it) => it.el === e.target)); io.unobserve(e.target); }
   }, { rootMargin: '0px 0px -15% 0px' });
   els.forEach((el) => io.observe(el));
 })();

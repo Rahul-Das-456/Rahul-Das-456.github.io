@@ -113,11 +113,11 @@
   .theme-toggle:hover { color: var(--navy); border-color: var(--navy); }
   .icon-sun  { display: none; }
   .icon-moon { display: block; }
-  [data-theme="dark"] .icon-moon { display: none; }
-  [data-theme="dark"] .icon-sun  { display: block; }
+  [data-theme="retired-dark"] .icon-moon { display: none; }
+  [data-theme="retired-dark"] .icon-sun  { display: block; }
 
   /* ── DARK MODE ── */
-  [data-theme="dark"] {
+  [data-theme="retired-dark"] {
     --cream:      #0d1c2e;
     --cream-dark: #112235;
     --navy:       #c4d4e4;
@@ -131,18 +131,18 @@
     --gold-light: #d4b48a;
     --white:      #0d1c2e;
   }
-  [data-theme="dark"] nav {
+  [data-theme="retired-dark"] nav {
     background: rgba(13, 28, 46, 0.95);
     border-bottom-color: #1c3048;
   }
-  [data-theme="dark"] .hero-section { background: #071420; }
-  [data-theme="dark"] .tool-card { background: #112235; border-color: #1c3048; }
-  [data-theme="dark"] .example-bullet { background: #071420; border-color: #1c3048; }
-  [data-theme="dark"] .q-output { background: #0d1c2e; border-left-color: var(--gold); }
-  [data-theme="dark"] .stem-chip { background: #112235; border-color: #1c3048; }
-  [data-theme="dark"] .step-card { background: #112235; border-color: #1c3048; }
-  [data-theme="dark"] .theme-table th { background: #071420; }
-  [data-theme="dark"] .theme-table tr:nth-child(even) td { background: #112235; }
+  [data-theme="retired-dark"] .hero-section { background: #071420; }
+  [data-theme="retired-dark"] .tool-card { background: #112235; border-color: #1c3048; }
+  [data-theme="retired-dark"] .example-bullet { background: #071420; border-color: #1c3048; }
+  [data-theme="retired-dark"] .q-output { background: #0d1c2e; border-left-color: var(--gold); }
+  [data-theme="retired-dark"] .stem-chip { background: #112235; border-color: #1c3048; }
+  [data-theme="retired-dark"] .step-card { background: #112235; border-color: #1c3048; }
+  [data-theme="retired-dark"] .theme-table th { background: #071420; }
+  [data-theme="retired-dark"] .theme-table tr:nth-child(even) td { background: #112235; }
 
   /* ── HERO ── */
   .hero-section {
@@ -176,8 +176,8 @@
     max-width: 64ch;
     line-height: 1.8;
   }
-  [data-theme="dark"] .hero-section { background: #071420; }
-  [data-theme="dark"] .hero-title { color: var(--gold); }
+  [data-theme="retired-dark"] .hero-section { background: #071420; }
+  [data-theme="retired-dark"] .hero-title { color: var(--gold); }
 
   /* ── MAIN CONTENT ── */
   .page-body { max-width: 900px; margin: 0 auto; padding: 5rem 8vw; }
@@ -327,7 +327,7 @@
     text-transform: uppercase;
   }
 
-  [data-theme="dark"] .example-header { background: #071420; color: var(--gold); }
+  [data-theme="retired-dark"] .example-header { background: #071420; color: var(--gold); }
 
   .example-bullet {
     background: var(--cream-dark);
@@ -415,7 +415,7 @@
   .tool-textarea:focus { border-color: var(--gold); }
   .tool-textarea::placeholder { color: var(--ink-light); font-style: italic; }
 
-  [data-theme="dark"] .tool-textarea {
+  [data-theme="retired-dark"] .tool-textarea {
     background: #0d1c2e;
     border-color: #1c3048;
     color: var(--ink);
@@ -569,7 +569,7 @@
     padding: 0.65rem 1rem;
     font-size: 0.88rem;
   }
-  [data-theme="dark"] .jd-pattern-item { background: #112235; border-color: #1c3048; }
+  [data-theme="retired-dark"] .jd-pattern-item { background: #112235; border-color: #1c3048; }
   .jd-in  { font-family: var(--mono); font-size: 0.75rem; color: var(--ink-mid); }
   .jd-arr { font-family: var(--mono); font-size: 0.7rem; color: var(--gold); white-space: nowrap; }
   .jd-out { font-family: var(--mono); font-size: 0.75rem; color: var(--navy); }
@@ -621,6 +621,29 @@
 </style>
 <script>document.documentElement.classList.add('js')</script>
 <link rel="stylesheet" href="assets/site.css">
+<style>
+  /* reading page: one comfortable measure, centred */
+  html:root, html[data-theme] { --sheet: 900px; }
+  .exhibit__title { max-width: none; }
+  .exhibit__card { padding-inline: clamp(20px, 4.5vw, 72px) !important; }
+  /* the four steps read as a sequence, not a row of boxes */
+  .step-card { background: none !important; border: 0 !important; padding: 0 !important; }
+  .steps-list { gap: clamp(24px, 3vw, 36px) !important; }
+  .step-label { font-size: var(--step-lead) !important; margin-bottom: 6px; }
+  /* the three questions under each bullet sit as one list on the block */
+  .example-questions { gap: 0 !important; padding: 8px 20px 16px !important; }
+  .q-output { background: none !important; border: 0 !important; padding: 12px 0 !important; font-size: var(--step-body) !important; color: var(--paper-ink) !important; }
+  .q-output + .q-output { margin-top: 4px; }
+  .example-bullet { font-size: var(--step-body) !important; font-style: normal !important; }
+  .example-bullet::before { content: 'Bullet' !important; font-family: var(--font) !important; font-size: var(--step-small) !important; font-weight: 600; }
+  /* JD patterns: a two-column lookup, what the JD says and what you ask */
+  .jd-pattern-list { gap: 0 !important; }
+  .jd-pattern-item { grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr) !important; background: none !important; border: 0 !important; padding: 10px 0 !important; }
+  .jd-in, .jd-out { font-family: var(--font) !important; font-size: var(--step-body) !important; }
+  .jd-arr { font-family: var(--font) !important; }
+  .step-desc code { font-size: 0.9em !important; }
+  .tool-empty { border: 0 !important; background: var(--paper-2); font-family: var(--font) !important; font-size: var(--step-body) !important; }
+</style>
 <script src="assets/site.js" defer></script>
 </head>
 <body>
@@ -666,7 +689,7 @@
       Question mapping is the practice of reading your own bullets backward: ask "what question would make someone tell this story?" Once you know the question, you know the answer. You lived it.
     </p>
     <div class="callout">
-      <strong>The key realization:</strong> a behavioral question is just a resume bullet prepended with a conversational stem. That's it. No mystery, no unpredictability. Once you've mapped your bullets, the entire behavioral interview becomes a structured narrative exercise you control.
+      <strong>The idea:</strong> a behavioral question is a resume bullet with a conversational stem in front. Map your bullets and you know what the interview will ask.
     </div>
   </div>
 
@@ -849,32 +872,32 @@
     <ul class="jd-pattern-list">
       <li class="jd-pattern-item">
         <span class="jd-in">"Experience [verb]ing / with / in …"</span>
-        <span class="jd-arr">→ strip →</span>
+        <span class="jd-arr">becomes</span>
         <span class="jd-out">"you have experience [verb]ing …"</span>
       </li>
       <li class="jd-pattern-item">
         <span class="jd-in">"Ability to [verb] …"</span>
-        <span class="jd-arr">→ strip →</span>
+        <span class="jd-arr">becomes</span>
         <span class="jd-out">"you [verb]ed …"</span>
       </li>
       <li class="jd-pattern-item">
         <span class="jd-in">"X+ years of experience …"</span>
-        <span class="jd-arr">→ strip →</span>
+        <span class="jd-arr">becomes</span>
         <span class="jd-out">"you have experience …"</span>
       </li>
       <li class="jd-pattern-item">
         <span class="jd-in">"Demonstrated ability/experience …"</span>
-        <span class="jd-arr">→ strip →</span>
+        <span class="jd-arr">becomes</span>
         <span class="jd-out">"you demonstrated …"</span>
       </li>
       <li class="jd-pattern-item">
         <span class="jd-in">"Strong knowledge of / Proficiency in …"</span>
-        <span class="jd-arr">→ strip →</span>
+        <span class="jd-arr">becomes</span>
         <span class="jd-out">"you applied strong knowledge of …"</span>
       </li>
       <li class="jd-pattern-item">
         <span class="jd-in">"Proven track record of …"</span>
-        <span class="jd-arr">→ strip →</span>
+        <span class="jd-arr">becomes</span>
         <span class="jd-out">"you have a proven track record of …"</span>
       </li>
     </ul>
@@ -962,7 +985,7 @@
     </div>
 
     <div class="callout" style="margin-top: 2rem;">
-      <strong>The full circle:</strong> read the JD → map each bullet to a question → find the resume bullet that answers it → you now know exactly what they'll ask and exactly which story to tell. You're not preparing in the dark anymore.
+      <strong>Put together:</strong> read the JD, turn each requirement into a question, then find the resume bullet that answers it. Now you know what they'll ask and which story to tell.
     </div>
   </div>
 
@@ -1160,7 +1183,7 @@
   const themeToggle = document.getElementById('theme-toggle');
 
   function applyTheme(dark) {
-    htmlEl.setAttribute('data-theme', dark ? 'dark' : 'light');
+    htmlEl.setAttribute('data-theme','light');
     themeToggle.setAttribute('aria-label', dark ? 'Switch to light mode' : 'Switch to dark mode');
     localStorage.setItem('theme', dark ? 'dark' : 'light');
   }
