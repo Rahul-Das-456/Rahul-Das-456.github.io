@@ -453,3 +453,4 @@ html.lenis, html.lenis body { height: auto; }
 .rb-split { display: inline; }
 .rb-split > .split-parent { display: block !important; }
 .magnet-host, .magnet__slot { display: contents; }
+.das-terminal { width: 100%; }

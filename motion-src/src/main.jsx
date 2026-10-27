@@ -46,7 +46,7 @@ if (!calm) {
   }
   const sheet = document.querySelector('.cv__sheet');
   if (sheet) {
-    gsap.fromTo(sheet, { rotate: -4, y: 40 }, { rotate: -0.8, y: 0, ease: 'none', scrollTrigger: { trigger: sheet, start: 'top bottom', end: 'top 40%', scrub: true } });
+    gsap.fromTo(sheet, { rotate: -2.2 }, { rotate: -0.8, ease: 'none', scrollTrigger: { trigger: sheet, start: 'top bottom', end: 'top 40%', scrub: true } });
   }
 }
 
@@ -94,10 +94,13 @@ for (const el of new Set(headings)) {
   const text = (el.children.length ? [...el.children].map((c) => c.textContent).join(' ') : el.textContent).replace(/\s+/g, ' ').trim();
   if (!text) continue;
   const host = Object.assign(document.createElement('span'), { className: 'rb-split' });
-  host.setAttribute('aria-hidden', 'true');
-  el.setAttribute('aria-label', text);
+  // letters split one by one read badly, so the title is named by its label; split words stay readable as they are
+  if (isTitle) { host.setAttribute('aria-hidden', 'true'); el.setAttribute('aria-label', text); }
   el.replaceChildren(host);
-  mount(host, <SplitText text={text} tag="span" textAlign="inherit" splitType={isTitle ? 'words, chars' : 'words'} delay={isTitle ? 32 : 70} duration={1} effect="rise" hoverEffect="lift" trigger={isTitle ? 'load' : 'view'} rootMargin="-40px" />);
+  // SplitText runs this heading's entrance; the page's own fade would hide it a second time
+  el.removeAttribute('data-reveal');
+  el.classList.add('is-in');
+  mount(host, <SplitText text={text} tag="span" textAlign="inherit" splitType={isTitle ? 'words, chars' : 'words'} delay={isTitle ? 32 : 70} duration={1} effect="rise" hoverEffect="lift" trigger={isTitle ? 'load' : 'view'} rootMargin="-40px" aria={isTitle ? 'auto' : 'none'} />);
 }
 
 // CountUp on the ledger figures
@@ -140,6 +143,13 @@ if (strip && !calm) {
     />
   ));
 }
+
+// ---------- Cult UI and Watermelon UI islands, with their scoped utility styles ----------
+const islandStyles = document.createElement('link');
+islandStyles.rel = 'stylesheet';
+islandStyles.href = new URL('./islands.css', import.meta.url).href;
+document.head.append(islandStyles);
+import('./islands.jsx');
 
 ScrollTrigger.refresh();
 addEventListener('load', () => ScrollTrigger.refresh());

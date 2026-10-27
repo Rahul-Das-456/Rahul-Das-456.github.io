@@ -75,7 +75,8 @@ const SplitText = ({
   hoverEffect = 'none',
   color,
   accentColor,
-  onLetterAnimationComplete
+  onLetterAnimationComplete,
+  aria = 'auto'
 }) => {
   const ref = useRef(null);
   const completedTextRef = useRef(null);
@@ -322,6 +323,7 @@ const SplitText = ({
         wordsClass: 'split-word',
         charsClass: 'split-char',
         reduceWhiteSpace: false,
+        aria,
         onSplit: self => {
           pieces = [self[unit], self.chars, self.words, self.lines].find(list => list.length) || [];
           movers = mask && self.masks?.length === pieces.length ? self.masks : pieces;

@@ -910,6 +910,7 @@ journalctl -u das -f         # stream live surveillance logs</div>
     {id:'tl-19',html:'<span class="t-purple">[Claude]</span> Pattern matches SEC Rule 10b-5 spoofing typology (cancel rate 97.3% &gt; 85% threshold)'},
     {id:'tl-20',html:'<span class="t-purple">[Claude]</span> Recommend: escalate to supervisor · generate SAR narrative if pattern repeats &gt;2 sessions'},
   ];
+  window.DAS_LINES=lines;
   let li=0;
   function revealLine(){
     if(li>=lines.length)return;
