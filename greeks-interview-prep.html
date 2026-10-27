@@ -1,19 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<script>
-  (function(){
-    var s=localStorage.getItem('theme');
-    var p=window.matchMedia('(prefers-color-scheme: dark)').matches;
-    if(s==='dark'||(!s&&p)){document.documentElement.setAttribute('data-theme','dark');}
-  })();
-</script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Greeks &amp; Market Maker Compliance — Rahul Das</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,600;1,8..60,300;1,8..60,400&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600&display=swap" rel="stylesheet">
 <style>
   :root {
     --cream:#f8f5f0; --cream-dark:#ede9e2;
@@ -180,55 +173,42 @@
     .a-body{font-size:.88rem;}
   }
 </style>
+<script>document.documentElement.classList.add('js')</script>
+<link rel="stylesheet" href="assets/site.css">
+<script src="assets/site.js" defer></script>
 </head>
 <body>
+<a class="sr-only" href="#main">Skip to content</a>
+<header class="bar">
+  <a class="bar__mark" href="./index.html">Rahul Das</a>
+  <nav class="bar__links" aria-label="Tools">
+    <a href="./options-visualizer.html">Options</a>
+    <a href="./futures-visualizer.html">Futures</a>
+    <a href="./strategies-visualizer.html">Strategies</a>
+    <a href="./hulls-notes.html">Hull's notes</a>
+  </nav>
+  <a class="bar__action" href="./index.html#tools">All tools</a>
+</header>
+<div hidden aria-hidden="true"><button id="theme-toggle" type="button" tabindex="-1"></button><button id="hamburger-btn" type="button" tabindex="-1"></button><div id="nav-menu"></div><div id="nav-overlay"></div></div>
 
-<nav>
-  <a class="nav-mark" href="./index.html">Rahul Das</a>
-  <div class="nav-right">
-    <button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark mode">
-      <svg class="icon-moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
-      <svg class="icon-sun" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
-    </button>
-    <button class="hamburger-btn" id="hamburger-btn" aria-label="Toggle menu" aria-expanded="false">
-      <span></span><span></span><span></span>
-    </button>
+<main id="main">
+<section class="exhibit" aria-labelledby="page-title">
+  <div class="exhibit__room"><img src="assets/board-of-trade-pit-of-craziness-265184314.jpg" alt="" fetchpriority="high"></div>
+  <div class="exhibit__card">
+    <h1 id="page-title" class="exhibit__title">Greeks and the compliance lens</h1>
+    <p class="exhibit__sub">A deep-dive interview prep guide covering every Greek from delta to vomma, mapped to the surveillance, risk, and regulatory questions that come up at market makers like Optiver, Citadel Securities, and IMC.</p>
+    <dl class="exhibit__fields">
+      <dt>Re</dt><dd>Market Maker Compliance — Optiver &amp; Peers</dd>
+      <dt>Covers</dt><dd>Delta, Gamma Squeeze, Vega Manipulation, Position Limits, VIX Settlement, Expiry Surveillance, Rule 15c3-5, Spoofing</dd>
+      <dt>From</dt><dd>Rahul Das, Compliance Technology Associate</dd>
+    </dl>
   </div>
-</nav>
-<div class="nav-overlay" id="nav-overlay"></div>
-<nav class="nav-menu" id="nav-menu">
-  <a href="./das.html">DAS Suite</a>
-  <a href="./options-visualizer.html">Options Visualizer</a>
-  <a href="./futures-visualizer.html">Futures Visualizer</a>
-  <a href="./strategies-visualizer.html">Strategies Visualizer</a>
-  <a href="./hulls-notes.html">Hull's Notes</a>
-  <a href="./trade-surveillance-career-guide.html">Career Guide</a>
-  <a href="./interview-question-mapping.html">Interview Prep</a>
-  <a href="./job-search-history.html">Job Search</a>
-  <a href="./index.html">Back to Home</a>
-</nav>
-
-<!-- PAGE HEADER -->
-<div class="page-header">
-  <p class="page-eyebrow">Market Maker Compliance — Optiver &amp; Peers</p>
-  <h1 class="page-title">Greeks &amp; the<br><em>Compliance Lens</em></h1>
-  <p class="page-sub">A deep-dive interview prep guide covering every Greek from delta to vomma, mapped to the surveillance, risk, and regulatory questions that come up at market makers like Optiver, Citadel Securities, and IMC.</p>
-  <div class="page-tags">
-    <span class="page-tag">Delta</span>
-    <span class="page-tag">Gamma Squeeze</span>
-    <span class="page-tag">Vega Manipulation</span>
-    <span class="page-tag">Position Limits</span>
-    <span class="page-tag">VIX Settlement</span>
-    <span class="page-tag">Expiry Surveillance</span>
-    <span class="page-tag">Rule 15c3-5</span>
-    <span class="page-tag">Spoofing</span>
-  </div>
-</div>
+</section>
 
 <div class="notes-wrap">
 
 <!-- FLASH CARD QUIZ -->
-<div class="section-label" style="border-top:none;margin-top:0;padding-top:0;">Quick Reference — Flip Cards</div>
+<h2 class="section-label" style="border-top:none;margin-top:0;padding-top:0;">Quick reference flip cards</h2>
 <div class="section-sub">Click any card to reveal the compliance-focused definition and formula</div>
 <div class="quiz-section">
   <div class="quiz-grid" id="quiz-grid">
@@ -369,7 +349,7 @@ Accelerates sharply near expiry</div>
 </div>
 
 <!-- ═══ SECTION 1: CORE GREEKS ═══ -->
-<div class="section-label">Section 1 — The Five Core Greeks</div>
+<h2 class="section-label">The Five Core Greeks</h2>
 <div class="section-sub">What they measure &nbsp;·&nbsp; The formulas &nbsp;·&nbsp; Why compliance cares</div>
 
 <div class="qa-block section-first" id="q1">
@@ -547,7 +527,7 @@ Rule of thumb: 1% rate rise adds ~ρ to call value
 </div>
 
 <!-- ═══ SECTION 2: HIGHER-ORDER GREEKS ═══ -->
-<div class="section-label">Section 2 — Higher-Order Greeks</div>
+<h2 class="section-label">Higher-Order Greeks</h2>
 <div class="section-sub">Vanna · Vomma · Charm · Speed · Color — what a sharp compliance officer knows</div>
 
 <div class="qa-block section-first" id="q6">
@@ -648,7 +628,7 @@ Practical effect (expiry day):
 </div>
 
 <!-- ═══ SECTION 3: MARKET MAKING OPERATIONS ═══ -->
-<div class="section-label">Section 3 — Greeks in Market Making Operations</div>
+<h2 class="section-label">Greeks in Market Making Operations</h2>
 <div class="section-sub">How Optiver and peers actually use Greeks day-to-day</div>
 
 <div class="qa-block section-first" id="q9">
@@ -721,7 +701,7 @@ Practical effect (expiry day):
 </div>
 
 <!-- ═══ SECTION 4: COMPLIANCE & SURVEILLANCE ═══ -->
-<div class="section-label">Section 4 — Compliance &amp; Surveillance Applications</div>
+<h2 class="section-label">Compliance &amp; Surveillance Applications</h2>
 <div class="section-sub">Position limits · Expiry manipulation · VIX settlement · Spoofing · Wash trading</div>
 
 <div class="qa-block section-first" id="q11">
@@ -903,7 +883,7 @@ The strike where the total payout to option holders is minimized.</div>
 </div>
 
 <!-- ═══ SECTION 5: TECHNICAL INTERVIEW Q&A ═══ -->
-<div class="section-label">Section 5 — Technical Interview Q&amp;A</div>
+<h2 class="section-label">Technical Interview Q&amp;A</h2>
 <div class="section-sub">Questions Optiver and market maker compliance teams actually ask</div>
 
 <div class="qa-block section-first" id="q16">
@@ -1037,7 +1017,7 @@ Volatility risk premium (VRP) = IV − RV  (usually positive)
 </div>
 
 <!-- ═══ SECTION 6: BEHAVIORAL Q&A ═══ -->
-<div class="section-label">Section 6 — Behavioral &amp; Situational Q&amp;A</div>
+<h2 class="section-label">Behavioral &amp; Situational Q&amp;A</h2>
 <div class="section-sub">Optiver values: intellectual rigor · directness · speed · humility</div>
 
 <div class="qa-block section-first" id="q21">
@@ -1155,7 +1135,7 @@ Volatility risk premium (VRP) = IV − RV  (usually positive)
 </div>
 
 <!-- ═══ SECTION 7: OPTIVER CULTURE ═══ -->
-<div class="section-label">Section 7 — Optiver Culture &amp; What They Test</div>
+<h2 class="section-label">Optiver Culture &amp; What They Test</h2>
 <div class="section-sub">How to distinguish yourself from other compliance candidates</div>
 
 <div class="qa-block section-first" id="q26">
@@ -1266,8 +1246,23 @@ Volatility risk premium (VRP) = IV − RV  (usually positive)
   </div>
 </div>
 
-<footer>
-  <p class="foot-txt">Rahul Das &nbsp;·&nbsp; rdas0541@gmail.com &nbsp;·&nbsp; rahul-das-456.github.io</p>
+</main>
+
+<footer class="back">
+  <div class="back__card">
+    <p class="back__name">Rahul Das</p>
+    <div class="back__row">
+      <p>Trade surveillance and compliance technology in Chicago. Every tool here is free to use.</p>
+      <ul class="back__links">
+        <li><a href="./index.html">Portfolio</a></li>
+        <li><a href="./index.html#tools">All tools</a></li>
+        <li><a href="mailto:rdas0541@gmail.com">rdas0541@gmail.com</a></li>
+        <li><a href="https://www.linkedin.com/in/rahul-das-capm/" rel="noopener">LinkedIn</a></li>
+        <li><a href="./Rahul_Das_Resume.pdf" download>Résumé, PDF</a></li>
+      </ul>
+    </div>
+    <p class="back__credit">Photograph: <a href="https://commons.wikimedia.org/wiki/File:Board_Of_Trade_Pit_Of_Craziness_(265184314).jpg" rel="noopener">Board of Trade pit</a>, Richie Diesterheft, CC BY 2.0.</p>
+  </div>
 </footer>
 
 <script>

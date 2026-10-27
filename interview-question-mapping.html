@@ -1,23 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<script>
-  (function(){
-    var s=localStorage.getItem('theme');
-    var p=window.matchMedia('(prefers-color-scheme: dark)').matches;
-    if(s==='dark'||(!s&&p)){document.documentElement.setAttribute('data-theme','dark');}
-  })();
-
-  // Side-panel nav
-  const hb=document.getElementById('hamburger-btn');
-  const nm=document.getElementById('nav-menu');
-  const ov=document.getElementById('nav-overlay');
-  function openNav(){hb.classList.add('open');nm.classList.add('open');if(ov)ov.classList.add('open');hb.setAttribute('aria-expanded','true');}
-  function closeNav(){hb.classList.remove('open');nm.classList.remove('open');if(ov)ov.classList.remove('open');hb.setAttribute('aria-expanded','false');}
-  hb.addEventListener('click',()=>nm.classList.contains('open')?closeNav():openNav());
-  if(ov)ov.addEventListener('click',closeNav);
-  document.addEventListener('keydown',e=>{if(e.key==='Escape')closeNav();});
-</script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Interview Question Mapping — Rahul Das</title>
@@ -28,7 +11,7 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,600;1,8..60,300;1,8..60,400&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600&display=swap" rel="stylesheet">
 <style>
   :root {
     --cream: #f8f5f0;
@@ -636,28 +619,39 @@
   .hero-title   { animation: fadeUp 0.7s ease 0.25s both; }
   .hero-sub     { animation: fadeUp 0.7s ease 0.4s both; }
 </style>
+<script>document.documentElement.classList.add('js')</script>
+<link rel="stylesheet" href="assets/site.css">
+<script src="assets/site.js" defer></script>
 </head>
 <body>
+<a class="sr-only" href="#main">Skip to content</a>
+<header class="bar">
+  <a class="bar__mark" href="./index.html">Rahul Das</a>
+  <nav class="bar__links" aria-label="Tools">
+    <a href="./options-visualizer.html">Options</a>
+    <a href="./futures-visualizer.html">Futures</a>
+    <a href="./strategies-visualizer.html">Strategies</a>
+    <a href="./hulls-notes.html">Hull's notes</a>
+  </nav>
+  <a class="bar__action" href="./index.html#tools">All tools</a>
+</header>
+<div hidden aria-hidden="true"><button id="theme-toggle" type="button" tabindex="-1"></button><button id="hamburger-btn" type="button" tabindex="-1"></button><div id="nav-menu"></div><div id="nav-overlay"></div></div>
 
-<!-- NAV -->
-<nav>
-  <a class="nav-mark" href="./index.html">Rahul Das</a>
-  <button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark mode">
-    <svg class="icon-moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
-    <svg class="icon-sun"  width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
-  </button>
-  <a class="nav-download" href="./Rahul_Das_Resume.pdf" download="Rahul_Das_Resume.pdf">Download CV</a>
-</nav>
-
-<!-- HERO -->
-<div class="hero-section">
-  <p class="hero-eyebrow">Interview Preparation Technique</p>
-  <h1 class="hero-title">Question<br><em>Mapping</em></h1>
-  <p class="hero-sub">Every behavioral question a recruiter can ask you is already sitting on your resume — you just haven't rephrased it as a question yet. Here's the manual technique to do exactly that, no AI required.</p>
-</div>
+<main id="main">
+<section class="exhibit" aria-labelledby="page-title">
+  <div class="exhibit__room"><img src="assets/thomas-edison-stock-ticker-nmah-jn2014-3625.jpg" alt="" fetchpriority="high"></div>
+  <div class="exhibit__card">
+    <h1 id="page-title" class="exhibit__title">Question mapping</h1>
+    <p class="exhibit__sub">Every behavioral question a recruiter can ask you is already sitting on your resume — you just haven't rephrased it as a question yet. Here's the manual technique to do exactly that, no AI required.</p>
+    <dl class="exhibit__fields">
+      <dt>Re</dt><dd>Interview Preparation Technique</dd>
+      <dt>From</dt><dd>Rahul Das, Compliance Technology Associate</dd>
+    </dl>
+  </div>
+</section>
 
 <!-- PAGE BODY -->
-<main class="page-body">
+<div class="page-body">
 
   <a class="back-link" href="./index.html">← Back to Portfolio</a>
 
@@ -1138,11 +1132,26 @@
     </div>
   </div>
 
-</main>
+</div>
 
 <!-- FOOTER -->
-<footer class="page-footer">
-  © 2026 Rahul Das &nbsp;·&nbsp; <a href="./index.html" style="color: var(--gold); text-decoration: none;">rahul-das-456.github.io</a>
+</main>
+
+<footer class="back">
+  <div class="back__card">
+    <p class="back__name">Rahul Das</p>
+    <div class="back__row">
+      <p>Trade surveillance and compliance technology in Chicago. Every tool here is free to use.</p>
+      <ul class="back__links">
+        <li><a href="./index.html">Portfolio</a></li>
+        <li><a href="./index.html#tools">All tools</a></li>
+        <li><a href="mailto:rdas0541@gmail.com">rdas0541@gmail.com</a></li>
+        <li><a href="https://www.linkedin.com/in/rahul-das-capm/" rel="noopener">LinkedIn</a></li>
+        <li><a href="./Rahul_Das_Resume.pdf" download>Résumé, PDF</a></li>
+      </ul>
+    </div>
+    <p class="back__credit">Photograph: <a href="https://commons.wikimedia.org/wiki/File:Thomas_Edison_stock_ticker_NMAH-JN2014-3625.jpg" rel="noopener">Edison stock ticker</a>, Jaclyn Nash, Smithsonian, public domain.</p>
+  </div>
 </footer>
 
 <script>

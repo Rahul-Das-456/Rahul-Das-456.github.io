@@ -1,360 +1,138 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Job Search History | Rahul Das</title>
-  <script src="https://cdn.plot.ly/plotly-2.27.0.min.js">
-  // Side-panel nav
-  const hb=document.getElementById('hamburger-btn');
-  const nm=document.getElementById('nav-menu');
-  const ov=document.getElementById('nav-overlay');
-  function openNav(){hb.classList.add('open');nm.classList.add('open');if(ov)ov.classList.add('open');hb.setAttribute('aria-expanded','true');}
-  function closeNav(){hb.classList.remove('open');nm.classList.remove('open');if(ov)ov.classList.remove('open');hb.setAttribute('aria-expanded','false');}
-  hb.addEventListener('click',()=>nm.classList.contains('open')?closeNav():openNav());
-  if(ov)ov.addEventListener('click',closeNav);
-  document.addEventListener('keydown',e=>{if(e.key==='Escape')closeNav();});
-</script>
-  <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-    body {
-      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-      background: #0f172a;
-      color: #e2e8f0;
-      min-height: 100vh;
-      padding: 0 0 60px;
-    }
-
-    header {
-      background: #1e293b;
-      border-bottom: 1px solid #334155;
-      padding: 18px 32px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-
-    header .brand {
-      font-size: 1.1rem;
-      font-weight: 700;
-      color: #6366f1;
-      text-decoration: none;
-    }
-
-    nav a {
-      color: #94a3b8;
-      text-decoration: none;
-      font-size: 0.9rem;
-      margin-left: 24px;
-      transition: color 0.2s;
-    }
-    nav a:hover { color: #e2e8f0; }
-    nav a.active { color: #6366f1; font-weight: 600; }
-
-    .hero {
-      text-align: center;
-      padding: 56px 24px 32px;
-    }
-    .hero h1 {
-      font-size: 2.2rem;
-      font-weight: 800;
-      background: linear-gradient(135deg, #6366f1, #8b5cf6);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      margin-bottom: 14px;
-    }
-    .hero p {
-      color: #94a3b8;
-      max-width: 620px;
-      margin: 0 auto;
-      line-height: 1.7;
-      font-size: 1rem;
-    }
-
-    .stat-row {
-      display: flex;
-      justify-content: center;
-      gap: 32px;
-      margin: 36px auto 0;
-      flex-wrap: wrap;
-      max-width: 800px;
-    }
-    .stat-card {
-      background: #1e293b;
-      border: 1px solid #334155;
-      border-radius: 12px;
-      padding: 20px 32px;
-      text-align: center;
-      flex: 1;
-      min-width: 180px;
-    }
-    .stat-card .value {
-      font-size: 2rem;
-      font-weight: 800;
-      color: #6366f1;
-    }
-    .stat-card .label {
-      font-size: 0.8rem;
-      color: #64748b;
-      margin-top: 4px;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-    }
-
-    .section {
-      max-width: 1060px;
-      margin: 52px auto 0;
-      padding: 0 24px;
-    }
-
-    .section-header {
-      margin-bottom: 20px;
-    }
-    .section-header .tag {
-      display: inline-block;
-      background: #1e293b;
-      border: 1px solid #6366f1;
-      color: #818cf8;
-      font-size: 0.72rem;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      padding: 3px 10px;
-      border-radius: 4px;
-      margin-bottom: 10px;
-    }
-    .section-header h2 {
-      font-size: 1.4rem;
-      font-weight: 700;
-    }
-    .section-header p {
-      color: #64748b;
-      font-size: 0.9rem;
-      margin-top: 6px;
-      line-height: 1.6;
-    }
-
-    .chart-card {
-      background: #1e293b;
-      border: 1px solid #334155;
-      border-radius: 14px;
-      overflow: hidden;
-    }
-
-    .chart-meta {
-      display: flex;
-      gap: 32px;
-      padding: 18px 24px;
-      border-bottom: 1px solid #334155;
-      flex-wrap: wrap;
-    }
-    .meta-item .mlabel {
-      font-size: 0.72rem;
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
-      color: #475569;
-      margin-bottom: 3px;
-    }
-    .meta-item .mval {
-      font-size: 0.95rem;
-      font-weight: 600;
-      color: #cbd5e1;
-    }
-
-    .chart-wrap {
-      padding: 8px 4px 4px;
-    }
-
-    .divider {
-      display: flex;
-      align-items: center;
-      gap: 16px;
-      max-width: 1060px;
-      margin: 52px auto 0;
-      padding: 0 24px;
-      color: #334155;
-    }
-    .divider::before, .divider::after {
-      content: '';
-      flex: 1;
-      height: 1px;
-      background: #334155;
-    }
-    .divider span {
-      font-size: 0.78rem;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      color: #475569;
-      white-space: nowrap;
-    }
-
-    .takeaway {
-      max-width: 1060px;
-      margin: 40px auto 0;
-      padding: 0 24px;
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 16px;
-    }
-    .takeaway-card {
-      background: #1e293b;
-      border: 1px solid #334155;
-      border-radius: 10px;
-      padding: 20px 22px;
-    }
-    .takeaway-card .tc-label {
-      font-size: 0.72rem;
-      text-transform: uppercase;
-      letter-spacing: 0.07em;
-      color: #6366f1;
-      margin-bottom: 8px;
-    }
-    .takeaway-card p {
-      font-size: 0.88rem;
-      color: #94a3b8;
-      line-height: 1.65;
-    }
-    .takeaway-card strong { color: #e2e8f0; }
-
-    footer {
-      text-align: center;
-      margin-top: 64px;
-      color: #334155;
-      font-size: 0.8rem;
-    }
-    footer a { color: #6366f1; text-decoration: none; }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Job Search History | Rahul Das</title>
+<meta name="description" content="Two job searches in compliance, mapped application by application: 4,000 applications by volume, then 300 by targeting, with the same three roles accepted.">
+<link rel="canonical" href="https://rahul-das-456.github.io/job-search-history.html">
+<script src="https://cdn.plot.ly/plotly-2.27.0.min.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600&display=swap" rel="stylesheet">
+<script>document.documentElement.classList.add('js')</script>
+<link rel="stylesheet" href="assets/site.css">
+<script src="assets/site.js" defer></script>
+<style>
+.ledger { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; }
+.ledger div { background: var(--paper-2); padding: clamp(18px, 2.4vw, 32px); display: flex; flex-direction: column; gap: 8px; }
+.ledger b { font-size: clamp(2.4rem, 1rem + 4vw, 4.75rem); font-weight: 600; letter-spacing: -0.05em; line-height: 0.9; font-variant-numeric: tabular-nums lining-nums; }
+.ledger div:nth-child(4) b { color: var(--accent-deep); }
+.ledger span { font-size: var(--step-body); color: var(--paper-muted); }
+.search { display: grid; gap: 24px; }
+.search + .search { margin-top: clamp(72px, 9vw, 120px); }
+.search__head { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(20px, 4vw, 56px); align-items: end; }
+.search__head h2 { font-size: var(--step-head); }
+.search__head p { color: var(--paper-ink); max-width: 52ch; }
+.search__when { display: block; font-size: var(--step-lead); font-weight: 500; letter-spacing: -0.01em; color: var(--accent-deep); margin-bottom: 10px; }
+.facts { display: flex; flex-wrap: wrap; gap: 6px; margin: 0; }
+.facts div { background: var(--paper-2); padding: 12px 16px; display: flex; flex-direction: column-reverse; }
+.facts dt { font-size: var(--step-small); color: var(--paper-muted); }
+.facts dd { margin: 0; font-size: var(--step-lead); font-weight: 600; letter-spacing: -0.02em; font-variant-numeric: tabular-nums; }
+.sankey { background: var(--paper); min-height: 460px; }
+.pivot { margin: clamp(72px, 9vw, 120px) 0 0; font-size: var(--step-head); font-weight: 600; letter-spacing: -0.04em; line-height: 1; max-width: 18ch; }
+.lessons { display: grid; grid-template-columns: repeat(2, 1fr); gap: 6px; margin-top: clamp(40px, 5vw, 64px); }
+.lessons article { background: var(--paper-ink); color: var(--paper); padding: clamp(20px, 2.6vw, 36px); }
+.lessons h3 { font-size: var(--step-lead); margin-bottom: 10px; color: var(--accent); }
+.lessons p { color: var(--paper); }
+.lessons strong { color: #fff; }
+@media (max-width: 760px) {
+  .ledger { grid-template-columns: 1fr 1fr; }
+  .search__head, .lessons { grid-template-columns: 1fr; }
+  .sankey { min-height: 520px; }
+}
+</style>
 </head>
 <body>
-
-<header>
-  <a class="brand" href="https://rahul-das-456.github.io/">Rahul Das</a>
-  <nav>
-    <a href="https://rahul-das-456.github.io/">Home</a>
-    <a href="https://rahul-das-456.github.io/job-search-history.html" class="active">Job Search</a>
-    <a href="./Rahul_Das_Resume.pdf">Resume</a>
+<a class="sr-only" href="#main">Skip to content</a>
+<header class="bar">
+  <a class="bar__mark" href="./index.html">Rahul Das</a>
+  <nav class="bar__links" aria-label="Tools">
+    <a href="./options-visualizer.html">Options</a>
+    <a href="./futures-visualizer.html">Futures</a>
+    <a href="./strategies-visualizer.html">Strategies</a>
+    <a href="./hulls-notes.html">Hull's notes</a>
   </nav>
+  <a class="bar__action" href="./index.html#tools">All tools</a>
 </header>
 
-<div class="hero">
-  <h1>Job Search History</h1>
-  <p>
-    Two distinct searches. Two radically different strategies. The same number of offers accepted.
-    These Sankey diagrams map every application, screen, and interview round — showing how volume
-    and targeting trade off against each other in the compliance job market.
-  </p>
+<main id="main">
+<section class="exhibit" aria-labelledby="page-title">
+  <div class="exhibit__room"><img src="assets/board-of-trade-pit-of-craziness-265184314.jpg" alt="" fetchpriority="high"></div>
+  <div class="exhibit__card">
+    <h1 id="page-title" class="exhibit__title">Job search history</h1>
+    <p class="exhibit__sub">Two searches, two strategies, the same three roles accepted. The diagrams follow every application to its end, so volume and targeting can be weighed side by side.</p>
+    <dl class="exhibit__fields">
+      <dt>Re</dt><dd>4,000 applications by volume, then 300 by targeting</dd>
+      <dt>From</dt><dd>Rahul Das, Compliance Technology Associate</dd>
+    </dl>
+  </div>
+</section>
 
-  <div class="stat-row">
-    <div class="stat-card">
-      <div class="value">4,300</div>
-      <div class="label">Total Applications</div>
+<div class="page-body">
+  <div class="ledger">
+    <div><b>4,300</b><span>applications in total</span></div>
+    <div><b>6</b><span>roles accepted</span></div>
+    <div><b>0.14%</b><span>blended acceptance rate</span></div>
+    <div><b>13×</b><span>fewer applications per role, second search</span></div>
+  </div>
+
+  <section class="search" aria-labelledby="s1" style="margin-top:clamp(72px,9vw,120px)">
+    <div class="search__head">
+      <h2 id="s1">The volume play</h2>
+      <p><span class="search__when">2017 to 2019, 4,000 applications</span>Fresh out of undergrad, with no compliance brand and no network. I solved it the only way that felt controllable: apply everywhere, every day. It was exhausting and humbling, and it worked, but the math was brutal.</p>
     </div>
-    <div class="stat-card">
-      <div class="value">6</div>
-      <div class="label">Roles Accepted</div>
+    <dl class="facts">
+      <div><dt>Applications</dt><dd>4,000</dd></div>
+      <div><dt>Ghosted</dt><dd>3,600 (90%)</dd></div>
+      <div><dt>Offers received</dt><dd>5</dd></div>
+      <div><dt>Accepted</dt><dd>3</dd></div>
+      <div><dt>Acceptance rate</dt><dd>0.075%</dd></div>
+    </dl>
+    <div id="chart1" class="sankey" role="img" aria-label="Sankey diagram: 4,000 applications, 3,600 ghosted, 400 screened, 200 phone interviews, 60 first rounds, 15 finals, 5 offers, 3 accepted."></div>
+  </section>
+
+  <p class="pivot">Two years later, a different strategy.</p>
+
+  <section class="search" aria-labelledby="s2" style="margin-top:clamp(40px,5vw,64px)">
+    <div class="search__head">
+      <h2 id="s2">The targeted play</h2>
+      <p><span class="search__when">2023 to 2024, 300 applications</span>This time: SIE certified, CAPM in hand, four years of compliance experience and a deliberate list of target firms. I applied only where I had a referral, a direct recruiter connection or a strong profile match. 93% fewer applications, the same number accepted.</p>
     </div>
-    <div class="stat-card">
-      <div class="value">0.14%</div>
-      <div class="label">Blended Acceptance Rate</div>
-    </div>
-    <div class="stat-card">
-      <div class="value">13×</div>
-      <div class="label">Efficiency Gain (Search 2 vs 1)</div>
-    </div>
+    <dl class="facts">
+      <div><dt>Applications</dt><dd>300</dd></div>
+      <div><dt>Ghosted</dt><dd>150 (50%)</dd></div>
+      <div><dt>Offers received</dt><dd>5</dd></div>
+      <div><dt>Accepted</dt><dd>3</dd></div>
+      <div><dt>Acceptance rate</dt><dd>1.0%</dd></div>
+    </dl>
+    <div id="chart2" class="sankey" role="img" aria-label="Sankey diagram: 300 applications, 150 ghosted, 150 screened, 90 phone interviews, 40 first rounds, 15 finals, 5 offers, 3 accepted."></div>
+  </section>
+
+  <div class="lessons">
+    <article><h3>Volume against targeting</h3><p><strong>The ghosted rate fell from 90% to 50%</strong> just by narrowing scope. A referral or a recruiter relationship all but ended the disappearing into an applicant tracking system.</p></article>
+    <article><h3>The shape of the funnel</h3><p>The first search was wide at the top and nearly empty by the final rounds. The second held <strong>steady conversion at every stage</strong>, a sign of better fit rather than better luck.</p></article>
+    <article><h3>Same result, a fraction of the cost</h3><p>Both searches ended with three accepted roles. The second took <strong>13× fewer applications</strong>: 3,700 fewer rejections, fewer months and far less strain.</p></article>
+    <article><h3>What it says about compliance hiring</h3><p>Compliance hiring runs on <strong>relationships</strong>. Volume could not make up for missing credentials in the first search; credentials and targeted positioning did in the second.</p></article>
   </div>
 </div>
+</main>
 
-<!-- ─── SEARCH 1 ─────────────────────────────────────── -->
-<div class="section">
-  <div class="section-header">
-    <div class="tag">Search 1 · 2017 – 2019</div>
-    <h2>The Volume Play &mdash; 4,000 Applications</h2>
-    <p>
-      Fresh out of undergrad, no compliance-specific brand, no network. Solved it the only way that felt
-      controllable: apply everywhere, every day. The result was exhausting, humbling, and ultimately worked —
-      but the math was brutal.
-    </p>
-  </div>
-  <div class="chart-card">
-    <div class="chart-meta">
-      <div class="meta-item"><div class="mlabel">Applications</div><div class="mval">4,000</div></div>
-      <div class="meta-item"><div class="mlabel">Ghosted</div><div class="mval">3,600 (90%)</div></div>
-      <div class="meta-item"><div class="mlabel">Offers Received</div><div class="mval">5</div></div>
-      <div class="meta-item"><div class="mlabel">Accepted</div><div class="mval">3</div></div>
-      <div class="meta-item"><div class="mlabel">Acceptance Rate</div><div class="mval">0.075%</div></div>
+<footer class="back">
+  <div class="back__card">
+    <p class="back__name">Rahul Das</p>
+    <div class="back__row">
+      <p>Trade surveillance and compliance technology in Chicago. Every tool here is free to use.</p>
+      <ul class="back__links">
+        <li><a href="./index.html">Portfolio</a></li>
+        <li><a href="./index.html#tools">All tools</a></li>
+        <li><a href="mailto:rdas0541@gmail.com">rdas0541@gmail.com</a></li>
+        <li><a href="https://www.linkedin.com/in/rahul-das-capm/" rel="noopener">LinkedIn</a></li>
+        <li><a href="./Rahul_Das_Resume.pdf" download>Résumé, PDF</a></li>
+      </ul>
     </div>
-    <div class="chart-wrap">
-      <div id="chart1" style="height:440px;"></div>
-    </div>
+    <p class="back__credit">Photograph: <a href="https://commons.wikimedia.org/wiki/File:Board_Of_Trade_Pit_Of_Craziness_(265184314).jpg" rel="noopener">Board of Trade pit</a>, Richie Diesterheft, CC BY 2.0.</p>
   </div>
-</div>
-
-<div class="divider"><span>two years later &amp; a pivot in strategy</span></div>
-
-<!-- ─── SEARCH 2 ─────────────────────────────────────── -->
-<div class="section">
-  <div class="section-header">
-    <div class="tag">Search 2 · 2023 – 2024</div>
-    <h2>The Targeted Play &mdash; 300 Applications</h2>
-    <p>
-      This time: SIE certified, CAPM in hand, 4+ years of compliance experience, and a deliberate list of
-      target firms. Applied only to roles with a referral, a direct recruiter connection, or a strong
-      profile match. 93% fewer applications. Same number of acceptances.
-    </p>
-  </div>
-  <div class="chart-card">
-    <div class="chart-meta">
-      <div class="meta-item"><div class="mlabel">Applications</div><div class="mval">300</div></div>
-      <div class="meta-item"><div class="mlabel">Ghosted</div><div class="mval">150 (50%)</div></div>
-      <div class="meta-item"><div class="mlabel">Offers Received</div><div class="mval">5</div></div>
-      <div class="meta-item"><div class="mlabel">Accepted</div><div class="mval">3</div></div>
-      <div class="meta-item"><div class="mlabel">Acceptance Rate</div><div class="mval">1.0%</div></div>
-    </div>
-    <div class="chart-wrap">
-      <div id="chart2" style="height:440px;"></div>
-    </div>
-  </div>
-</div>
-
-<!-- ─── TAKEAWAYS ─────────────────────────────────────── -->
-<div class="takeaway">
-  <div class="takeaway-card">
-    <div class="tc-label">Volume vs Targeting</div>
-    <p>
-      <strong>Ghosted rate dropped from 90% to 50%</strong> simply by narrowing scope. A referral or
-      recruiter relationship cut the chance of disappearing into an ATS to near zero.
-    </p>
-  </div>
-  <div class="takeaway-card">
-    <div class="tc-label">Funnel Shape</div>
-    <p>
-      Search 1's funnel was extremely narrow at the top and nearly invisible by final rounds.
-      Search 2 maintained <strong>consistent conversion at every stage</strong> — a signal of
-      better fit, not better luck.
-    </p>
-  </div>
-  <div class="takeaway-card">
-    <div class="tc-label">Same Output, Fraction of the Cost</div>
-    <p>
-      Both searches ended with 3 accepted roles. Search 2 took <strong>13× fewer applications</strong>
-      to get there — meaning 3,700 fewer rejections, fewer months, and far less emotional overhead.
-    </p>
-  </div>
-  <div class="takeaway-card">
-    <div class="tc-label">Compliance Market Lesson</div>
-    <p>
-      Compliance hiring is heavily <strong>relationship-driven</strong>. The credential gap (no SIE,
-      no certs) in Search 1 couldn't be overcome with volume — but could be overcome with credentials
-      and targeted positioning in Search 2.
-    </p>
-  </div>
-</div>
-
-<footer>
-  <p>
-    &copy; 2024 <a href="https://rahul-das-456.github.io/">Rahul Das</a> &mdash; Chicago, IL
-  </p>
 </footer>
 
 <script>
@@ -376,23 +154,23 @@ const c1nodes = {
     'Declined (2)'          // 12
   ],
   color: [
-    '#6366f1',  // 0 applications
-    '#374151',  // 1 ghosted
-    '#0ea5e9',  // 2 initial screen
-    '#dc2626',  // 3 rejected screen
-    '#8b5cf6',  // 4 phone
-    '#dc2626',  // 5 rejected phone
-    '#f59e0b',  // 6 1st round
-    '#dc2626',  // 7 rejected 1st
-    '#10b981',  // 8 final
-    '#dc2626',  // 9 rejected final
-    '#22c55e',  // 10 offers
-    '#22c55e',  // 11 accepted
-    '#94a3b8',  // 12 declined
+    '#121a30',  // 0 applications
+    '#b9b5ab',  // 1 ghosted
+    '#2f4a8a',  // 2 initial screen
+    '#ff5a4a',  // 3 rejected screen
+    '#3d5aa6',  // 4 phone
+    '#ff5a4a',  // 5 rejected phone
+    '#5873bd',  // 6 1st round
+    '#ff5a4a',  // 7 rejected 1st
+    '#7f97d6',  // 8 final
+    '#ff5a4a',  // 9 rejected final
+    '#1d9a63',  // 10 offers
+    '#1d9a63',  // 11 accepted
+    '#4a5169',  // 12 declined
   ],
   pad: 18,
   thickness: 22,
-  line: { color: '#0f172a', width: 0.5 }
+  line: { color: '#e7e5df', width: 0 }
 };
 
 const c1links = {
@@ -400,18 +178,18 @@ const c1links = {
   target: [1,  2,  3,  4,  5,  6,  7,  8,  9, 10, 11, 12],
   value:  [3600, 400, 200, 200, 140, 60, 45, 15, 10, 5, 3, 2],
   color:  [
-    'rgba(55,65,81,0.5)',    // ghosted
-    'rgba(14,165,233,0.4)', // screened
-    'rgba(220,38,38,0.4)',  // rejected screen
-    'rgba(139,92,246,0.4)',  // phone
-    'rgba(220,38,38,0.4)',  // rejected phone
-    'rgba(245,158,11,0.4)', // 1st round
-    'rgba(220,38,38,0.4)',  // rejected 1st
-    'rgba(16,185,129,0.4)', // final
-    'rgba(220,38,38,0.4)',  // rejected final
-    'rgba(34,197,94,0.4)',  // offers
-    'rgba(34,197,94,0.6)',  // accepted
-    'rgba(148,163,184,0.4)'  // declined
+    'rgba(185,181,171,0.55)',    // ghosted
+    'rgba(47,74,138,0.45)', // screened
+    'rgba(255,90,74,0.5)',  // rejected screen
+    'rgba(61,90,166,0.45)',  // phone
+    'rgba(255,90,74,0.5)',  // rejected phone
+    'rgba(88,115,189,0.45)', // 1st round
+    'rgba(255,90,74,0.5)',  // rejected 1st
+    'rgba(127,151,214,0.5)', // final
+    'rgba(255,90,74,0.5)',  // rejected final
+    'rgba(29,154,99,0.5)',  // offers
+    'rgba(29,154,99,0.7)',  // accepted
+    'rgba(74,81,105,0.45)'  // declined
   ]
 };
 
@@ -420,11 +198,11 @@ Plotly.newPlot('chart1', [{
   orientation: 'h',
   node: c1nodes,
   link: c1links,
-  textfont: { color: '#e2e8f0', size: 11 }
+  textfont: { color: '#121a30', size: 14, family: 'Bricolage Grotesque, system-ui, sans-serif' }
 }], {
-  paper_bgcolor: '#1e293b',
-  plot_bgcolor: '#1e293b',
-  font: { color: '#cbd5e1', size: 11, family: 'Segoe UI, system-ui, sans-serif' },
+  paper_bgcolor: 'rgba(0,0,0,0)',
+  plot_bgcolor: 'rgba(0,0,0,0)',
+  font: { color: '#121a30', size: 14, family: 'Bricolage Grotesque, system-ui, sans-serif' },
   margin: { t: 10, l: 10, r: 10, b: 10 }
 }, { responsive: true, displayModeBar: false });
 
@@ -447,23 +225,23 @@ const c2nodes = {
     'Declined (2)'          // 12
   ],
   color: [
-    '#6366f1',
-    '#374151',
-    '#0ea5e9',
-    '#dc2626',
-    '#8b5cf6',
-    '#dc2626',
-    '#f59e0b',
-    '#dc2626',
-    '#10b981',
-    '#dc2626',
-    '#22c55e',
-    '#22c55e',
-    '#94a3b8',
+    '#121a30',
+    '#b9b5ab',
+    '#2f4a8a',
+    '#ff5a4a',
+    '#3d5aa6',
+    '#ff5a4a',
+    '#5873bd',
+    '#ff5a4a',
+    '#7f97d6',
+    '#ff5a4a',
+    '#1d9a63',
+    '#1d9a63',
+    '#4a5169',
   ],
   pad: 18,
   thickness: 22,
-  line: { color: '#0f172a', width: 0.5 }
+  line: { color: '#e7e5df', width: 0 }
 };
 
 const c2links = {
@@ -471,18 +249,18 @@ const c2links = {
   target: [1,  2,  3,  4,  5,  6,  7,  8,  9, 10, 11, 12],
   value:  [150, 150, 60, 90, 50, 40, 25, 15, 10, 5, 3, 2],
   color:  [
-    'rgba(55,65,81,0.5)',
-    'rgba(14,165,233,0.4)',
-    'rgba(220,38,38,0.4)',
-    'rgba(139,92,246,0.4)',
-    'rgba(220,38,38,0.4)',
-    'rgba(245,158,11,0.4)',
-    'rgba(220,38,38,0.4)',
-    'rgba(16,185,129,0.4)',
-    'rgba(220,38,38,0.4)',
-    'rgba(34,197,94,0.4)',
-    'rgba(34,197,94,0.6)',
-    'rgba(148,163,184,0.4)'
+    'rgba(185,181,171,0.55)',
+    'rgba(47,74,138,0.45)',
+    'rgba(255,90,74,0.5)',
+    'rgba(61,90,166,0.45)',
+    'rgba(255,90,74,0.5)',
+    'rgba(88,115,189,0.45)',
+    'rgba(255,90,74,0.5)',
+    'rgba(127,151,214,0.5)',
+    'rgba(255,90,74,0.5)',
+    'rgba(29,154,99,0.5)',
+    'rgba(29,154,99,0.7)',
+    'rgba(74,81,105,0.45)'
   ]
 };
 
@@ -491,11 +269,11 @@ Plotly.newPlot('chart2', [{
   orientation: 'h',
   node: c2nodes,
   link: c2links,
-  textfont: { color: '#e2e8f0', size: 11 }
+  textfont: { color: '#121a30', size: 14, family: 'Bricolage Grotesque, system-ui, sans-serif' }
 }], {
-  paper_bgcolor: '#1e293b',
-  plot_bgcolor: '#1e293b',
-  font: { color: '#cbd5e1', size: 11, family: 'Segoe UI, system-ui, sans-serif' },
+  paper_bgcolor: 'rgba(0,0,0,0)',
+  plot_bgcolor: 'rgba(0,0,0,0)',
+  font: { color: '#121a30', size: 14, family: 'Bricolage Grotesque, system-ui, sans-serif' },
   margin: { t: 10, l: 10, r: 10, b: 10 }
 }, { responsive: true, displayModeBar: false });
 </script>

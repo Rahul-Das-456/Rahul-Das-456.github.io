@@ -1,19 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<script>
-  (function(){
-    var s=localStorage.getItem('theme');
-    var p=window.matchMedia('(prefers-color-scheme: dark)').matches;
-    if(s==='dark'||(!s&&p)){document.documentElement.setAttribute('data-theme','dark');}
-  })();
-</script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>DAS — Detection Analytics Suite · Rahul Das</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,600;1,8..60,300;1,8..60,400&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600&display=swap" rel="stylesheet">
 <style>
   :root{
     --cream:#f8f5f0;--cream-dark:#ede9e2;
@@ -221,53 +214,37 @@
     .page-title{font-size:clamp(2.2rem,8vw,3.5rem);}
   }
 </style>
+<script>document.documentElement.classList.add('js')</script>
+<link rel="stylesheet" href="assets/site.css">
+<script src="assets/site.js" defer></script>
 </head>
 <body>
+<a class="sr-only" href="#main">Skip to content</a>
+<header class="bar">
+  <a class="bar__mark" href="./index.html">Rahul Das</a>
+  <nav class="bar__links" aria-label="Tools">
+    <a href="./options-visualizer.html">Options</a>
+    <a href="./futures-visualizer.html">Futures</a>
+    <a href="./strategies-visualizer.html">Strategies</a>
+    <a href="./hulls-notes.html">Hull's notes</a>
+  </nav>
+  <a class="bar__action" href="./index.html#tools">All tools</a>
+</header>
+<div hidden aria-hidden="true"><button id="theme-toggle" type="button" tabindex="-1"></button><button id="hamburger-btn" type="button" tabindex="-1"></button><div id="nav-menu"></div><div id="nav-overlay"></div></div>
 
-<nav class="top-nav">
-  <a class="nav-mark" href="./index.html">Rahul Das</a>
-  <div class="nav-right">
-    <button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark mode">
-      <svg class="icon-moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
-      <svg class="icon-sun" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
-    </button>
-    <button class="hamburger-btn" id="hamburger-btn" aria-label="Toggle navigation" aria-expanded="false">
-      <span></span><span></span><span></span>
-    </button>
+<main id="main">
+<section class="exhibit" aria-labelledby="page-title">
+  <div class="exhibit__room"><img src="assets/thomas-edison-stock-ticker-nmah-jn2014-3625.jpg" alt="" fetchpriority="high"></div>
+  <div class="exhibit__card">
+    <h1 id="page-title" class="exhibit__title">Detection Analytics Suite</h1>
+    <p class="exhibit__sub">A terminal-native surveillance engine that embeds SQL pattern recognition, WSL runtime isolation, and Claude AI analysis into any operating system. Connect to live market data. Detect manipulation. Act.</p>
+    <dl class="exhibit__fields">
+      <dt>Re</dt><dd>Financial Surveillance · Cross-Market Intelligence</dd>
+      <dt>Covers</dt><dd>SQL Pattern Engine, Claude AI, WSL Runtime, CBOE · NYSE · NASDAQ, Real-time Alerts, Spoofing, Gamma Squeeze, VIX Manipulation, Wash Trading</dd>
+      <dt>From</dt><dd>Rahul Das, Compliance Technology Associate</dd>
+    </dl>
   </div>
-</nav>
-<div class="nav-overlay" id="nav-overlay"></div>
-<nav class="nav-menu" id="nav-menu">
-  <a href="./das.html" class="active">DAS Suite</a>
-  <a href="./options-visualizer.html">Options Visualizer</a>
-  <a href="./futures-visualizer.html">Futures Visualizer</a>
-  <a href="./strategies-visualizer.html">Strategies Visualizer</a>
-  <a href="./hulls-notes.html">Hull's Notes</a>
-  <a href="./greeks-interview-prep.html">Greeks Prep</a>
-  <a href="./trade-surveillance-career-guide.html">Career Guide</a>
-  <a href="./interview-question-mapping.html">Interview Prep</a>
-  <a href="./job-search-history.html">Job Search</a>
-  <a href="./index.html">Back to Home</a>
-</nav>
-
-<!-- PAGE HEADER -->
-<div class="page-header">
-  <p class="page-eyebrow">Financial Surveillance &nbsp;·&nbsp; Cross-Market Intelligence</p>
-  <h1 class="page-title">DAS<br><em>Detection Analytics Suite</em></h1>
-  <p class="das-abbr">D · Detection &nbsp; A · Analytics &nbsp; S · Suite</p>
-  <p class="page-sub">A terminal-native surveillance engine that embeds SQL pattern recognition, WSL runtime isolation, and Claude AI analysis into any operating system. Connect to live market data. Detect manipulation. Act.</p>
-  <div class="page-tags">
-    <span class="page-tag hi">SQL Pattern Engine</span>
-    <span class="page-tag hi">Claude AI</span>
-    <span class="page-tag hi">WSL Runtime</span>
-    <span class="page-tag">CBOE · NYSE · NASDAQ</span>
-    <span class="page-tag">Real-time Alerts</span>
-    <span class="page-tag">Spoofing</span>
-    <span class="page-tag">Gamma Squeeze</span>
-    <span class="page-tag">VIX Manipulation</span>
-    <span class="page-tag">Wash Trading</span>
-  </div>
-</div>
+</section>
 
 <!-- PILLARS -->
 <div class="pillars">
@@ -859,8 +836,23 @@ journalctl -u das -f         # stream live surveillance logs</div>
   </div>
 </div>
 
-<footer>
-  <p class="foot-txt">Rahul Das &nbsp;·&nbsp; rdas0541@gmail.com &nbsp;·&nbsp; rahul-das-456.github.io</p>
+</main>
+
+<footer class="back">
+  <div class="back__card">
+    <p class="back__name">Rahul Das</p>
+    <div class="back__row">
+      <p>Trade surveillance and compliance technology in Chicago. Every tool here is free to use.</p>
+      <ul class="back__links">
+        <li><a href="./index.html">Portfolio</a></li>
+        <li><a href="./index.html#tools">All tools</a></li>
+        <li><a href="mailto:rdas0541@gmail.com">rdas0541@gmail.com</a></li>
+        <li><a href="https://www.linkedin.com/in/rahul-das-capm/" rel="noopener">LinkedIn</a></li>
+        <li><a href="./Rahul_Das_Resume.pdf" download>Résumé, PDF</a></li>
+      </ul>
+    </div>
+    <p class="back__credit">Photograph: <a href="https://commons.wikimedia.org/wiki/File:Thomas_Edison_stock_ticker_NMAH-JN2014-3625.jpg" rel="noopener">Edison stock ticker</a>, Jaclyn Nash, Smithsonian, public domain.</p>
+  </div>
 </footer>
 
 <script>
@@ -899,7 +891,7 @@ journalctl -u das -f         # stream live surveillance logs</div>
   const lines=[
     {id:'tl-1', html:'<span class="t-prompt">surveillance@das</span><span class="t-muted">:</span><span class="t-info">~/das</span><span class="t-muted">$</span> <span class="t-cmd">das connect --source live --exchange CBOE --symbols SPXW,SPY,VIX</span>'},
     {id:'tl-2', html:'<span class="t-info">[DAS]</span> Resolving CBOE WebSocket endpoint...'},
-    {id:'tl-3', html:'<span class="t-ok">[DAS]</span> ✓ Connected &nbsp;|&nbsp; Latency: 2.3ms &nbsp;|&nbsp; Symbols: 3 &nbsp;|&nbsp; Session: DAS-20260630-A'},
+    {id:'tl-3', html:'<span class="t-ok">[DAS]</span> Connected &nbsp;|&nbsp; Latency: 2.3ms &nbsp;|&nbsp; Symbols: 3 &nbsp;|&nbsp; Session: DAS-20260630-A'},
     {id:'tl-4', html:''},
     {id:'tl-5', html:'<span class="t-prompt">surveillance@das</span><span class="t-muted">:</span><span class="t-info">~/das</span><span class="t-muted">$</span> <span class="t-cmd">das scan --pattern spoofing --window 500ms --threshold 0.85 --watch</span>'},
     {id:'tl-6', html:'<span class="t-info">[DAS]</span> SQL Pattern Engine armed &nbsp;·&nbsp; Scanning order flow (500ms rolling window)'},

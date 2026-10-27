@@ -1,28 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<script>
-  (function(){
-    var s=localStorage.getItem('theme'),p=window.matchMedia('(prefers-color-scheme: dark)').matches;
-    if(s==='dark'||(!s&&p))document.documentElement.setAttribute('data-theme','dark');
-  })();
-
-  // Side-panel nav
-  const hb=document.getElementById('hamburger-btn');
-  const nm=document.getElementById('nav-menu');
-  const ov=document.getElementById('nav-overlay');
-  function openNav(){hb.classList.add('open');nm.classList.add('open');if(ov)ov.classList.add('open');hb.setAttribute('aria-expanded','true');}
-  function closeNav(){hb.classList.remove('open');nm.classList.remove('open');if(ov)ov.classList.remove('open');hb.setAttribute('aria-expanded','false');}
-  hb.addEventListener('click',()=>nm.classList.contains('open')?closeNav():openNav());
-  if(ov)ov.addEventListener('click',closeNav);
-  document.addEventListener('keydown',e=>{if(e.key==='Escape')closeNav();});
-</script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>Option Strategies Visualizer — Rahul Das</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,600;1,8..60,300;1,8..60,400&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600&display=swap" rel="stylesheet">
 <style>
 :root{
   --cream:#f8f5f0;--cream-dark:#ede9e2;
@@ -148,39 +132,37 @@ footer{background:var(--navy);padding:2rem 8vw;text-align:center;}
   .type-tab{flex:1;min-width:calc(50% - 1px);}
 }
 </style>
+<script>document.documentElement.classList.add('js')</script>
+<link rel="stylesheet" href="assets/site.css">
+<script src="assets/site.js" defer></script>
+<script src="assets/payoff.js" defer></script>
 </head>
 <body>
-<nav>
-  <a class="nav-mark" href="./index.html">Rahul Das</a>
-  <div class="nav-right">
-    <button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark mode">
-      <svg class="icon-moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
-      <svg class="icon-sun" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
-    </button>
-        <button class="hamburger-btn" id="hamburger-btn" aria-label="Toggle menu" aria-expanded="false">
-      <span></span><span></span><span></span>
-    </button>
-    <a class="nav-back" href="./index.html">Back to Portfolio</a>
-  </div>
-</nav>
-<nav class="nav-menu" id="nav-menu">
-  <a href="./das.html">DAS Suite</a>
-  <a href="./options-visualizer.html">Options Visualizer</a>
-  <a href="./futures-visualizer.html">Futures Visualizer</a>
-  <a href="./strategies-visualizer.html">Strategies Visualizer</a>
-  <a href="./hulls-notes.html">Hull's Notes</a>
-  <a href="./greeks-interview-prep.html">Greeks Prep</a>
-  <a href="./trade-surveillance-career-guide.html">Career Guide</a>
-  <a href="./interview-question-mapping.html">Interview Prep</a>
-  <a href="./job-search-history.html">Job Search</a>
-  <a href="./index.html">Back to Home</a>
-</nav>
+<a class="sr-only" href="#main">Skip to content</a>
+<header class="bar">
+  <a class="bar__mark" href="./index.html">Rahul Das</a>
+  <nav class="bar__links" aria-label="Tools">
+    <a href="./options-visualizer.html">Options</a>
+    <a href="./futures-visualizer.html">Futures</a>
+    <a href="./strategies-visualizer.html" aria-current="page">Strategies</a>
+    <a href="./hulls-notes.html">Hull's notes</a>
+  </nav>
+  <a class="bar__action" href="./index.html#tools">All tools</a>
+</header>
+<div hidden aria-hidden="true"><button id="theme-toggle" type="button" tabindex="-1"></button><button id="hamburger-btn" type="button" tabindex="-1"></button><div id="nav-menu"></div><div id="nav-overlay"></div></div>
 
-<div class="page-header">
-  <p class="page-eyebrow">Hull, Ch. 11-12 + 20</p>
-  <h1 class="page-title">Option Strategies<br><em>Visualizer</em></h1>
-  <p class="page-sub">Interactive payoff diagrams for seven core option strategies plus the volatility smile. Adjust sliders to see how each parameter reshapes risk and reward.</p>
-</div>
+<main id="main">
+<section class="exhibit exhibit--short" aria-labelledby="page-title">
+  <div class="exhibit__room"><img src="assets/randolph-street-east-from-lasalle-street-chicago.jpg" alt="" fetchpriority="high"></div>
+  <div class="exhibit__card">
+    <h1 id="page-title" class="exhibit__title">Option strategies visualizer</h1>
+    <p class="exhibit__sub">Eleven option strategies and the volatility smile, each drawn at expiry. Change a strike and the whole shape answers.</p>
+    <dl class="exhibit__fields">
+      <dt>Source</dt><dd>Hull, <i>Options, Futures, and Other Derivatives</i>, chapters 11, 12 and 20</dd>
+      <dt>From</dt><dd>Rahul Das, Compliance Technology Associate</dd>
+    </dl>
+  </div>
+</section>
 
 <div class="viz-wrap">
   <div class="type-tabs" role="tablist">
@@ -219,7 +201,24 @@ footer{background:var(--navy);padding:2rem 8vw;text-align:center;}
   </div>
 </div>
 
-<footer><p class="foot-txt">Option Strategies Visualizer &nbsp;&#xb7;&nbsp; Rahul Das &nbsp;&#xb7;&nbsp; rahul-das-456.github.io</p></footer>
+</main>
+
+<footer class="back">
+  <div class="back__card">
+    <p class="back__name">Rahul Das</p>
+    <div class="back__row">
+      <p>Trade surveillance and compliance technology in Chicago. Every tool here is free to use.</p>
+      <ul class="back__links">
+        <li><a href="./index.html">Portfolio</a></li>
+        <li><a href="./index.html#tools">All tools</a></li>
+        <li><a href="mailto:rdas0541@gmail.com">rdas0541@gmail.com</a></li>
+        <li><a href="https://www.linkedin.com/in/rahul-das-capm/" rel="noopener">LinkedIn</a></li>
+        <li><a href="./Rahul_Das_Resume.pdf" download>Résumé, PDF</a></li>
+      </ul>
+    </div>
+    <p class="back__credit">Photograph: <a href="https://commons.wikimedia.org/wiki/File:Randolph_Street_east_from_Lasalle_Street,_Chicago,_Illinois,_1900.jpg" rel="noopener">Randolph Street, 1900</a>, Detroit Publishing Co., public domain.</p>
+  </div>
+</footer>
 
 <script>
 (function(){
@@ -634,6 +633,8 @@ function drawPayoff(type){
   var rawmax=Math.max.apply(null,ys),rawmin=Math.min.apply(null,ys);
   var pad=Math.max(Math.abs(rawmax),Math.abs(rawmin))*0.3;
   var ymax=rawmax+pad,ymin=rawmin-pad;
+  svg._viz={key:type,xmin:xmin,xmax:xmax,ymin:ymin,ymax:ymax,ML:ML,MT:MT,IW:IW,IH:IH,s0:s.s0,
+    f:function(st){return cfg.pnl(st,s);},unit:'Profit or loss at expiry, per share'};
 
   for(var i=0;i<=4;i++){
     var gp=ymin+(ymax-ymin)*(i/4);
@@ -740,6 +741,7 @@ function drawPayoff(type){
 function drawVolSmile(){
   var s=state['vol-smile'];
   var svg=document.getElementById('chart-svg');
+  svg._viz=null;
   while(svg.firstChild)svg.removeChild(svg.firstChild);
 
   var xmin=s.s0*0.6,xmax=s.s0*1.4;
