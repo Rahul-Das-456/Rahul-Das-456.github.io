@@ -180,6 +180,7 @@ ul, ol { padding: 0; list-style: none; }
 .memo__foot { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 16px; padding-top: clamp(4px, 1vh, 12px); }
 .memo__foot .credit { font-size: var(--step-small); color: var(--paper-muted); }
 .memo__foot .link { justify-self: end; font-weight: 500; }
+.memo__acts { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; }
 
 @media (max-width: 760px) {
   .memo__nav { display: none; }
@@ -188,6 +189,7 @@ ul, ol { padding: 0; list-style: none; }
   .memo__photo { width: 46%; justify-self: end; margin-top: -8px; }
   .memo__foot { grid-template-columns: 1fr; }
   .memo__foot .btn { width: 100%; }
+  .memo__acts { flex-direction: column; }
   .memo__foot .credit { order: 3; }
   .memo__foot .link { justify-self: start; }
 }
@@ -655,7 +657,10 @@ html.lenis, html.lenis body { height: auto; }
 
     <div class="memo__foot" style="--i:3">
       <span class="credit">SIE · CAPM · Prosci · Lean Six Sigma</span>
-      <a class="btn" href="./Rahul_Das_Resume.pdf" target="_blank" rel="noopener">View résumé <span class="arrow" aria-hidden="true">&#8599;</span></a>
+      <div class="memo__acts">
+        <a class="btn" href="./Rahul_Das_Resume.pdf" target="_blank" rel="noopener">View résumé <span class="arrow" aria-hidden="true">&#8599;</span></a>
+        <a class="btn btn--ink" data-calendly="https://calendly.com/rdas0541/15min" href="mailto:rdas0541@gmail.com?subject=Booking%20a%2015-minute%20call">Book a 15-minute call <span class="arrow" aria-hidden="true">&#8594;</span></a>
+      </div>
       <a class="link" href="mailto:rdas0541@gmail.com">Email me</a>
     </div>
   </article>
@@ -1226,10 +1231,6 @@ html.lenis, html.lenis body { height: auto; }
 
 // Book a call: Calendly popup when data-calendly holds a link, plain email otherwise
 (() => {
-  const btn = document.getElementById('book-call');
-  const url = (btn.dataset.calendly || '').trim();
-  if (!url) return;
-  btn.href = url; btn.target = '_blank'; btn.rel = 'noopener';
   let loading;
   const load = () => loading ||= new Promise((ok, fail) => {
     const css = document.createElement('link');
@@ -1240,11 +1241,16 @@ html.lenis, html.lenis body { height: auto; }
     js.onload = ok; js.onerror = fail;
     document.head.append(js);
   });
-  btn.addEventListener('click', async (e) => {
-    if (e.metaKey || e.ctrlKey || e.shiftKey) return;
-    e.preventDefault();
-    try { await load(); window.Calendly.initPopupWidget({ url }); }
-    catch { window.open(url, '_blank', 'noopener'); }
+  document.querySelectorAll('[data-calendly]').forEach((btn) => {
+    const url = btn.dataset.calendly.trim();
+    if (!url) return;
+    btn.href = url; btn.target = '_blank'; btn.rel = 'noopener';
+    btn.addEventListener('click', async (e) => {
+      if (e.metaKey || e.ctrlKey || e.shiftKey) return;
+      e.preventDefault();
+      try { await load(); window.Calendly.initPopupWidget({ url }); }
+      catch { window.open(url, '_blank', 'noopener'); }
+    });
   });
 })();
 </script>
