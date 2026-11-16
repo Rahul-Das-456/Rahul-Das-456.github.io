@@ -523,6 +523,12 @@ ul, ol { padding: 0; list-style: none; }
 .coupon .field { font-size: var(--step-small); font-weight: 600; margin-top: 8px; }
 .coupon .field:first-child { margin-top: 0; }
 .coupon .field span { font-weight: 400; }
+.coupon__intro { display: grid; gap: 20px; }
+.book { display: grid; gap: 12px; justify-items: start; }
+.book p { font-size: var(--step-small); font-weight: 600; }
+.btn--line { background: transparent; color: var(--accent-ink); box-shadow: inset 0 0 0 2px var(--accent-ink); }
+.btn--line:hover { background: #ff8a7e; }
+.btn--line:focus-visible { outline: 3px solid var(--accent-ink); outline-offset: 3px; }
 @media (max-width: 860px) {
   .coupon { grid-template-columns: 1fr; }
   .coupon::before, .coupon::after { left: auto; top: 50%; margin: -14px 0 0; }
@@ -967,8 +973,15 @@ html.lenis, html.lenis body { height: auto; }
 <section class="contact wrap" id="contact" aria-labelledby="contact-h">
   <div class="coupon" data-reveal>
     <div class="coupon__left">
-      <h2 id="contact-h">Hiring for surveillance?</h2>
-      <p>Tell me about the role, the team and the markets you cover. I read every message.</p>
+      <div class="coupon__intro">
+        <h2 id="contact-h">Hiring for surveillance?</h2>
+        <p>Tell me about the role, the team and the markets you cover. I read every message.</p>
+      </div>
+      <div class="book">
+        <p>Rather talk it through?</p>
+        <!-- Set data-calendly to the 30-minute Calendly event link. Until then the button opens an email. -->
+        <a class="btn btn--line" id="book-call" data-calendly="" href="mailto:rdas0541@gmail.com?subject=Booking%20a%2030-minute%20call">Book a 30-minute call <span class="arrow" aria-hidden="true">&#8594;</span></a>
+      </div>
     </div>
     <form id="contact-form" action="https://formspree.io/f/mqeoqzkn" method="POST">
       <label class="field" for="f-name">Name</label>
@@ -1208,6 +1221,30 @@ html.lenis, html.lenis body { height: auto; }
     } catch {
       note.textContent = 'That did not send. Email me at rdas0541@gmail.com instead.';
     } finally { btn.disabled = false; }
+  });
+})();
+
+// Book a call: Calendly popup when data-calendly holds a link, plain email otherwise
+(() => {
+  const btn = document.getElementById('book-call');
+  const url = (btn.dataset.calendly || '').trim();
+  if (!url) return;
+  btn.href = url; btn.target = '_blank'; btn.rel = 'noopener';
+  let loading;
+  const load = () => loading ||= new Promise((ok, fail) => {
+    const css = document.createElement('link');
+    css.rel = 'stylesheet'; css.href = 'https://assets.calendly.com/assets/external/widget.css';
+    document.head.append(css);
+    const js = document.createElement('script');
+    js.src = 'https://assets.calendly.com/assets/external/widget.js';
+    js.onload = ok; js.onerror = fail;
+    document.head.append(js);
+  });
+  btn.addEventListener('click', async (e) => {
+    if (e.metaKey || e.ctrlKey || e.shiftKey) return;
+    e.preventDefault();
+    try { await load(); window.Calendly.initPopupWidget({ url }); }
+    catch { window.open(url, '_blank', 'noopener'); }
   });
 })();
 </script>
