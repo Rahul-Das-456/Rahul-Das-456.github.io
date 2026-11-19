@@ -423,28 +423,28 @@ ul, ol { padding: 0; list-style: none; }
   .cv__acts .btn { width: 100%; }
 }
 
-/* ---------- tools: book-spine index ---------- */
+/* ---------- tools: an index of rows, read left to right ---------- */
 .tools { padding-top: var(--gap-section); padding-bottom: 64px; }
 .tools__head { display: flex; align-items: baseline; gap: 24px; flex-wrap: wrap; margin-bottom: 28px; }
 .tools__head p { color: var(--muted); max-width: 52ch; }
-.shelf { display: flex; gap: 6px; height: 440px; }
+.shelf { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
 .spine {
-  flex: 1 1 0; min-width: 0; display: flex; flex-direction: row; justify-content: flex-start; align-items: center; gap: 12px;
-  padding: 16px 0; background: var(--surface); color: var(--ink); text-decoration: none;
-  writing-mode: vertical-rl; transition: background-color var(--t-hover) var(--ease-out), transform var(--t-ui) var(--ease-out), color var(--t-hover) var(--ease-out);
+  min-width: 0; min-height: 76px; display: flex; align-items: center; justify-content: space-between; gap: 16px;
+  padding: 14px 20px; background: var(--surface); color: var(--ink); text-decoration: none;
+  transition: background-color var(--t-hover) var(--ease-out), transform var(--t-ui) var(--ease-out), color var(--t-hover) var(--ease-out);
 }
-.spine b { font-size: var(--step-body); font-weight: 500; letter-spacing: -0.01em; }
-.spine span { font-size: var(--step-small); font-weight: 500; padding: 8px 3px; color: var(--paper-ink); }
+.spine b { font-size: var(--step-lead); font-weight: 500; letter-spacing: -0.01em; line-height: 1.2; }
+.spine span { flex: none; font-size: var(--step-small); font-weight: 500; padding: 4px 8px; color: var(--paper-ink); }
 .spine[data-k=deriv] span { background: var(--accent); }
 .spine[data-k=career] span { background: var(--paper); }
 .spine[data-k=study] span { background: var(--blue); }
 .spine[data-k=data] span { background: var(--bid); }
-.spine:hover, .spine:focus-visible { background: var(--paper); color: var(--paper-ink); transform: translateY(-10px); }
+.spine:hover, .spine:focus-visible { background: var(--paper); color: var(--paper-ink); transform: translateX(6px); }
 .shelf:hover .spine:not(:hover) b { color: var(--muted); }
 @media (max-width: 760px) {
-  .shelf { height: auto; flex-wrap: wrap; gap: 10px; }
-  .spine { writing-mode: horizontal-tb; flex: 0 1 auto; flex-direction: row; padding: 10px 12px; gap: 10px; }
-  .spine span { padding: 2px 6px; }
+  .shelf { grid-template-columns: 1fr; }
+  .spine { min-height: 64px; padding: 12px 16px; }
+  .spine b { font-size: var(--step-body); }
 }
 
 /* ---------- toolkit: giant word, filled bars ---------- */
@@ -606,9 +606,6 @@ html.lenis, html.lenis body { height: auto; }
   .js .shutter[data-reveal] img { transform: scale(1.12); transition: transform 1500ms var(--ease-soft); }
   .js .shutter[data-reveal].is-in { clip-path: inset(0); }
   .js .shutter[data-reveal].is-in img { transform: none; }
-  .js .spine[data-reveal] { transform: translateY(40px); }
-  .js .spine[data-reveal].is-in { transform: none; }
-  .js .spine[data-reveal].is-in:hover { transform: translateY(-10px); }
 }
 @media (prefers-reduced-motion: reduce) {
   .memo__photo, .slip:hover, .spine:hover { transform: none !important; }
@@ -699,7 +696,7 @@ html.lenis, html.lenis body { height: auto; }
 <section class="exhibit wrap" id="exhibit" aria-labelledby="exhibit-h">
   <div class="exhibit__head">
     <h2 id="exhibit-h" class="head" data-reveal>Exhibit A: a spoof, replayed</h2>
-    <p data-reveal style="--i:1">An illustrative order book with made-up numbers, the kind of pattern I reviewed every day. Scroll, or drive it yourself.</p>
+    <p data-reveal style="--i:1">An illustrative order book with made-up numbers, the kind of pattern I reviewed every day. Scroll, or drive it yourself. <a class="link" href="./surveillance-patterns.html">See 24 more patterns, replayed.</a></p>
   </div>
 
   <div class="story">
@@ -891,18 +888,19 @@ html.lenis, html.lenis body { height: auto; }
 <section class="tools wrap" id="tools" aria-labelledby="tools-h">
   <div class="tools__head">
     <h2 id="tools-h" class="head" data-reveal>Things I built</h2>
-    <p data-reveal style="--i:1">Free visualizers and study guides for derivatives and surveillance careers. Pick a spine.</p>
+    <p data-reveal style="--i:1">Free visualizers and study guides for derivatives and surveillance careers. Pick one.</p>
   </div>
-  <div class="shelf">
-    <a class="spine" data-k="deriv" href="./options-visualizer.html" data-reveal style="--i:0"><b>Options payoff visualizer</b><span>Derivatives</span></a>
-    <a class="spine" data-k="deriv" href="./futures-visualizer.html" data-reveal style="--i:1"><b>Futures payoff visualizer</b><span>Derivatives</span></a>
-    <a class="spine" data-k="deriv" href="./strategies-visualizer.html" data-reveal style="--i:2"><b>Option strategies visualizer</b><span>Derivatives</span></a>
-    <a class="spine" data-k="data" href="./das.html" data-reveal style="--i:3"><b>Detection Analytics Suite</b><span>Surveillance</span></a>
-    <a class="spine" data-k="study" href="./hulls-notes.html" data-reveal style="--i:4"><b>Hull's notes</b><span>Study notes</span></a>
-    <a class="spine" data-k="study" href="./greeks-interview-prep.html" data-reveal style="--i:5"><b>Greeks and market maker compliance</b><span>Study notes</span></a>
-    <a class="spine" data-k="career" href="./trade-surveillance-career-guide.html" data-reveal style="--i:6"><b>Trade surveillance career guide</b><span>Career</span></a>
-    <a class="spine" data-k="career" href="./interview-question-mapping.html" data-reveal style="--i:7"><b>Interview question mapping</b><span>Career</span></a>
-    <a class="spine" data-k="career" href="./job-search-history.html" data-reveal style="--i:8"><b>Job search history</b><span>Career</span></a>
+  <div class="shelf" data-reveal style="--i:2">
+    <a class="spine" data-k="data" href="./surveillance-patterns.html"><b>Surveillance patterns, replayed</b><span>Surveillance</span></a>
+    <a class="spine" data-k="deriv" href="./options-visualizer.html"><b>Options payoff visualizer</b><span>Derivatives</span></a>
+    <a class="spine" data-k="deriv" href="./futures-visualizer.html"><b>Futures payoff visualizer</b><span>Derivatives</span></a>
+    <a class="spine" data-k="deriv" href="./strategies-visualizer.html"><b>Option strategies visualizer</b><span>Derivatives</span></a>
+    <a class="spine" data-k="data" href="./das.html"><b>Detection Analytics Suite</b><span>Surveillance</span></a>
+    <a class="spine" data-k="study" href="./hulls-notes.html"><b>Hull's notes</b><span>Study notes</span></a>
+    <a class="spine" data-k="study" href="./greeks-interview-prep.html"><b>Greeks and market maker compliance</b><span>Study notes</span></a>
+    <a class="spine" data-k="career" href="./trade-surveillance-career-guide.html"><b>Trade surveillance career guide</b><span>Career</span></a>
+    <a class="spine" data-k="career" href="./interview-question-mapping.html"><b>Interview question mapping</b><span>Career</span></a>
+    <a class="spine" data-k="career" href="./job-search-history.html"><b>Job search history</b><span>Career</span></a>
   </div>
 </section>
 

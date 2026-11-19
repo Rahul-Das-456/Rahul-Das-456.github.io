@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Market Abuse, Replayed | Rahul Das</title>
+<meta name="description" content="Twenty-five capital markets surveillance patterns, each replayed step by step: spoofing, layering, wash trading, marking the close, insider trading, front running and more, with the rules, red flags and the work behind each alert.">
+<link rel="canonical" href="https://rahul-das-456.github.io/surveillance-patterns.html">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600&display=swap" rel="stylesheet">
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-2008615M0E"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-2008615M0E');</script>
+<script>document.documentElement.classList.add('js')</script>
+<link rel="stylesheet" href="assets/site.css">
+<script src="assets/site.js" defer></script>
+<style>
+.lab { width: min(var(--sheet), 100% - 2 * var(--m)); margin: clamp(72px, 9vw, 140px) auto 0; }
+.lab__head { display: grid; grid-template-columns: 7fr 5fr; gap: 24px clamp(24px, 4vw, 72px); align-items: end; margin-bottom: clamp(28px, 3vw, 44px); }
+.lab__head h2 { font-size: var(--step-head); letter-spacing: -0.04em !important; line-height: 0.95; color: var(--ink-hi); }
+.lab__head p { color: var(--ink-hi); max-width: none; text-wrap: pretty; }
+
+/* picker: plain horizontal buttons, wrapping, grouped by family */
+.pick { display: grid; gap: 18px; margin-bottom: clamp(32px, 4vw, 56px); }
+.pick__grp { display: grid; grid-template-columns: 200px 1fr; gap: 8px 20px; align-items: start; }
+.pick__fam { margin: 0; padding-top: 10px; font-weight: 600; color: var(--ink-hi); font-size: var(--step-body); }
+.pick__row { display: flex; flex-wrap: wrap; gap: 6px; }
+.pick__btn {
+  min-height: 44px; padding: 0 16px; border: 0; background: var(--surface); color: var(--ink-hi);
+  font: 500 var(--step-body)/1.1 var(--font); cursor: pointer; text-align: left;
+  transition: background-color var(--t-hover) var(--ease-out), color var(--t-hover) var(--ease-out), transform var(--t-press) var(--ease-out);
+}
+.pick__btn:hover { background: var(--surface-2); }
+.pick__btn:active { transform: scale(0.97); }
+.pick__btn[aria-pressed="true"] { background: var(--accent); color: var(--accent-ink); }
+.pick__btn:focus-visible, .pstep:focus-visible, .pctl button:focus-visible { outline: 3px solid var(--blue); outline-offset: 2px; }
+
+/* stage */
+.stage { display: grid; grid-template-columns: 7fr 5fr; gap: clamp(24px, 4vw, 72px); align-items: start; }
+.pboard[data-ui] { position: sticky; top: 84px; background: var(--surface); color: var(--ink-hi); padding: clamp(16px, 2vw, 28px); border: 1px solid #2c3a63 !important; }
+.pbar { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; margin-bottom: 10px; }
+.pbar__inst { font-weight: 600; }
+.pbar__last { font-size: var(--step-small); color: var(--muted); font-variant-numeric: tabular-nums; }
+.pbar__last b { color: var(--ink-hi); font-size: var(--step-body); }
+.pbar__last .dn { color: var(--accent); }
+.pbar__last .up { color: var(--bid); }
+.pbar__range { display: block; text-align: right; }
+.pchart { display: block; width: 100%; height: auto; }
+.ch__line { fill: none; stroke: var(--paper); stroke-width: 2.5; stroke-linejoin: round; stroke-linecap: round; }
+.ch__x { fill: var(--accent); }
+.ch__now { fill: var(--paper); }
+.ch__ax { fill: var(--muted); font: 500 13px var(--font); font-variant-numeric: tabular-nums; }
+.pladder { margin-top: 10px; }
+.pladder table, .ptape table { width: 100%; table-layout: fixed; font-variant-numeric: tabular-nums; }
+.pladder th, .ptape th { color: var(--muted) !important; border-bottom: 0 !important; text-align: left; padding: 0 0 6px; font-weight: 500 !important; }
+.pladder th:first-child { text-align: right; }
+.pladder th:nth-child(2) { text-align: center; width: 26%; }
+.pladder td { height: 26px; padding: 0; color: var(--ink-hi) !important; border-bottom: 0 !important; border-top: 1px solid #26335a !important; font-size: var(--step-small); }
+.ppx { text-align: center; font-weight: 500; }
+.pc { position: relative; height: 20px; display: flex; align-items: center; }
+.pc--bid { justify-content: flex-end; }
+.pq { position: relative; z-index: 1; padding: 0 8px; }
+.pq.is-x { font-weight: 600; }
+.pb { position: absolute; inset: 0; display: flex; }
+.pc--bid .pb { flex-direction: row-reverse; }
+.pb i { display: block; height: 100%; transition: width 600ms var(--ease-expo); }
+.pc--bid .pb i.own { background: color-mix(in srgb, var(--bid) 38%, var(--surface)); }
+.pc--ask .pb i.own { background: color-mix(in srgb, var(--accent) 30%, var(--surface)); }
+.pb i.x { background: var(--accent); }
+.pnote { position: relative; z-index: 1; margin-left: auto; padding-right: 6px; font-weight: 600; color: var(--bid); font-size: var(--step-small); }
+.ptape { margin-top: 14px; }
+.ptape td { padding: 6px 8px 6px 0; color: var(--ink-hi) !important; border-bottom: 0 !important; border-top: 1px solid #26335a !important; font-size: var(--step-small); vertical-align: top; }
+.ptape th:nth-child(1), .ptape td:nth-child(1) { width: 30%; }
+.ptape th:nth-child(2), .ptape td:nth-child(2) { width: 20%; }
+.ptape tr.is-x td { color: #ff8a7e !important; font-weight: 500; }
+.ptape tbody tr:first-child td { animation: tape-in 500ms var(--ease-expo) both; }
+@keyframes tape-in { from { opacity: 0; transform: translateY(-6px); } to { opacity: 1; transform: none; } }
+.pctl { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-top: 16px; }
+.pctl button {
+  min-height: 44px; min-width: 44px; padding: 0 14px; border: 0; background: var(--surface-2); color: var(--ink-hi);
+  font: 500 var(--step-small)/1 var(--font); cursor: pointer;
+  transition: background-color var(--t-hover) var(--ease-out), transform var(--t-press) var(--ease-out);
+}
+.pctl button:hover { background: #2d3b66; }
+.pctl button:active { transform: scale(0.95); }
+.pctl input[type=range] { flex: 1 1 120px; accent-color: var(--accent); min-height: 44px; }
+.pctl__count { font-size: var(--step-small); color: var(--muted); }
+.palert { display: none; gap: 4px; margin-top: 14px; padding: 14px 16px; background: var(--accent); color: var(--accent-ink); font-size: var(--step-small); }
+.palert b { font-size: var(--step-body); }
+.pboard.is-alert .palert { display: grid; animation: alert-in 500ms var(--ease-expo) both; }
+@keyframes alert-in { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+.pkey { margin: 12px 0 0; font-size: var(--step-small); color: var(--muted); }
+.pkey i { display: inline-block; width: 12px; height: 12px; background: var(--accent); border-radius: 50%; vertical-align: -1px; margin-right: 6px; }
+
+.pstory h3 { font-size: var(--step-head); letter-spacing: -0.04em !important; line-height: 0.95; color: var(--ink-hi); margin: 0 0 14px; }
+.pstory > p { color: var(--ink-hi); font-size: var(--step-lead); line-height: 1.3; margin: 0 0 24px; text-wrap: pretty; }
+.psteps { list-style: none; margin: 0; padding: 0; display: grid; gap: 4px; }
+.pstep {
+  width: 100%; display: grid; gap: 4px; text-align: left; padding: 14px 16px; border: 0; background: transparent; color: var(--muted);
+  font: 400 var(--step-body)/1.45 var(--font); cursor: pointer;
+  transition: background-color var(--t-hover) var(--ease-out), color var(--t-hover) var(--ease-out);
+}
+.pstep b { font-size: var(--step-lead); font-weight: 600; line-height: 1.2; color: inherit; }
+.pstep:hover { background: var(--surface); color: var(--ink-hi); }
+.pstep.is-on { background: var(--surface); color: var(--ink-hi); }
+.pstep.is-on b { color: var(--accent); }
+
+/* the case file under the replay */
+.pfile { margin-top: clamp(40px, 5vw, 72px); display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; }
+.pfile section { background: var(--paper); color: var(--paper-ink); padding: clamp(18px, 2vw, 28px); }
+.pfile section:first-child { background: var(--paper-ink); color: var(--paper); outline: 2px solid var(--surface-2); }
+.pfile h4 { font-size: var(--step-lead); font-weight: 600; letter-spacing: -0.01em; margin: 0 0 12px; color: inherit; }
+.pfile section:first-child h4 { color: var(--accent); }
+.pfile ul { margin: 0; padding-left: 1.1em; display: grid; gap: 6px; }
+.pfile li { color: inherit; }
+
+/* index sheet */
+.pindex h2 { font-size: var(--step-head); letter-spacing: -0.04em !important; line-height: 0.95; margin: 0 0 12px; }
+.pindex__head { display: grid; grid-template-columns: 1fr 220px; gap: 32px; align-items: end; margin-bottom: 28px; }
+.pindex__head p { max-width: 60ch; margin: 0; }
+.pindex__head img { width: 100%; height: 260px; object-fit: cover; filter: grayscale(1) contrast(1.05); }
+.pfloor { width: min(var(--sheet), 100% - 2 * var(--m)); margin: clamp(72px, 9vw, 140px) auto 0; display: grid; grid-template-columns: 7fr 5fr; gap: clamp(24px, 4vw, 72px); align-items: end; }
+.pfloor video { width: 100%; height: auto; aspect-ratio: 4 / 3; object-fit: cover; filter: grayscale(1) contrast(1.1); background: var(--surface); }
+.pfloor figcaption { color: var(--ink-hi); font-size: var(--step-lead); line-height: 1.35; text-wrap: pretty; }
+.back__credit { max-width: 60ch; }
+.pfloor figcaption b { display: block; font-weight: 600; margin-bottom: 8px; color: var(--accent); }
+.pindex table { width: 100%; }
+.pindex th { text-align: left; padding: 0 16px 10px 0; }
+.pindex td { padding: 12px 16px 12px 0; color: var(--paper-ink) !important; vertical-align: top; font-size: var(--step-body); border-bottom: 1px solid var(--paper-3) !important; }
+.pindex td:first-child { font-weight: 600; width: 24%; }
+.pindex td:last-child { width: 26%; }
+.pindex a { color: var(--paper-ink); text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 4px; text-decoration-color: color-mix(in srgb, currentColor 35%, transparent); }
+.pindex a:hover { text-decoration-color: var(--accent); }
+.pindex .fam td { font-size: var(--step-lead); font-weight: 600; color: var(--accent-deep) !important; padding-top: 28px; border-bottom: 3px solid var(--paper-ink) !important; }
+
+@media (max-width: 900px) {
+  .lab__head, .stage { grid-template-columns: 1fr; }
+  .pick__grp { grid-template-columns: 1fr; }
+  .pick__fam { padding-top: 0; }
+  .pboard[data-ui] { position: static; padding: 14px; }
+  .pfile { grid-template-columns: 1fr 1fr; }
+  .pfloor { grid-template-columns: 1fr; }
+}
+@media (max-width: 560px) {
+  .pfile { grid-template-columns: 1fr; }
+  .pindex__head { grid-template-columns: 1fr 110px; gap: 16px; }
+  .pindex__head img { height: 140px; }
+  .pick__btn { min-height: 44px; padding: 0 12px; font-size: var(--step-small); }
+  .pladder td { height: 22px; }
+  .pc { height: 18px; }
+  .pindex thead { display: none; }
+  .pindex tr { display: grid; padding: 10px 0; border-bottom: 1px solid var(--paper-3); }
+  .pindex td, .pindex td:first-child, .pindex td:last-child { width: auto; border: 0 !important; padding: 2px 0; }
+  .pindex .fam td { border-bottom: 3px solid var(--paper-ink) !important; padding-bottom: 6px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .ptape tbody tr:first-child td, .pboard.is-alert .palert { animation: none; }
+  .pb i { transition: none; }
+}
+</style>
+</head>
+<body>
+<a class="sr-only" href="#main">Skip to content</a>
+<header class="bar">
+  <a class="bar__mark" href="./index.html">Rahul Das</a>
+  <nav class="bar__links" aria-label="Tools">
+    <a href="./surveillance-patterns.html" aria-current="page">Patterns</a>
+    <a href="./das.html">DAS</a>
+    <a href="./options-visualizer.html">Options</a>
+    <a href="./trade-surveillance-career-guide.html">Career guide</a>
+  </nav>
+  <a class="bar__action" href="./index.html#tools">All tools</a>
+</header>
+
+<main id="main">
+<section class="exhibit" aria-labelledby="page-title">
+  <div class="exhibit__room"><img src="assets/randolph-street-east-from-lasalle-street-chicago.jpg" alt="" fetchpriority="high"></div>
+  <div class="exhibit__card">
+    <h1 id="page-title" class="exhibit__title">Market abuse, replayed</h1>
+    <p class="exhibit__sub">Twenty-five ways markets get abused, each played out step by step the way an alert sees it. Pick one, then press play or step through it.</p>
+    <dl class="exhibit__fields">
+      <dt>Re</dt><dd>Order book, trade-based, price, information and customer patterns</dd>
+      <dt>From</dt><dd>Rahul Das, Compliance Technology Associate</dd>
+      <dt>Note</dt><dd>Every case is illustrative. Accounts and numbers are made up.</dd>
+    </dl>
+  </div>
+</section>
+
+<section class="lab" id="lab" aria-labelledby="lab-h" hidden>
+  <div class="lab__head">
+    <h2 id="lab-h">Pick a pattern</h2>
+    <p>Red marks the account under review: its orders in the book, its trades on the chart and its lines on the tape.</p>
+  </div>
+  <div class="pick" id="picker"></div>
+
+  <div class="stage">
+    <div class="pboard" id="pboard" data-ui>
+      <div class="pbar">
+        <span class="pbar__inst" id="pinst"></span>
+        <span class="pbar__last" aria-live="polite">Last <b id="plast"></b> <span id="pchg"></span> <span class="pbar__range" id="prange"></span></span>
+      </div>
+      <svg class="pchart" id="chart" viewBox="0 0 640 220" role="img" aria-label="Price chart"></svg>
+      <div class="pladder" id="pladder">
+        <table><thead><tr><th scope="col">Bids</th><th scope="col">Price</th><th scope="col">Offers</th></tr></thead><tbody></tbody></table>
+      </div>
+      <div class="ptape" id="tape">
+        <table><thead><tr><th scope="col">Time</th><th scope="col">Account</th><th scope="col">Event</th></tr></thead><tbody aria-live="polite"></tbody></table>
+      </div>
+      <div class="pctl">
+        <button type="button" id="pprev" aria-label="Previous step">&#8592;</button>
+        <button type="button" id="pplay">Play</button>
+        <button type="button" id="pnext" aria-label="Next step">&#8594;</button>
+        <label class="sr-only" for="pscrub">Replay step</label>
+        <input type="range" id="pscrub" min="0" max="4" step="1" value="0">
+        <span class="pctl__count" id="pcount"></span>
+      </div>
+      <div class="palert" id="palert" role="status"><b></b><span></span></div>
+      <p class="pkey"><i aria-hidden="true"></i>Account under review</p>
+    </div>
+
+    <div class="pstory">
+      <h3 id="pname"></h3>
+      <p id="psum"></p>
+      <ol class="psteps" id="psteps"></ol>
+    </div>
+  </div>
+
+  <div class="pfile">
+    <section aria-labelledby="f1"><h4 id="f1">The rules</h4><ul id="plaw"></ul></section>
+    <section aria-labelledby="f2"><h4 id="f2">Red flags</h4><ul id="pflags"></ul></section>
+    <section aria-labelledby="f3"><h4 id="f3">How I work the alert</h4><ul id="pwork"></ul></section>
+    <section aria-labelledby="f4"><h4 id="f4">Data I pull</h4><ul id="pdata"></ul></section>
+  </div>
+</section>
+
+<figure class="pfloor" aria-labelledby="floor-cap">
+  <video muted loop playsinline autoplay preload="metadata" poster="assets/nyse-floor-poster.jpg" width="640" height="480" aria-hidden="true">
+    <source src="assets/nyse-floor.webm" type="video/webm">
+    <source src="assets/nyse-floor.mp4" type="video/mp4">
+  </video>
+  <figcaption id="floor-cap"><b>The same schemes, older than the screens.</b> Traders on the floor in the 1950s could paint the tape or corner a market by hand. Today each pattern leaves a record in orders, cancels and fills, and that record is what surveillance reads.</figcaption>
+</figure>
+
+<div class="page-body pindex">
+  <div class="pindex__head">
+    <div>
+      <h2 id="index-h">All 25 patterns</h2>
+      <p>The whole set on one sheet. Open any row to replay it.</p>
+    </div>
+    <img src="assets/thomas-edison-stock-ticker-nmah-jn2014-3625.jpg" width="1200" height="1484" alt="Thomas Edison's Universal stock printer under a glass dome" loading="lazy">
+  </div>
+  <table aria-labelledby="index-h">
+    <thead><tr><th scope="col">Pattern</th><th scope="col">What it looks like</th><th scope="col">Main rules</th></tr></thead>
+    <tbody>
+      <tr class="fam"><td colspan="3">Order book</td></tr>
+      <tr><td><a href="#spoofing" data-open="spoofing">Spoofing</a></td><td>Orders the trader never means to fill, placed to move the price toward a real order on the other side.</td><td>CEA §4c(a)(5)(C); CFTC Rule 180.1; CME Rule 575.A</td></tr>
+      <tr><td><a href="#layering" data-open="layering">Layering</a></td><td>Spoofing spread across several price levels on one side, to build fake depth and walk the price.</td><td>SEA §9(a)(2); SEA §10(b) and Rule 10b-5; FINRA Rules 2020 and 5210</td></tr>
+      <tr><td><a href="#quote-stuffing" data-open="quote-stuffing">Quote stuffing</a></td><td>A flood of orders and cancels that slows other firms' market data, so the sender can trade on stale prices.</td><td>CME Rule 575.C; FINRA Rules 2010 and 5210; SEA §9(a)(2)</td></tr>
+      <tr><td><a href="#momentum-ignition" data-open="momentum-ignition">Momentum ignition</a></td><td>A burst of aggressive orders meant to set off other algorithms, then trading against the move they start.</td><td>CEA §6(c)(1) and CFTC Rule 180.1; SEA §9(a)(2); FINRA Rule 2020</td></tr>
+      <tr class="fam"><td colspan="3">Trade-based</td></tr>
+      <tr><td><a href="#wash-trading" data-open="wash-trading">Wash trading</a></td><td>The same owner on both sides of a trade. Volume is printed, but no risk changes hands.</td><td>CEA §4c(a)(2)(A); CME Rule 534; SEA §9(a)(1)</td></tr>
+      <tr><td><a href="#prearranged" data-open="prearranged">Prearranged trading</a></td><td>Two parties agree the price and size off the market, then run the trade through the book to avoid competition.</td><td>CEA §4c(a); CME Rule 539; SEA §9(a)(1)</td></tr>
+      <tr><td><a href="#painting-tape" data-open="painting-tape">Painting the tape</a></td><td>A string of small trades between related accounts to show activity and a rising price on the tape.</td><td>SEA §9(a)(1) and §9(a)(2); FINRA Rules 2020 and 6140(b); CFTC Rule 180.1</td></tr>
+      <tr><td><a href="#money-passing" data-open="money-passing">Money passing</a></td><td>Trades at off-market prices that move money from one account to another, often a client to an insider.</td><td>CEA §4c(a); CME Rules 534 and 539; NFA Compliance Rule 2-4</td></tr>
+      <tr class="fam"><td colspan="3">Price and benchmarks</td></tr>
+      <tr><td><a href="#marking-close" data-open="marking-close">Marking the close</a></td><td>Buying or selling at the end of the day to set a closing price that values a bigger position.</td><td>SEA §9(a)(2); SEA §10(b) and Rule 10b-5; FINRA Rule 2020</td></tr>
+      <tr><td><a href="#pump-dump" data-open="pump-dump">Pump and dump</a></td><td>Buying cheap shares, hyping the stock with false news, then selling to the buyers the hype brought in.</td><td>SEA §9(a)(2); SEA §10(b) and Rule 10b-5; Securities Act §17(a)</td></tr>
+      <tr><td><a href="#short-distort" data-open="short-distort">Short and distort</a></td><td>Shorting a stock, then spreading false bad news to push it down and cover at a profit.</td><td>SEA §10(b) and Rule 10b-5; SEA §9(a)(2); FINRA Rule 2020</td></tr>
+      <tr><td><a href="#squeeze" data-open="squeeze">Corner and squeeze</a></td><td>Holding most of the longs and most of the deliverable supply, so shorts must buy back at a forced price.</td><td>CEA §6(c) and §9(a)(2); CFTC Rules 180.1 and 180.2; CME Rules 560 and 562</td></tr>
+      <tr><td><a href="#cross-market" data-open="cross-market">Cross-market manipulation</a></td><td>Moving one market to profit in a linked one, such as pushing a stock to lift options or swaps on it.</td><td>SEA §9(a)(2); SEA §10(b) and Rule 10b-5; CFTC Rule 180.1</td></tr>
+      <tr><td><a href="#benchmark-fix" data-open="benchmark-fix">Benchmark manipulation</a></td><td>Trading or colluding inside a fixing window to move a benchmark that prices billions in other contracts.</td><td>CEA §9(a)(2); CFTC Rules 180.1 and 180.2; Sherman Act §1</td></tr>
+      <tr><td><a href="#rule-105" data-open="rule-105">Short selling before an offering</a></td><td>Shorting a stock in the five days before a priced offering, then buying shares in that offering.</td><td>Regulation M Rule 105; SEA §10(b) and Rule 10b-5</td></tr>
+      <tr class="fam"><td colspan="3">Information</td></tr>
+      <tr><td><a href="#insider-trading" data-open="insider-trading">Insider trading</a></td><td>Trading on material non-public information, or passing it to someone who trades.</td><td>SEA §10(b) and Rule 10b-5; SEA §15(g); FINRA Rule 3110(d)</td></tr>
+      <tr><td><a href="#front-running" data-open="front-running">Front running</a></td><td>Trading ahead of a customer's large order the firm knows about, to profit from its price impact.</td><td>FINRA Rule 5270; FINRA Rule 2010; CME Rule 530</td></tr>
+      <tr><td><a href="#trading-ahead" data-open="trading-ahead">Trading ahead of customer orders</a></td><td>The firm fills its own order at a price that should have filled a customer limit order it was holding.</td><td>FINRA Rule 5320; CME Rule 530</td></tr>
+      <tr><td><a href="#block-leak" data-open="block-leak">Block trade information misuse</a></td><td>Using news of a pending block trade to trade ahead of it, or passing it to someone who does.</td><td>CME Rule 526; CFTC Rule 180.1; FINRA Rule 5270</td></tr>
+      <tr class="fam"><td colspan="3">Customer and firm</td></tr>
+      <tr><td><a href="#cherry-picking" data-open="cherry-picking">Cherry-picking</a></td><td>An adviser waits to see how trades do, then gives the winners to itself and the losers to clients.</td><td>Advisers Act §206; Advisers Act Rule 206(4)-7; SEA §10(b)</td></tr>
+      <tr><td><a href="#churning" data-open="churning">Churning</a></td><td>A broker trades a customer's account too often, mainly to earn commissions.</td><td>FINRA Rule 2111; Reg BI, SEA Rule 15l-1; SEA §10(b) and Rule 10b-5</td></tr>
+      <tr><td><a href="#markups" data-open="markups">Excessive markups</a></td><td>Charging a customer far above the prevailing market price on a principal trade.</td><td>FINRA Rule 2121; FINRA Rule 2124; MSRB Rule G-30</td></tr>
+      <tr><td><a href="#best-ex" data-open="best-ex">Best execution failure</a></td><td>Routing customer orders where the firm benefits instead of where the customer gets the best price.</td><td>FINRA Rule 5310; Reg NMS Rules 605 and 606; Reg NMS Rule 611</td></tr>
+      <tr><td><a href="#reg-sho" data-open="reg-sho">Naked short selling</a></td><td>Selling short without a locate, then failing to deliver and not closing out the fail on time.</td><td>Reg SHO Rule 203(b); Reg SHO Rule 204; SEA Rule 10b-21</td></tr>
+      <tr><td><a href="#free-riding" data-open="free-riding">Free-riding</a></td><td>Buying in a cash account and paying for it with the proceeds of selling the same stock.</td><td>Reg T, 12 CFR 220.8(c); FINRA Rule 4210</td></tr>
+    </tbody>
+  </table>
+</div>
+</main>
+
+<footer class="back">
+  <div class="back__card">
+    <p class="back__name">Rahul Das</p>
+    <div class="back__row">
+      <p>Trade surveillance and compliance technology in Chicago. Every tool here is free to use.</p>
+      <ul class="back__links">
+        <li><a href="./index.html">Portfolio</a></li>
+        <li><a href="./index.html#tools">All tools</a></li>
+        <li><a href="mailto:rdas0541@gmail.com">rdas0541@gmail.com</a></li>
+        <li><a href="https://www.linkedin.com/in/rahul-das-capm/" rel="noopener">LinkedIn</a></li>
+        <li><a href="./Rahul_Das_Resume.pdf" target="_blank" rel="noopener">Résumé, PDF</a></li>
+      </ul>
+    </div>
+    <p class="back__credit">Pictures: <a href="https://commons.wikimedia.org/wiki/File:Randolph_Street_east_from_Lasalle_Street,_Chicago,_Illinois,_1900.jpg" rel="noopener">Randolph Street, 1900</a>, Detroit Publishing Co.; trading floor footage from <a href="https://archive.org/details/big_board" rel="noopener">The Big Board</a>, On Film, Inc., Prelinger Archives; <a href="https://commons.wikimedia.org/wiki/File:Thomas_Edison_stock_ticker_NMAH-JN2014-3625.jpg" rel="noopener">Edison stock ticker</a>, Jaclyn Nash, Smithsonian. All public domain.</p>
+  </div>
+</footer>
+
+<script src="assets/patterns-data.js"></script>
+<script src="assets/patterns.js"></script>
+<script type="module" src="assets/motion/main.js"></script>
+</body>
+</html>
