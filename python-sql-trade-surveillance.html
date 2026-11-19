@@ -1,0 +1,850 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Python and SQL for Trade Surveillance | Rahul Das</title>
+<meta name="description" content="A hands-on guide to Python and SQL for trade surveillance. Eleven short scripts on one practice database: SQL basics, window functions, pandas, then wash trades, spoofing, marking the close, front running, insider trading, threshold tuning and case export.">
+<meta name="author" content="Rahul Das">
+<link rel="canonical" href="https://rahul-das-456.github.io/python-sql-trade-surveillance.html">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600&display=swap" rel="stylesheet">
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-2008615M0E"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-2008615M0E');</script>
+<script>document.documentElement.classList.add('js')</script>
+<link rel="stylesheet" href="assets/site.css">
+<script src="assets/site.js" defer></script>
+<style>
+html:root { --sheet: 960px; }
+.guide-wrap { color: var(--paper-ink); }
+.guide-wrap p, .guide-wrap li { max-width: 68ch; text-wrap: pretty; }
+.guide-wrap p + p { margin-top: 0.9em; }
+.guide-wrap code { font-size: 0.9em; }
+.lesson { scroll-margin-top: 96px; }
+.exhibit__card { padding-inline: clamp(20px, 4.5vw, 72px); }
+.ref-wrap { padding-inline: clamp(20px, 4.5vw, 72px) !important; }
+.lesson + .lesson { padding-top: clamp(104px, 11vw, 160px); }
+.lh { font-size: var(--step-head); font-weight: 600; letter-spacing: -0.035em; line-height: 1; color: var(--paper-ink); margin: 0 0 20px; text-wrap: balance; }
+.guide-wrap a:not(.toc a), .ref-wrap a { color: var(--paper-ink); text-decoration: underline; text-decoration-color: var(--accent-deep); text-underline-offset: 3px; }
+.lead { font-size: var(--step-lead); line-height: 1.35; }
+
+.steps { margin: 20px 0 0; padding-left: 1.4em; display: grid; gap: 10px; }
+.toc { margin: 24px 0 0; padding-left: 1.6em; columns: 2 280px; column-gap: 48px; }
+.toc li::marker { color: var(--accent-deep); font-variant-numeric: tabular-nums; }
+.toc li { break-inside: avoid; }
+.toc a { display: flex; gap: 12px; padding: 10px 0; color: var(--paper-ink); text-decoration: none; min-height: 44px; align-items: baseline; }
+.toc a:hover { color: var(--accent-deep); }
+.toc a:focus-visible, .file a:focus-visible, details summary:focus-visible { outline: 2px solid var(--accent-deep); outline-offset: 3px; }
+
+.file { display: flex; justify-content: space-between; gap: 12px; margin: 28px 0 0 !important; max-width: none !important; font-size: var(--step-small); }
+.file span { color: var(--paper-muted); }
+pre.code { margin: 8px 0 0; padding: 18px 20px; background: var(--paper-ink); color: var(--paper); overflow-x: auto; font-size: 0.85rem; line-height: 1.6; tab-size: 4; -webkit-overflow-scrolling: touch; }
+pre.code[data-lang="Output"] { background: var(--paper-2); color: var(--paper-ink); }
+pre.code code { font-size: inherit; white-space: pre; }
+
+details.out, details.ans { margin-top: 12px; }
+details summary { cursor: pointer; min-height: 44px; display: flex; align-items: center; gap: 10px; font-weight: 500; list-style: none; color: var(--paper-ink); }
+details summary::-webkit-details-marker { display: none; }
+details summary::before { content: "+"; display: inline-grid; place-items: center; width: 22px; height: 22px; background: var(--paper-ink); color: var(--paper); font-weight: 600; flex: none; }
+details[open] summary::before { content: "\2212"; }
+.ans__body > p { margin-top: 12px; }
+.after { margin-top: 16px; }
+
+.try { margin-top: 28px; padding: clamp(16px, 2.4vw, 28px); background: var(--paper-2); }
+.try h3, .q h3 { font-size: var(--step-lead); font-weight: 600; letter-spacing: -0.01em; margin: 0 0 8px; color: var(--paper-ink); }
+.try pre.code[data-lang="Output"] { background: var(--paper); }
+
+.qs { display: grid; gap: 16px; margin-top: 24px; }
+.q { padding: clamp(16px, 2.4vw, 28px); background: var(--paper-2); }
+.q pre.code[data-lang="Output"] { background: var(--paper); }
+.q__lvl { font-size: var(--step-small); color: var(--accent-deep); font-weight: 600; margin: 0 0 4px; }
+
+.res { list-style: none; padding: 0; margin: 20px 0 0; display: grid; gap: 14px; }
+.res b { font-weight: 600; }
+.tbl td code { white-space: nowrap; }
+.tbl { margin-top: 20px; }
+.tbl th, .tbl td { padding: 8px 20px 8px 0 !important; text-align: left; vertical-align: top; }
+@media (max-width: 600px) { pre.code { font-size: 0.78rem; padding: 14px; } }
+</style>
+</head>
+<body>
+<a class="sr-only" href="#main">Skip to content</a>
+<header class="bar">
+  <a class="bar__mark" href="./index.html">Rahul Das</a>
+  <nav class="bar__links" aria-label="Tools">
+    <a href="./surveillance-patterns.html">Patterns</a>
+    <a href="./das.html">DAS</a>
+    <a href="./python-sql-trade-surveillance.html" aria-current="page">Python and SQL</a>
+    <a href="./trade-surveillance-career-guide.html">Career guide</a>
+  </nav>
+  <a class="bar__action" href="./index.html#tools">All tools</a>
+</header>
+
+<main id="main">
+<section class="exhibit exhibit--short" aria-labelledby="page-title">
+  <div class="exhibit__room"><img src="assets/randolph-street-east-from-lasalle-street-chicago.jpg" alt="" fetchpriority="high"></div>
+  <div class="exhibit__card">
+    <h1 id="page-title" class="exhibit__title">Surveillance in Python and SQL</h1>
+    <p class="exhibit__sub">A hands-on trade surveillance course. Eleven short scripts on one practice database. Each one teaches a single idea and catches a planted case.</p>
+    <dl class="exhibit__fields">
+      <dt>Re</dt><dd>Surveillance analytics, hands on</dd>
+      <dt>From</dt><dd>Rahul Das, former Cboe and FINRA</dd>
+      <dt>Needs</dt><dd>Python 3, pandas, SQLite (comes with Python and macOS)</dd>
+    </dl>
+  </div>
+</section>
+
+<div class="guide-wrap">
+  <section class="lesson" id="start" aria-labelledby="start-h">
+    <h2 class="lh" id="start-h">Start here</h2>
+    <p class="lead">Surveillance is two jobs. SQL pulls the right rows from billions. Python tests them for a pattern. You need both.</p>
+    <p>Each lesson below gives you a short idea, the rule behind it, a script, its real output, and a task to try. The format borrows from <a class="link" href="https://sqlbolt.com/" rel="noopener">SQLBolt</a> and <a class="link" href="https://datalemur.com/" rel="noopener">DataLemur</a>. Read, run, change one thing, run again.</p>
+    <ol class="steps">
+      <li>Download <a class="link" href="assets/surveillance-scripts/surveillance-scripts.zip" download>all eleven scripts (zip)</a> and unzip them.</li>
+      <li>Install pandas: <code>pip install pandas</code></li>
+      <li>Build the data: <code>python3 00_build_db.py</code></li>
+      <li>Run a SQL lesson: <code>sqlite3 surv.db &lt; 01_sql_basics.sql</code></li>
+      <li>Run a Python lesson: <code>python3 05_spoofing.py</code></li>
+    </ol>
+    <ol class="toc" aria-label="Lessons">
+<li><a href="#setup">Build the practice data</a></li>
+<li><a href="#sql-basics">SQL basics: SELECT, WHERE, GROUP BY</a></li>
+<li><a href="#joins-windows">Joins and window functions</a></li>
+<li><a href="#pandas">Python basics: pandas</a></li>
+<li><a href="#wash">Wash trades</a></li>
+<li><a href="#spoofing">Spoofing and layering</a></li>
+<li><a href="#close">Marking the close</a></li>
+<li><a href="#front-running">Front running</a></li>
+<li><a href="#insider">Insider trading</a></li>
+<li><a href="#tuning">Tuning a threshold</a></li>
+<li><a href="#case">From alert to case</a></li>
+      <li><a href="#practice">Interview practice</a></li>
+    </ol>
+  </section>
+
+<section class="lesson" id="setup" aria-labelledby="setup-h">
+<h2 class="lh" id="setup-h">Build the practice data</h2>
+<p>Every lesson runs on one small database, <code>surv.db</code>. It holds one trading day in two symbols, XYZ and ABC. Most of it is random, ordinary trading. Five cases are planted in it on purpose. Your job is to find them.</p><table class="tbl"><thead><tr><th>Table</th><th>One row is</th><th>Key columns</th></tr></thead><tbody><tr><td><code>accounts</code></td><td>an account</td><td>account_id, owner_id, acct_type (client or prop)</td></tr><tr><td><code>orders</code></td><td>an order</td><td>ts, account_id, symbol, side, price, qty, status, end_ts</td></tr><tr><td><code>trades</code></td><td>an execution</td><td>ts, symbol, buy_acct, sell_acct, price, qty</td></tr><tr><td><code>news</code></td><td>a headline</td><td>symbol, ts, headline</td></tr></tbody></table>
+<details class="out"><summary>Show 00_build_db.py</summary><p class="file"><a class="link" href="assets/surveillance-scripts/00_build_db.py" download>00_build_db.py</a><span>Python</span></p><pre class="code" data-lang="Python"><code># 00_build_db.py: build a small practice database of one trading day.
+# Run once: python3 00_build_db.py  -&gt;  creates surv.db
+import sqlite3, random
+from datetime import datetime, timedelta
+
+random.seed(7)
+day = datetime(2026, 3, 2, 9, 30)
+t = lambda m, s=0: (day + timedelta(minutes=m, seconds=s)).isoformat(sep=&quot; &quot;)
+
+con = sqlite3.connect(&quot;surv.db&quot;)
+con.executescript(&quot;&quot;&quot;
+DROP TABLE IF EXISTS accounts; DROP TABLE IF EXISTS orders;
+DROP TABLE IF EXISTS trades;   DROP TABLE IF EXISTS news;
+CREATE TABLE accounts(account_id TEXT PRIMARY KEY, owner_id TEXT, acct_type TEXT);
+CREATE TABLE orders(order_id INTEGER PRIMARY KEY, ts TEXT, account_id TEXT, symbol TEXT,
+                    side TEXT, price REAL, qty INT, status TEXT, end_ts TEXT);
+CREATE TABLE trades(trade_id INTEGER PRIMARY KEY, ts TEXT, symbol TEXT,
+                    buy_acct TEXT, sell_acct TEXT, price REAL, qty INT);
+CREATE TABLE news(symbol TEXT, ts TEXT, headline TEXT);
+&quot;&quot;&quot;)
+
+# 8 client accounts and 1 prop account. A3 and A4 share one owner.
+accts = [(f&quot;A{i}&quot;, f&quot;O{i}&quot;, &quot;client&quot;) for i in range(1, 9)] + [(&quot;P1&quot;, &quot;FIRM&quot;, &quot;prop&quot;)]
+accts[3] = (&quot;A4&quot;, &quot;O3&quot;, &quot;client&quot;)
+con.executemany(&quot;INSERT INTO accounts VALUES (?,?,?)&quot;, accts)
+clients = [a[0] for a in accts if a[2] == &quot;client&quot;]
+
+orders, trades = [], []
+def trade(ts, sym, b, s, px, q):
+    trades.append((ts, sym, b, s, round(px, 2), q))
+def order(ts, acct, sym, side, px, q, status, end):
+    orders.append((ts, acct, sym, side, round(px, 2), q, status, end))
+
+# Normal market: 400 random trades and orders, 25% of orders cancelled.
+px = {&quot;XYZ&quot;: 50.0, &quot;ABC&quot;: 20.0}
+for m in sorted(random.randrange(385) for _ in range(400)):
+    sym = random.choice([&quot;XYZ&quot;, &quot;ABC&quot;])
+    if sym == &quot;ABC&quot; and m &gt;= 270:   # ABC news lands at 14:00 (minute 270)
+        continue
+    px[sym] *= 1 + random.gauss(0, 0.0005)
+    b, s = random.sample(clients, 2)
+    if {b, s} == {&quot;A3&quot;, &quot;A4&quot;}:      # keep the planted wash pair clean
+        continue
+    q = random.choice([100, 200, 300, 500])
+    trade(t(m, random.randint(0, 59)), sym, b, s, px[sym], q)
+    acct = random.choice(clients)
+    cancel = random.random() &lt; 0.25
+    order(t(m), acct, sym, random.choice([&quot;BUY&quot;, &quot;SELL&quot;]), px[sym], q,
+          &quot;CANCELLED&quot; if cancel else &quot;FILLED&quot;, t(m, random.randint(5, 120)))
+
+# Planted case 1, wash trades: A3 buys from A4 (same owner) at one price.
+for k in range(5):
+    trade(t(60 + k * 7), &quot;XYZ&quot;, &quot;A3&quot;, &quot;A4&quot;, 50.10, 1000)
+
+# Planted case 2, spoofing: A5 stacks big sells, buys small, cancels the sells.
+for k in range(5):
+    order(t(45, k), &quot;A5&quot;, &quot;XYZ&quot;, &quot;SELL&quot;, 50.05 + k * 0.01, 5000, &quot;CANCELLED&quot;, t(45, 8))
+order(t(45, 5), &quot;A5&quot;, &quot;XYZ&quot;, &quot;BUY&quot;, 49.90, 200, &quot;FILLED&quot;, t(45, 6))
+trade(t(45, 6), &quot;XYZ&quot;, &quot;A5&quot;, &quot;A2&quot;, 49.90, 200)
+
+# Planted case 3, marking the close: A6 buys hard in the last 5 minutes.
+for k in range(10):
+    trade(t(385, k * 25), &quot;XYZ&quot;, &quot;A6&quot;, random.choice(clients[:5]), px[&quot;XYZ&quot;] + k * 0.15, 800)
+
+# Planted case 4, front running: client A1 sends a big buy, prop P1 buys first.
+order(t(90), &quot;A1&quot;, &quot;XYZ&quot;, &quot;BUY&quot;, 50.30, 50000, &quot;FILLED&quot;, t(95))
+order(t(90, 20), &quot;P1&quot;, &quot;XYZ&quot;, &quot;BUY&quot;, 50.25, 3000, &quot;FILLED&quot;, t(90, 25))
+
+# Planted case 5, insider trading: A7 buys ABC 30 minutes before deal news.
+con.execute(&quot;INSERT INTO news VALUES (&#x27;ABC&#x27;, ?, &#x27;ABC to be acquired at $26&#x27;)&quot;, (t(270),))
+for k in range(4):
+    trade(t(240 + k * 5), &quot;ABC&quot;, &quot;A7&quot;, &quot;A8&quot;, 20.1 + k * 0.02, 5000)
+for k in range(6):
+    trade(t(272 + k * 10), &quot;ABC&quot;, random.choice(clients[:3]), &quot;A8&quot;, 25.6 + k * 0.05, 300)
+
+con.executemany(&quot;INSERT INTO trades(ts,symbol,buy_acct,sell_acct,price,qty) VALUES (?,?,?,?,?,?)&quot;, trades)
+con.executemany(&quot;INSERT INTO orders(ts,account_id,symbol,side,price,qty,status,end_ts) VALUES (?,?,?,?,?,?,?,?)&quot;, orders)
+con.commit()
+print({tb: con.execute(f&quot;SELECT COUNT(*) FROM {tb}&quot;).fetchone()[0] for tb in [&quot;accounts&quot;, &quot;orders&quot;, &quot;trades&quot;, &quot;news&quot;]})</code></pre></details><p class="after">Run it once. It prints a row count for each table: 9 accounts, about 330 orders, about 350 trades and 1 headline.</p>
+</section>
+
+<section class="lesson" id="sql-basics" aria-labelledby="sql-basics-h">
+<h2 class="lh" id="sql-basics-h">SQL basics: SELECT, WHERE, GROUP BY</h2>
+<p>Four clauses do most surveillance work. <code>SELECT</code> picks columns. <code>WHERE</code> filters rows. <code>GROUP BY</code> rolls rows up per account or symbol. <code>HAVING</code> filters the rolled-up groups.</p><p>Query 4 holds the first real lesson. Count A5's orders and A5 looks normal. Weight them by shares and A5 cancels most of what it shows. Always ask what you are counting.</p>
+<p class="file"><a class="link" href="assets/surveillance-scripts/01_sql_basics.sql" download>01_sql_basics.sql</a><span>SQL</span></p><pre class="code" data-lang="SQL"><code>-- 01_sql_basics.sql: SELECT, WHERE, GROUP BY, ORDER BY.
+-- Run: sqlite3 surv.db &lt; 01_sql_basics.sql
+.mode column
+.headers on
+
+-- 1. Look at the raw tape. Always start here.
+SELECT * FROM trades ORDER BY ts LIMIT 5;
+
+-- 2. Filter: big prints only.
+SELECT ts, symbol, buy_acct, sell_acct, price, qty
+FROM trades
+WHERE qty &gt;= 1000
+ORDER BY qty DESC
+LIMIT 5;
+
+-- 3. Aggregate: who bought the most of each symbol?
+SELECT symbol, buy_acct, SUM(qty) AS shares_bought, COUNT(*) AS n_trades
+FROM trades
+GROUP BY symbol, buy_acct
+ORDER BY shares_bought DESC
+LIMIT 5;
+
+-- 4. HAVING filters groups. Count-based cancel rate hides a spoofer;
+--    share-weighted cancel rate finds one. Compare the two columns.
+SELECT account_id,
+       COUNT(*) AS n_orders,
+       ROUND(AVG(status = &#x27;CANCELLED&#x27;), 2) AS cancel_rate_by_count,
+       ROUND(1.0 * SUM(CASE WHEN status = &#x27;CANCELLED&#x27; THEN qty END) / SUM(qty), 2)
+         AS cancel_rate_by_shares
+FROM orders
+GROUP BY account_id
+HAVING cancel_rate_by_shares &gt; 0.5;</code></pre>
+<details class="out"><summary>Show the output</summary><pre class="code" data-lang="Output"><code>trade_id  ts                   symbol  buy_acct  sell_acct  price  qty
+--------  -------------------  ------  --------  ---------  -----  ---
+2         2026-03-02 09:30:48  XYZ     A8        A5         50.01  100
+1         2026-03-02 09:30:56  XYZ     A8        A7         49.99  100
+3         2026-03-02 09:32:44  ABC     A8        A5         19.99  200
+4         2026-03-02 09:36:13  XYZ     A4        A8         50.0   100
+5         2026-03-02 09:37:29  ABC     A3        A8         20.0   200
+ts                   symbol  buy_acct  sell_acct  price  qty 
+-------------------  ------  --------  ---------  -----  ----
+2026-03-02 13:30:00  ABC     A7        A8         20.1   5000
+2026-03-02 13:35:00  ABC     A7        A8         20.12  5000
+2026-03-02 13:40:00  ABC     A7        A8         20.14  5000
+2026-03-02 13:45:00  ABC     A7        A8         20.16  5000
+2026-03-02 10:30:00  XYZ     A3        A4         50.1   1000
+symbol  buy_acct  shares_bought  n_trades
+------  --------  -------------  --------
+ABC     A7        23800          19      
+XYZ     A6        13900          31      
+XYZ     A3        10800          28      
+XYZ     A5        9200           35      
+XYZ     A1        8100           30      
+account_id  n_orders  cancel_rate_by_count  cancel_rate_by_shares
+----------  --------  --------------------  ---------------------
+A5          42        0.38                  0.78</code></pre></details>
+<div class="try"><h3>Try it</h3><p>Find the five accounts that sold the most XYZ.</p><details class="ans"><summary>Show the answer</summary><div class="ans__body"><pre class="code" data-lang="SQL"><code>SELECT sell_acct, SUM(qty) AS shares_sold
+FROM trades
+WHERE symbol = &#x27;XYZ&#x27;
+GROUP BY sell_acct
+ORDER BY shares_sold DESC
+LIMIT 5;</code></pre><pre class="code" data-lang="Output"><code>sell_acct  shares_sold
+---------  -----------
+A4         10400      
+A1         10100      
+A6         8700       
+A8         8300       
+A2         8200</code></pre></div></details></div>
+</section>
+
+<section class="lesson" id="joins-windows" aria-labelledby="joins-windows-h">
+<h2 class="lh" id="joins-windows-h">Joins and window functions</h2>
+<p>A <code>JOIN</code> adds facts from another table, such as who owns an account. A window function looks at nearby rows without collapsing them. <code>LAG</code> reads the previous row. <code>SUM() OVER</code> keeps a running total. <code>RANK()</code> orders rows inside each group.</p><p>These four tools rebuild a trader's day: position, price path and rank.</p>
+<p class="file"><a class="link" href="assets/surveillance-scripts/02_joins_windows.sql" download>02_joins_windows.sql</a><span>SQL</span></p><pre class="code" data-lang="SQL"><code>-- 02_joins_windows.sql: JOIN and window functions.
+-- Run: sqlite3 surv.db &lt; 02_joins_windows.sql
+.mode column
+.headers on
+
+-- 1. JOIN: tag each trade with the buyer&#x27;s and seller&#x27;s owner.
+SELECT t.ts, t.buy_acct, b.owner_id AS buy_owner,
+       t.sell_acct, s.owner_id AS sell_owner, t.qty
+FROM trades t
+JOIN accounts b ON b.account_id = t.buy_acct
+JOIN accounts s ON s.account_id = t.sell_acct
+ORDER BY t.ts
+LIMIT 5;
+
+-- 2. LAG: price change from the previous trade in the same symbol.
+SELECT ts, symbol, price,
+       ROUND(price - LAG(price) OVER (PARTITION BY symbol ORDER BY ts), 2) AS chg
+FROM trades
+WHERE symbol = &#x27;XYZ&#x27;
+ORDER BY ts DESC
+LIMIT 5;
+
+-- 3. Running SUM: an account&#x27;s position through the day.
+WITH fills AS (
+  SELECT ts, symbol, buy_acct AS acct,  qty FROM trades
+  UNION ALL
+  SELECT ts, symbol, sell_acct AS acct, -qty FROM trades
+)
+SELECT ts, symbol, qty,
+       SUM(qty) OVER (PARTITION BY symbol ORDER BY ts) AS position
+FROM fills
+WHERE acct = &#x27;A7&#x27; AND symbol = &#x27;ABC&#x27;
+ORDER BY ts
+LIMIT 6;
+
+-- 4. RANK: top 3 buyers per symbol.
+SELECT * FROM (
+  SELECT symbol, buy_acct, SUM(qty) AS shares,
+         RANK() OVER (PARTITION BY symbol ORDER BY SUM(qty) DESC) AS rnk
+  FROM trades GROUP BY symbol, buy_acct
+) WHERE rnk &lt;= 3;</code></pre>
+<details class="out"><summary>Show the output</summary><pre class="code" data-lang="Output"><code>ts                   buy_acct  buy_owner  sell_acct  sell_owner  qty
+-------------------  --------  ---------  ---------  ----------  ---
+2026-03-02 09:30:48  A8        O8         A5         O5          100
+2026-03-02 09:30:56  A8        O8         A7         O7          100
+2026-03-02 09:32:44  A8        O8         A5         O5          200
+2026-03-02 09:36:13  A4        O3         A8         O8          100
+2026-03-02 09:37:29  A3        O3         A8         O8          200
+ts                   symbol  price  chg 
+-------------------  ------  -----  ----
+2026-03-02 15:58:45  XYZ     51.58  0.15
+2026-03-02 15:58:20  XYZ     51.43  0.15
+2026-03-02 15:57:55  XYZ     51.28  0.15
+2026-03-02 15:57:30  XYZ     51.13  0.15
+2026-03-02 15:57:05  XYZ     50.98  0.15
+ts                   symbol  qty   position
+-------------------  ------  ----  --------
+2026-03-02 09:49:44  ABC     300   300     
+2026-03-02 10:07:12  ABC     300   600     
+2026-03-02 10:29:02  ABC     500   1100    
+2026-03-02 10:30:50  ABC     -500  600     
+2026-03-02 10:31:38  ABC     -200  400     
+2026-03-02 10:43:08  ABC     -200  200     
+symbol  buy_acct  shares  rnk
+------  --------  ------  ---
+ABC     A7        23800   1  
+ABC     A5        5000    2  
+ABC     A3        4900    3  
+XYZ     A6        13900   1  
+XYZ     A3        10800   2  
+XYZ     A5        9200    3</code></pre></details>
+<div class="try"><h3>Try it</h3><p>List XYZ trades where the price rose more than $0.10 from the trade before. Which account shows up at the end of the day?</p><details class="ans"><summary>Show the answer</summary><div class="ans__body"><pre class="code" data-lang="SQL"><code>WITH chg AS (
+  SELECT ts, buy_acct, price,
+         price - LAG(price) OVER (ORDER BY ts) AS jump
+  FROM trades
+  WHERE symbol = &#x27;XYZ&#x27;
+)
+SELECT ts, buy_acct, price, ROUND(jump, 2) AS jump
+FROM chg
+WHERE jump &gt; 0.10;</code></pre><pre class="code" data-lang="Output"><code>ts                   buy_acct  price  jump
+-------------------  --------  -----  ----
+2026-03-02 10:22:17  A2        49.98  0.13
+2026-03-02 10:30:00  A3        50.1   0.18
+2026-03-02 10:37:00  A3        50.1   0.18
+2026-03-02 10:44:00  A3        50.1   0.15
+2026-03-02 10:51:00  A3        50.1   0.12
+2026-03-02 15:55:25  A6        50.38  0.15
+2026-03-02 15:55:50  A6        50.53  0.15
+2026-03-02 15:56:15  A6        50.68  0.15
+2026-03-02 15:56:40  A6        50.83  0.15
+2026-03-02 15:57:05  A6        50.98  0.15
+2026-03-02 15:57:30  A6        51.13  0.15
+2026-03-02 15:57:55  A6        51.28  0.15
+2026-03-02 15:58:20  A6        51.43  0.15
+2026-03-02 15:58:45  A6        51.58  0.15</code></pre></div></details></div>
+</section>
+
+<section class="lesson" id="pandas" aria-labelledby="pandas-h">
+<h2 class="lh" id="pandas-h">Python basics: pandas</h2>
+<p>SQL pulls the data. pandas reshapes it. <code>pd.read_sql</code> turns a query into a DataFrame. From there you can compute VWAP, build price bars and measure each account's share of volume in a few lines.</p><p>Check shape, types and nulls first. A bad timestamp column breaks every rule that follows.</p>
+<p class="file"><a class="link" href="assets/surveillance-scripts/03_pandas_basics.py" download>03_pandas_basics.py</a><span>Python</span></p><pre class="code" data-lang="Python"><code># 03_pandas_basics.py: load SQL into pandas and reshape it.
+# Run: python3 03_pandas_basics.py   (needs: pip install pandas)
+import sqlite3
+import pandas as pd
+
+con = sqlite3.connect(&quot;surv.db&quot;)
+trades = pd.read_sql(&quot;SELECT * FROM trades&quot;, con, parse_dates=[&quot;ts&quot;])
+
+# 1. Quick health check: shape, types, nulls.
+print(trades.shape)
+print(trades.dtypes)
+print(trades.isna().sum().sum(), &quot;nulls&quot;)
+
+# 2. VWAP per symbol: sum(price * qty) / sum(qty).
+trades[&quot;notional&quot;] = trades[&quot;price&quot;] * trades[&quot;qty&quot;]
+vwap = trades.groupby(&quot;symbol&quot;)[[&quot;notional&quot;, &quot;qty&quot;]].sum()
+vwap[&quot;vwap&quot;] = (vwap[&quot;notional&quot;] / vwap[&quot;qty&quot;]).round(2)
+print(vwap)
+
+# 3. Five-minute bars for XYZ: open, high, low, close, volume.
+xyz = trades[trades[&quot;symbol&quot;] == &quot;XYZ&quot;].set_index(&quot;ts&quot;).sort_index()
+bars = xyz[&quot;price&quot;].resample(&quot;5min&quot;).ohlc()
+bars[&quot;volume&quot;] = xyz[&quot;qty&quot;].resample(&quot;5min&quot;).sum()
+print(bars.dropna().tail())
+
+# 4. Each account&#x27;s share of the day&#x27;s volume.
+vol = pd.concat([trades[[&quot;buy_acct&quot;, &quot;qty&quot;]].set_axis([&quot;acct&quot;, &quot;qty&quot;], axis=1),
+                 trades[[&quot;sell_acct&quot;, &quot;qty&quot;]].set_axis([&quot;acct&quot;, &quot;qty&quot;], axis=1)])
+share = vol.groupby(&quot;acct&quot;)[&quot;qty&quot;].sum() / (2 * trades[&quot;qty&quot;].sum())
+print(share.sort_values(ascending=False).round(3).head())</code></pre>
+<details class="out"><summary>Show the output</summary><pre class="code" data-lang="Output"><code>(348, 7)
+trade_id              int64
+ts           datetime64[ns]
+symbol               object
+buy_acct             object
+sell_acct            object
+price               float64
+qty                   int64
+dtype: object
+0 nulls
+         notional    qty   vwap
+symbol                         
+ABC     1081029.0  53300  20.28
+XYZ     3264251.0  65000  50.22
+                      open   high    low  close  volume
+ts                                                     
+2026-03-02 15:30:00  50.25  50.25  50.24  50.24     200
+2026-03-02 15:35:00  50.27  50.27  50.27  50.27     200
+2026-03-02 15:40:00  50.26  50.26  50.26  50.26     300
+2026-03-02 15:45:00  50.26  50.26  50.23  50.24    1000
+2026-03-02 15:55:00  50.23  51.58  50.23  51.58    8000
+acct
+A8    0.189
+A7    0.170
+A6    0.129
+A3    0.110
+A1    0.109
+Name: qty, dtype: float64</code></pre></details>
+<div class="try"><h3>Try it</h3><p>Build 1-minute bars for ABC. Which minute traded the most shares?</p><details class="ans"><summary>Show the answer</summary><div class="ans__body"><pre class="code" data-lang="Python"><code>abc = trades[trades[&quot;symbol&quot;] == &quot;ABC&quot;].set_index(&quot;ts&quot;).sort_index()
+vol = abc[&quot;qty&quot;].resample(&quot;1min&quot;).sum()
+print(vol.idxmax(), vol.max())</code></pre></div></details></div>
+</section>
+
+<section class="lesson" id="wash" aria-labelledby="wash-h">
+<h2 class="lh" id="wash-h">Wash trades</h2>
+<p>A wash trade has the same owner on both sides. Nothing changes hands, but the tape shows volume. That fake volume can draw other traders in.</p><p><strong>Rule:</strong> Exchange Act Section 9(a)(1); FINRA Rule 6140(b).</p><p>The test is one line: <code>b.owner_id = s.owner_id</code>. The join to <code>accounts</code> does the rest. Real firms link owners through KYC data, shared addresses and shared devices.</p>
+<p class="file"><a class="link" href="assets/surveillance-scripts/04_wash_trades.sql" download>04_wash_trades.sql</a><span>SQL</span></p><pre class="code" data-lang="SQL"><code>-- 04_wash_trades.sql: wash trades.
+-- Same beneficial owner on both sides means no change in ownership.
+-- Run: sqlite3 surv.db &lt; 04_wash_trades.sql
+.mode column
+.headers on
+
+SELECT b.owner_id,
+       t.symbol,
+       COUNT(*)              AS n_trades,
+       SUM(t.qty)            AS shares,
+       MIN(t.ts)             AS first_ts,
+       MAX(t.ts)             AS last_ts
+FROM trades t
+JOIN accounts b ON b.account_id = t.buy_acct
+JOIN accounts s ON s.account_id = t.sell_acct
+WHERE b.owner_id = s.owner_id          -- the core test
+  AND t.buy_acct &lt;&gt; t.sell_acct        -- self-crosses get their own report
+GROUP BY b.owner_id, t.symbol
+HAVING COUNT(*) &gt;= 3;                  -- one cross can be an accident</code></pre>
+<details class="out"><summary>Show the output</summary><pre class="code" data-lang="Output"><code>owner_id  symbol  n_trades  shares  first_ts             last_ts            
+--------  ------  --------  ------  -------------------  -------------------
+O3        XYZ     5         5000    2026-03-02 10:30:00  2026-03-02 10:58:00</code></pre></details>
+<div class="try"><h3>Try it</h3><p>Count same-owner trades by hour. When did the washing happen?</p><details class="ans"><summary>Show the answer</summary><div class="ans__body"><pre class="code" data-lang="SQL"><code>SELECT strftime(&#x27;%H&#x27;, t.ts) AS hour, COUNT(*) AS same_owner_trades
+FROM trades t
+JOIN accounts b ON b.account_id = t.buy_acct
+JOIN accounts s ON s.account_id = t.sell_acct
+WHERE b.owner_id = s.owner_id
+GROUP BY hour
+ORDER BY same_owner_trades DESC;</code></pre><pre class="code" data-lang="Output"><code>hour  same_owner_trades
+----  -----------------
+10    5</code></pre></div></details></div>
+</section>
+
+<section class="lesson" id="spoofing" aria-labelledby="spoofing-h">
+<h2 class="lh" id="spoofing-h">Spoofing and layering</h2>
+<p>The spoofer stacks large orders on one side to move the price. Then they fill a small order on the other side and cancel the stack. The large orders were never meant to trade.</p><p><strong>Rule:</strong> Exchange Act Section 9(a)(2) and Rule 10b-5; for futures, CEA Section 4c(a)(5)(C).</p><p>The script finds the bait first: big orders cancelled within seconds. Then it checks for a fill on the opposite side by the same account, close in time. Three numbers drive it: <code>BIG</code>, <code>FAST</code> and <code>WINDOW</code>.</p>
+<p class="file"><a class="link" href="assets/surveillance-scripts/05_spoofing.py" download>05_spoofing.py</a><span>Python</span></p><pre class="code" data-lang="Python"><code># 05_spoofing.py: spoofing and layering.
+# Pattern: big orders on one side, a small fill on the other side,
+# then the big orders are cancelled within seconds.
+import sqlite3
+import pandas as pd
+
+con = sqlite3.connect(&quot;surv.db&quot;)
+o = pd.read_sql(&quot;SELECT * FROM orders&quot;, con, parse_dates=[&quot;ts&quot;, &quot;end_ts&quot;])
+o[&quot;life_s&quot;] = (o[&quot;end_ts&quot;] - o[&quot;ts&quot;]).dt.total_seconds()
+
+BIG, FAST, WINDOW = 2000, 10, pd.Timedelta(&quot;30s&quot;)   # tune these
+
+# 1. Big orders cancelled fast: the &quot;bait&quot;.
+bait = o[(o[&quot;status&quot;] == &quot;CANCELLED&quot;) &amp; (o[&quot;qty&quot;] &gt;= BIG) &amp; (o[&quot;life_s&quot;] &lt;= FAST)]
+
+# 2. For each fill, look for bait on the opposite side from the same account.
+fills = o[o[&quot;status&quot;] == &quot;FILLED&quot;]
+hits = []
+for _, f in fills.iterrows():
+    opp = &quot;SELL&quot; if f[&quot;side&quot;] == &quot;BUY&quot; else &quot;BUY&quot;
+    near = bait[(bait[&quot;account_id&quot;] == f[&quot;account_id&quot;]) &amp; (bait[&quot;symbol&quot;] == f[&quot;symbol&quot;])
+                &amp; (bait[&quot;side&quot;] == opp) &amp; ((bait[&quot;ts&quot;] - f[&quot;ts&quot;]).abs() &lt;= WINDOW)]
+    if len(near):
+        hits.append({&quot;account&quot;: f[&quot;account_id&quot;], &quot;symbol&quot;: f[&quot;symbol&quot;], &quot;fill_ts&quot;: f[&quot;ts&quot;],
+                     &quot;fill_side&quot;: f[&quot;side&quot;], &quot;fill_qty&quot;: f[&quot;qty&quot;],
+                     &quot;bait_orders&quot;: len(near), &quot;bait_qty&quot;: near[&quot;qty&quot;].sum(),
+                     &quot;ratio&quot;: round(near[&quot;qty&quot;].sum() / f[&quot;qty&quot;], 1)})
+
+result = pd.DataFrame(hits)
+print(result.to_string(index=False))</code></pre>
+<details class="out"><summary>Show the output</summary><pre class="code" data-lang="Output"><code>account symbol             fill_ts fill_side  fill_qty  bait_orders  bait_qty  ratio
+     A5    XYZ 2026-03-02 10:15:05       BUY       200            5     25000  125.0</code></pre></details>
+<div class="try"><h3>Try it</h3><p>Set <code>BIG</code> to 10000 and run it again. What happens, and what does that tell you about size thresholds?</p><details class="ans"><summary>Show the answer</summary><div class="ans__body"><p>The script prints an empty table: no hits. Each bait order was 5,000 shares, under the new bar. The spoofer split 25,000 shares into five orders. A per-order size test misses that, so good rules also add up related orders by account, side and time.</p></div></details></div>
+</section>
+
+<section class="lesson" id="close" aria-labelledby="close-h">
+<h2 class="lh" id="close-h">Marking the close</h2>
+<p>The closing price sets fund NAVs, margin and option settlement. A trader who buys hard in the last minutes can push that price up for a payoff elsewhere.</p><p><strong>Rule:</strong> Exchange Act Section 9(a)(2); FINRA Rule 2020.</p><p>The query keeps the last 10 minutes, measures the price move, and flags any buyer with half or more of that volume while the price moved 1% or more.</p>
+<p class="file"><a class="link" href="assets/surveillance-scripts/06_marking_close.sql" download>06_marking_close.sql</a><span>SQL</span></p><pre class="code" data-lang="SQL"><code>-- 06_marking_the_close.sql: marking the close.
+-- Who drove the price in the last 10 minutes, and how much did it move?
+-- Run: sqlite3 surv.db &lt; 06_marking_close.sql
+.mode column
+.headers on
+
+WITH last10 AS (
+  SELECT * FROM trades
+  WHERE time(ts) &gt;= &#x27;15:50:00&#x27;
+),
+move AS (                                   -- price change over the window
+  SELECT symbol,
+         (SELECT price FROM last10 l WHERE l.symbol = x.symbol ORDER BY ts LIMIT 1)      AS open_px,
+         (SELECT price FROM last10 l WHERE l.symbol = x.symbol ORDER BY ts DESC LIMIT 1) AS close_px
+  FROM (SELECT DISTINCT symbol FROM last10) x
+)
+SELECT l.symbol, l.buy_acct,
+       SUM(l.qty)                                         AS bought,
+       ROUND(1.0 * SUM(l.qty) /
+             (SELECT SUM(qty) FROM last10 z WHERE z.symbol = l.symbol), 2) AS share_of_vol,
+       ROUND(100.0 * (m.close_px - m.open_px) / m.open_px, 2)              AS move_pct
+FROM last10 l
+JOIN move m ON m.symbol = l.symbol
+GROUP BY l.symbol, l.buy_acct
+HAVING share_of_vol &gt;= 0.5 AND ABS(move_pct) &gt;= 1.0;</code></pre>
+<details class="out"><summary>Show the output</summary><pre class="code" data-lang="Output"><code>symbol  buy_acct  bought  share_of_vol  move_pct
+------  --------  ------  ------------  --------
+XYZ     A6        8000    1.0           2.69</code></pre></details>
+<div class="try"><h3>Try it</h3><p>Who sold to the account marking the close in the last 5 minutes?</p><details class="ans"><summary>Show the answer</summary><div class="ans__body"><pre class="code" data-lang="SQL"><code>SELECT symbol, sell_acct, SUM(qty) AS sold
+FROM trades
+WHERE time(ts) &gt;= &#x27;15:55:00&#x27;
+GROUP BY symbol, sell_acct
+ORDER BY sold DESC;</code></pre><pre class="code" data-lang="Output"><code>symbol  sell_acct  sold
+------  ---------  ----
+XYZ     A2         3200
+XYZ     A4         2400
+XYZ     A1         1600
+XYZ     A5         800</code></pre></div></details></div>
+</section>
+
+<section class="lesson" id="front-running" aria-labelledby="front-running-h">
+<h2 class="lh" id="front-running-h">Front running</h2>
+<p>A firm holds a large client order. Before working it, the firm's own account buys the same stock. The client's order then lifts the price and the firm profits.</p><p><strong>Rule:</strong> FINRA Rule 5270 (block transactions) and Rule 5320 (trading ahead of customer orders).</p><p>The query joins <code>orders</code> to itself. It keeps prop orders in the same symbol and side, entered while the client order was still working.</p>
+<p class="file"><a class="link" href="assets/surveillance-scripts/07_front_running.sql" download>07_front_running.sql</a><span>SQL</span></p><pre class="code" data-lang="SQL"><code>-- 07_front_running.sql: front running.
+-- A firm (prop) order, same symbol and side, placed while a large
+-- client order was still working.
+-- Run: sqlite3 surv.db &lt; 07_front_running.sql
+.mode column
+.headers on
+
+SELECT c.order_id   AS client_order, c.account_id AS client, c.qty AS client_qty,
+       c.ts         AS client_in,    c.end_ts     AS client_done,
+       p.account_id AS prop_acct,    p.ts         AS prop_in,  p.qty AS prop_qty,
+       CAST(ROUND((julianday(p.ts) - julianday(c.ts)) * 86400) AS INT) AS secs_after
+FROM orders c
+JOIN accounts ca ON ca.account_id = c.account_id AND ca.acct_type = &#x27;client&#x27;
+JOIN orders p    ON p.symbol = c.symbol
+                AND p.side   = c.side
+                AND p.ts     &gt; c.ts            -- prop came in after the client
+                AND p.ts     &lt; c.end_ts        -- but before the client finished
+JOIN accounts pa ON pa.account_id = p.account_id AND pa.acct_type = &#x27;prop&#x27;
+WHERE c.qty &gt;= 10000;                           -- &quot;large&quot; client order</code></pre>
+<details class="out"><summary>Show the output</summary><pre class="code" data-lang="Output"><code>client_order  client  client_qty  client_in            client_done          prop_acct  prop_in              prop_qty  secs_after
+------------  ------  ----------  -------------------  -------------------  ---------  -------------------  --------  ----------
+329           A1      50000       2026-03-02 11:00:00  2026-03-02 11:05:00  P1         2026-03-02 11:00:20  3000      20</code></pre></details>
+<div class="try"><h3>Try it</h3><p>Widen the window: also catch prop orders sent up to 60 seconds <em>before</em> the client order arrived.</p><details class="ans"><summary>Show the answer</summary><div class="ans__body"><pre class="code" data-lang="SQL"><code>SELECT c.order_id AS client_order, p.account_id AS prop_acct,
+       p.ts AS prop_in, c.ts AS client_in
+FROM orders c
+JOIN accounts ca ON ca.account_id = c.account_id AND ca.acct_type = &#x27;client&#x27;
+JOIN orders p    ON p.symbol = c.symbol AND p.side = c.side
+                AND p.ts BETWEEN datetime(c.ts, &#x27;-60 seconds&#x27;) AND c.end_ts
+JOIN accounts pa ON pa.account_id = p.account_id AND pa.acct_type = &#x27;prop&#x27;
+WHERE c.qty &gt;= 10000;</code></pre><pre class="code" data-lang="Output"><code>client_order  prop_acct  prop_in              client_in          
+------------  ---------  -------------------  -------------------
+329           P1         2026-03-02 11:00:20  2026-03-02 11:00:00</code></pre></div></details></div>
+</section>
+
+<section class="lesson" id="insider" aria-labelledby="insider-h">
+<h2 class="lh" id="insider-h">Insider trading</h2>
+<p>Insider trading surveillance works backward from news. Take each material headline. Find who built a position before it. Rank them by profit.</p><p><strong>Rule:</strong> Exchange Act Section 10(b) and Rule 10b-5.</p><p>The script nets buys against sells in the two hours before the headline, then prices each position at the post-news average. Biggest paper profit gets reviewed first.</p>
+<p class="file"><a class="link" href="assets/surveillance-scripts/08_insider.py" download>08_insider.py</a><span>Python</span></p><pre class="code" data-lang="Python"><code># 08_insider.py: insider trading around news.
+# Who built a position before the headline, and what did it earn?
+import sqlite3
+import pandas as pd
+
+con = sqlite3.connect(&quot;surv.db&quot;)
+trades = pd.read_sql(&quot;SELECT * FROM trades&quot;, con, parse_dates=[&quot;ts&quot;])
+news = pd.read_sql(&quot;SELECT * FROM news&quot;, con, parse_dates=[&quot;ts&quot;])
+
+LOOKBACK = pd.Timedelta(&quot;2h&quot;)
+rows = []
+for _, n in news.iterrows():
+    sym = trades[trades[&quot;symbol&quot;] == n[&quot;symbol&quot;]]
+    before = sym[(sym[&quot;ts&quot;] &lt; n[&quot;ts&quot;]) &amp; (sym[&quot;ts&quot;] &gt;= n[&quot;ts&quot;] - LOOKBACK)]
+    after_px = sym[sym[&quot;ts&quot;] &gt; n[&quot;ts&quot;]][&quot;price&quot;].mean()
+
+    # Net shares bought per account in the lookback window.
+    buys = before.groupby(&quot;buy_acct&quot;)[&quot;qty&quot;].sum()
+    sells = before.groupby(&quot;sell_acct&quot;)[&quot;qty&quot;].sum()
+    net = buys.sub(sells, fill_value=0)
+    cost = (before[&quot;price&quot;] * before[&quot;qty&quot;]).groupby(before[&quot;buy_acct&quot;]).sum()
+
+    for acct, shares in net[net &gt; 0].items():
+        avg_px = cost.get(acct, 0) / buys.get(acct, 1)
+        rows.append({&quot;symbol&quot;: n[&quot;symbol&quot;], &quot;headline&quot;: n[&quot;headline&quot;], &quot;account&quot;: acct,
+                     &quot;net_shares&quot;: int(shares), &quot;avg_cost&quot;: round(avg_px, 2),
+                     &quot;px_after&quot;: round(after_px, 2),
+                     &quot;paper_pnl&quot;: round(shares * (after_px - avg_px))})
+
+result = pd.DataFrame(rows).sort_values(&quot;paper_pnl&quot;, ascending=False)
+print(result.head().to_string(index=False))   # top of the list gets reviewed first</code></pre>
+<details class="out"><summary>Show the output</summary><pre class="code" data-lang="Output"><code>symbol                  headline account  net_shares  avg_cost  px_after  paper_pnl
+   ABC ABC to be acquired at $26      A7       20900     20.12     25.72     117040
+   ABC ABC to be acquired at $26      A5         800     20.06     25.72       4534
+   ABC ABC to be acquired at $26      A4         400     20.09     25.72       2253
+   ABC ABC to be acquired at $26      A2         300     20.07     25.72       1698
+   ABC ABC to be acquired at $26      A1         300     20.08     25.72       1695</code></pre></details>
+<div class="try"><h3>Try it</h3><p>Change <code>LOOKBACK</code> to 30 minutes. Who stays at the top, and what does a short window risk?</p><details class="ans"><summary>Show the answer</summary><div class="ans__body"><p>A7 stays on top. Small accounts shuffle in and out. A short window cuts noise but misses insiders who build slowly over days, so real reviews use several windows.</p><pre class="code" data-lang="Output"><code>symbol                  headline account  net_shares  avg_cost  px_after  paper_pnl
+   ABC ABC to be acquired at $26      A7       20000     20.13     25.72     111900
+   ABC ABC to be acquired at $26      A5        1100     20.04     25.72       6256
+   ABC ABC to be acquired at $26      A2         900     20.05     25.72       5109
+   ABC ABC to be acquired at $26      A6         400     20.03     25.72       2277</code></pre></div></details></div>
+</section>
+
+<section class="lesson" id="tuning" aria-labelledby="tuning-h">
+<h2 class="lh" id="tuning-h">Tuning a threshold</h2>
+<p>Every rule has a threshold. Set it too low and analysts drown in false positives. Set it too high and a real case slips by. Tuning means testing thresholds against past outcomes.</p><p><strong>Rule:</strong> FINRA Rule 3110 requires a supervisory system reasonably designed for the business. Write down why you chose each threshold.</p><p>The script sweeps the share-weighted cancel rate and reports alerts, true hits, precision and recall at each step.</p>
+<p class="file"><a class="link" href="assets/surveillance-scripts/09_alert_tuning.py" download>09_alert_tuning.py</a><span>Python</span></p><pre class="code" data-lang="Python"><code># 09_alert_tuning.py: tune a threshold.
+# Sweep the cancel-rate threshold and count alerts vs. true hits.
+# Labels come from past case outcomes (here: known bad accounts).
+import sqlite3
+import pandas as pd
+
+con = sqlite3.connect(&quot;surv.db&quot;)
+o = pd.read_sql(&quot;SELECT account_id, status, qty FROM orders&quot;, con)
+o[&quot;cxl_qty&quot;] = o[&quot;qty&quot;].where(o[&quot;status&quot;] == &quot;CANCELLED&quot;, 0)
+rate = o.groupby(&quot;account_id&quot;)[[&quot;cxl_qty&quot;, &quot;qty&quot;]].sum()
+rate[&quot;cancel_rate&quot;] = rate[&quot;cxl_qty&quot;] / rate[&quot;qty&quot;]
+
+confirmed = {&quot;A5&quot;}          # accounts a past investigation confirmed
+
+rows = []
+for th in [0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9]:
+    alerted = set(rate.index[rate[&quot;cancel_rate&quot;] &gt;= th])
+    tp = len(alerted &amp; confirmed)
+    rows.append({&quot;threshold&quot;: th, &quot;alerts&quot;: len(alerted), &quot;true_hits&quot;: tp,
+                 &quot;false_pos&quot;: len(alerted) - tp,
+                 &quot;precision&quot;: round(tp / len(alerted), 2) if alerted else None,
+                 &quot;recall&quot;: tp / len(confirmed)})
+print(pd.DataFrame(rows).to_string(index=False))
+# Pick the highest threshold that keeps recall at 1.0. Write down why.</code></pre>
+<details class="out"><summary>Show the output</summary><pre class="code" data-lang="Output"><code> threshold  alerts  true_hits  false_pos  precision  recall
+       0.2       4          1          3       0.25     1.0
+       0.3       2          1          1       0.50     1.0
+       0.4       1          1          0       1.00     1.0
+       0.5       1          1          0       1.00     1.0
+       0.6       1          1          0       1.00     1.0
+       0.7       1          1          0       1.00     1.0
+       0.8       0          0          0        NaN     0.0
+       0.9       0          0          0        NaN     0.0</code></pre></details>
+<div class="try"><h3>Try it</h3><p>Say a past case also confirmed A2. Add it to <code>confirmed</code>. Which threshold do you pick now?</p><details class="ans"><summary>Show the answer</summary><div class="ans__body"><p>0.3. It is the highest threshold that still catches both A5 and A2, with no false positives. At 0.4, recall drops to 0.5.</p><pre class="code" data-lang="Output"><code> threshold  alerts  true_hits  false_pos  precision  recall
+       0.2       4          2          2        0.5     1.0
+       0.3       2          2          0        1.0     1.0
+       0.4       1          1          0        1.0     0.5
+       0.5       1          1          0        1.0     0.5
+       0.6       1          1          0        1.0     0.5
+       0.7       1          1          0        1.0     0.5
+       0.8       0          0          0        NaN     0.0
+       0.9       0          0          0        NaN     0.0</code></pre></div></details></div>
+</section>
+
+<section class="lesson" id="case" aria-labelledby="case-h">
+<h2 class="lh" id="case-h">From alert to case</h2>
+<p>Detection ends in a queue. The last script runs every rule and writes one file, <code>alerts.csv</code>, with an ID, the rule, the account, a one-line reason and an empty note for the analyst.</p><p>The note matters most. Each alert needs a written disposition: what you checked, what you found and why you closed or escalated it.</p>
+<p class="file"><a class="link" href="assets/surveillance-scripts/10_case_export.py" download>10_case_export.py</a><span>Python</span></p><pre class="code" data-lang="Python"><code># 10_case_export.py: run every check and write one alert file for review.
+import runpy, sqlite3
+from datetime import date
+import pandas as pd
+
+con = sqlite3.connect(&quot;surv.db&quot;)
+alerts = []
+
+def run_sql(path):
+    q = &quot;\n&quot;.join(l for l in open(path) if not l.startswith(&quot;.&quot;))  # drop sqlite3 dot-commands
+    return pd.read_sql(q, con)
+
+def run_py(path):
+    return runpy.run_path(path)[&quot;result&quot;]          # each script leaves its table in `result`
+
+for _, r in run_sql(&quot;04_wash_trades.sql&quot;).iterrows():
+    alerts.append((&quot;WASH&quot;, r.owner_id, f&quot;{r.n_trades} same-owner trades, {r.shares} sh {r.symbol}&quot;))
+for _, r in run_py(&quot;05_spoofing.py&quot;).iterrows():
+    alerts.append((&quot;SPOOF&quot;, r.account, f&quot;{r.bait_qty} sh bait vs {r.fill_qty} sh fill, {r.symbol}&quot;))
+for _, r in run_sql(&quot;06_marking_close.sql&quot;).iterrows():
+    alerts.append((&quot;MARKING_CLOSE&quot;, r.buy_acct, f&quot;{r.share_of_vol:.0%} of last-10-min volume, {r.move_pct}% move&quot;))
+for _, r in run_sql(&quot;07_front_running.sql&quot;).iterrows():
+    alerts.append((&quot;FRONT_RUN&quot;, r.prop_acct, f&quot;bought {r.secs_after}s into client order {r.client_order}&quot;))
+for _, r in run_py(&quot;08_insider.py&quot;).head(1).iterrows():
+    alerts.append((&quot;INSIDER&quot;, r.account, f&quot;{r.net_shares} sh before news, paper P&amp;L ${r.paper_pnl:,}&quot;))
+
+df = pd.DataFrame(alerts, columns=[&quot;rule&quot;, &quot;account&quot;, &quot;detail&quot;])
+df.insert(0, &quot;alert_id&quot;, [f&quot;{date.today():%Y%m%d}-{i:03d}&quot; for i in range(1, len(df) + 1)])
+df[&quot;status&quot;] = &quot;OPEN&quot;
+df[&quot;analyst_note&quot;] = &quot;&quot;      # the analyst writes the disposition here
+df.to_csv(&quot;alerts.csv&quot;, index=False)
+print(&quot;\n&quot;, df.to_string(index=False))</code></pre>
+<details class="out"><summary>Show the output</summary><pre class="code" data-lang="Output"><code>account symbol             fill_ts fill_side  fill_qty  bait_orders  bait_qty  ratio
+     A5    XYZ 2026-03-02 10:15:05       BUY       200            5     25000  125.0
+symbol                  headline account  net_shares  avg_cost  px_after  paper_pnl
+   ABC ABC to be acquired at $26      A7       20900     20.12     25.72     117040
+   ABC ABC to be acquired at $26      A5         800     20.06     25.72       4534
+   ABC ABC to be acquired at $26      A4         400     20.09     25.72       2253
+   ABC ABC to be acquired at $26      A2         300     20.07     25.72       1698
+   ABC ABC to be acquired at $26      A1         300     20.08     25.72       1695
+
+     alert_id          rule account                                   detail status analyst_note
+20261119-001          WASH      O3         5 same-owner trades, 5000 sh XYZ   OPEN             
+20261119-002         SPOOF      A5        25000 sh bait vs 200 sh fill, XYZ   OPEN             
+20261119-003 MARKING_CLOSE      A6   100% of last-10-min volume, 2.69% move   OPEN             
+20261119-004     FRONT_RUN      P1         bought 20s into client order 329   OPEN             
+20261119-005       INSIDER      A7 20900 sh before news, paper P&amp;L $117,040   OPEN</code></pre></details>
+<div class="try"><h3>Try it</h3><p>Add a <code>priority</code> column: HIGH for INSIDER and SPOOF, NORMAL for the rest. Sort HIGH first.</p><details class="ans"><summary>Show the answer</summary><div class="ans__body"><pre class="code" data-lang="Python"><code>import pandas as pd
+df = pd.read_csv(&quot;alerts.csv&quot;)
+df[&quot;priority&quot;] = df[&quot;rule&quot;].map({&quot;INSIDER&quot;: &quot;HIGH&quot;, &quot;SPOOF&quot;: &quot;HIGH&quot;}).fillna(&quot;NORMAL&quot;)
+df = df.sort_values(&quot;priority&quot;)          # &quot;HIGH&quot; sorts before &quot;NORMAL&quot;
+print(df[[&quot;alert_id&quot;, &quot;rule&quot;, &quot;account&quot;, &quot;priority&quot;]].to_string(index=False))</code></pre><pre class="code" data-lang="Output"><code>    alert_id          rule account priority
+20261119-002         SPOOF      A5     HIGH
+20261119-005       INSIDER      A7     HIGH
+20261119-001          WASH      O3   NORMAL
+20261119-003 MARKING_CLOSE      A6   NORMAL
+20261119-004     FRONT_RUN      P1   NORMAL</code></pre></div></details></div>
+</section>
+
+  <section class="lesson" id="practice" aria-labelledby="practice-h">
+    <h2 class="lh" id="practice-h">Interview practice</h2>
+    <p>Three questions in the style of a surveillance SQL screen. Same database. Write your answer before you open mine.</p>
+    <div class="qs">
+<article class="q"><p class="q__lvl">Easy</p><h3>Order-to-trade imbalance</h3><p>Using <code>orders</code>, return each account whose cancelled shares are more than 3 times its filled shares. Show both totals.</p><details class="ans"><summary>Show the answer</summary><div class="ans__body"><pre class="code" data-lang="SQL"><code>SELECT account_id,
+       SUM(CASE WHEN status = &#x27;CANCELLED&#x27; THEN qty ELSE 0 END) AS cancelled,
+       SUM(CASE WHEN status = &#x27;FILLED&#x27;    THEN qty ELSE 0 END) AS filled
+FROM orders
+GROUP BY account_id
+HAVING cancelled &gt; 3 * filled;</code></pre><pre class="code" data-lang="Output"><code>account_id  cancelled  filled
+----------  ---------  ------
+A5          27200      7800</code></pre></div></details></article>
+<article class="q"><p class="q__lvl">Medium</p><h3>Off-market prints</h3><p>Using <code>trades</code>, find the five trades furthest from their symbol's daily VWAP, where the gap is more than 2%. Show the percent gap.</p><details class="ans"><summary>Show the answer</summary><div class="ans__body"><p>Every hit is ABC after the 14:00 headline. That is news, not abuse. An analyst checks the news feed before escalating any price alert.</p><pre class="code" data-lang="SQL"><code>WITH v AS (
+  SELECT symbol, SUM(price * qty) / SUM(qty) AS vwap
+  FROM trades GROUP BY symbol
+)
+SELECT t.trade_id, t.ts, t.symbol, t.price, ROUND(v.vwap, 2) AS vwap,
+       ROUND(100.0 * (t.price - v.vwap) / v.vwap, 1) AS pct_off
+FROM trades t JOIN v ON v.symbol = t.symbol
+WHERE ABS(t.price - v.vwap) / v.vwap &gt; 0.02
+ORDER BY ABS(pct_off) DESC
+LIMIT 5;</code></pre><pre class="code" data-lang="Output"><code>trade_id  ts                   symbol  price  vwap   pct_off
+--------  -------------------  ------  -----  -----  -------
+348       2026-03-02 14:52:00  ABC     25.85  20.28  27.5   
+347       2026-03-02 14:42:00  ABC     25.8   20.28  27.2   
+346       2026-03-02 14:32:00  ABC     25.75  20.28  27.0   
+345       2026-03-02 14:22:00  ABC     25.7   20.28  26.7   
+344       2026-03-02 14:12:00  ABC     25.65  20.28  26.5</code></pre></div></details></article>
+<article class="q"><p class="q__lvl">Hard</p><h3>Ramping</h3><p>Find any account that bought one symbol at least five times in a row, each fill at a higher price than the last, with no more than five minutes between fills. Show the start, end and price range of each run.</p><details class="ans"><summary>Show the answer</summary><div class="ans__body"><p>This is a gaps-and-islands problem. Flag where a new run starts, then a running total of those flags gives each run its own ID.</p><pre class="code" data-lang="SQL"><code>WITH b AS (
+  SELECT buy_acct AS acct, symbol, ts, price,
+         LAG(price) OVER w AS prev_px,
+         LAG(ts)    OVER w AS prev_ts
+  FROM trades
+  WINDOW w AS (PARTITION BY buy_acct, symbol ORDER BY ts)
+),
+flags AS (                         -- 1 starts a new run, 0 continues it
+  SELECT *, CASE WHEN price &gt; prev_px
+                  AND (julianday(ts) - julianday(prev_ts)) * 1440 &lt;= 5
+                 THEN 0 ELSE 1 END AS new_run
+  FROM b
+),
+runs AS (
+  SELECT *, SUM(new_run) OVER (PARTITION BY acct, symbol ORDER BY ts) AS run_id
+  FROM flags
+)
+SELECT acct, symbol, COUNT(*) AS rising_buys,
+       MIN(ts) AS start_ts, MAX(ts) AS end_ts,
+       MIN(price) AS from_px, MAX(price) AS to_px
+FROM runs
+GROUP BY acct, symbol, run_id
+HAVING COUNT(*) &gt;= 5
+ORDER BY rising_buys DESC;</code></pre><pre class="code" data-lang="Output"><code>acct  symbol  rising_buys  start_ts             end_ts               from_px  to_px
+----  ------  -----------  -------------------  -------------------  -------  -----
+A6    XYZ     10           2026-03-02 15:55:00  2026-03-02 15:58:45  50.23    51.58</code></pre></div></details></article>
+    </div>
+  </section>
+
+  <section class="lesson" id="next" aria-labelledby="next-h">
+    <h2 class="lh" id="next-h">Keep practicing</h2>
+    <ul class="res">
+      <li><b><a class="link" href="https://sqlbolt.com/" rel="noopener">SQLBolt</a>.</b> Short interactive lessons on SELECT, joins and aggregates. Do lessons 1 to 12 in one sitting.</li>
+      <li><b><a class="link" href="https://datalemur.com/" rel="noopener">DataLemur</a>.</b> Real interview SQL questions from finance and tech firms. Its window function tutorial covers lesson 02 in more depth.</li>
+      <li><b><a class="link" href="https://pandas.pydata.org/docs/user_guide/10min.html" rel="noopener">10 minutes to pandas</a>.</b> The official tour. Read the sections on groupby and time series.</li>
+      <li><b><a class="link" href="./surveillance-patterns.html">Surveillance patterns, replayed</a>.</b> Twenty-five patterns to turn into your own rules.</li>
+    </ul>
+  </section>
+</div>
+
+<div class="ref-wrap">
+  <p class="ref-txt">Written by Rahul Das, former Compliance Technology Associate at Polymarket. Before that, Cboe and FINRA. All data on this page is made up. Rule citations are a starting point, not legal advice.</p>
+</div>
+</main>
+
+<footer class="back">
+  <div class="back__card">
+    <p class="back__name">Rahul Das</p>
+    <div class="back__row">
+      <p>Trade surveillance and compliance technology in Chicago. Every tool here is free to use.</p>
+      <ul class="back__links">
+        <li><a href="./index.html">Portfolio</a></li>
+        <li><a href="./index.html#tools">All tools</a></li>
+        <li><a href="mailto:rdas0541@gmail.com">rdas0541@gmail.com</a></li>
+        <li><a href="https://www.linkedin.com/in/rahul-das-capm/" rel="noopener">LinkedIn</a></li>
+        <li><a href="./Rahul_Das_Resume.pdf" target="_blank" rel="noopener">Résumé, PDF</a></li>
+      </ul>
+    </div>
+    <p class="back__credit">Photograph: <a href="https://commons.wikimedia.org/wiki/File:Randolph_Street_east_from_Lasalle_Street,_Chicago,_Illinois,_1900.jpg" rel="noopener">Randolph Street, 1900</a>, Detroit Publishing Co., public domain.</p>
+  </div>
+</footer>
+<script type="module" src="assets/motion/main.js"></script>
+</body>
+</html>
