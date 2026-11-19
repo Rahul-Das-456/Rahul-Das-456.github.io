@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Market Abuse, Replayed | Rahul Das</title>
-<meta name="description" content="Twenty-five capital markets surveillance patterns, each replayed step by step: spoofing, layering, wash trading, marking the close, insider trading, front running and more, with the rules, red flags and the work behind each alert.">
+<meta name="description" content="Twenty-five capital markets surveillance patterns, each replayed step by step: spoofing, layering, wash trading, marking the close, insider trading, front running and more, with the rules, red flags, safeguards and how to build them.">
 <link rel="canonical" href="https://rahul-das-456.github.io/surveillance-patterns.html">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -114,6 +114,41 @@
 .pfile ul { margin: 0; padding-left: 1.1em; display: grid; gap: 6px; }
 .pfile li { color: inherit; }
 
+/* safeguards panel */
+.pguard { margin-top: 6px; background: var(--surface); padding: clamp(18px, 2.4vw, 32px); }
+.pguard h4 { font-size: var(--step-lead); font-weight: 600; margin: 0 0 16px; color: var(--ink-hi); }
+.gtab { width: 100%; table-layout: fixed; }
+.gtab th { color: var(--muted) !important; border-bottom: 3px solid var(--surface-2) !important; text-align: left; padding: 0 16px 8px 0; font-weight: 500 !important; }
+.gtab th:nth-child(1) { width: 26%; } .gtab th:nth-child(2) { width: 130px; }
+.gtab td { color: var(--ink-hi) !important; border-bottom: 1px solid #2c3a63 !important; padding: 14px 16px 14px 0; vertical-align: top; font-size: var(--step-body); text-wrap: pretty; }
+.gtab td:first-child { font-weight: 600; }
+.gtab td span { display: inline-block; font-size: var(--step-small); font-weight: 600; padding: 3px 8px; color: var(--paper-ink); background: var(--paper); }
+.gtab tr[data-l="Exchange"] span { background: var(--blue); }
+.gtab tr[data-l="Pre-trade"] span { background: var(--bid); }
+.gtab tr[data-l="Surveillance"] span { background: var(--accent); }
+
+/* control stack sheet */
+.stack__head { display: grid; grid-template-columns: 5fr 7fr; gap: 24px clamp(24px, 4vw, 64px); align-items: end; margin-bottom: clamp(28px, 3vw, 44px); }
+.stack__head h2 { font-size: var(--step-head); letter-spacing: -0.04em !important; line-height: 0.95; margin: 0; }
+.stack__head p { margin: 0; max-width: none; text-wrap: pretty; }
+.stack__grid { display: grid; gap: 28px; }
+.stack__grid section { display: grid; grid-template-columns: 5fr 7fr; gap: 12px clamp(24px, 4vw, 64px); align-items: start; }
+.stack__grid h3 { font-size: var(--step-head); letter-spacing: -0.04em !important; line-height: 0.95; margin: 0 0 8px; color: var(--paper-ink); }
+.stack__grid section:nth-child(1) h3 { color: #2f4a8a; }
+.stack__grid section:nth-child(2) h3 { color: var(--bid-deep); }
+.stack__grid section:nth-child(3) h3 { color: var(--accent-deep); }
+.stack__grid p { margin: 0; color: var(--paper-ink); font-size: var(--step-lead); line-height: 1.3; max-width: none; }
+.stack__grid ul { margin: 0; padding: 0; list-style: none; display: flex; flex-wrap: wrap; gap: 6px; color: var(--paper-ink); }
+.stack__grid li { background: var(--paper-2); padding: 8px 12px; }
+.stack__sub { font-size: var(--step-lead); font-weight: 600; margin: clamp(48px, 6vw, 80px) 0 18px; color: var(--paper-ink); }
+.build { margin: 0; padding-left: 1.4em; display: grid; grid-template-columns: 1fr 1fr; gap: 14px clamp(24px, 4vw, 56px); }
+.build li { color: var(--paper-ink); padding-left: 4px; }
+.build li::marker { font-weight: 600; color: var(--accent-deep); }
+.build b { display: block; font-weight: 600; }
+.gaps { display: grid; grid-template-columns: 1fr 1fr; gap: 24px clamp(24px, 4vw, 56px); background: var(--paper-ink); padding: clamp(20px, 3vw, 40px); }
+.gaps p { margin: 0; max-width: none; color: var(--paper); }
+.gaps b { display: block; color: var(--accent); margin-bottom: 6px; }
+
 /* index sheet */
 .pindex h2 { font-size: var(--step-head); letter-spacing: -0.04em !important; line-height: 0.95; margin: 0 0 12px; }
 .pindex__head { display: grid; grid-template-columns: 1fr 220px; gap: 32px; align-items: end; margin-bottom: 28px; }
@@ -140,10 +175,16 @@
   .pboard[data-ui] { position: static; padding: 14px; }
   .pfile { grid-template-columns: 1fr 1fr; }
   .pfloor { grid-template-columns: 1fr; }
+  .stack__head { grid-template-columns: 1fr; }
+  .stack__grid section { grid-template-columns: 1fr; }
 }
 @media (max-width: 560px) {
   .pfile { grid-template-columns: 1fr; }
   .pindex__head { grid-template-columns: 1fr 110px; gap: 16px; }
+  .stack__grid, .build, .gaps { grid-template-columns: 1fr; }
+  .gtab thead { display: none; }
+  .gtab tr { display: grid; gap: 6px; padding: 12px 0; border-bottom: 1px solid #2c3a63; }
+  .gtab td { border: 0 !important; padding: 0; }
   .pindex__head img { height: 140px; }
   .pick__btn { min-height: 44px; padding: 0 12px; font-size: var(--step-small); }
   .pladder td { height: 22px; }
@@ -177,7 +218,7 @@
   <div class="exhibit__room"><img src="assets/randolph-street-east-from-lasalle-street-chicago.jpg" alt="" fetchpriority="high"></div>
   <div class="exhibit__card">
     <h1 id="page-title" class="exhibit__title">Market abuse, replayed</h1>
-    <p class="exhibit__sub">Twenty-five ways markets get abused, each played out step by step the way an alert sees it. Pick one, then press play or step through it.</p>
+    <p class="exhibit__sub">Twenty-five ways markets get abused, each played out step by step the way an alert sees it, with the safeguards that stop it and how I would build them.</p>
     <dl class="exhibit__fields">
       <dt>Re</dt><dd>Order book, trade-based, price, information and customer patterns</dd>
       <dt>From</dt><dd>Rahul Das, Compliance Technology Associate</dd>
@@ -231,7 +272,45 @@
     <section aria-labelledby="f3"><h4 id="f3">How I work the alert</h4><ul id="pwork"></ul></section>
     <section aria-labelledby="f4"><h4 id="f4">Data I pull</h4><ul id="pdata"></ul></section>
   </div>
+
+  <div class="pguard" aria-labelledby="g-h">
+    <h4 id="g-h">Safeguards, and how I would build them</h4>
+    <table class="gtab"><thead><tr><th scope="col">Safeguard</th><th scope="col">Layer</th><th scope="col">How I would build it</th></tr></thead><tbody id="pguard"></tbody></table>
+  </div>
 </section>
+
+<div class="page-body stack">
+  <div class="stack__head">
+    <h2 id="stack-h">Four layers of safeguards</h2>
+    <p>No single control stops market abuse. Venues stop the worst of it in the matching engine, firms block risky orders before they leave, surveillance finds what got through, and supervision acts on it. Each replay above lists the controls at each layer for that pattern.</p>
+  </div>
+  <div class="stack__grid">
+    <section aria-labelledby="l1"><div><h3 id="l1">Exchange</h3><p>Rules and matching engine controls the venue runs for everyone.</p></div><ul><li>Self-match prevention IDs</li><li>Price bands, velocity logic, Limit Up-Limit Down and circuit breakers</li><li>Message throttles and messaging efficiency programs</li><li>Position limits and accountability levels</li><li>Exchange and FINRA surveillance, CAT and Intermarket Surveillance Group data</li></ul></section>
+    <section aria-labelledby="l2"><div><h3 id="l2">Pre-trade</h3><p>Checks inside the firm before an order reaches the market.</p></div><ul><li>SEC Rule 15c3-5 market access controls: credit, size, price and message limits</li><li>Kill switches held by risk, not the trader</li><li>Restricted lists, locates and position limit gates</li><li>Pre-allocation and cross protocols in the order system</li></ul></section>
+    <section aria-labelledby="l3"><div><h3 id="l3">Surveillance</h3><p>Alert models run on orders, trades and communications after the fact.</p></div><ul><li>Vendor platforms such as Nasdaq SMARTS, NICE Actimize, Eventus Validus and Scila</li><li>In-house models on CAT, exchange audit trail and order system data</li><li>E-communications surveillance on chats, email and voice</li><li>Case management that keeps every alert and its outcome</li></ul></section>
+    <section aria-labelledby="l4"><div><h3 id="l4">Oversight</h3><p>The people and procedures that make the alerts mean something.</p></div><ul><li>Written supervisory procedures under FINRA Rule 3110</li><li>Annual testing under FINRA Rule 3120 and Rule 206(4)-7</li><li>Personal trading, information barriers and training</li><li>Model governance: documentation, tuning and validation</li></ul></section>
+  </div>
+
+  <h3 class="stack__sub" id="build-h">How I would put it in place</h3>
+  <ol class="build" aria-labelledby="build-h">
+    <li><b>Map risks to controls.</b> List every product and pattern the firm is exposed to, then mark which layer covers each one. Gaps go to the top of the plan.</li>
+    <li><b>Prove the data is complete.</b> Reconcile order, trade and CAT data to the venues every day. Missing cancels or bad timestamps break spoofing and layering models first.</li>
+    <li><b>Turn on the vendor models, then tune them.</b> Start with the vendor's defaults, then set thresholds per product using each market's own depth, volume and volatility. One lot count never fits every contract.</li>
+    <li><b>Test with known cases.</b> Replay past enforcement cases and synthetic scenarios like the ones on this page. A model that cannot catch a textbook spoof will not catch a real one.</li>
+    <li><b>Test below the line.</b> Sample activity just under each threshold every quarter. If real issues sit there, the threshold is too high.</li>
+    <li><b>Write the workflow.</b> Set who reviews each alert, how fast, what evidence closes it and when it escalates to a case, a SAR or a referral.</li>
+    <li><b>Govern the models.</b> Document every rule, log every parameter change with its reason, and have the models validated independently each year.</li>
+    <li><b>Report what it finds.</b> Track alert volumes, close rates, escalations and time to close by pattern, and bring them to the compliance committee.</li>
+  </ol>
+
+  <h3 class="stack__sub">Where systems still fall short</h3>
+  <div class="gaps">
+    <p><b>Cross-product blind spots.</b> Many firms still run equities, options and futures surveillance in separate tools, so a cross-market scheme shows up as three small alerts instead of one case.</p>
+    <p><b>Too many false positives.</b> Most alerts close with no issue. Teams that never tune end up skimming, and the real case gets closed with the noise.</p>
+    <p><b>New markets.</b> Crypto venues and prediction markets face the same patterns with less mature controls, often with no self-match prevention or consolidated audit trail.</p>
+    <p><b>Communications.</b> Intent lives in chats and calls. Trade alerts that are never joined to communications miss the evidence that decides most spoofing and prearranged cases.</p>
+  </div>
+</div>
 
 <figure class="pfloor" aria-labelledby="floor-cap">
   <video muted loop playsinline autoplay preload="metadata" poster="assets/nyse-floor-poster.jpg" width="640" height="480" aria-hidden="true">
@@ -305,6 +384,7 @@
 </footer>
 
 <script src="assets/patterns-data.js"></script>
+<script src="assets/patterns-guards.js"></script>
 <script src="assets/patterns.js"></script>
 <script type="module" src="assets/motion/main.js"></script>
 </body>

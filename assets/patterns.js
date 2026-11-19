@@ -42,6 +42,9 @@
     $('#pflags').innerHTML = pat.flags.map((l) => `<li>${esc(l)}</li>`).join('');
     $('#pwork').innerHTML = pat.work.map((l) => `<li>${esc(l)}</li>`).join('');
     $('#pdata').innerHTML = pat.data.map((l) => `<li>${esc(l)}</li>`).join('');
+    const G = (window.GUARDS || {})[pat.id] || [];
+    $('#pguard').innerHTML = G.map(([c, l, h]) => `<tr data-l="${esc(l)}"><td>${esc(c)}</td><td><span>${esc(l)}</span></td><td>${esc(h)}</td></tr>`).join('');
+    root.querySelector('.pguard').hidden = !G.length;
     $('#palert b').textContent = 'Alert: ' + pat.alert[0];
     $('#palert span').textContent = pat.alert[1];
     stepsEl.innerHTML = pat.steps.map((s, i) => `<li><button type="button" class="pstep" data-i="${i}"><b>${esc(s.h)}</b><span>${esc(s.p)}</span></button></li>`).join('');
